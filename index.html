@@ -18,20 +18,18 @@
       text-align: center;
     }
 
-    .wrap{ padding: 24px; }
+    .wrap{
+      padding: 24px;
+    }
 
-    /* Typing effect */
+    /* Smooth reveal */
     .logo{
-      display: inline-block;
       font-size: 64px;
       letter-spacing: 10px;
       font-weight: 600;
-      line-height: 1;
-      white-space: nowrap;
-      overflow: hidden;
-      width: 0;
-      border-right: 3px solid #000;
-      animation: typing 1.8s steps(7, end) forwards, blink .75s step-end infinite;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: reveal 1.4s ease forwards;
     }
 
     .sub{
@@ -41,22 +39,23 @@
       text-transform: uppercase;
       opacity: 0;
       line-height: 1.6;
-      animation: fadeIn 0.9s ease forwards;
-      animation-delay: 2.0s;
+      animation: fadeIn 1s ease forwards;
+      animation-delay: 1.2s;
     }
 
-    @keyframes typing {
-      from { width: 0; }
-      to   { width: 100%; }
-    }
-
-    @keyframes blink {
-      50% { border-color: transparent; }
+    @keyframes reveal {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @keyframes fadeIn {
-      to { opacity: 0.55; }
+      to {
+        opacity: 0.55;
+      }
     }
+
   </style>
 </head>
 
