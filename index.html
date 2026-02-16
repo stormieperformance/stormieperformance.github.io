@@ -18,26 +18,50 @@
       text-align: center;
     }
 
+    .wrap{ padding: 24px; }
+
+    /* Typing effect */
     .logo{
+      display: inline-block;
       font-size: 64px;
       letter-spacing: 10px;
       font-weight: 600;
       line-height: 1;
-      margin-bottom: 14px; /* <-- mindre mellanrum */
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      border-right: 3px solid #000;
+      animation: typing 1.8s steps(7, end) forwards, blink .75s step-end infinite;
     }
 
     .sub{
+      margin-top: 14px;
       font-size: 13px;
       letter-spacing: 4px;
       text-transform: uppercase;
-      opacity: 0.55;
+      opacity: 0;
       line-height: 1.6;
+      animation: fadeIn 0.9s ease forwards;
+      animation-delay: 2.0s;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to   { width: 100%; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 0.55; }
     }
   </style>
 </head>
 
 <body>
-  <div>
+  <div class="wrap">
     <div class="logo">STORMI&#x0112;</div>
     <div class="sub">
       Hybrid Performance<br />
