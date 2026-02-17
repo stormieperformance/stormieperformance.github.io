@@ -6,9 +6,10 @@
 <title>Stormiē Performance Engine</title>
 
 <style>
+* { box-sizing: border-box; }
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
     background: #ffffff;
     color: #111;
     display: flex;
@@ -17,186 +18,315 @@ body {
 }
 
 .container {
-    max-width: 600px;
-    width: 90%;
+    max-width: 620px;
+    width: 92%;
     margin-top: 60px;
+    padding-bottom: 60px;
 }
 
 h1 {
     font-size: 28px;
     font-weight: 600;
     text-align: center;
+    letter-spacing: 0.18em;
 }
 
 .sub {
     text-align: center;
-    margin-bottom: 40px;
-    color: #666;
+    margin: 10px 0 34px;
+    color: rgba(0,0,0,0.55);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-size: 12px;
 }
 
 .section {
-    margin-bottom: 30px;
+    margin-bottom: 22px;
+    padding: 18px 16px;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 12px;
+    background: rgba(0,0,0,0.02);
+}
+
+.section-title{
+    font-size: 11px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    opacity: 0.55;
+    margin-bottom: 12px;
 }
 
 label {
     display: block;
     margin-bottom: 6px;
-    font-size: 14px;
-    color: #444;
+    font-size: 13px;
+    color: rgba(0,0,0,0.72);
 }
 
 input, select {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     margin-bottom: 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 10px;
+    background: #fff;
+    outline: none;
+}
+
+input:focus, select:focus{
+    border-color: rgba(0,0,0,0.25);
+}
+
+.row{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+}
+
+@media (max-width: 560px){
+    .row{ grid-template-columns: 1fr; }
 }
 
 button {
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     background: #111;
-    color: white;
+    color: #fff;
     border: none;
     cursor: pointer;
-    font-size: 15px;
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    border-radius: 12px;
 }
 
-button:hover {
-    opacity: 0.85;
+button:hover { opacity: 0.88; }
+
+.toplink{
+    display:inline-block;
+    margin-bottom: 18px;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(0,0,0,0.65);
+    border-bottom: 1px solid rgba(0,0,0,0.18);
+    padding-bottom: 3px;
 }
+.toplink:hover{ color:#000; border-bottom-color: rgba(0,0,0,0.35); }
 
 .output {
-    margin-top: 40px;
-    padding: 20px;
-    border: 1px solid #eee;
-    border-radius: 6px;
-    background: #fafafa;
+    margin-top: 22px;
+    padding: 18px 16px;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 12px;
+    background: rgba(0,0,0,0.02);
 }
 
 .score {
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 600;
     margin-bottom: 10px;
+    letter-spacing: 0.02em;
+}
+
+.mono{
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+.small{
+    font-size: 12px;
+    opacity: 0.7;
+    line-height: 1.7;
+}
+.error{
+    color: #111;
 }
 </style>
 </head>
 
 <body>
-
 <div class="container">
+
+<a class="toplink" href="/">← Back</a>
 
 <h1>STORMIĒ</h1>
 <div class="sub">Performance Engine — Beta</div>
 
 <div class="section">
-<label>Profile</label>
-<select id="profile">
-<option value="fighter">Fighter</option>
-<option value="climber">Climber</option>
-<option value="hybrid">Hybrid</option>
-</select>
+  <div class="section-title">Profile</div>
+  <label>Training Profile</label>
+  <select id="profile">
+    <option value="fighter">Fighter</option>
+    <option value="climber">Climber</option>
+    <option value="hybrid">Hybrid</option>
+  </select>
+
+  <label>Bodyweight (kg)</label>
+  <input type="number" id="bw" min="30" max="200" step="0.1" placeholder="e.g. 65">
 </div>
 
 <div class="section">
-<label>Muay Thai Sessions per Week</label>
-<input type="number" id="thai" min="0" max="6" value="2">
+  <div class="section-title">Sport Load</div>
+  <label>Muay Thai sessions / week</label>
+  <input type="number" id="thai" min="0" max="6" value="2">
 
-<label>Climbing Sessions per Week</label>
-<input type="number" id="climb" min="0" max="4" value="2">
+  <label>Climbing sessions / week</label>
+  <input type="number" id="climb" min="0" max="4" value="2">
 </div>
 
 <div class="section">
-<label>Squat – Weight (kg)</label>
-<input type="number" id="squatWeight">
-<label>Reps</label>
-<input type="number" id="squatReps">
-<label>RPE</label>
-<input type="number" id="squatRPE">
+  <div class="section-title">Top Sets</div>
 
-<label>Hinge – Weight (kg)</label>
-<input type="number" id="hingeWeight">
-<label>Reps</label>
-<input type="number" id="hingeReps">
-<label>RPE</label>
-<input type="number" id="hingeRPE">
+  <label>Squat</label>
+  <div class="row">
+    <input type="number" id="squatWeight" min="0" step="0.5" placeholder="kg">
+    <input type="number" id="squatReps" min="1" max="20" step="1" placeholder="reps">
+    <input type="number" id="squatRPE" min="6" max="10" step="0.5" placeholder="RPE">
+  </div>
 
-<label>Pull – Weight (kg)</label>
-<input type="number" id="pullWeight">
-<label>Reps</label>
-<input type="number" id="pullReps">
-<label>RPE</label>
-<input type="number" id="pullRPE">
+  <label>Hinge</label>
+  <div class="row">
+    <input type="number" id="hingeWeight" min="0" step="0.5" placeholder="kg">
+    <input type="number" id="hingeReps" min="1" max="20" step="1" placeholder="reps">
+    <input type="number" id="hingeRPE" min="6" max="10" step="0.5" placeholder="RPE">
+  </div>
+
+  <label>Pull</label>
+  <div class="row">
+    <input type="number" id="pullWeight" min="0" step="0.5" placeholder="kg">
+    <input type="number" id="pullReps" min="1" max="20" step="1" placeholder="reps">
+    <input type="number" id="pullRPE" min="6" max="10" step="0.5" placeholder="RPE">
+  </div>
 </div>
 
-<button onclick="analyze()">Analyze Performance</button>
+<button type="button" onclick="analyze()">Analyze</button>
 
 <div class="output" id="output" style="display:none;">
-<div class="score" id="score"></div>
-<div id="details"></div>
+  <div class="score" id="score"></div>
+  <div class="small mono" id="details"></div>
 </div>
 
 </div>
 
 <script>
 function e1RM(weight, reps) {
-    return weight * (1 + reps / 30);
+  return weight * (1 + reps / 30);
 }
 
 function rpeFactor(rpe) {
-    if (rpe >= 10) return 1;
-    if (rpe >= 9) return 0.97;
-    if (rpe >= 8) return 0.94;
-    if (rpe >= 7) return 0.90;
-    return 0.85;
+  if (rpe >= 10) return 1.00;
+  if (rpe >= 9)  return 0.97;
+  if (rpe >= 8)  return 0.94;
+  if (rpe >= 7)  return 0.90;
+  return 0.85;
+}
+
+function isValidNumber(n){
+  return typeof n === "number" && isFinite(n) && !isNaN(n);
 }
 
 function analyze() {
+  const profile = document.getElementById("profile").value;
 
-    const thai = parseInt(document.getElementById("thai").value);
-    const climb = parseInt(document.getElementById("climb").value);
+  const thai  = parseInt(document.getElementById("thai").value, 10);
+  const climb = parseInt(document.getElementById("climb").value, 10);
 
-    const squat = e1RM(
-        parseFloat(document.getElementById("squatWeight").value),
-        parseFloat(document.getElementById("squatReps").value)
-    ) * rpeFactor(parseFloat(document.getElementById("squatRPE").value));
+  const bwRaw = parseFloat(document.getElementById("bw").value);
+  const bw = isValidNumber(bwRaw) && bwRaw > 0 ? bwRaw : null;
 
-    const hinge = e1RM(
-        parseFloat(document.getElementById("hingeWeight").value),
-        parseFloat(document.getElementById("hingeReps").value)
-    ) * rpeFactor(parseFloat(document.getElementById("hingeRPE").value));
+  const squatW = parseFloat(document.getElementById("squatWeight").value);
+  const squatR = parseFloat(document.getElementById("squatReps").value);
+  const squatP = parseFloat(document.getElementById("squatRPE").value);
 
-    const pull = e1RM(
-        parseFloat(document.getElementById("pullWeight").value),
-        parseFloat(document.getElementById("pullReps").value)
-    ) * rpeFactor(parseFloat(document.getElementById("pullRPE").value));
+  const hingeW = parseFloat(document.getElementById("hingeWeight").value);
+  const hingeR = parseFloat(document.getElementById("hingeReps").value);
+  const hingeP = parseFloat(document.getElementById("hingeRPE").value);
 
-    const bodyweight = 65; // Temporary placeholder
+  const pullW  = parseFloat(document.getElementById("pullWeight").value);
+  const pullR  = parseFloat(document.getElementById("pullReps").value);
+  const pullP  = parseFloat(document.getElementById("pullRPE").value);
 
-    const relativeStrength = ((squat/bodyweight) + (hinge/bodyweight) + (pull/bodyweight)) / 3;
-    let strengthScore = Math.min(Math.round(relativeStrength * 40), 100);
+  const output = document.getElementById("output");
+  const scoreEl = document.getElementById("score");
+  const detailsEl = document.getElementById("details");
 
-    let sportLoad = thai + climb;
-    let loadCategory;
-    let recommendation;
+  // Validate required fields
+  const required = [squatW, squatR, squatP, hingeW, hingeR, hingeP, pullW, pullR, pullP];
+  const allOk = required.every(isValidNumber);
 
-    if (sportLoad >= 4) {
-        loadCategory = "High";
-        recommendation = "Reduce strength volume 20%. Limit to 2 sessions. RPE cap 8.";
-    } else if (sportLoad >= 2) {
-        loadCategory = "Moderate";
-        recommendation = "Maintain current volume. Monitor fatigue.";
-    } else {
-        loadCategory = "Low";
-        recommendation = "Full progression allowed. Increase load next week.";
-    }
+  output.style.display = "block";
 
-    document.getElementById("output").style.display = "block";
-    document.getElementById("score").innerText = "Structural Strength Score: " + strengthScore;
-    document.getElementById("details").innerHTML =
-        "Sport Load: " + loadCategory + "<br><br>" +
-        "Recommendation:<br>" + recommendation;
+  if (!allOk) {
+    scoreEl.textContent = "Missing inputs";
+    detailsEl.innerHTML =
+      "Enter <span class='mono'>kg / reps / RPE</span> for Squat, Hinge and Pull.";
+    return;
+  }
+
+  const squat = e1RM(squatW, squatR) * rpeFactor(squatP);
+  const hinge = e1RM(hingeW, hingeR) * rpeFactor(hingeP);
+  const pull  = e1RM(pullW,  pullR)  * rpeFactor(pullP);
+
+  // Sport load
+  const sportLoad = (thai || 0) + (climb || 0);
+  let loadCategory, volumeAdjust, sessions, rpeCap;
+
+  if (sportLoad >= 4) {
+    loadCategory = "High";
+    volumeAdjust = "-20% back-off volume";
+    sessions = 2;
+    rpeCap = 8;
+  } else if (sportLoad >= 2) {
+    loadCategory = "Moderate";
+    volumeAdjust = "-10% back-off volume";
+    sessions = 3;
+    rpeCap = 9;
+  } else {
+    loadCategory = "Low";
+    volumeAdjust = "Full volume";
+    sessions = 3;
+    rpeCap = 9;
+  }
+
+  // Profile weighting (subtle but real)
+  let wSquat = 1.0, wHinge = 1.0, wPull = 1.0;
+  if (profile === "fighter") { wHinge = 1.1; wPull = 1.05; }
+  if (profile === "climber") { wPull  = 1.2; wHinge = 0.95; }
+  if (profile === "hybrid")  { wPull  = 1.1; }
+
+  // Structural Strength Score (v0.1)
+  // If BW missing, use a neutral fallback for now but disclose it.
+  const bwUsed = bw ?? 65;
+
+  const rel = (
+    ( (squat / bwUsed) * wSquat ) +
+    ( (hinge / bwUsed) * wHinge ) +
+    ( (pull  / bwUsed) * wPull  )
+  ) / 3;
+
+  // Map to 0–100 in a simple, interpretable way for MVP
+  const strengthScore = Math.max(0, Math.min(100, Math.round(rel * 40)));
+
+  // Recommendation text
+  const recommendation =
+    (loadCategory === "High")
+      ? "Reduce volume and protect performance output."
+      : (loadCategory === "Moderate")
+        ? "Maintain and progress selectively."
+        : "Progress is approved.";
+
+  scoreEl.textContent = "Structural Strength Score: " + strengthScore;
+
+  const bwNote = bw ? "" : "BW not set → using 65kg baseline (MVP).";
+
+  detailsEl.innerHTML =
+    "Profile: " + profile.toUpperCase() + "<br>" +
+    "Sport Load: " + loadCategory + " (" + sportLoad + "/week)<br>" +
+    "Strength Sessions: " + sessions + "/week<br>" +
+    "RPE Cap: " + rpeCap + "<br>" +
+    "Volume: " + volumeAdjust + "<br><br>" +
+    "Recommendation: " + recommendation + "<br>" +
+    (bwNote ? ("<br>" + bwNote) : "");
 }
 </script>
 
