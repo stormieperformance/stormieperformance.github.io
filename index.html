@@ -1,71 +1,246 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>STORMI&#x0112;</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>STORMIĒ</title>
 
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body{
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #ffffff;
-      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-      text-align: center;
-    }
+body{
+  height:100vh;
+  background:#ffffff;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  overflow:hidden;
+}
 
-    .wrap{
-      padding: 24px;
-    }
+/* --- LOGO ANIMATION --- */
+.logo{
+  font-size:64px;
+  letter-spacing:10px;
+  font-weight:600;
+  opacity:0;
+  transform:translateY(12px);
+  animation:reveal 1.4s ease forwards;
+}
 
-    /* Smooth reveal */
-    .logo{
-      font-size: 64px;
-      letter-spacing: 10px;
-      font-weight: 600;
-      opacity: 0;
-      transform: translateY(10px);
-      animation: reveal 1.4s ease forwards;
-    }
+.sub{
+  margin-top:14px;
+  font-size:13px;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  opacity:0;
+  line-height:1.6;
+  animation:fadeIn 1s ease forwards;
+  animation-delay:1.2s;
+}
 
-    .sub{
-      margin-top: 14px;
-      font-size: 13px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      opacity: 0;
-      line-height: 1.6;
-      animation: fadeIn 1s ease forwards;
-      animation-delay: 1.2s;
-    }
+@keyframes reveal{ to{ opacity:1; transform:translateY(0); } }
+@keyframes fadeIn{ to{ opacity:0.55; } }
 
-    @keyframes reveal {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+/* --- MENU BUTTON (hamburger -> X) --- */
+.menu-btn{
+  position:fixed;
+  top:18px;
+  left:18px;
+  width:44px;
+  height:44px;
+  border:1px solid rgba(0,0,0,0.10);
+  background:rgba(255,255,255,0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius:12px;
+  cursor:pointer;
+  z-index:100;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition: transform .2s ease, background .2s ease;
+}
 
-    @keyframes fadeIn {
-      to {
-        opacity: 0.55;
-      }
-    }
+.menu-btn:hover{ transform: translateY(-1px); background:rgba(255,255,255,0.9); }
 
-  </style>
+.icon{
+  width:18px;
+  height:12px;
+  position:relative;
+}
+
+.icon span{
+  position:absolute;
+  left:0; right:0;
+  height:2px;
+  background:#000;
+  border-radius:2px;
+  transition: transform .25s ease, top .25s ease, opacity .2s ease;
+}
+
+.icon span:nth-child(1){ top:0; }
+.icon span:nth-child(2){ top:5px; }
+.icon span:nth-child(3){ top:10px; }
+
+.menu-btn.open .icon span:nth-child(1){ top:5px; transform: rotate(45deg); }
+.menu-btn.open .icon span:nth-child(2){ opacity:0; }
+.menu-btn.open .icon span:nth-child(3){ top:5px; transform: rotate(-45deg); }
+
+/* --- GLASS OVERLAY --- */
+.about{
+  position:fixed;
+  inset:0;
+  background:rgba(10,10,10,0.28);              /* darker tech tint */
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.35s ease;
+  z-index:90;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:40px;
+}
+
+.about.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.panel{
+  width:min(720px, 92vw);
+  background:rgba(255,255,255,0.82);
+  border:1px solid rgba(255,255,255,0.45);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.18);
+  border-radius:18px;
+  padding:34px 28px;
+  transform: translateY(10px);
+  opacity:0;
+  transition: transform .35s ease, opacity .35s ease;
+}
+
+.about.active .panel{
+  transform: translateY(0);
+  opacity:1;
+}
+
+.panel h2{
+  font-size:12px;
+  letter-spacing:0.28em;
+  text-transform:uppercase;
+  opacity:0.7;
+  margin-bottom:14px;
+}
+
+.panel .headline{
+  font-size:22px;
+  letter-spacing:0.18em;
+  font-weight:600;
+  margin-bottom:18px;
+}
+
+.panel p{
+  font-size:14px;
+  line-height:1.8;
+  opacity:0.75;
+}
+
+.panel a{
+  display:inline-block;
+  margin-top:18px;
+  font-size:12px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  text-decoration:none;
+  color:#000;
+  opacity:0.75;
+  border-bottom:1px solid rgba(0,0,0,0.25);
+  padding-bottom:3px;
+}
+.panel a:hover{ opacity:1; }
+
+.hint{
+  margin-top:18px;
+  font-size:11px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  opacity:0.45;
+}
+</style>
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="logo">STORMI&#x0112;</div>
-    <div class="sub">
-      Hybrid Performance<br />
-      Launching Soon
-    </div>
+
+<button class="menu-btn" id="menuBtn" aria-label="About" aria-expanded="false">
+  <div class="icon" aria-hidden="true">
+    <span></span><span></span><span></span>
   </div>
+</button>
+
+<div>
+  <div class="logo">STORMI&#x0112;</div>
+  <div class="sub">
+    Hybrid Performance<br>
+    Launching Soon
+  </div>
+</div>
+
+<!-- Glass overlay -->
+<div class="about" id="about" aria-hidden="true">
+  <div class="panel" role="dialog" aria-label="About Stormie">
+    <h2>ABOUT</h2>
+    <div class="headline">Hybrid Performance Lab</div>
+
+    <p>
+      Stormiē is a tech-driven hybrid performance lab focused on strength,
+      durability and structured progression.
+      Developed by Storm Kolmodin, Licensed Personal Trainer.
+    </p>
+
+    <a href="https://ptlicens.trueoriginal.com/licensierad-personlig-tranare-denise-kolmodin-138305lEsdYeph88/?ref=linkedin-profile&zone=true_08&lang=en"
+       target="_blank" rel="noopener noreferrer">
+      Verify PT License
+    </a>
+
+    <div class="hint">Press ESC to close</div>
+  </div>
+</div>
+
+<script>
+const menuBtn = document.getElementById("menuBtn");
+const about = document.getElementById("about");
+
+function openAbout(){
+  about.classList.add("active");
+  about.setAttribute("aria-hidden", "false");
+  menuBtn.classList.add("open");
+  menuBtn.setAttribute("aria-expanded", "true");
+}
+function closeAbout(){
+  about.classList.remove("active");
+  about.setAttribute("aria-hidden", "true");
+  menuBtn.classList.remove("open");
+  menuBtn.setAttribute("aria-expanded", "false");
+}
+
+menuBtn.addEventListener("click", () => {
+  if (about.classList.contains("active")) closeAbout();
+  else openAbout();
+});
+
+// Click outside panel closes
+about.addEventListener("click", (e) => {
+  if (e.target === about) closeAbout();
+});
+
+// ESC closes
+window.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && about.classList.contains("active")) closeAbout();
+});
+</script>
+
 </body>
 </html>
