@@ -27,6 +27,32 @@ body{
   opacity:0;
   transform:translateY(12px);
   animation:reveal 1.4s ease forwards;
+  user-select:none;
+}
+
+/* Secret engine hotspot (premium / subtle) */
+.secret-engine{
+  display:inline-block;
+  position:relative;
+  cursor:pointer;
+  outline:none;
+}
+.secret-engine::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-6px;
+  height:1px;
+  background:rgba(0,0,0,0.22);
+  opacity:0;
+  transform:scaleX(0.7);
+  transition:opacity .25s ease, transform .25s ease;
+}
+.secret-engine:hover::after,
+.secret-engine:focus-visible::after{
+  opacity:1;
+  transform:scaleX(1);
 }
 
 .sub{
@@ -92,7 +118,7 @@ body{
 .about{
   position:fixed;
   inset:0;
-  background:rgba(10,10,10,0.28);              /* darker tech tint */
+  background:rgba(10,10,10,0.28);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   opacity:0;
@@ -181,7 +207,11 @@ body{
 </button>
 
 <div>
-  <div class="logo">STORMI&#x0112;</div>
+  <!-- Logo with secret engine hotspot on Ē -->
+  <div class="logo" aria-label="STORMIĒ">
+    STORMI<span class="secret-engine" id="engineHotspot" role="link" tabindex="0" aria-label="Enter Engine">Ē</span>
+  </div>
+
   <div class="sub">
     Hybrid Performance<br>
     Launching Soon
@@ -212,6 +242,7 @@ body{
 <script>
 const menuBtn = document.getElementById("menuBtn");
 const about = document.getElementById("about");
+const engineHotspot = document.getElementById("engineHotspot");
 
 function openAbout(){
   about.classList.add("active");
@@ -239,6 +270,15 @@ about.addEventListener("click", (e) => {
 // ESC closes
 window.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && about.classList.contains("active")) closeAbout();
+});
+
+// Secret navigation to Engine (click Ē)
+function goEngine(){
+  window.location.href = "/engine.html";
+}
+engineHotspot.addEventListener("click", goEngine);
+engineHotspot.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" || e.key === " ") goEngine();
 });
 </script>
 
