@@ -6,140 +6,233 @@
 <title>Stormiē Performance Engine</title>
 
 <style>
-* { box-sizing: border-box; }
-body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-    background: #ffffff;
-    color: #111;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+:root{
+  --text:#111;
+  --muted:rgba(0,0,0,0.55);
+  --muted2:rgba(0,0,0,0.38);
+  --line:rgba(0,0,0,0.08);
+  --line2:rgba(0,0,0,0.12);
+  --wash:rgba(0,0,0,0.02);
 }
 
-.container {
-    max-width: 620px;
-    width: 92%;
-    margin-top: 60px;
-    padding-bottom: 60px;
+*{ box-sizing:border-box; }
+body{
+  margin:0;
+  background:#fff;
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  display:flex;
+  justify-content:center;
 }
 
-h1 {
-    font-size: 28px;
-    font-weight: 600;
-    text-align: center;
-    letter-spacing: 0.18em;
+.container{
+  width:min(820px, 92vw);
+  padding:54px 0 80px;
 }
 
-.sub {
-    text-align: center;
-    margin: 10px 0 34px;
-    color: rgba(0,0,0,0.55);
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    font-size: 12px;
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:22px;
 }
 
-.section {
-    margin-bottom: 22px;
-    padding: 18px 16px;
-    border: 1px solid rgba(0,0,0,0.08);
-    border-radius: 12px;
-    background: rgba(0,0,0,0.02);
+.back{
+  display:inline-block;
+  font-size:12px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  text-decoration:none;
+  color:var(--muted);
+  border-bottom:1px solid rgba(0,0,0,0.16);
+  padding-bottom:3px;
+}
+.back:hover{ color:#000; border-bottom-color:rgba(0,0,0,0.32); }
+
+.brand{
+  text-align:right;
+  font-size:11px;
+  letter-spacing:0.28em;
+  text-transform:uppercase;
+  color:var(--muted2);
 }
 
-.section-title{
-    font-size: 11px;
-    letter-spacing: 0.26em;
-    text-transform: uppercase;
-    opacity: 0.55;
-    margin-bottom: 12px;
+h1{
+  margin:0;
+  text-align:center;
+  font-size:28px;
+  font-weight:600;
+  letter-spacing:0.18em;
 }
 
-label {
-    display: block;
-    margin-bottom: 6px;
-    font-size: 13px;
-    color: rgba(0,0,0,0.72);
+.sub{
+  text-align:center;
+  margin:10px 0 34px;
+  color:var(--muted);
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  font-size:12px;
 }
 
-input, select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 12px;
-    border: 1px solid rgba(0,0,0,0.12);
-    border-radius: 10px;
-    background: #fff;
-    outline: none;
+.grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:14px;
+}
+
+@media (max-width: 760px){
+  .grid{ grid-template-columns:1fr; }
+}
+
+.card{
+  border:1px solid var(--line);
+  background:var(--wash);
+  border-radius:16px;
+  padding:18px 16px;
+}
+
+.card-title{
+  font-size:11px;
+  letter-spacing:0.28em;
+  text-transform:uppercase;
+  color:var(--muted2);
+  margin-bottom:12px;
+}
+
+label{
+  display:block;
+  font-size:12px;
+  color:rgba(0,0,0,0.72);
+  margin:0 0 6px;
+}
+
+input, select{
+  width:100%;
+  padding:10px 11px;
+  border:1px solid var(--line2);
+  border-radius:12px;
+  background:#fff;
+  outline:none;
+  font-size:14px;
+  color:#111;
 }
 
 input:focus, select:focus{
-    border-color: rgba(0,0,0,0.25);
+  border-color:rgba(0,0,0,0.22);
 }
 
-.row{
-    display:grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
+.row3{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap:10px;
 }
 
-@media (max-width: 560px){
-    .row{ grid-template-columns: 1fr; }
+@media (max-width: 520px){
+  .row3{ grid-template-columns:1fr; }
 }
 
-button {
-    width: 100%;
-    padding: 14px;
-    background: #111;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    font-size: 13px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    border-radius: 12px;
+.lift{
+  margin-bottom:14px;
+}
+.lift:last-child{ margin-bottom:0; }
+
+.lift-name{
+  font-size:12px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:rgba(0,0,0,0.55);
+  margin-bottom:8px;
 }
 
-button:hover { opacity: 0.88; }
-
-.toplink{
-    display:inline-block;
-    margin-bottom: 18px;
-    font-size: 12px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: rgba(0,0,0,0.65);
-    border-bottom: 1px solid rgba(0,0,0,0.18);
-    padding-bottom: 3px;
-}
-.toplink:hover{ color:#000; border-bottom-color: rgba(0,0,0,0.35); }
-
-.output {
-    margin-top: 22px;
-    padding: 18px 16px;
-    border: 1px solid rgba(0,0,0,0.08);
-    border-radius: 12px;
-    background: rgba(0,0,0,0.02);
+.actions{
+  margin-top:14px;
+  display:flex;
+  gap:12px;
 }
 
-.score {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 10px;
-    letter-spacing: 0.02em;
+@media (max-width: 520px){
+  .actions{ flex-direction:column; }
+}
+
+button{
+  flex:1;
+  padding:14px 14px;
+  border-radius:14px;
+  border:none;
+  cursor:pointer;
+  font-size:12px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+}
+
+.primary{
+  background:#111;
+  color:#fff;
+}
+.primary:hover{ opacity:0.88; }
+
+.secondary{
+  background:#fff;
+  color:#111;
+  border:1px solid var(--line2);
+}
+.secondary:hover{ background:rgba(0,0,0,0.02); }
+
+.output{
+  margin-top:14px;
+  border:1px solid var(--line);
+  background:rgba(0,0,0,0.015);
+  border-radius:16px;
+  padding:18px 16px;
+  display:none;
+}
+
+.kpi{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.score{
+  font-size:18px;
+  font-weight:600;
+}
+.badge{
+  font-size:11px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:rgba(0,0,0,0.55);
+}
+
+.hr{
+  height:1px;
+  background:rgba(0,0,0,0.06);
+  margin:12px 0;
 }
 
 .mono{
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size:12px;
+  line-height:1.75;
+  color:rgba(0,0,0,0.72);
+  white-space:pre-line;
 }
-.small{
-    font-size: 12px;
-    opacity: 0.7;
-    line-height: 1.7;
+
+.notice{
+  font-size:12px;
+  color:rgba(0,0,0,0.55);
+  line-height:1.7;
 }
-.error{
-    color: #111;
+
+.footer{
+  margin-top:22px;
+  text-align:center;
+  font-size:11px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:rgba(0,0,0,0.35);
 }
 </style>
 </head>
@@ -147,73 +240,101 @@ button:hover { opacity: 0.88; }
 <body>
 <div class="container">
 
-<a class="toplink" href="/">← Back</a>
-
-<h1>STORMIĒ</h1>
-<div class="sub">Performance Engine — Beta</div>
-
-<div class="section">
-  <div class="section-title">Profile</div>
-  <label>Training Profile</label>
-  <select id="profile">
-    <option value="fighter">Fighter</option>
-    <option value="climber">Climber</option>
-    <option value="hybrid">Hybrid</option>
-  </select>
-
-  <label>Bodyweight (kg)</label>
-  <input type="number" id="bw" min="30" max="200" step="0.1" placeholder="e.g. 65">
-</div>
-
-<div class="section">
-  <div class="section-title">Sport Load</div>
-  <label>Muay Thai sessions / week</label>
-  <input type="number" id="thai" min="0" max="6" value="2">
-
-  <label>Climbing sessions / week</label>
-  <input type="number" id="climb" min="0" max="4" value="2">
-</div>
-
-<div class="section">
-  <div class="section-title">Top Sets</div>
-
-  <label>Squat</label>
-  <div class="row">
-    <input type="number" id="squatWeight" min="0" step="0.5" placeholder="kg">
-    <input type="number" id="squatReps" min="1" max="20" step="1" placeholder="reps">
-    <input type="number" id="squatRPE" min="6" max="10" step="0.5" placeholder="RPE">
+  <div class="topbar">
+    <a class="back" href="/">← Back</a>
+    <div class="brand">Engine v0.1</div>
   </div>
 
-  <label>Hinge</label>
-  <div class="row">
-    <input type="number" id="hingeWeight" min="0" step="0.5" placeholder="kg">
-    <input type="number" id="hingeReps" min="1" max="20" step="1" placeholder="reps">
-    <input type="number" id="hingeRPE" min="6" max="10" step="0.5" placeholder="RPE">
+  <h1>STORMIĒ</h1>
+  <div class="sub">Performance Engine — Beta</div>
+
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-title">Setup</div>
+
+      <label>Training Profile</label>
+      <select id="profile">
+        <option value="fighter">Fighter</option>
+        <option value="climber">Climber</option>
+        <option value="hybrid" selected>Hybrid</option>
+      </select>
+
+      <label style="margin-top:10px;">Bodyweight (kg)</label>
+      <input type="number" id="bw" min="30" max="200" step="0.1" placeholder="e.g. 65">
+
+      <div class="hr"></div>
+
+      <label>Muay Thai sessions / week</label>
+      <input type="number" id="thai" min="0" max="6" value="2">
+
+      <label>Climbing sessions / week</label>
+      <input type="number" id="climb" min="0" max="4" value="2">
+
+      <div class="actions">
+        <button class="primary" type="button" onclick="analyze()">Analyze</button>
+        <button class="secondary" type="button" onclick="resetForm()">Reset</button>
+      </div>
+
+      <div class="output" id="output">
+        <div class="kpi">
+          <div class="score" id="scoreText">Structural Strength Score: —</div>
+          <div class="badge" id="badgeText">—</div>
+        </div>
+        <div class="hr"></div>
+        <div class="mono" id="detailsText"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Top Sets</div>
+
+      <div class="lift">
+        <div class="lift-name">Squat</div>
+        <div class="row3">
+          <input type="number" id="squatWeight" min="0" step="0.5" placeholder="kg">
+          <input type="number" id="squatReps" min="1" max="20" step="1" placeholder="reps">
+          <input type="number" id="squatRPE" min="6" max="10" step="0.5" placeholder="RPE">
+        </div>
+      </div>
+
+      <div class="lift">
+        <div class="lift-name">Hinge</div>
+        <div class="row3">
+          <input type="number" id="hingeWeight" min="0" step="0.5" placeholder="kg">
+          <input type="number" id="hingeReps" min="1" max="20" step="1" placeholder="reps">
+          <input type="number" id="hingeRPE" min="6" max="10" step="0.5" placeholder="RPE">
+        </div>
+      </div>
+
+      <div class="lift">
+        <div class="lift-name">Pull</div>
+        <div class="row3">
+          <input type="number" id="pullWeight" min="0" step="0.5" placeholder="kg">
+          <input type="number" id="pullReps" min="1" max="20" step="1" placeholder="reps">
+          <input type="number" id="pullRPE" min="6" max="10" step="0.5" placeholder="RPE">
+        </div>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="notice">
+        Enter one top set per lift. The engine estimates capacity using <span class="mono">e1RM + RPE</span> and adapts volume based on sport load.
+      </div>
+    </div>
+
   </div>
 
-  <label>Pull</label>
-  <div class="row">
-    <input type="number" id="pullWeight" min="0" step="0.5" placeholder="kg">
-    <input type="number" id="pullReps" min="1" max="20" step="1" placeholder="reps">
-    <input type="number" id="pullRPE" min="6" max="10" step="0.5" placeholder="RPE">
-  </div>
-</div>
-
-<button type="button" onclick="analyze()">Analyze</button>
-
-<div class="output" id="output" style="display:none;">
-  <div class="score" id="score"></div>
-  <div class="small mono" id="details"></div>
-</div>
+  <div class="footer">Open Access Beta • No accounts • Local computation</div>
 
 </div>
 
 <script>
-function e1RM(weight, reps) {
+function e1RM(weight, reps){
   return weight * (1 + reps / 30);
 }
 
-function rpeFactor(rpe) {
+function rpeFactor(rpe){
   if (rpe >= 10) return 1.00;
   if (rpe >= 9)  return 0.97;
   if (rpe >= 8)  return 0.94;
@@ -221,18 +342,22 @@ function rpeFactor(rpe) {
   return 0.85;
 }
 
-function isValidNumber(n){
-  return typeof n === "number" && isFinite(n) && !isNaN(n);
+function isNum(x){
+  return typeof x === "number" && isFinite(x) && !isNaN(x);
 }
 
-function analyze() {
+function clamp(n, min, max){
+  return Math.max(min, Math.min(max, n));
+}
+
+function analyze(){
   const profile = document.getElementById("profile").value;
 
-  const thai  = parseInt(document.getElementById("thai").value, 10);
-  const climb = parseInt(document.getElementById("climb").value, 10);
-
   const bwRaw = parseFloat(document.getElementById("bw").value);
-  const bw = isValidNumber(bwRaw) && bwRaw > 0 ? bwRaw : null;
+  const bw = (isNum(bwRaw) && bwRaw > 0) ? bwRaw : null;
+
+  const thai  = parseInt(document.getElementById("thai").value, 10) || 0;
+  const climb = parseInt(document.getElementById("climb").value, 10) || 0;
 
   const squatW = parseFloat(document.getElementById("squatWeight").value);
   const squatR = parseFloat(document.getElementById("squatReps").value);
@@ -246,20 +371,22 @@ function analyze() {
   const pullR  = parseFloat(document.getElementById("pullReps").value);
   const pullP  = parseFloat(document.getElementById("pullRPE").value);
 
-  const output = document.getElementById("output");
-  const scoreEl = document.getElementById("score");
-  const detailsEl = document.getElementById("details");
-
-  // Validate required fields
   const required = [squatW, squatR, squatP, hingeW, hingeR, hingeP, pullW, pullR, pullP];
-  const allOk = required.every(isValidNumber);
+  const ok = required.every(isNum);
+
+  const output = document.getElementById("output");
+  const scoreText = document.getElementById("scoreText");
+  const badgeText = document.getElementById("badgeText");
+  const detailsText = document.getElementById("detailsText");
 
   output.style.display = "block";
 
-  if (!allOk) {
-    scoreEl.textContent = "Missing inputs";
-    detailsEl.innerHTML =
-      "Enter <span class='mono'>kg / reps / RPE</span> for Squat, Hinge and Pull.";
+  if(!ok){
+    scoreText.textContent = "Missing inputs";
+    badgeText.textContent = "Complete top sets";
+    detailsText.textContent =
+      "Enter: kg / reps / RPE for Squat, Hinge and Pull.\n" +
+      "Bodyweight is optional but recommended.";
     return;
   }
 
@@ -268,15 +395,15 @@ function analyze() {
   const pull  = e1RM(pullW,  pullR)  * rpeFactor(pullP);
 
   // Sport load
-  const sportLoad = (thai || 0) + (climb || 0);
-  let loadCategory, volumeAdjust, sessions, rpeCap;
+  const sportLoad = thai + climb;
 
-  if (sportLoad >= 4) {
+  let loadCategory, volumeAdjust, sessions, rpeCap;
+  if(sportLoad >= 4){
     loadCategory = "High";
     volumeAdjust = "-20% back-off volume";
     sessions = 2;
     rpeCap = 8;
-  } else if (sportLoad >= 2) {
+  } else if(sportLoad >= 2){
     loadCategory = "Moderate";
     volumeAdjust = "-10% back-off volume";
     sessions = 3;
@@ -288,45 +415,52 @@ function analyze() {
     rpeCap = 9;
   }
 
-  // Profile weighting (subtle but real)
+  // Profile weighting (subtle)
   let wSquat = 1.0, wHinge = 1.0, wPull = 1.0;
-  if (profile === "fighter") { wHinge = 1.1; wPull = 1.05; }
-  if (profile === "climber") { wPull  = 1.2; wHinge = 0.95; }
-  if (profile === "hybrid")  { wPull  = 1.1; }
+  if(profile === "fighter"){ wHinge = 1.10; wPull = 1.05; }
+  if(profile === "climber"){ wPull  = 1.20; wHinge = 0.95; }
+  if(profile === "hybrid"){  wPull  = 1.10; }
 
-  // Structural Strength Score (v0.1)
-  // If BW missing, use a neutral fallback for now but disclose it.
   const bwUsed = bw ?? 65;
-
   const rel = (
-    ( (squat / bwUsed) * wSquat ) +
-    ( (hinge / bwUsed) * wHinge ) +
-    ( (pull  / bwUsed) * wPull  )
+    ((squat / bwUsed) * wSquat) +
+    ((hinge / bwUsed) * wHinge) +
+    ((pull  / bwUsed) * wPull)
   ) / 3;
 
-  // Map to 0–100 in a simple, interpretable way for MVP
-  const strengthScore = Math.max(0, Math.min(100, Math.round(rel * 40)));
+  // MVP mapping 0–100
+  const score = clamp(Math.round(rel * 40), 0, 100);
 
-  // Recommendation text
-  const recommendation =
-    (loadCategory === "High")
-      ? "Reduce volume and protect performance output."
-      : (loadCategory === "Moderate")
-        ? "Maintain and progress selectively."
-        : "Progress is approved.";
+  // Output copy (engine feel)
+  let decision;
+  if(loadCategory === "High") decision = "Protect output. Reduce volume and cap intensity.";
+  else if(loadCategory === "Moderate") decision = "Maintain. Progress selectively.";
+  else decision = "Progress approved.";
 
-  scoreEl.textContent = "Structural Strength Score: " + strengthScore;
+  scoreText.textContent = "Structural Strength Score: " + score;
+  badgeText.textContent = loadCategory + " sport load";
 
-  const bwNote = bw ? "" : "BW not set → using 65kg baseline (MVP).";
+  const bwNote = bw ? "" : "Note: bodyweight not set → using 65kg baseline (MVP).";
 
-  detailsEl.innerHTML =
-    "Profile: " + profile.toUpperCase() + "<br>" +
-    "Sport Load: " + loadCategory + " (" + sportLoad + "/week)<br>" +
-    "Strength Sessions: " + sessions + "/week<br>" +
-    "RPE Cap: " + rpeCap + "<br>" +
-    "Volume: " + volumeAdjust + "<br><br>" +
-    "Recommendation: " + recommendation + "<br>" +
-    (bwNote ? ("<br>" + bwNote) : "");
+  detailsText.textContent =
+    "Profile: " + profile.toUpperCase() + "\n" +
+    "Sport sessions: " + sportLoad + "/week (Thai " + thai + " + Climb " + climb + ")\n" +
+    "Strength sessions: " + sessions + "/week\n" +
+    "RPE cap: " + rpeCap + "\n" +
+    "Volume: " + volumeAdjust + "\n\n" +
+    "Recommendation: " + decision + (bwNote ? ("\n\n" + bwNote) : "");
+}
+
+function resetForm(){
+  document.getElementById("bw").value = "";
+  document.getElementById("thai").value = 2;
+  document.getElementById("climb").value = 2;
+
+  ["squatWeight","squatReps","squatRPE","hingeWeight","hingeReps","hingeRPE","pullWeight","pullReps","pullRPE"]
+    .forEach(id => document.getElementById(id).value = "");
+
+  const output = document.getElementById("output");
+  output.style.display = "none";
 }
 </script>
 
