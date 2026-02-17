@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stormiē Performance Engine</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #ffffff;
+    color: #111;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    max-width: 600px;
+    width: 90%;
+    margin-top: 60px;
+}
+
+h1 {
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.sub {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #666;
+}
+
+.section {
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #444;
+}
+
+input, select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #111;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+button:hover {
+    opacity: 0.85;
+}
+
+.output {
+    margin-top: 40px;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    background: #fafafa;
+}
+
+.score {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>STORMIĒ</h1>
+<div class="sub">Performance Engine — Beta</div>
+
+<div class="section">
+<label>Profile</label>
+<select id="profile">
+<option value="fighter">Fighter</option>
+<option value="climber">Climber</option>
+<option value="hybrid">Hybrid</option>
+</select>
+</div>
+
+<div class="section">
+<label>Muay Thai Sessions per Week</label>
+<input type="number" id="thai" min="0" max="6" value="2">
+
+<label>Climbing Sessions per Week</label>
+<input type="number" id="climb" min="0" max="4" value="2">
+</div>
+
+<div class="section">
+<label>Squat – Weight (kg)</label>
+<input type="number" id="squatWeight">
+<label>Reps</label>
+<input type="number" id="squatReps">
+<label>RPE</label>
+<input type="number" id="squatRPE">
+
+<label>Hinge – Weight (kg)</label>
+<input type="number" id="hingeWeight">
+<label>Reps</label>
+<input type="number" id="hingeReps">
+<label>RPE</label>
+<input type="number" id="hingeRPE">
+
+<label>Pull – Weight (kg)</label>
+<input type="number" id="pullWeight">
+<label>Reps</label>
+<input type="number" id="pullReps">
+<label>RPE</label>
+<input type="number" id="pullRPE">
+</div>
+
+<button onclick="analyze()">Analyze Performance</button>
+
+<div class="output" id="output" style="display:none;">
+<div class="score" id="score"></div>
+<div id="details"></div>
+</div>
+
+</div>
+
+<script>
+function e1RM(weight, reps) {
+    return weight * (1 + reps / 30);
+}
+
+function rpeFactor(rpe) {
+    if (rpe >= 10) return 1;
+    if (rpe >= 9) return 0.97;
+    if (rpe >= 8) return 0.94;
+    if (rpe >= 7) return 0.90;
+    return 0.85;
+}
+
+function analyze() {
+
+    const thai = parseInt(document.getElementById("thai").value);
+    const climb = parseInt(document.getElementById("climb").value);
+
+    const squat = e1RM(
+        parseFloat(document.getElementById("squatWeight").value),
+        parseFloat(document.getElementById("squatReps").value)
+    ) * rpeFactor(parseFloat(document.getElementById("squatRPE").value));
+
+    const hinge = e1RM(
+        parseFloat(document.getElementById("hingeWeight").value),
+        parseFloat(document.getElementById("hingeReps").value)
+    ) * rpeFactor(parseFloat(document.getElementById("hingeRPE").value));
+
+    const pull = e1RM(
+        parseFloat(document.getElementById("pullWeight").value),
+        parseFloat(document.getElementById("pullReps").value)
+    ) * rpeFactor(parseFloat(document.getElementById("pullRPE").value));
+
+    const bodyweight = 65; // Temporary placeholder
+
+    const relativeStrength = ((squat/bodyweight) + (hinge/bodyweight) + (pull/bodyweight)) / 3;
+    let strengthScore = Math.min(Math.round(relativeStrength * 40), 100);
+
+    let sportLoad = thai + climb;
+    let loadCategory;
+    let recommendation;
+
+    if (sportLoad >= 4) {
+        loadCategory = "High";
+        recommendation = "Reduce strength volume 20%. Limit to 2 sessions. RPE cap 8.";
+    } else if (sportLoad >= 2) {
+        loadCategory = "Moderate";
+        recommendation = "Maintain current volume. Monitor fatigue.";
+    } else {
+        loadCategory = "Low";
+        recommendation = "Full progression allowed. Increase load next week.";
+    }
+
+    document.getElementById("output").style.display = "block";
+    document.getElementById("score").innerText = "Structural Strength Score: " + strengthScore;
+    document.getElementById("details").innerHTML =
+        "Sport Load: " + loadCategory + "<br><br>" +
+        "Recommendation:<br>" + recommendation;
+}
+</script>
+
+</body>
+</html>
