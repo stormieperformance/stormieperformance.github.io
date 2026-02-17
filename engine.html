@@ -7,34 +7,41 @@
 
 <style>
 :root{
-  --text:#111;
-  --muted:rgba(0,0,0,0.55);
-  --muted2:rgba(0,0,0,0.38);
-  --line:rgba(0,0,0,0.08);
-  --line2:rgba(0,0,0,0.12);
-  --wash:rgba(0,0,0,0.02);
+  --text:#0b0b0d;
+  --muted:rgba(10,10,14,0.56);
+  --muted2:rgba(10,10,14,0.40);
+  --line:rgba(10,10,14,0.08);
+  --line2:rgba(10,10,14,0.12);
+  --wash:rgba(10,10,14,0.02);
+  --glass:rgba(255,255,255,0.68);
+  --shadow: 0 24px 80px rgba(0,0,0,0.08);
 }
 
 *{ box-sizing:border-box; }
+
 body{
   margin:0;
-  background:#fff;
+  min-height:100vh;
   color:var(--text);
   font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
   display:flex;
   justify-content:center;
+  background:
+    radial-gradient(900px 500px at 20% 12%, rgba(0,0,0,0.05), transparent 60%),
+    radial-gradient(800px 480px at 88% 22%, rgba(0,0,0,0.035), transparent 65%),
+    #ffffff;
 }
 
 .container{
-  width:min(820px, 92vw);
-  padding:54px 0 80px;
+  width:min(900px, 92vw);
+  padding:54px 0 90px;
 }
 
 .topbar{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  margin-bottom:22px;
+  margin-bottom:20px;
 }
 
 .back{
@@ -44,10 +51,15 @@ body{
   text-transform:uppercase;
   text-decoration:none;
   color:var(--muted);
-  border-bottom:1px solid rgba(0,0,0,0.16);
+  border-bottom:1px solid rgba(0,0,0,0.14);
   padding-bottom:3px;
+  transition: color .2s ease, border-color .2s ease, transform .2s ease;
 }
-.back:hover{ color:#000; border-bottom-color:rgba(0,0,0,0.32); }
+.back:hover{
+  color:#000;
+  border-bottom-color:rgba(0,0,0,0.28);
+  transform: translateY(-1px);
+}
 
 .brand{
   text-align:right;
@@ -80,15 +92,36 @@ h1{
   gap:14px;
 }
 
-@media (max-width: 760px){
+@media (max-width: 820px){
   .grid{ grid-template-columns:1fr; }
 }
 
 .card{
   border:1px solid var(--line);
-  background:var(--wash);
-  border-radius:16px;
+  border-radius:20px;
   padding:18px 16px;
+  background: var(--glass);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  position:relative;
+  overflow:hidden;
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background:
+    radial-gradient(520px 220px at 25% 10%, rgba(255,255,255,0.70), transparent 60%),
+    radial-gradient(520px 260px at 80% 25%, rgba(255,255,255,0.55), transparent 65%);
+  opacity:0.9;
+  pointer-events:none;
+}
+
+.card > *{
+  position:relative;
+  z-index:1;
 }
 
 .card-title{
@@ -108,17 +141,19 @@ label{
 
 input, select{
   width:100%;
-  padding:10px 11px;
-  border:1px solid var(--line2);
-  border-radius:12px;
-  background:#fff;
+  padding:11px 12px;
+  border:1px solid rgba(0,0,0,0.10);
+  border-radius:14px;
+  background: rgba(255,255,255,0.78);
   outline:none;
   font-size:14px;
   color:#111;
+  transition: border-color .2s ease, background .2s ease;
 }
 
 input:focus, select:focus{
   border-color:rgba(0,0,0,0.22);
+  background:#fff;
 }
 
 .row3{
@@ -157,34 +192,40 @@ input:focus, select:focus{
 button{
   flex:1;
   padding:14px 14px;
-  border-radius:14px;
+  border-radius:16px;
   border:none;
   cursor:pointer;
   font-size:12px;
   letter-spacing:0.22em;
   text-transform:uppercase;
+  transition: transform .2s ease, opacity .2s ease, background .2s ease;
 }
 
 .primary{
   background:#111;
   color:#fff;
 }
-.primary:hover{ opacity:0.88; }
+.primary:hover{ opacity:0.9; transform: translateY(-1px); }
 
 .secondary{
-  background:#fff;
+  background: rgba(255,255,255,0.72);
   color:#111;
-  border:1px solid var(--line2);
+  border:1px solid rgba(0,0,0,0.12);
 }
-.secondary:hover{ background:rgba(0,0,0,0.02); }
+.secondary:hover{
+  background: rgba(255,255,255,0.95);
+  transform: translateY(-1px);
+}
 
 .output{
   margin-top:14px;
-  border:1px solid var(--line);
-  background:rgba(0,0,0,0.015);
-  border-radius:16px;
+  border:1px solid rgba(0,0,0,0.08);
+  background: rgba(255,255,255,0.70);
+  border-radius:20px;
   padding:18px 16px;
   display:none;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .kpi{
@@ -199,6 +240,7 @@ button{
   font-size:18px;
   font-weight:600;
 }
+
 .badge{
   font-size:11px;
   letter-spacing:0.22em;
@@ -233,6 +275,23 @@ button{
   letter-spacing:0.22em;
   text-transform:uppercase;
   color:rgba(0,0,0,0.35);
+}
+
+/* Subtle info icon */
+.info{
+  font-size:12px;
+  margin-left:6px;
+  opacity:0.45;
+  cursor:help;
+  transition: opacity .2s ease;
+  user-select:none;
+}
+.info:hover{ opacity:0.85; }
+
+/* Reduce motion preference */
+@media (prefers-reduced-motion: reduce){
+  *{ transition:none !important; }
+  button:hover{ transform:none; }
 }
 </style>
 </head>
@@ -294,7 +353,7 @@ button{
         <div class="row3">
           <input type="number" id="squatWeight" min="0" step="0.5" placeholder="kg">
           <input type="number" id="squatReps" min="1" max="20" step="1" placeholder="reps">
-          <input type="number" id="squatRPE" min="6" max="10" step="0.5" placeholder="RPE">
+          <input type="number" id="squatRPE" min="6" max="10" step="0.5" value="8" placeholder="Effort">
         </div>
       </div>
 
@@ -303,7 +362,7 @@ button{
         <div class="row3">
           <input type="number" id="hingeWeight" min="0" step="0.5" placeholder="kg">
           <input type="number" id="hingeReps" min="1" max="20" step="1" placeholder="reps">
-          <input type="number" id="hingeRPE" min="6" max="10" step="0.5" placeholder="RPE">
+          <input type="number" id="hingeRPE" min="6" max="10" step="0.5" value="8" placeholder="Effort">
         </div>
       </div>
 
@@ -312,14 +371,17 @@ button{
         <div class="row3">
           <input type="number" id="pullWeight" min="0" step="0.5" placeholder="kg">
           <input type="number" id="pullReps" min="1" max="20" step="1" placeholder="reps">
-          <input type="number" id="pullRPE" min="6" max="10" step="0.5" placeholder="RPE">
+          <input type="number" id="pullRPE" min="6" max="10" step="0.5" value="8" placeholder="Effort">
         </div>
       </div>
 
       <div class="hr"></div>
 
       <div class="notice">
-        Enter one top set per lift. The engine estimates capacity using <span class="mono">e1RM + RPE</span> and adapts volume based on sport load.
+        Effort (1–10)
+        <span class="info" title="10 = Max effort • 9 = 1 rep left • 8 = 2 reps left • 7 = 3 reps left">ⓘ</span>
+        <br>
+        Enter one top set per lift. The engine estimates capacity using <span class="mono">e1RM + Effort</span> and adapts volume based on sport load.
       </div>
     </div>
 
@@ -385,7 +447,7 @@ function analyze(){
     scoreText.textContent = "Missing inputs";
     badgeText.textContent = "Complete top sets";
     detailsText.textContent =
-      "Enter: kg / reps / RPE for Squat, Hinge and Pull.\n" +
+      "Enter: kg / reps / Effort for Squat, Hinge and Pull.\n" +
       "Bodyweight is optional but recommended.";
     return;
   }
@@ -446,7 +508,7 @@ function analyze(){
     "Profile: " + profile.toUpperCase() + "\n" +
     "Sport sessions: " + sportLoad + "/week (Thai " + thai + " + Climb " + climb + ")\n" +
     "Strength sessions: " + sessions + "/week\n" +
-    "RPE cap: " + rpeCap + "\n" +
+    "Effort cap: " + rpeCap + "\n" +
     "Volume: " + volumeAdjust + "\n\n" +
     "Recommendation: " + decision + (bwNote ? ("\n\n" + bwNote) : "");
 }
@@ -456,8 +518,17 @@ function resetForm(){
   document.getElementById("thai").value = 2;
   document.getElementById("climb").value = 2;
 
-  ["squatWeight","squatReps","squatRPE","hingeWeight","hingeReps","hingeRPE","pullWeight","pullReps","pullRPE"]
-    .forEach(id => document.getElementById(id).value = "");
+  document.getElementById("squatWeight").value = "";
+  document.getElementById("squatReps").value = "";
+  document.getElementById("squatRPE").value = 8;
+
+  document.getElementById("hingeWeight").value = "";
+  document.getElementById("hingeReps").value = "";
+  document.getElementById("hingeRPE").value = 8;
+
+  document.getElementById("pullWeight").value = "";
+  document.getElementById("pullReps").value = "";
+  document.getElementById("pullRPE").value = 8;
 
   const output = document.getElementById("output");
   output.style.display = "none";
