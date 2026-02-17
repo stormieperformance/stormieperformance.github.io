@@ -28,9 +28,50 @@ body{
   transform:translateY(12px);
   animation:reveal 1.4s ease forwards;
   user-select:none;
+
+  /* premium micro cue */
+  transition: opacity .25s ease;
+}
+.logo:hover{ opacity: 0.92; }
+
+.sub{
+  margin-top:14px;
+  font-size:13px;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  opacity:0;
+  line-height:1.6;
+  animation:fadeIn 1s ease forwards;
+  animation-delay:1.2s;
 }
 
-/* Secret engine hotspot (premium / subtle) */
+/* Premium hint line (subtle) */
+.engine-hint{
+  margin-top: 26px;
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(6px);
+  animation: hintIn .9s ease forwards;
+  animation-delay: 2.2s;
+  transition: opacity .25s ease, transform .25s ease;
+  user-select: none;
+  pointer-events: none;
+}
+@keyframes hintIn{
+  to{ opacity: 0.28; transform: translateY(0); }
+}
+/* When logo is hovered, hint becomes slightly clearer */
+.logo:hover + .sub + .engine-hint,
+.logo:focus-within + .sub + .engine-hint{
+  opacity: 0.48;
+}
+
+@keyframes reveal{ to{ opacity:1; transform:translateY(0); } }
+@keyframes fadeIn{ to{ opacity:0.55; } }
+
+/* --- Secret engine hotspot (premium / subtle) --- */
 .secret-engine{
   display:inline-block;
   position:relative;
@@ -55,19 +96,25 @@ body{
   transform:scaleX(1);
 }
 
-.sub{
-  margin-top:14px;
-  font-size:13px;
-  letter-spacing:4px;
-  text-transform:uppercase;
+/* Ultra subtle pulse under Ē */
+.secret-engine::before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-4px;
+  height:1px;
+  background:rgba(0,0,0,0.18);
   opacity:0;
-  line-height:1.6;
-  animation:fadeIn 1s ease forwards;
-  animation-delay:1.2s;
+  transform:scaleX(0.6);
+  animation:enginePulse 4s ease-in-out infinite;
+  animation-delay:3s;
 }
-
-@keyframes reveal{ to{ opacity:1; transform:translateY(0); } }
-@keyframes fadeIn{ to{ opacity:0.55; } }
+@keyframes enginePulse{
+  0%   { opacity:0; transform:scaleX(0.6); }
+  50%  { opacity:0.35; transform:scaleX(1); }
+  100% { opacity:0; transform:scaleX(0.6); }
+}
 
 /* --- MENU BUTTON (hamburger -> X) --- */
 .menu-btn{
@@ -215,6 +262,10 @@ body{
   <div class="sub">
     Hybrid Performance<br>
     Launching Soon
+  </div>
+
+  <div class="engine-hint" id="engineHint" aria-hidden="true">
+    Access Engine
   </div>
 </div>
 
