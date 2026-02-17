@@ -45,8 +45,9 @@ body{
   animation-delay:1.2s;
 }
 
-/* Premium hint line (subtle) */
+/* Premium hint line (subtle) — now clickable */
 .engine-hint{
+  display:inline-block;
   margin-top: 26px;
   font-size: 10px;
   letter-spacing: 0.32em;
@@ -55,13 +56,21 @@ body{
   transform: translateY(6px);
   animation: hintIn .9s ease forwards;
   animation-delay: 2.2s;
-  transition: opacity .25s ease, transform .25s ease;
+
+  text-decoration: none;
+  color: rgba(0,0,0,0.60);
+  transition: opacity .25s ease, transform .25s ease, color .25s ease;
   user-select: none;
-  pointer-events: none;
 }
+.engine-hint:hover{
+  opacity: 1;
+  color: rgba(0,0,0,0.90);
+}
+
 @keyframes hintIn{
   to{ opacity: 0.28; transform: translateY(0); }
 }
+
 /* When logo is hovered, hint becomes slightly clearer */
 .logo:hover + .sub + .engine-hint,
 .logo:focus-within + .sub + .engine-hint{
@@ -70,51 +79,6 @@ body{
 
 @keyframes reveal{ to{ opacity:1; transform:translateY(0); } }
 @keyframes fadeIn{ to{ opacity:0.55; } }
-
-/* --- Secret engine hotspot (premium / subtle) --- */
-.secret-engine{
-  display:inline-block;
-  position:relative;
-  cursor:pointer;
-  outline:none;
-}
-.secret-engine::after{
-  content:"";
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:-6px;
-  height:1px;
-  background:rgba(0,0,0,0.22);
-  opacity:0;
-  transform:scaleX(0.7);
-  transition:opacity .25s ease, transform .25s ease;
-}
-.secret-engine:hover::after,
-.secret-engine:focus-visible::after{
-  opacity:1;
-  transform:scaleX(1);
-}
-
-/* Ultra subtle pulse under Ē */
-.secret-engine::before{
-  content:"";
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:-4px;
-  height:1px;
-  background:rgba(0,0,0,0.18);
-  opacity:0;
-  transform:scaleX(0.6);
-  animation:enginePulse 4s ease-in-out infinite;
-  animation-delay:3s;
-}
-@keyframes enginePulse{
-  0%   { opacity:0; transform:scaleX(0.6); }
-  50%  { opacity:0.35; transform:scaleX(1); }
-  100% { opacity:0; transform:scaleX(0.6); }
-}
 
 /* --- MENU BUTTON (hamburger -> X) --- */
 .menu-btn{
@@ -254,19 +218,16 @@ body{
 </button>
 
 <div>
-  <!-- Logo with secret engine hotspot on Ē -->
-  <div class="logo" aria-label="STORMIĒ">
-    STORMI<span class="secret-engine" id="engineHotspot" role="link" tabindex="0" aria-label="Enter Engine">Ē</span>
-  </div>
+  <div class="logo" aria-label="STORMIĒ">STORMIĒ</div>
 
   <div class="sub">
     Hybrid Performance<br>
     Launching Soon
   </div>
 
-  <div class="engine-hint" id="engineHint" aria-hidden="true">
+  <a class="engine-hint" href="/engine.html" aria-label="Access Engine">
     Access Engine
-  </div>
+  </a>
 </div>
 
 <!-- Glass overlay -->
@@ -293,7 +254,6 @@ body{
 <script>
 const menuBtn = document.getElementById("menuBtn");
 const about = document.getElementById("about");
-const engineHotspot = document.getElementById("engineHotspot");
 
 function openAbout(){
   about.classList.add("active");
@@ -321,15 +281,6 @@ about.addEventListener("click", (e) => {
 // ESC closes
 window.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && about.classList.contains("active")) closeAbout();
-});
-
-// Secret navigation to Engine (click Ē)
-function goEngine(){
-  window.location.href = "/engine.html";
-}
-engineHotspot.addEventListener("click", goEngine);
-engineHotspot.addEventListener("keydown", (e) => {
-  if (e.key === "Enter" || e.key === " ") goEngine();
 });
 </script>
 
