@@ -7,61 +7,54 @@
 
 <style>
 :root{
-  --text:#0b0b0d;
-  --muted:rgba(10,10,14,0.56);
-  --muted2:rgba(10,10,14,0.40);
-  --line:rgba(10,10,14,0.08);
-  --line2:rgba(10,10,14,0.12);
-  --glass:rgba(255,255,255,0.68);
-  --shadow: 0 24px 80px rgba(0,0,0,0.08);
+  --text:#111;
+  --muted:rgba(0,0,0,0.55);
+  --muted2:rgba(0,0,0,0.38);
+  --line:rgba(0,0,0,0.08);
+  --line2:rgba(0,0,0,0.12);
+  --wash:rgba(0,0,0,0.02);
+  --glass:rgba(255,255,255,0.75);
+  --shadow:0 30px 80px rgba(0,0,0,0.10);
 }
 
 *{ box-sizing:border-box; }
-
 body{
   margin:0;
-  min-height:100vh;
+  background:#fff;
   color:var(--text);
   font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
   display:flex;
   justify-content:center;
-  background:
-    radial-gradient(900px 500px at 20% 12%, rgba(0,0,0,0.05), transparent 60%),
-    radial-gradient(800px 480px at 88% 22%, rgba(0,0,0,0.035), transparent 65%),
-    #ffffff;
 }
 
 .container{
-  width:min(980px, 92vw);
-  padding:54px 0 90px;
+  width:min(860px, 92vw);
+  padding:54px 0 80px;
 }
 
 .topbar{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  margin-bottom:20px;
+  margin-bottom:22px;
 }
 
-.back{
+.back, .ghostlink{
   display:inline-block;
   font-size:12px;
   letter-spacing:0.22em;
   text-transform:uppercase;
   text-decoration:none;
   color:var(--muted);
-  border-bottom:1px solid rgba(0,0,0,0.14);
+  border-bottom:1px solid rgba(0,0,0,0.16);
   padding-bottom:3px;
-  transition: color .2s ease, border-color .2s ease, transform .2s ease;
 }
-.back:hover{
-  color:#000;
-  border-bottom-color:rgba(0,0,0,0.28);
-  transform: translateY(-1px);
-}
+.back:hover, .ghostlink:hover{ color:#000; border-bottom-color:rgba(0,0,0,0.32); }
 
 .brand{
-  text-align:right;
+  display:flex;
+  gap:16px;
+  align-items:center;
   font-size:11px;
   letter-spacing:0.28em;
   text-transform:uppercase;
@@ -78,52 +71,62 @@ h1{
 
 .sub{
   text-align:center;
-  margin:10px 0 34px;
+  margin:10px 0 18px;
   color:var(--muted);
   letter-spacing:0.22em;
   text-transform:uppercase;
   font-size:12px;
 }
 
+/* VALUE PROP (minimal, premium) */
+.value{
+  margin:0 auto 28px;
+  width:min(820px, 100%);
+  border:1px solid var(--line);
+  background:var(--wash);
+  border-radius:16px;
+  padding:16px 16px;
+}
+.value strong{
+  display:block;
+  text-align:center;
+  font-size:12px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  font-weight:600;
+  opacity:0.85;
+  margin-bottom:8px;
+}
+.value p{
+  margin:0;
+  text-align:center;
+  font-size:12px;
+  line-height:1.7;
+  color:rgba(0,0,0,0.62);
+}
+.value .mono{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  letter-spacing:0.02em;
+}
+
+/* GRID */
 .grid{
   display:grid;
   grid-template-columns: 1fr 1fr;
   gap:14px;
 }
-@media (max-width: 880px){
+@media (max-width: 760px){
   .grid{ grid-template-columns:1fr; }
 }
 
 .card{
-  border:1px solid rgba(10,10,14,0.08);
-  border-radius:20px;
+  border:1px solid var(--line);
+  background:var(--wash);
+  border-radius:16px;
   padding:18px 16px;
-  background: var(--glass);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  position:relative;
-  overflow:hidden;
 }
-
-.card::before{
-  content:"";
-  position:absolute;
-  inset:-2px;
-  background:
-    radial-gradient(520px 220px at 25% 10%, rgba(255,255,255,0.70), transparent 60%),
-    radial-gradient(520px 260px at 80% 25%, rgba(255,255,255,0.55), transparent 65%);
-  opacity:0.9;
-  pointer-events:none;
-}
-
-.card > *{ position:relative; z-index:1; }
 
 .card-title{
-  display:flex;
-  align-items:baseline;
-  justify-content:space-between;
-  gap:12px;
   font-size:11px;
   letter-spacing:0.28em;
   text-transform:uppercase;
@@ -131,39 +134,72 @@ h1{
   margin-bottom:12px;
 }
 
-.pill{
-  font-size:10px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  color:rgba(0,0,0,0.55);
-  border:1px solid rgba(0,0,0,0.10);
-  background:rgba(255,255,255,0.55);
-  padding:6px 10px;
-  border-radius:999px;
+/* Labels + info tooltips */
+.labelrow{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin:0 0 6px;
 }
-
 label{
   display:block;
   font-size:12px;
   color:rgba(0,0,0,0.72);
-  margin:0 0 6px;
+  margin:0;
+}
+.info{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:20px;
+  height:20px;
+  border-radius:10px;
+  border:1px solid rgba(0,0,0,0.10);
+  background:rgba(255,255,255,0.8);
+  cursor:default;
+  user-select:none;
+  font-size:11px;
+  color:rgba(0,0,0,0.55);
+}
+.info::after{
+  content:attr(data-tip);
+  position:absolute;
+  right:0;
+  top:26px;
+  width:min(320px, 70vw);
+  padding:10px 10px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.82);
+  border:1px solid rgba(0,0,0,0.10);
+  box-shadow: var(--shadow);
+  color:rgba(0,0,0,0.72);
+  font-size:12px;
+  line-height:1.6;
+  opacity:0;
+  transform:translateY(-4px);
+  pointer-events:none;
+  transition:opacity .18s ease, transform .18s ease;
+  text-transform:none;
+  letter-spacing:0;
+}
+.info:hover::after{
+  opacity:1;
+  transform:translateY(0);
 }
 
 input, select{
   width:100%;
-  padding:11px 12px;
-  border:1px solid rgba(0,0,0,0.10);
-  border-radius:14px;
-  background: rgba(255,255,255,0.78);
+  padding:10px 11px;
+  border:1px solid var(--line2);
+  border-radius:12px;
+  background:#fff;
   outline:none;
   font-size:14px;
   color:#111;
-  transition: border-color .2s ease, background .2s ease;
 }
-input:focus, select:focus{
-  border-color:rgba(0,0,0,0.22);
-  background:#fff;
-}
+input:focus, select:focus{ border-color:rgba(0,0,0,0.22); }
 
 .row3{
   display:grid;
@@ -197,47 +233,29 @@ input:focus, select:focus{
 button{
   flex:1;
   padding:14px 14px;
-  border-radius:16px;
+  border-radius:14px;
   border:none;
   cursor:pointer;
   font-size:12px;
   letter-spacing:0.22em;
   text-transform:uppercase;
-  transition: transform .2s ease, opacity .2s ease, background .2s ease;
 }
-
 .primary{ background:#111; color:#fff; }
-.primary:hover{ opacity:0.9; transform: translateY(-1px); }
-
+.primary:hover{ opacity:0.88; }
 .secondary{
-  background: rgba(255,255,255,0.72);
+  background:#fff;
   color:#111;
-  border:1px solid rgba(0,0,0,0.12);
+  border:1px solid var(--line2);
 }
-.secondary:hover{
-  background: rgba(255,255,255,0.95);
-  transform: translateY(-1px);
-}
-
-.tertiary{
-  background: rgba(255,255,255,0.50);
-  color:#111;
-  border:1px solid rgba(0,0,0,0.10);
-}
-.tertiary:hover{
-  background: rgba(255,255,255,0.85);
-  transform: translateY(-1px);
-}
+.secondary:hover{ background:rgba(0,0,0,0.02); }
 
 .output{
   margin-top:14px;
-  border:1px solid rgba(0,0,0,0.08);
-  background: rgba(255,255,255,0.70);
-  border-radius:20px;
+  border:1px solid var(--line);
+  background:rgba(0,0,0,0.015);
+  border-radius:16px;
   padding:18px 16px;
   display:none;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
 }
 
 .kpi{
@@ -255,11 +273,7 @@ button{
   color:rgba(0,0,0,0.55);
 }
 
-.hr{
-  height:1px;
-  background:rgba(0,0,0,0.06);
-  margin:12px 0;
-}
+.hr{ height:1px; background:rgba(0,0,0,0.06); margin:12px 0; }
 
 .mono{
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -284,99 +298,97 @@ button{
   color:rgba(0,0,0,0.35);
 }
 
-/* Subtle info icon */
-.info{
-  font-size:12px;
-  margin-left:6px;
-  opacity:0.45;
-  cursor:help;
-  transition: opacity .2s ease;
-  user-select:none;
+/* Dynamic sport rows */
+.sport-row{
+  transition: opacity .2s ease, transform .2s ease, max-height .25s ease;
+  overflow:hidden;
 }
-.info:hover{ opacity:0.85; }
-
-/* Intelligence blocks */
-.meta{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap:10px;
-}
-@media (max-width: 520px){
-  .meta{ grid-template-columns:1fr; }
-}
-.metaBox{
-  border:1px solid rgba(0,0,0,0.08);
-  background:rgba(255,255,255,0.58);
-  border-radius:16px;
-  padding:12px 12px;
-}
-.metaLabel{
-  font-size:10px;
-  letter-spacing:0.28em;
-  text-transform:uppercase;
-  color:rgba(0,0,0,0.45);
-  margin-bottom:6px;
-}
-.metaValue{
-  font-size:13px;
-  letter-spacing:0.06em;
-  color:rgba(0,0,0,0.80);
+.sport-row.hidden{
+  opacity:0;
+  transform:translateY(-4px);
+  max-height:0;
+  pointer-events:none;
+  margin:0;
+  padding:0;
 }
 
-/* History */
-.log{
-  margin-top:12px;
-  border:1px solid rgba(0,0,0,0.08);
-  background:rgba(255,255,255,0.58);
-  border-radius:16px;
-  padding:12px 12px;
-}
-.logRow{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  padding:8px 0;
-  border-top:1px solid rgba(0,0,0,0.06);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size:12px;
-  color:rgba(0,0,0,0.72);
-}
-.logRow:first-child{ border-top:none; }
-.trendUp{ color:rgba(0,0,0,0.90); }
-.trendDown{ color:rgba(0,0,0,0.55); }
-.trendFlat{ color:rgba(0,0,0,0.72); }
-
-/* Plan */
-.planBox{
-  margin-top:12px;
-  border:1px solid rgba(0,0,0,0.08);
-  background:rgba(255,255,255,0.58);
-  border-radius:16px;
-  padding:12px 12px;
-  display:none;
-}
-.planTop{
+/* Glossary modal (glass) */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(10,10,10,0.28);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .25s ease;
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  margin-bottom:8px;
+  justify-content:center;
+  padding:26px;
+  z-index:999;
 }
-.smallBtn{
-  padding:10px 12px;
-  border-radius:14px;
-  font-size:11px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  border:1px solid rgba(0,0,0,0.10);
-  background:rgba(255,255,255,0.55);
-  cursor:pointer;
-}
-.smallBtn:hover{ background:rgba(255,255,255,0.90); }
+.modal.active{ opacity:1; pointer-events:auto; }
 
-@media (prefers-reduced-motion: reduce){
-  *{ transition:none !important; }
-  button:hover{ transform:none; }
+.modal-panel{
+  width:min(760px, 94vw);
+  background:rgba(255,255,255,0.82);
+  border:1px solid rgba(255,255,255,0.45);
+  box-shadow: var(--shadow);
+  border-radius:18px;
+  padding:22px 18px;
+}
+.modal-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:10px;
+}
+.modal-title{
+  font-size:12px;
+  letter-spacing:0.28em;
+  text-transform:uppercase;
+  color:rgba(0,0,0,0.55);
+}
+.modal-close{
+  border:none;
+  background:transparent;
+  cursor:pointer;
+  font-size:14px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:rgba(0,0,0,0.55);
+  padding:6px 8px;
+}
+.modal-close:hover{ color:#000; }
+
+.gloss-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+@media (max-width: 720px){
+  .gloss-grid{ grid-template-columns:1fr; }
+}
+.term{
+  border:1px solid rgba(0,0,0,0.08);
+  background:rgba(0,0,0,0.02);
+  border-radius:14px;
+  padding:12px 12px;
+}
+.term b{
+  display:block;
+  font-size:12px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+.term p{
+  margin:0;
+  font-size:12px;
+  line-height:1.7;
+  color:rgba(0,0,0,0.70);
 }
 </style>
 </head>
@@ -386,37 +398,61 @@ button{
 
   <div class="topbar">
     <a class="back" href="/">← Back</a>
-    <div class="brand">Engine v0.3</div>
+    <div class="brand">
+      <a class="ghostlink" href="#" id="openGlossary">Glossary</a>
+      <span>Engine v0.1</span>
+    </div>
   </div>
 
   <h1>STORMIĒ</h1>
   <div class="sub">Performance Engine — Beta</div>
 
+  <div class="value">
+    <strong>Adaptive Strength Prescription</strong>
+    <p>
+      Enter <span class="mono">sport load</span> + one top set per lift → receive weekly strength output:
+      <span class="mono">sessions, effort cap, volume bias</span>.
+    </p>
+  </div>
+
   <div class="grid">
 
     <div class="card">
-      <div class="card-title">
-        <span>Setup</span>
-        <span class="pill" id="trendPill">TREND —</span>
-      </div>
+      <div class="card-title">Setup</div>
 
-      <label>Training Profile</label>
+      <div class="labelrow">
+        <label>Training Profile</label>
+        <span class="info" data-tip="Select your primary sport context. The engine adapts the inputs and weighting accordingly.">i</span>
+      </div>
       <select id="profile">
         <option value="fighter">Fighter</option>
         <option value="climber">Climber</option>
         <option value="hybrid" selected>Hybrid</option>
       </select>
 
-      <label style="margin-top:10px;">Bodyweight (kg)</label>
+      <div class="labelrow" style="margin-top:10px;">
+        <label>Bodyweight (kg)</label>
+        <span class="info" data-tip="Used to compute relative strength. Optional, but makes the score more accurate.">i</span>
+      </div>
       <input type="number" id="bw" min="30" max="200" step="0.1" placeholder="e.g. 65">
 
       <div class="hr"></div>
 
-      <label>Muay Thai sessions / week</label>
-      <input type="number" id="thai" min="0" max="6" value="2">
+      <div id="thaiRow" class="sport-row">
+        <div class="labelrow">
+          <label>Muay Thai sessions / week</label>
+          <span class="info" data-tip="Sport load influences fatigue budget. More sessions → lower strength volume + lower effort cap.">i</span>
+        </div>
+        <input type="number" id="thai" min="0" max="6" value="2">
+      </div>
 
-      <label>Climbing sessions / week</label>
-      <input type="number" id="climb" min="0" max="4" value="2">
+      <div id="climbRow" class="sport-row">
+        <div class="labelrow">
+          <label>Climbing sessions / week</label>
+          <span class="info" data-tip="Climbing adds pulling + tendon load. Higher sessions → protect recovery and reduce strength stress.">i</span>
+        </div>
+        <input type="number" id="climb" min="0" max="6" value="2">
+      </div>
 
       <div class="actions">
         <button class="primary" type="button" onclick="analyze()">Analyze</button>
@@ -428,38 +464,6 @@ button{
           <div class="score" id="scoreText">Structural Strength Score: —</div>
           <div class="badge" id="badgeText">—</div>
         </div>
-
-        <div class="hr"></div>
-
-        <div class="meta">
-          <div class="metaBox">
-            <div class="metaLabel">Last Run</div>
-            <div class="metaValue" id="lastRunText">—</div>
-          </div>
-          <div class="metaBox">
-            <div class="metaLabel">Engine Decision</div>
-            <div class="metaValue" id="decisionText">—</div>
-          </div>
-        </div>
-
-        <div class="actions" style="margin-top:12px;">
-          <button class="primary" type="button" id="genBtn" onclick="generateWeek()" disabled>Generate Week Template</button>
-          <button class="tertiary" type="button" id="copyBtn" onclick="copyPlan()" style="display:none;">Copy Plan</button>
-        </div>
-
-        <div class="planBox" id="planBox">
-          <div class="planTop">
-            <div class="metaLabel" style="margin:0;">Week Template</div>
-            <span class="pill" id="planPill">DRAFT</span>
-          </div>
-          <div class="mono" id="planText"></div>
-        </div>
-
-        <div class="log" id="historyBox" style="display:none;">
-          <div class="metaLabel" style="margin-bottom:4px;">History (last 5)</div>
-          <div id="historyList"></div>
-        </div>
-
         <div class="hr"></div>
         <div class="mono" id="detailsText"></div>
       </div>
@@ -473,7 +477,7 @@ button{
         <div class="row3">
           <input type="number" id="squatWeight" min="0" step="0.5" placeholder="kg">
           <input type="number" id="squatReps" min="1" max="20" step="1" placeholder="reps">
-          <input type="number" id="squatRPE" min="6" max="10" step="0.5" value="8" placeholder="Effort">
+          <input type="number" id="squatRPE" min="6" max="10" step="0.5" placeholder="RPE">
         </div>
       </div>
 
@@ -482,7 +486,7 @@ button{
         <div class="row3">
           <input type="number" id="hingeWeight" min="0" step="0.5" placeholder="kg">
           <input type="number" id="hingeReps" min="1" max="20" step="1" placeholder="reps">
-          <input type="number" id="hingeRPE" min="6" max="10" step="0.5" value="8" placeholder="Effort">
+          <input type="number" id="hingeRPE" min="6" max="10" step="0.5" placeholder="RPE">
         </div>
       </div>
 
@@ -491,120 +495,118 @@ button{
         <div class="row3">
           <input type="number" id="pullWeight" min="0" step="0.5" placeholder="kg">
           <input type="number" id="pullReps" min="1" max="20" step="1" placeholder="reps">
-          <input type="number" id="pullRPE" min="6" max="10" step="0.5" value="8" placeholder="Effort">
+          <input type="number" id="pullRPE" min="6" max="10" step="0.5" placeholder="RPE">
         </div>
       </div>
 
       <div class="hr"></div>
 
       <div class="notice">
-        Effort (1–10)
-        <span class="info" title="10 = Max effort • 9 = 1 rep left • 8 = 2 reps left • 7 = 3 reps left">ⓘ</span>
-        <br>
-        Enter one top set per lift. The engine estimates capacity using <span class="mono">e1RM + Effort</span> and adapts strength volume to sport load.
+        RPE = effort rating (how close to failure). The engine uses <span class="mono">e1RM + RPE</span> to estimate capacity and set an effort cap.
       </div>
     </div>
 
   </div>
 
   <div class="footer">Open Access Beta • No accounts • Local computation</div>
+</div>
 
+<!-- Glossary Modal -->
+<div class="modal" id="glossary" aria-hidden="true">
+  <div class="modal-panel" role="dialog" aria-label="Glossary">
+    <div class="modal-head">
+      <div class="modal-title">Glossary</div>
+      <button class="modal-close" id="closeGlossary">Close</button>
+    </div>
+
+    <div class="gloss-grid">
+      <div class="term">
+        <b>Effort cap</b>
+        <p>Maximum effort allowed for working sets (expressed as an RPE limit). Keeps progress without draining recovery.</p>
+      </div>
+      <div class="term">
+        <b>Intensity limit</b>
+        <p>Upper limit on how heavy you go relative to current capacity. Used when sport load is high.</p>
+      </div>
+      <div class="term">
+        <b>Back-off volume</b>
+        <p>Additional sets done after a top set at lighter load. Scales down when sport load is high.</p>
+      </div>
+      <div class="term">
+        <b>Protect output</b>
+        <p>Prioritize performance in your sport by limiting strength stress when fatigue risk is high.</p>
+      </div>
+      <div class="term">
+        <b>Recovery bias</b>
+        <p>The engine shifts your week toward recovery when total training stress is high.</p>
+      </div>
+      <div class="term">
+        <b>Focus area</b>
+        <p>Which qualities the prescription leans toward (durability, max strength, pulling capacity, etc.).</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-const STORAGE_KEY = "stormie_engine_history_v1";
-const MAX_HISTORY = 5;
+function e1RM(weight, reps){ return weight * (1 + reps / 30); }
 
-// current state for generator
-let ENGINE_STATE = null;
-
-function nowStamp(){
-  const d = new Date();
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth()+1).padStart(2,"0");
-  const dd = String(d.getDate()).padStart(2,"0");
-  const hh = String(d.getHours()).padStart(2,"0");
-  const mi = String(d.getMinutes()).padStart(2,"0");
-  return `${yyyy}-${mm}-${dd} ${hh}:${mi}`;
-}
-
-function e1RM(weight, reps){
-  return weight * (1 + reps / 30);
-}
-
-function effortFactor(effort){
-  if (effort >= 10) return 1.00;
-  if (effort >= 9)  return 0.97;
-  if (effort >= 8)  return 0.94;
-  if (effort >= 7)  return 0.90;
+function rpeFactor(rpe){
+  if (rpe >= 10) return 1.00;
+  if (rpe >= 9)  return 0.97;
+  if (rpe >= 8)  return 0.94;
+  if (rpe >= 7)  return 0.90;
   return 0.85;
 }
 
-function isNum(x){
-  return typeof x === "number" && isFinite(x) && !isNaN(x);
-}
+function isNum(x){ return typeof x === "number" && isFinite(x) && !isNaN(x); }
+function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
 
-function clamp(n, min, max){
-  return Math.max(min, Math.min(max, n));
-}
+/* Dynamic UI */
+const profileEl = document.getElementById("profile");
+const thaiRow = document.getElementById("thaiRow");
+const climbRow = document.getElementById("climbRow");
 
-function getHistory(){
-  try{
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if(!raw) return [];
-    const parsed = JSON.parse(raw);
-    if(!Array.isArray(parsed)) return [];
-    return parsed;
-  }catch{
-    return [];
+function applyProfileUI(){
+  const p = profileEl.value;
+
+  if(p === "fighter"){
+    climbRow.classList.add("hidden");
+    thaiRow.classList.remove("hidden");
+  } else if(p === "climber"){
+    thaiRow.classList.add("hidden");
+    climbRow.classList.remove("hidden");
+  } else {
+    thaiRow.classList.remove("hidden");
+    climbRow.classList.remove("hidden");
   }
 }
+profileEl.addEventListener("change", applyProfileUI);
+applyProfileUI();
 
-function setHistory(list){
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-}
-
-function computeTrend(history){
-  const last3 = history.slice(0,3).map(x => x.score);
-  if(last3.length < 2) return { label:"TREND —", cls:"trendFlat" };
-  const a = last3[0];
-  const b = last3[last3.length-1];
-  const delta = a - b;
-  if(delta >= 3) return { label:"TREND ↑", cls:"trendUp" };
-  if(delta <= -3) return { label:"TREND ↓", cls:"trendDown" };
-  return { label:"TREND →", cls:"trendFlat" };
-}
-
-function renderTrendPill(){
-  const history = getHistory();
-  const pill = document.getElementById("trendPill");
-  const t = computeTrend(history);
-  pill.textContent = t.label;
-  pill.classList.remove("trendUp","trendDown","trendFlat");
-  pill.classList.add(t.cls);
-}
-
-function renderHistoryBox(){
-  const history = getHistory();
-  const box = document.getElementById("historyBox");
-  const list = document.getElementById("historyList");
-
-  if(history.length === 0){
-    box.style.display = "none";
-    list.innerHTML = "";
-    return;
+/* Glossary modal */
+const glossary = document.getElementById("glossary");
+document.getElementById("openGlossary").addEventListener("click", (e)=>{
+  e.preventDefault();
+  glossary.classList.add("active");
+  glossary.setAttribute("aria-hidden","false");
+});
+document.getElementById("closeGlossary").addEventListener("click", ()=>{
+  glossary.classList.remove("active");
+  glossary.setAttribute("aria-hidden","true");
+});
+glossary.addEventListener("click", (e)=>{
+  if(e.target === glossary){
+    glossary.classList.remove("active");
+    glossary.setAttribute("aria-hidden","true");
   }
-
-  box.style.display = "block";
-  list.innerHTML = "";
-
-  history.slice(0,MAX_HISTORY).forEach(item => {
-    const row = document.createElement("div");
-    row.className = "logRow";
-    row.innerHTML = `<span>${item.time}</span><span>Score ${item.score} • ${item.load}</span>`;
-    list.appendChild(row);
-  });
-}
+});
+window.addEventListener("keydown",(e)=>{
+  if(e.key === "Escape" && glossary.classList.contains("active")){
+    glossary.classList.remove("active");
+    glossary.setAttribute("aria-hidden","true");
+  }
+});
 
 function analyze(){
   const profile = document.getElementById("profile").value;
@@ -612,86 +614,76 @@ function analyze(){
   const bwRaw = parseFloat(document.getElementById("bw").value);
   const bw = (isNum(bwRaw) && bwRaw > 0) ? bwRaw : null;
 
-  const thai  = parseInt(document.getElementById("thai").value, 10) || 0;
-  const climb = parseInt(document.getElementById("climb").value, 10) || 0;
+  // sport load (handle hidden fields)
+  const thaiEl  = document.getElementById("thai");
+  const climbEl = document.getElementById("climb");
+
+  const thai  = thaiRow.classList.contains("hidden")  ? 0 : (parseInt(thaiEl.value, 10) || 0);
+  const climb = climbRow.classList.contains("hidden") ? 0 : (parseInt(climbEl.value, 10) || 0);
 
   const squatW = parseFloat(document.getElementById("squatWeight").value);
   const squatR = parseFloat(document.getElementById("squatReps").value);
-  const squatE = parseFloat(document.getElementById("squatRPE").value);
+  const squatP = parseFloat(document.getElementById("squatRPE").value);
 
   const hingeW = parseFloat(document.getElementById("hingeWeight").value);
   const hingeR = parseFloat(document.getElementById("hingeReps").value);
-  const hingeE = parseFloat(document.getElementById("hingeRPE").value);
+  const hingeP = parseFloat(document.getElementById("hingeRPE").value);
 
   const pullW  = parseFloat(document.getElementById("pullWeight").value);
   const pullR  = parseFloat(document.getElementById("pullReps").value);
-  const pullE  = parseFloat(document.getElementById("pullRPE").value);
+  const pullP  = parseFloat(document.getElementById("pullRPE").value);
 
-  const required = [squatW, squatR, squatE, hingeW, hingeR, hingeE, pullW, pullR, pullE];
+  const required = [squatW, squatR, squatP, hingeW, hingeR, hingeP, pullW, pullR, pullP];
   const ok = required.every(isNum);
 
   const output = document.getElementById("output");
   const scoreText = document.getElementById("scoreText");
   const badgeText = document.getElementById("badgeText");
   const detailsText = document.getElementById("detailsText");
-  const lastRunText = document.getElementById("lastRunText");
-  const decisionText = document.getElementById("decisionText");
-
-  const genBtn = document.getElementById("genBtn");
-  const copyBtn = document.getElementById("copyBtn");
-  const planBox = document.getElementById("planBox");
-  const planText = document.getElementById("planText");
-  const planPill = document.getElementById("planPill");
 
   output.style.display = "block";
-
-  // reset plan UI each analyze
-  planBox.style.display = "none";
-  planText.textContent = "";
-  copyBtn.style.display = "none";
-  genBtn.disabled = true;
-  planPill.textContent = "DRAFT";
 
   if(!ok){
     scoreText.textContent = "Missing inputs";
     badgeText.textContent = "Complete top sets";
-    lastRunText.textContent = "—";
-    decisionText.textContent = "—";
     detailsText.textContent =
-      "Enter: kg / reps / Effort for Squat, Hinge and Pull.\n" +
+      "Enter: kg / reps / RPE for Squat, Hinge and Pull.\n" +
       "Bodyweight is optional but recommended.";
-    ENGINE_STATE = null;
     return;
   }
 
-  const squat = e1RM(squatW, squatR) * effortFactor(squatE);
-  const hinge = e1RM(hingeW, hingeR) * effortFactor(hingeE);
-  const pull  = e1RM(pullW,  pullR)  * effortFactor(pullE);
+  const squat = e1RM(squatW, squatR) * rpeFactor(squatP);
+  const hinge = e1RM(hingeW, hingeR) * rpeFactor(hingeP);
+  const pull  = e1RM(pullW,  pullR)  * rpeFactor(pullP);
 
   const sportLoad = thai + climb;
 
-  let loadCategory, volumeAdjust, sessions, effortCap;
+  // Output prescription logic (MVP, but product-feel)
+  let loadCategory, volumeAdjust, sessions, rpeCap, focusArea;
   if(sportLoad >= 4){
     loadCategory = "High";
-    volumeAdjust = "-20% back-off volume";
+    volumeAdjust = "Back-off volume: -20%";
     sessions = 2;
-    effortCap = 8;
+    rpeCap = 8;
+    focusArea = "Durability + recovery";
   } else if(sportLoad >= 2){
     loadCategory = "Moderate";
-    volumeAdjust = "-10% back-off volume";
+    volumeAdjust = "Back-off volume: -10%";
     sessions = 3;
-    effortCap = 9;
+    rpeCap = 9;
+    focusArea = "Strength maintenance";
   } else {
     loadCategory = "Low";
-    volumeAdjust = "Full volume";
+    volumeAdjust = "Back-off volume: full";
     sessions = 3;
-    effortCap = 9;
+    rpeCap = 9;
+    focusArea = "Strength progression";
   }
 
-  // Profile weighting
+  // Profile bias (subtle, but “intelligent”)
   let wSquat = 1.0, wHinge = 1.0, wPull = 1.0;
-  if(profile === "fighter"){ wHinge = 1.10; wPull = 1.05; }
-  if(profile === "climber"){ wPull  = 1.20; wHinge = 0.95; }
+  if(profile === "fighter"){ wHinge = 1.10; wPull = 1.05; focusArea = "Power + resilience"; }
+  if(profile === "climber"){ wPull  = 1.20; wHinge = 0.95; focusArea = "Pulling capacity"; }
   if(profile === "hybrid"){  wPull  = 1.10; }
 
   const bwUsed = bw ?? 65;
@@ -704,194 +696,23 @@ function analyze(){
   const score = clamp(Math.round(rel * 40), 0, 100);
 
   let decision;
-  if(loadCategory === "High") decision = "Protect output. Reduce volume and cap intensity.";
+  if(loadCategory === "High") decision = "Protect output. Reduce stress and cap effort.";
   else if(loadCategory === "Moderate") decision = "Maintain. Progress selectively.";
   else decision = "Progress approved.";
 
   scoreText.textContent = "Structural Strength Score: " + score;
   badgeText.textContent = loadCategory + " sport load";
-  lastRunText.textContent = nowStamp() + " • Score " + score + " • Load " + loadCategory;
-  decisionText.textContent = sessions + " strength sessions/week • Effort cap " + effortCap;
 
   const bwNote = bw ? "" : "Note: bodyweight not set → using 65kg baseline (MVP).";
 
   detailsText.textContent =
     "Profile: " + profile.toUpperCase() + "\n" +
-    "Sport sessions: " + sportLoad + "/week (Thai " + thai + " + Climb " + climb + ")\n" +
+    "Sport sessions: " + sportLoad + "/week\n" +
     "Strength sessions: " + sessions + "/week\n" +
-    "Effort cap: " + effortCap + "\n" +
-    "Volume: " + volumeAdjust + "\n\n" +
+    "Effort cap: RPE " + rpeCap + "\n" +
+    volumeAdjust + "\n" +
+    "Focus area: " + focusArea + "\n\n" +
     "Recommendation: " + decision + (bwNote ? ("\n\n" + bwNote) : "");
-
-  // save state for generator
-  ENGINE_STATE = {
-    time: nowStamp(),
-    profile,
-    score,
-    loadCategory,
-    sessions,
-    effortCap,
-    sportLoad,
-    thai,
-    climb
-  };
-
-  // enable generator
-  genBtn.disabled = false;
-
-  // save history
-  const history = getHistory();
-  const entry = { time: ENGINE_STATE.time, score, load: loadCategory, sportLoad, profile };
-  const updated = [entry, ...history].slice(0, MAX_HISTORY);
-  setHistory(updated);
-  renderTrendPill();
-  renderHistoryBox();
-}
-
-function weekParams(state){
-  // Volume presets by load
-  if(state.loadCategory === "High"){
-    return { mainSets: 3, backoffSets: 1, repsMain: "4–6", repsBackoff: "6–8", accessories: 1, conditioning: "optional" };
-  }
-  if(state.loadCategory === "Moderate"){
-    return { mainSets: 4, backoffSets: 1, repsMain: "4–6", repsBackoff: "6–8", accessories: 2, conditioning: "optional" };
-  }
-  return { mainSets: 4, backoffSets: 2, repsMain: "3–6", repsBackoff: "6–10", accessories: 2, conditioning: "optional" };
-}
-
-function profileNotes(profile){
-  if(profile === "fighter"){
-    return {
-      bias: "Bias: hinge + trunk stiffness + neck/upper-back resilience.",
-      accessoryA: "Accessory: split squat OR step-up (2–3 sets)",
-      accessoryB: "Accessory: anti-rotation press (2–3 sets)",
-      finisher: "Finisher: 6–10 min easy sled / incline walk (if fresh)"
-    };
-  }
-  if(profile === "climber"){
-    return {
-      bias: "Bias: pull capacity + scap control + lower-body maintenance.",
-      accessoryA: "Accessory: row variation (2–3 sets)",
-      accessoryB: "Accessory: posterior shoulder / external rotation (2–3 sets)",
-      finisher: "Finisher: 8–12 min zone-2 (optional)"
-    };
-  }
-  return {
-    bias: "Bias: balanced structural strength for sport + aesthetics.",
-    accessoryA: "Accessory: single-leg pattern (2–3 sets)",
-    accessoryB: "Accessory: upper back / rear delts (2–3 sets)",
-    finisher: "Finisher: 6–10 min zone-2 (optional)"
-  };
-}
-
-function generateWeek(){
-  const state = ENGINE_STATE;
-  if(!state) return;
-
-  const planBox = document.getElementById("planBox");
-  const planText = document.getElementById("planText");
-  const planPill = document.getElementById("planPill");
-  const copyBtn = document.getElementById("copyBtn");
-
-  const p = weekParams(state);
-  const n = profileNotes(state.profile);
-
-  // Session count
-  const sessions = state.sessions; // 2 or 3
-  const cap = state.effortCap;
-
-  // Simple scheduling suggestion (no calendar integration)
-  const spacing =
-    sessions === 2
-      ? "Spacing: place strength on two non-consecutive days (e.g., Tue/Fri)."
-      : "Spacing: place strength on three non-consecutive days (e.g., Mon/Wed/Fri).";
-
-  // Build sessions
-  const header =
-`STORMIĒ WEEK TEMPLATE (v0.3)
-Generated: ${state.time}
-Profile: ${state.profile.toUpperCase()}
-Sport load: ${state.sportLoad}/week (Thai ${state.thai} + Climb ${state.climb})
-Strength sessions: ${sessions}/week
-Effort cap: ${cap}
-
-${n.bias}
-${spacing}
-
-RULES
-- Stop sets at Effort ${cap}. Leave reps in reserve.
-- Keep total session time: 45–60 min (High load: 35–50 min).
-- If fatigue is high: remove 1 back-off set + skip finisher.
-`;
-
-  function sessionBlock(name, mainLift, secondLift, third){
-    const accCount = p.accessories;
-    const accLine =
-      accCount === 1
-        ? `${n.accessoryA}`
-        : `${n.accessoryA}\n- ${n.accessoryB}`;
-
-    const backoff =
-      p.backoffSets > 0
-        ? `- Back-off: ${p.backoffSets}×${p.repsBackoff} @ Effort ${Math.min(cap,8)}`
-        : `- Back-off: —`;
-
-    return `
-${name}
-- Warm-up: 6–8 min + 3 ramp sets
-- ${mainLift}: ${p.mainSets}×${p.repsMain} @ Effort ${cap}
-${backoff}
-- ${secondLift}: 3×6–10 @ Effort ${Math.min(cap,8)}
-- ${third}: 2×8–12 @ Effort ${Math.min(cap,8)}
-- ${accLine}
-- Finisher: ${n.finisher}
-`.trim();
-  }
-
-  // Choose session structure
-  const A = sessionBlock("SESSION A (SQUAT FOCUS)", "Squat", "Pull (row or pull-up)", "Hinge accessory (RDL or hip hinge)");
-  const B = sessionBlock("SESSION B (HINGE FOCUS)", "Hinge (deadlift / RDL)", "Press (DB press or push-up)", "Pull (row / pulldown)");
-  const C = sessionBlock("SESSION C (PULL + STRUCTURE)", "Pull (weighted pull-up or row)", "Squat variation (front/goblet)", "Hinge (light / speed)");
-
-  let sessionsText = "";
-  if(sessions === 2){
-    sessionsText = `${A}\n\n${B}`;
-  } else {
-    sessionsText = `${A}\n\n${B}\n\n${C}`;
-  }
-
-  // Premium close
-  const close =
-`
-ADAPTATION NOTE
-- If Thai/Climb intensity spikes this week: keep Effort at 7–8 and cut 1 set per main lift.
-- If sport feels easy + sleep is good: keep Effort ${cap} and add +1 rep per set (not weight).
-
-NEXT STEP
-- Re-run Engine after 7 days → compare trend + adjust.
-`.trim();
-
-  planText.textContent = `${header}\n${sessionsText}\n\n${close}`;
-  planPill.textContent = "GENERATED";
-  planBox.style.display = "block";
-  copyBtn.style.display = "inline-block";
-
-  // auto-scroll to plan
-  planBox.scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
-async function copyPlan(){
-  const text = document.getElementById("planText").textContent || "";
-  if(!text) return;
-  try{
-    await navigator.clipboard.writeText(text);
-    const btn = document.getElementById("copyBtn");
-    const prev = btn.textContent;
-    btn.textContent = "Copied";
-    setTimeout(() => btn.textContent = prev, 900);
-  }catch{
-    // fallback: do nothing
-  }
 }
 
 function resetForm(){
@@ -899,31 +720,14 @@ function resetForm(){
   document.getElementById("thai").value = 2;
   document.getElementById("climb").value = 2;
 
-  document.getElementById("squatWeight").value = "";
-  document.getElementById("squatReps").value = "";
-  document.getElementById("squatRPE").value = 8;
-
-  document.getElementById("hingeWeight").value = "";
-  document.getElementById("hingeReps").value = "";
-  document.getElementById("hingeRPE").value = 8;
-
-  document.getElementById("pullWeight").value = "";
-  document.getElementById("pullReps").value = "";
-  document.getElementById("pullRPE").value = 8;
+  ["squatWeight","squatReps","squatRPE","hingeWeight","hingeReps","hingeRPE","pullWeight","pullReps","pullRPE"]
+    .forEach(id => document.getElementById(id).value = "");
 
   document.getElementById("output").style.display = "none";
 
-  // reset plan state
-  ENGINE_STATE = null;
-  document.getElementById("genBtn").disabled = true;
-  document.getElementById("planBox").style.display = "none";
-  document.getElementById("planText").textContent = "";
-  document.getElementById("copyBtn").style.display = "none";
-  document.getElementById("planPill").textContent = "DRAFT";
+  // keep UI consistent with profile
+  applyProfileUI();
 }
-
-renderTrendPill();
-renderHistoryBox();
 </script>
 
 </body>
