@@ -71,45 +71,64 @@ h1{
 
 .sub{
   text-align:center;
-  margin:10px 0 18px;
+  margin:10px 0 12px;
   color:var(--muted);
   letter-spacing:0.22em;
   text-transform:uppercase;
   font-size:12px;
 }
 
-/* VALUE PROP (minimal, premium) */
+/* NEW: positioning block (under STORMIĒ) */
+.position{
+  text-align:center;
+  margin:0 0 26px;
+}
+.position .headline{
+  font-size:12px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  font-weight:600;
+  color:rgba(0,0,0,0.78);
+  margin:0 0 8px;
+}
+.position .micro{
+  margin:0;
+  font-size:12px;
+  line-height:1.75;
+  color:rgba(0,0,0,0.58);
+}
+.position .problem{
+  margin:10px 0 0;
+  font-size:12px;
+  line-height:1.75;
+  color:rgba(0,0,0,0.52);
+}
+
+/* VALUE PROP box (kept, but now "system statement" + link) */
 .value{
   margin:0 auto 28px;
   width:min(820px, 100%);
   border:1px solid var(--line);
   background:var(--wash);
   border-radius:16px;
-  padding:16px 16px;
-}
-.value strong{
-  display:block;
+  padding:14px 16px;
   text-align:center;
-  font-size:12px;
-  letter-spacing:0.18em;
+}
+.value a{
+  display:inline-block;
+  font-size:11px;
+  letter-spacing:0.22em;
   text-transform:uppercase;
-  font-weight:600;
-  opacity:0.85;
-  margin-bottom:8px;
+  color:rgba(0,0,0,0.55);
+  text-decoration:none;
+  border-bottom:1px solid rgba(0,0,0,0.16);
+  padding-bottom:3px;
 }
-.value p{
-  margin:0;
-  text-align:center;
-  font-size:12px;
-  line-height:1.7;
-  color:rgba(0,0,0,0.62);
-}
-.value .mono{
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  letter-spacing:0.02em;
+.value a:hover{
+  color:#000;
+  border-bottom-color:rgba(0,0,0,0.28);
 }
 
-/* GRID */
 .grid{
   display:grid;
   grid-template-columns: 1fr 1fr;
@@ -168,7 +187,7 @@ label{
   position:absolute;
   right:0;
   top:26px;
-  width:min(320px, 70vw);
+  width:min(340px, 76vw);
   padding:10px 10px;
   border-radius:12px;
   background:rgba(255,255,255,0.82);
@@ -331,7 +350,7 @@ button{
 .modal.active{ opacity:1; pointer-events:auto; }
 
 .modal-panel{
-  width:min(760px, 94vw);
+  width:min(820px, 94vw);
   background:rgba(255,255,255,0.82);
   border:1px solid rgba(255,255,255,0.45);
   box-shadow: var(--shadow);
@@ -343,7 +362,7 @@ button{
   align-items:flex-start;
   justify-content:space-between;
   gap:12px;
-  margin-bottom:10px;
+  margin-bottom:12px;
 }
 .modal-title{
   font-size:12px;
@@ -363,32 +382,50 @@ button{
 }
 .modal-close:hover{ color:#000; }
 
-.gloss-grid{
+.modal-sub{
+  margin:6px 0 0;
+  font-size:12px;
+  line-height:1.7;
+  color:rgba(0,0,0,0.62);
+}
+
+.section-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
+  margin-top:14px;
 }
 @media (max-width: 720px){
-  .gloss-grid{ grid-template-columns:1fr; }
+  .section-grid{ grid-template-columns:1fr; }
 }
-.term{
+.block{
   border:1px solid rgba(0,0,0,0.08);
   background:rgba(0,0,0,0.02);
   border-radius:14px;
   padding:12px 12px;
 }
-.term b{
+.block b{
   display:block;
-  font-size:12px;
-  letter-spacing:0.18em;
+  font-size:11px;
+  letter-spacing:0.22em;
   text-transform:uppercase;
-  margin-bottom:6px;
+  margin-bottom:8px;
+  color:rgba(0,0,0,0.55);
 }
-.term p{
+.block p, .block li{
   margin:0;
   font-size:12px;
   line-height:1.7;
   color:rgba(0,0,0,0.70);
+}
+.block ul{
+  margin:0;
+  padding-left:18px;
+}
+.divline{
+  height:1px;
+  background:rgba(0,0,0,0.06);
+  margin:14px 0;
 }
 </style>
 </head>
@@ -399,7 +436,7 @@ button{
   <div class="topbar">
     <a class="back" href="/">← Back</a>
     <div class="brand">
-      <a class="ghostlink" href="#" id="openGlossary">Glossary</a>
+      <a class="ghostlink" href="#" id="openGlossary">How it works</a>
       <span>Engine v0.1</span>
     </div>
   </div>
@@ -407,12 +444,15 @@ button{
   <h1>STORMIĒ</h1>
   <div class="sub">Performance Engine — Beta</div>
 
+  <!-- Positioning (your exact text) -->
+  <div class="position">
+    <div class="headline">Adaptive strength programming for fighters, climbers and hybrids.</div>
+    <p class="micro">Integrates strength with weekly sport load to prevent overreach and misdirected volume.</p>
+    <p class="problem">Most hybrid athletes guess strength volume. The result is fatigue without performance transfer.</p>
+  </div>
+
   <div class="value">
-    <strong>Adaptive Strength Prescription</strong>
-    <p>
-      Enter <span class="mono">sport load</span> + one top set per lift → receive weekly strength output:
-      <span class="mono">sessions, effort cap, volume bias</span>.
-    </p>
+    <a href="#" id="openGlossary2">View outputs & definitions</a>
   </div>
 
   <div class="grid">
@@ -422,7 +462,7 @@ button{
 
       <div class="labelrow">
         <label>Training Profile</label>
-        <span class="info" data-tip="Select your primary sport context. The engine adapts the inputs and weighting accordingly.">i</span>
+        <span class="info" data-tip="Fighter hides climbing sessions. Climber hides Muay Thai sessions. Hybrid shows both.">i</span>
       </div>
       <select id="profile">
         <option value="fighter">Fighter</option>
@@ -432,7 +472,7 @@ button{
 
       <div class="labelrow" style="margin-top:10px;">
         <label>Bodyweight (kg)</label>
-        <span class="info" data-tip="Used to compute relative strength. Optional, but makes the score more accurate.">i</span>
+        <span class="info" data-tip="Used for relative strength scoring. Optional, but recommended for accuracy.">i</span>
       </div>
       <input type="number" id="bw" min="30" max="200" step="0.1" placeholder="e.g. 65">
 
@@ -441,7 +481,7 @@ button{
       <div id="thaiRow" class="sport-row">
         <div class="labelrow">
           <label>Muay Thai sessions / week</label>
-          <span class="info" data-tip="Sport load influences fatigue budget. More sessions → lower strength volume + lower effort cap.">i</span>
+          <span class="info" data-tip="Higher sport load reduces strength volume and lowers the effort cap.">i</span>
         </div>
         <input type="number" id="thai" min="0" max="6" value="2">
       </div>
@@ -449,7 +489,7 @@ button{
       <div id="climbRow" class="sport-row">
         <div class="labelrow">
           <label>Climbing sessions / week</label>
-          <span class="info" data-tip="Climbing adds pulling + tendon load. Higher sessions → protect recovery and reduce strength stress.">i</span>
+          <span class="info" data-tip="Climbing adds pulling + tissue load. Higher sessions → prioritize performance recovery.">i</span>
         </div>
         <input type="number" id="climb" min="0" max="6" value="2">
       </div>
@@ -502,7 +542,7 @@ button{
       <div class="hr"></div>
 
       <div class="notice">
-        RPE = effort rating (how close to failure). The engine uses <span class="mono">e1RM + RPE</span> to estimate capacity and set an effort cap.
+        RPE = effort rating (how close to failure). The engine uses <span class="mono">e1RM + RPE</span> to estimate capacity and set an intensity limit.
       </div>
     </div>
 
@@ -511,39 +551,51 @@ button{
   <div class="footer">Open Access Beta • No accounts • Local computation</div>
 </div>
 
-<!-- Glossary Modal -->
+<!-- How it works modal -->
 <div class="modal" id="glossary" aria-hidden="true">
-  <div class="modal-panel" role="dialog" aria-label="Glossary">
+  <div class="modal-panel" role="dialog" aria-label="How it works">
     <div class="modal-head">
-      <div class="modal-title">Glossary</div>
+      <div>
+        <div class="modal-title">How it works</div>
+        <div class="modal-sub">
+          The integration problem between strength and sport.
+        </div>
+      </div>
       <button class="modal-close" id="closeGlossary">Close</button>
     </div>
 
-    <div class="gloss-grid">
-      <div class="term">
-        <b>Effort cap</b>
-        <p>Maximum effort allowed for working sets (expressed as an RPE limit). Keeps progress without draining recovery.</p>
+    <div class="section-grid">
+      <div class="block">
+        <b>After analysis, the engine generates</b>
+        <ul>
+          <li>Strength frequency (sessions/week)</li>
+          <li>Intensity limit (RPE cap)</li>
+          <li>Back-off volume adjustment</li>
+          <li>Structural focus bias</li>
+          <li>Performance protection directive</li>
+        </ul>
+        <div class="divline"></div>
+        <b>Soon</b>
+        <ul>
+          <li>Weekly template</li>
+          <li>Imbalance warnings</li>
+        </ul>
       </div>
-      <div class="term">
-        <b>Intensity limit</b>
-        <p>Upper limit on how heavy you go relative to current capacity. Used when sport load is high.</p>
+
+      <div class="block">
+        <b>Definitions</b>
+        <p><strong>Intensity limit</strong> = maximum effort allowed under current sport load.</p>
+        <p><strong>Back-off volume</strong> = volume after your top set (scaled down when load is high).</p>
+        <p><strong>Performance protection</strong> = prioritize performance recovery when fatigue risk is high.</p>
+        <p><strong>Structural focus bias</strong> = what quality the plan prioritizes this week.</p>
+        <div class="divline"></div>
+        <p><strong>RPE</strong> = effort rating (10 = max, 8 ≈ 2 reps in reserve).</p>
       </div>
-      <div class="term">
-        <b>Back-off volume</b>
-        <p>Additional sets done after a top set at lighter load. Scales down when sport load is high.</p>
-      </div>
-      <div class="term">
-        <b>Protect output</b>
-        <p>Prioritize performance in your sport by limiting strength stress when fatigue risk is high.</p>
-      </div>
-      <div class="term">
-        <b>Recovery bias</b>
-        <p>The engine shifts your week toward recovery when total training stress is high.</p>
-      </div>
-      <div class="term">
-        <b>Focus area</b>
-        <p>Which qualities the prescription leans toward (durability, max strength, pulling capacity, etc.).</p>
-      </div>
+    </div>
+
+    <div class="divline"></div>
+    <div class="modal-sub">
+      Most hybrid athletes guess strength volume. The result is fatigue without performance transfer.
     </div>
   </div>
 </div>
@@ -584,29 +636,22 @@ function applyProfileUI(){
 profileEl.addEventListener("change", applyProfileUI);
 applyProfileUI();
 
-/* Glossary modal */
+/* Modal */
 const glossary = document.getElementById("glossary");
-document.getElementById("openGlossary").addEventListener("click", (e)=>{
-  e.preventDefault();
+function openModal(e){
+  if(e) e.preventDefault();
   glossary.classList.add("active");
   glossary.setAttribute("aria-hidden","false");
-});
-document.getElementById("closeGlossary").addEventListener("click", ()=>{
+}
+function closeModal(){
   glossary.classList.remove("active");
   glossary.setAttribute("aria-hidden","true");
-});
-glossary.addEventListener("click", (e)=>{
-  if(e.target === glossary){
-    glossary.classList.remove("active");
-    glossary.setAttribute("aria-hidden","true");
-  }
-});
-window.addEventListener("keydown",(e)=>{
-  if(e.key === "Escape" && glossary.classList.contains("active")){
-    glossary.classList.remove("active");
-    glossary.setAttribute("aria-hidden","true");
-  }
-});
+}
+document.getElementById("openGlossary").addEventListener("click", openModal);
+document.getElementById("openGlossary2").addEventListener("click", openModal);
+document.getElementById("closeGlossary").addEventListener("click", closeModal);
+glossary.addEventListener("click", (e)=>{ if(e.target === glossary) closeModal(); });
+window.addEventListener("keydown",(e)=>{ if(e.key === "Escape" && glossary.classList.contains("active")) closeModal(); });
 
 function analyze(){
   const profile = document.getElementById("profile").value;
@@ -658,33 +703,37 @@ function analyze(){
 
   const sportLoad = thai + climb;
 
-  // Output prescription logic (MVP, but product-feel)
-  let loadCategory, volumeAdjust, sessions, rpeCap, focusArea;
+  // Prescription logic (MVP, product feel)
+  let loadCategory, volumeAdjust, sessions, rpeCap, focusArea, protection;
   if(sportLoad >= 4){
     loadCategory = "High";
     volumeAdjust = "Back-off volume: -20%";
     sessions = 2;
     rpeCap = 8;
     focusArea = "Durability + recovery";
+    protection = "Prioritize performance recovery";
   } else if(sportLoad >= 2){
     loadCategory = "Moderate";
     volumeAdjust = "Back-off volume: -10%";
     sessions = 3;
     rpeCap = 9;
     focusArea = "Strength maintenance";
+    protection = "Maintain sport output";
   } else {
     loadCategory = "Low";
     volumeAdjust = "Back-off volume: full";
     sessions = 3;
     rpeCap = 9;
     focusArea = "Strength progression";
+    protection = "Progress approved";
   }
 
-  // Profile bias (subtle, but “intelligent”)
+  // Profile bias (subtle)
   let wSquat = 1.0, wHinge = 1.0, wPull = 1.0;
-  if(profile === "fighter"){ wHinge = 1.10; wPull = 1.05; focusArea = "Power + resilience"; }
-  if(profile === "climber"){ wPull  = 1.20; wHinge = 0.95; focusArea = "Pulling capacity"; }
-  if(profile === "hybrid"){  wPull  = 1.10; }
+  let bias = "Structural focus bias: balanced";
+  if(profile === "fighter"){ wHinge = 1.10; wPull = 1.05; bias = "Structural focus bias: posterior chain + resilience"; focusArea = "Power + resilience"; }
+  if(profile === "climber"){ wPull  = 1.20; wHinge = 0.95; bias = "Structural focus bias: pulling capacity + tissue tolerance"; focusArea = "Pulling capacity"; }
+  if(profile === "hybrid"){  wPull  = 1.10; bias = "Structural focus bias: hybrid durability"; }
 
   const bwUsed = bw ?? 65;
   const rel = (
@@ -695,11 +744,6 @@ function analyze(){
 
   const score = clamp(Math.round(rel * 40), 0, 100);
 
-  let decision;
-  if(loadCategory === "High") decision = "Protect output. Reduce stress and cap effort.";
-  else if(loadCategory === "Moderate") decision = "Maintain. Progress selectively.";
-  else decision = "Progress approved.";
-
   scoreText.textContent = "Structural Strength Score: " + score;
   badgeText.textContent = loadCategory + " sport load";
 
@@ -707,12 +751,14 @@ function analyze(){
 
   detailsText.textContent =
     "Profile: " + profile.toUpperCase() + "\n" +
-    "Sport sessions: " + sportLoad + "/week\n" +
-    "Strength sessions: " + sessions + "/week\n" +
-    "Effort cap: RPE " + rpeCap + "\n" +
+    "Sport sessions: " + sportLoad + "/week\n\n" +
+    "Strength frequency: " + sessions + "/week\n" +
+    "Intensity limit (RPE cap): " + rpeCap + "\n" +
     volumeAdjust + "\n" +
-    "Focus area: " + focusArea + "\n\n" +
-    "Recommendation: " + decision + (bwNote ? ("\n\n" + bwNote) : "");
+    bias + "\n" +
+    "Focus area: " + focusArea + "\n" +
+    "Directive: " + protection + "\n" +
+    (bwNote ? ("\n\n" + bwNote) : "");
 }
 
 function resetForm(){
@@ -724,8 +770,6 @@ function resetForm(){
     .forEach(id => document.getElementById(id).value = "");
 
   document.getElementById("output").style.display = "none";
-
-  // keep UI consistent with profile
   applyProfileUI();
 }
 </script>
