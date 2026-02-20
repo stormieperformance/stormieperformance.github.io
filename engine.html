@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +15,6 @@
   --line:rgba(0,0,0,0.08);
   --line2:rgba(0,0,0,0.12);
   --wash:rgba(0,0,0,0.02);
-  --glass:rgba(255,255,255,0.75);
   --shadow:0 30px 80px rgba(0,0,0,0.10);
 }
 
@@ -78,7 +79,7 @@ h1{
   font-size:12px;
 }
 
-/* NEW: positioning block (under STORMIĒ) */
+/* Positioning */
 .position{
   text-align:center;
   margin:0 0 26px;
@@ -104,7 +105,6 @@ h1{
   color:rgba(0,0,0,0.52);
 }
 
-/* VALUE PROP box (kept, but now "system statement" + link) */
 .value{
   margin:0 auto 28px;
   width:min(820px, 100%);
@@ -124,10 +124,7 @@ h1{
   border-bottom:1px solid rgba(0,0,0,0.16);
   padding-bottom:3px;
 }
-.value a:hover{
-  color:#000;
-  border-bottom-color:rgba(0,0,0,0.28);
-}
+.value a:hover{ color:#000; border-bottom-color:rgba(0,0,0,0.28); }
 
 .grid{
   display:grid;
@@ -153,7 +150,7 @@ h1{
   margin-bottom:12px;
 }
 
-/* Labels + info tooltips */
+/* Labels + tooltips */
 .labelrow{
   display:flex;
   align-items:center;
@@ -187,10 +184,10 @@ label{
   position:absolute;
   right:0;
   top:26px;
-  width:min(340px, 76vw);
+  width:min(360px, 78vw);
   padding:10px 10px;
   border-radius:12px;
-  background:rgba(255,255,255,0.82);
+  background:rgba(255,255,255,0.86);
   border:1px solid rgba(0,0,0,0.10);
   box-shadow: var(--shadow);
   color:rgba(0,0,0,0.72);
@@ -203,10 +200,7 @@ label{
   text-transform:none;
   letter-spacing:0;
 }
-.info:hover::after{
-  opacity:1;
-  transform:translateY(0);
-}
+.info:hover::after{ opacity:1; transform:translateY(0); }
 
 input, select{
   width:100%;
@@ -219,6 +213,15 @@ input, select{
   color:#111;
 }
 input:focus, select:focus{ border-color:rgba(0,0,0,0.22); }
+
+.row2{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:10px;
+}
+@media (max-width: 520px){
+  .row2{ grid-template-columns:1fr; }
+}
 
 .row3{
   display:grid;
@@ -278,18 +281,44 @@ button{
 }
 
 .kpi{
-  display:flex;
-  align-items:baseline;
-  justify-content:space-between;
+  display:grid;
+  grid-template-columns: 1fr 1fr;
   gap:12px;
-  flex-wrap:wrap;
 }
-.score{ font-size:18px; font-weight:600; }
-.badge{
+@media (max-width: 520px){
+  .kpi{ grid-template-columns:1fr; }
+}
+.metric{
+  border:1px solid rgba(0,0,0,0.06);
+  background:rgba(255,255,255,0.55);
+  border-radius:14px;
+  padding:12px 12px;
+}
+.metric .label{
   font-size:11px;
   letter-spacing:0.22em;
   text-transform:uppercase;
-  color:rgba(0,0,0,0.55);
+  color:rgba(0,0,0,0.45);
+  margin-bottom:6px;
+}
+.metric .value{
+  border:none;
+  background:transparent;
+  padding:0;
+  margin:0;
+  width:auto;
+  text-align:left;
+  border-radius:0;
+  font-size:18px;
+  font-weight:600;
+  color:#111;
+}
+.metric .sub{
+  margin:6px 0 0;
+  font-size:11px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:rgba(0,0,0,0.45);
 }
 
 .hr{ height:1px; background:rgba(0,0,0,0.06); margin:12px 0; }
@@ -331,7 +360,7 @@ button{
   padding:0;
 }
 
-/* Glossary modal (glass) */
+/* Modal (glass) */
 .modal{
   position:fixed;
   inset:0;
@@ -350,7 +379,7 @@ button{
 .modal.active{ opacity:1; pointer-events:auto; }
 
 .modal-panel{
-  width:min(820px, 94vw);
+  width:min(860px, 94vw);
   background:rgba(255,255,255,0.82);
   border:1px solid rgba(255,255,255,0.45);
   box-shadow: var(--shadow);
@@ -395,7 +424,7 @@ button{
   gap:12px;
   margin-top:14px;
 }
-@media (max-width: 720px){
+@media (max-width: 760px){
   .section-grid{ grid-template-columns:1fr; }
 }
 .block{
@@ -418,15 +447,8 @@ button{
   line-height:1.7;
   color:rgba(0,0,0,0.70);
 }
-.block ul{
-  margin:0;
-  padding-left:18px;
-}
-.divline{
-  height:1px;
-  background:rgba(0,0,0,0.06);
-  margin:14px 0;
-}
+.block ul{ margin:0; padding-left:18px; }
+.divline{ height:1px; background:rgba(0,0,0,0.06); margin:14px 0; }
 </style>
 </head>
 
@@ -436,15 +458,14 @@ button{
   <div class="topbar">
     <a class="back" href="/">← Back</a>
     <div class="brand">
-      <a class="ghostlink" href="#" id="openGlossary">How it works</a>
-      <span>Engine v0.1</span>
+      <a class="ghostlink" href="#" id="openHow">How it works</a>
+      <span>Engine v0.2</span>
     </div>
   </div>
 
   <h1>STORMIĒ</h1>
   <div class="sub">Performance Engine — Beta</div>
 
-  <!-- Positioning (your exact text) -->
   <div class="position">
     <div class="headline">Adaptive strength programming for fighters, climbers and hybrids.</div>
     <p class="micro">Integrates strength with weekly sport load to prevent overreach and misdirected volume.</p>
@@ -452,17 +473,18 @@ button{
   </div>
 
   <div class="value">
-    <a href="#" id="openGlossary2">View outputs & definitions</a>
+    <a href="#" id="openHow2">View outputs & definitions</a>
   </div>
 
   <div class="grid">
 
+    <!-- SETUP -->
     <div class="card">
       <div class="card-title">Setup</div>
 
       <div class="labelrow">
         <label>Training Profile</label>
-        <span class="info" data-tip="Fighter hides climbing sessions. Climber hides Muay Thai sessions. Hybrid shows both.">i</span>
+        <span class="info" data-tip="Fighter hides climbing inputs. Climber hides Muay Thai inputs. Hybrid shows both.">i</span>
       </div>
       <select id="profile">
         <option value="fighter">Fighter</option>
@@ -476,22 +498,40 @@ button{
       </div>
       <input type="number" id="bw" min="30" max="200" step="0.1" placeholder="e.g. 65">
 
+      <div class="labelrow" style="margin-top:10px;">
+        <label>Current fatigue state</label>
+        <span class="info" data-tip="Subjective fatigue: Low (fresh), Moderate (normal), High (heavy legs, poor sleep, sore/tight). Used for Overreach Index.">i</span>
+      </div>
+      <select id="fatigue">
+        <option value="low" selected>Low</option>
+        <option value="moderate">Moderate</option>
+        <option value="high">High</option>
+      </select>
+
       <div class="hr"></div>
 
+      <!-- Muay Thai -->
       <div id="thaiRow" class="sport-row">
         <div class="labelrow">
-          <label>Muay Thai sessions / week</label>
-          <span class="info" data-tip="Higher sport load reduces strength volume and lowers the effort cap.">i</span>
+          <label>Muay Thai load</label>
+          <span class="info" data-tip="Enter total sessions and how many are high-intensity (sparring / hard pads). Intensity influences Overreach Index.">i</span>
         </div>
-        <input type="number" id="thai" min="0" max="6" value="2">
+        <div class="row2">
+          <input type="number" id="thaiTotal" min="0" max="10" value="2" placeholder="total / week">
+          <input type="number" id="thaiHard" min="0" max="10" value="0" placeholder="high-intensity / week">
+        </div>
       </div>
 
+      <!-- Climbing -->
       <div id="climbRow" class="sport-row">
-        <div class="labelrow">
-          <label>Climbing sessions / week</label>
-          <span class="info" data-tip="Climbing adds pulling + tissue load. Higher sessions → prioritize performance recovery.">i</span>
+        <div class="labelrow" style="margin-top:10px;">
+          <label>Climbing load</label>
+          <span class="info" data-tip="Enter total sessions and how many are high-intensity (limit bouldering / max hangs / very hard attempts).">i</span>
         </div>
-        <input type="number" id="climb" min="0" max="6" value="2">
+        <div class="row2">
+          <input type="number" id="climbTotal" min="0" max="10" value="2" placeholder="total / week">
+          <input type="number" id="climbHard" min="0" max="10" value="0" placeholder="high-intensity / week">
+        </div>
       </div>
 
       <div class="actions">
@@ -501,14 +541,23 @@ button{
 
       <div class="output" id="output">
         <div class="kpi">
-          <div class="score" id="scoreText">Structural Strength Score: —</div>
-          <div class="badge" id="badgeText">—</div>
+          <div class="metric">
+            <div class="label">Structural Strength Score</div>
+            <div class="value" id="strengthScore">—</div>
+            <div class="sub" id="strengthSub">relative capacity</div>
+          </div>
+          <div class="metric">
+            <div class="label">Overreach Index</div>
+            <div class="value" id="overreachValue">—</div>
+            <div class="sub" id="overreachStatus">—</div>
+          </div>
         </div>
         <div class="hr"></div>
         <div class="mono" id="detailsText"></div>
       </div>
     </div>
 
+    <!-- TOP SETS -->
     <div class="card">
       <div class="card-title">Top Sets</div>
 
@@ -540,9 +589,8 @@ button{
       </div>
 
       <div class="hr"></div>
-
       <div class="notice">
-        RPE = effort rating (how close to failure). The engine uses <span class="mono">e1RM + RPE</span> to estimate capacity and set an intensity limit.
+        Enter one representative top set per movement pattern. The engine estimates capacity using <span class="mono">e1RM + RPE</span>.
       </div>
     </div>
 
@@ -552,16 +600,14 @@ button{
 </div>
 
 <!-- How it works modal -->
-<div class="modal" id="glossary" aria-hidden="true">
+<div class="modal" id="how" aria-hidden="true">
   <div class="modal-panel" role="dialog" aria-label="How it works">
     <div class="modal-head">
       <div>
         <div class="modal-title">How it works</div>
-        <div class="modal-sub">
-          The integration problem between strength and sport.
-        </div>
+        <div class="modal-sub">The integration problem between strength and sport.</div>
       </div>
-      <button class="modal-close" id="closeGlossary">Close</button>
+      <button class="modal-close" id="closeHow">Close</button>
     </div>
 
     <div class="section-grid">
@@ -573,6 +619,7 @@ button{
           <li>Back-off volume adjustment</li>
           <li>Structural focus bias</li>
           <li>Performance protection directive</li>
+          <li>Overreach Index (0–100) + status</li>
         </ul>
         <div class="divline"></div>
         <b>Soon</b>
@@ -584,19 +631,16 @@ button{
 
       <div class="block">
         <b>Definitions</b>
-        <p><strong>Intensity limit</strong> = maximum effort allowed under current sport load.</p>
-        <p><strong>Back-off volume</strong> = volume after your top set (scaled down when load is high).</p>
-        <p><strong>Performance protection</strong> = prioritize performance recovery when fatigue risk is high.</p>
-        <p><strong>Structural focus bias</strong> = what quality the plan prioritizes this week.</p>
-        <div class="divline"></div>
-        <p><strong>RPE</strong> = effort rating (10 = max, 8 ≈ 2 reps in reserve).</p>
+        <p><strong>Overreach Index</strong> = heuristic risk metric based on sport stress + effort + fatigue state.</p>
+        <p><strong>Intensity limit</strong> = maximum effort allowed under current integration stress (RPE cap).</p>
+        <p><strong>Back-off volume</strong> = volume after your top set (scaled down when stress is high).</p>
+        <p><strong>Performance protection</strong> = prioritize sport output when fatigue risk is elevated.</p>
+        <p><strong>RPE</strong> = effort rating (10 = max, 8 ≈ ~2 reps in reserve).</p>
       </div>
     </div>
 
     <div class="divline"></div>
-    <div class="modal-sub">
-      Most hybrid athletes guess strength volume. The result is fatigue without performance transfer.
-    </div>
+    <div class="modal-sub">Most hybrid athletes guess strength volume. The result is fatigue without performance transfer.</div>
   </div>
 </div>
 
@@ -636,35 +680,76 @@ function applyProfileUI(){
 profileEl.addEventListener("change", applyProfileUI);
 applyProfileUI();
 
+/* Input sanity: hard <= total */
+function enforceHardLETotal(totalId, hardId){
+  const t = document.getElementById(totalId);
+  const h = document.getElementById(hardId);
+
+  function fix(){
+    const total = parseInt(t.value || "0", 10) || 0;
+    let hard = parseInt(h.value || "0", 10) || 0;
+
+    if(hard > total) hard = total;
+    if(hard < 0) hard = 0;
+    if(total < 0) t.value = 0;
+
+    h.value = hard;
+  }
+
+  t.addEventListener("input", fix);
+  h.addEventListener("input", fix);
+  fix();
+}
+enforceHardLETotal("thaiTotal","thaiHard");
+enforceHardLETotal("climbTotal","climbHard");
+
 /* Modal */
-const glossary = document.getElementById("glossary");
-function openModal(e){
-  if(e) e.preventDefault();
-  glossary.classList.add("active");
-  glossary.setAttribute("aria-hidden","false");
+const how = document.getElementById("how");
+function openHow(e){ if(e) e.preventDefault(); how.classList.add("active"); how.setAttribute("aria-hidden","false"); }
+function closeHow(){ how.classList.remove("active"); how.setAttribute("aria-hidden","true"); }
+document.getElementById("openHow").addEventListener("click", openHow);
+document.getElementById("openHow2").addEventListener("click", openHow);
+document.getElementById("closeHow").addEventListener("click", closeHow);
+how.addEventListener("click", (e)=>{ if(e.target === how) closeHow(); });
+window.addEventListener("keydown",(e)=>{ if(e.key === "Escape" && how.classList.contains("active")) closeHow(); });
+
+/* Overreach Index model (v0.2 heuristic, sport-protection bias) */
+function fatiguePoints(level){
+  if(level === "high") return 16;
+  if(level === "moderate") return 8;
+  return 0;
 }
-function closeModal(){
-  glossary.classList.remove("active");
-  glossary.setAttribute("aria-hidden","true");
+
+function overreachStatus(index){
+  if(index >= 65) return "ELEVATED";
+  if(index >= 35) return "CONTROLLED";
+  return "MINIMAL";
 }
-document.getElementById("openGlossary").addEventListener("click", openModal);
-document.getElementById("openGlossary2").addEventListener("click", openModal);
-document.getElementById("closeGlossary").addEventListener("click", closeModal);
-glossary.addEventListener("click", (e)=>{ if(e.target === glossary) closeModal(); });
-window.addEventListener("keydown",(e)=>{ if(e.key === "Escape" && glossary.classList.contains("active")) closeModal(); });
+
+/* Sport stress: total sessions + extra for high-intensity sessions
+   (kept simple but meaningful; stable; "hard" adds additional stress) */
+function sportStress(thaiTotal, thaiHard, climbTotal, climbHard){
+  // Muay Thai: base 1.0 per session, hard adds +0.7
+  const thai = (thaiTotal * 1.0) + (thaiHard * 0.7);
+  // Climbing: base 0.9 per session, hard adds +0.7
+  const climb = (climbTotal * 0.9) + (climbHard * 0.7);
+  return thai + climb; // typical range 0–~20
+}
 
 function analyze(){
-  const profile = document.getElementById("profile").value;
+  const profile = profileEl.value;
 
   const bwRaw = parseFloat(document.getElementById("bw").value);
   const bw = (isNum(bwRaw) && bwRaw > 0) ? bwRaw : null;
 
-  // sport load (handle hidden fields)
-  const thaiEl  = document.getElementById("thai");
-  const climbEl = document.getElementById("climb");
+  const fatigue = document.getElementById("fatigue").value;
 
-  const thai  = thaiRow.classList.contains("hidden")  ? 0 : (parseInt(thaiEl.value, 10) || 0);
-  const climb = climbRow.classList.contains("hidden") ? 0 : (parseInt(climbEl.value, 10) || 0);
+  // sport load (handle hidden fields)
+  const thaiTotal = thaiRow.classList.contains("hidden") ? 0 : (parseInt(document.getElementById("thaiTotal").value,10) || 0);
+  const thaiHard  = thaiRow.classList.contains("hidden") ? 0 : (parseInt(document.getElementById("thaiHard").value,10)  || 0);
+
+  const climbTotal = climbRow.classList.contains("hidden") ? 0 : (parseInt(document.getElementById("climbTotal").value,10) || 0);
+  const climbHard  = climbRow.classList.contains("hidden") ? 0 : (parseInt(document.getElementById("climbHard").value,10)  || 0);
 
   const squatW = parseFloat(document.getElementById("squatWeight").value);
   const squatR = parseFloat(document.getElementById("squatReps").value);
@@ -682,57 +767,34 @@ function analyze(){
   const ok = required.every(isNum);
 
   const output = document.getElementById("output");
-  const scoreText = document.getElementById("scoreText");
-  const badgeText = document.getElementById("badgeText");
-  const detailsText = document.getElementById("detailsText");
-
   output.style.display = "block";
 
+  const strengthScoreEl = document.getElementById("strengthScore");
+  const overreachValueEl = document.getElementById("overreachValue");
+  const overreachStatusEl = document.getElementById("overreachStatus");
+  const detailsText = document.getElementById("detailsText");
+
   if(!ok){
-    scoreText.textContent = "Missing inputs";
-    badgeText.textContent = "Complete top sets";
+    strengthScoreEl.textContent = "—";
+    overreachValueEl.textContent = "—";
+    overreachStatusEl.textContent = "COMPLETE INPUTS";
     detailsText.textContent =
       "Enter: kg / reps / RPE for Squat, Hinge and Pull.\n" +
-      "Bodyweight is optional but recommended.";
+      "Bodyweight is optional but recommended.\n" +
+      "Sport inputs improve Overreach Index accuracy.";
     return;
   }
 
+  // Capacity estimates
   const squat = e1RM(squatW, squatR) * rpeFactor(squatP);
   const hinge = e1RM(hingeW, hingeR) * rpeFactor(hingeP);
   const pull  = e1RM(pullW,  pullR)  * rpeFactor(pullP);
 
-  const sportLoad = thai + climb;
-
-  // Prescription logic (MVP, product feel)
-  let loadCategory, volumeAdjust, sessions, rpeCap, focusArea, protection;
-  if(sportLoad >= 4){
-    loadCategory = "High";
-    volumeAdjust = "Back-off volume: -20%";
-    sessions = 2;
-    rpeCap = 8;
-    focusArea = "Durability + recovery";
-    protection = "Prioritize performance recovery";
-  } else if(sportLoad >= 2){
-    loadCategory = "Moderate";
-    volumeAdjust = "Back-off volume: -10%";
-    sessions = 3;
-    rpeCap = 9;
-    focusArea = "Strength maintenance";
-    protection = "Maintain sport output";
-  } else {
-    loadCategory = "Low";
-    volumeAdjust = "Back-off volume: full";
-    sessions = 3;
-    rpeCap = 9;
-    focusArea = "Strength progression";
-    protection = "Progress approved";
-  }
-
   // Profile bias (subtle)
   let wSquat = 1.0, wHinge = 1.0, wPull = 1.0;
   let bias = "Structural focus bias: balanced";
-  if(profile === "fighter"){ wHinge = 1.10; wPull = 1.05; bias = "Structural focus bias: posterior chain + resilience"; focusArea = "Power + resilience"; }
-  if(profile === "climber"){ wPull  = 1.20; wHinge = 0.95; bias = "Structural focus bias: pulling capacity + tissue tolerance"; focusArea = "Pulling capacity"; }
+  if(profile === "fighter"){ wHinge = 1.10; wPull = 1.05; bias = "Structural focus bias: posterior chain + resilience"; }
+  if(profile === "climber"){ wPull  = 1.20; wHinge = 0.95; bias = "Structural focus bias: pulling capacity + tissue tolerance"; }
   if(profile === "hybrid"){  wPull  = 1.10; bias = "Structural focus bias: hybrid durability"; }
 
   const bwUsed = bw ?? 65;
@@ -742,29 +804,84 @@ function analyze(){
     ((pull  / bwUsed) * wPull)
   ) / 3;
 
-  const score = clamp(Math.round(rel * 40), 0, 100);
+  // Strength score (0–100)
+  const strengthScore = clamp(Math.round(rel * 40), 0, 100);
+  strengthScoreEl.textContent = strengthScore;
 
-  scoreText.textContent = "Structural Strength Score: " + score;
-  badgeText.textContent = loadCategory + " sport load";
+  // Overreach Index (0–100), sport-protection biased and stable
+  const avgRPE = (squatP + hingeP + pullP) / 3;
+  const sStress = sportStress(thaiTotal, thaiHard, climbTotal, climbHard); // ~0–20+
+  const fatiguePts = fatiguePoints(fatigue);
+
+  // Strength demand from effort (RPE) — minimal at 6, higher at 9–10
+  const effortDemand = clamp(Math.round((avgRPE - 6) * 6), 0, 28); // 6->0, 10->24
+  // Sport drives most of the index
+  const sportDemand  = clamp(Math.round(sStress * 10), 0, 80);
+  // Stronger athletes tolerate stress slightly better (small stabilizer)
+  const tolerance = Math.round((strengthScore / 100) * 10); // 0–10
+
+  const overreachIndex = clamp(Math.round(sportDemand + effortDemand + fatiguePts - tolerance), 0, 100);
+  const status = overreachStatus(overreachIndex);
+
+  overreachValueEl.textContent = overreachIndex;
+  overreachStatusEl.textContent = status;
+
+  // Prescription rules (sport protection first)
+  let sessions, rpeCap, volumeAdjust, directive, focusArea;
+  if(status === "ELEVATED"){
+    sessions = 2;
+    rpeCap = 8;
+    volumeAdjust = "Back-off volume: -20%";
+    directive = "Protect sport output. Reduce stress and prioritize recovery.";
+    focusArea = "Durability + tissue tolerance";
+  } else if(status === "CONTROLLED"){
+    sessions = 3;
+    rpeCap = 9;
+    volumeAdjust = "Back-off volume: -10%";
+    directive = "Maintain. Progress selectively under an effort cap.";
+    focusArea = "Strength maintenance";
+  } else {
+    sessions = 3;
+    rpeCap = 9;
+    volumeAdjust = "Back-off volume: full";
+    directive = "Progress approved. Keep effort controlled and add load gradually.";
+    focusArea = "Strength progression";
+  }
+
+  // Fine tune focus area by profile
+  if(profile === "fighter") focusArea = (status === "ELEVATED") ? "Resilience + power maintenance" : "Power + resilience";
+  if(profile === "climber") focusArea = (status === "ELEVATED") ? "Pulling tolerance + durability" : "Pulling capacity";
+  if(profile === "hybrid")  focusArea = (status === "ELEVATED") ? "Hybrid durability" : focusArea;
+
+  const sportTotal = thaiTotal + climbTotal;
+  const sportHardTotal = thaiHard + climbHard;
 
   const bwNote = bw ? "" : "Note: bodyweight not set → using 65kg baseline (MVP).";
+  const stressNote =
+    "Sport stress: " + sStress.toFixed(1) + " (total sessions " + sportTotal + ", high-intensity " + sportHardTotal + ").";
 
   detailsText.textContent =
     "Profile: " + profile.toUpperCase() + "\n" +
-    "Sport sessions: " + sportLoad + "/week\n\n" +
+    "Fatigue state: " + fatigue.toUpperCase() + "\n" +
+    stressNote + "\n\n" +
     "Strength frequency: " + sessions + "/week\n" +
     "Intensity limit (RPE cap): " + rpeCap + "\n" +
     volumeAdjust + "\n" +
     bias + "\n" +
     "Focus area: " + focusArea + "\n" +
-    "Directive: " + protection + "\n" +
+    "Directive: " + directive + "\n" +
     (bwNote ? ("\n\n" + bwNote) : "");
 }
 
 function resetForm(){
   document.getElementById("bw").value = "";
-  document.getElementById("thai").value = 2;
-  document.getElementById("climb").value = 2;
+  document.getElementById("fatigue").value = "low";
+
+  document.getElementById("thaiTotal").value = 2;
+  document.getElementById("thaiHard").value = 0;
+
+  document.getElementById("climbTotal").value = 2;
+  document.getElementById("climbHard").value = 0;
 
   ["squatWeight","squatReps","squatRPE","hingeWeight","hingeReps","hingeRPE","pullWeight","pullReps","pullRPE"]
     .forEach(id => document.getElementById(id).value = "");
