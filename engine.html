@@ -1,36 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Stormiē Performance Engine</title>
 
 <style>
 :root{
   --text:#111;
-  --muted:rgba(0,0,0,0.55);
-  --muted2:rgba(0,0,0,0.38);
-  --line:rgba(0,0,0,0.08);
-  --line2:rgba(0,0,0,0.12);
-  --wash:rgba(0,0,0,0.02);
-  --shadow:0 30px 80px rgba(0,0,0,0.10);
+  --muted:rgba(0,0,0,.62);
+  --muted2:rgba(0,0,0,.42);
+  --line:rgba(0,0,0,.09);
+  --line2:rgba(0,0,0,.14);
+  --wash:rgba(0,0,0,.02);
+
+  /* glass */
+  --glass: rgba(255,255,255,.70);
+  --glassLine: rgba(255,255,255,.45);
+  --shadow: 0 30px 90px rgba(0,0,0,.14);
+
+  --radius: 18px;
 }
 
 *{ box-sizing:border-box; }
+html,body{ height:100%; }
 body{
   margin:0;
   background:#fff;
   color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;
   display:flex;
   justify-content:center;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
 }
 
 .container{
   width:min(980px, 92vw);
-  padding:54px 0 80px;
+  padding:54px 0 90px;
 }
 
+/* Top bar */
 .topbar{
   display:flex;
   align-items:center;
@@ -38,184 +48,130 @@ body{
   margin-bottom:22px;
 }
 
-.back, .ghostlink{
-  display:inline-block;
+.back{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
   font-size:12px;
-  letter-spacing:0.22em;
+  letter-spacing:.22em;
   text-transform:uppercase;
   text-decoration:none;
   color:var(--muted);
-  border-bottom:1px solid rgba(0,0,0,0.16);
+  border-bottom:1px solid rgba(0,0,0,.16);
   padding-bottom:3px;
 }
-.back:hover, .ghostlink:hover{ color:#000; border-bottom-color:rgba(0,0,0,0.32); }
+.back:hover{ color:#000; border-bottom-color:rgba(0,0,0,.32); }
 
 .brand{
-  display:flex;
-  gap:16px;
-  align-items:center;
+  text-align:right;
   font-size:11px;
-  letter-spacing:0.28em;
+  letter-spacing:.28em;
   text-transform:uppercase;
   color:var(--muted2);
 }
 
+/* Header */
 h1{
   margin:0;
   text-align:center;
   font-size:28px;
-  font-weight:600;
-  letter-spacing:0.18em;
+  font-weight:650;
+  letter-spacing:.18em;
 }
 
 .sub{
   text-align:center;
-  margin:10px 0 12px;
+  margin:10px 0 10px;
   color:var(--muted);
-  letter-spacing:0.22em;
+  letter-spacing:.22em;
   text-transform:uppercase;
   font-size:12px;
 }
 
-/* Positioning */
-.position{
+.hero{
   text-align:center;
-  margin:0 0 26px;
-}
-.position .headline{
-  font-size:12px;
-  letter-spacing:0.16em;
-  text-transform:uppercase;
-  font-weight:600;
-  color:rgba(0,0,0,0.78);
-  margin:0 0 8px;
-}
-.position .micro{
-  margin:0;
-  font-size:12px;
-  line-height:1.75;
-  color:rgba(0,0,0,0.58);
-}
-.position .problem{
-  margin:10px 0 0;
-  font-size:12px;
-  line-height:1.75;
-  color:rgba(0,0,0,0.52);
+  margin:14px auto 34px;
+  max-width: 720px;
 }
 
-.value{
-  margin:0 auto 28px;
-  width:min(920px, 100%);
-  border:1px solid var(--line);
-  background:var(--wash);
-  border-radius:16px;
-  padding:14px 16px;
-  text-align:center;
+.hero .headline{
+  font-size:14px;
+  color:rgba(0,0,0,.72);
+  letter-spacing:.02em;
+  line-height:1.6;
+  margin-bottom:10px;
 }
-.value a{
-  display:inline-block;
-  font-size:11px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  color:rgba(0,0,0,0.55);
-  text-decoration:none;
-  border-bottom:1px solid rgba(0,0,0,0.16);
-  padding-bottom:3px;
+.hero .micro{
+  font-size:12px;
+  color:rgba(0,0,0,.52);
+  line-height:1.6;
 }
-.value a:hover{ color:#000; border-bottom-color:rgba(0,0,0,0.28); }
 
+/* Layout grid */
 .grid{
   display:grid;
   grid-template-columns: 1fr 1fr;
   gap:14px;
 }
-@media (max-width: 900px){
+@media (max-width: 840px){
   .grid{ grid-template-columns:1fr; }
 }
 
+/* Cards */
 .card{
   border:1px solid var(--line);
   background:var(--wash);
-  border-radius:16px;
+  border-radius:var(--radius);
   padding:18px 16px;
 }
 
 .card-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
   font-size:11px;
-  letter-spacing:0.28em;
+  letter-spacing:.28em;
   text-transform:uppercase;
   color:var(--muted2);
   margin-bottom:12px;
 }
 
-/* Labels + tooltips */
-.labelrow{
+.hr{
+  height:1px;
+  background:rgba(0,0,0,.06);
+  margin:12px 0;
+}
+
+/* Inputs */
+label{
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:10px;
+  font-size:12px;
+  color:rgba(0,0,0,.72);
   margin:0 0 6px;
 }
-label{
-  display:block;
-  font-size:12px;
-  color:rgba(0,0,0,0.72);
-  margin:0;
-}
-.info{
+
+.field{
   position:relative;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  width:20px;
-  height:20px;
-  border-radius:10px;
-  border:1px solid rgba(0,0,0,0.10);
-  background:rgba(255,255,255,0.8);
-  cursor:default;
-  user-select:none;
-  font-size:11px;
-  color:rgba(0,0,0,0.55);
+  margin-bottom:12px;
 }
-.info::after{
-  content:attr(data-tip);
-  position:absolute;
-  right:0;
-  top:26px;
-  width:min(440px, 86vw);
-  padding:10px 10px;
-  border-radius:12px;
-  background:rgba(255,255,255,0.86);
-  border:1px solid rgba(0,0,0,0.10);
-  box-shadow: var(--shadow);
-  color:rgba(0,0,0,0.72);
-  font-size:12px;
-  line-height:1.6;
-  opacity:0;
-  transform:translateY(-4px);
-  pointer-events:none;
-  transition:opacity .18s ease, transform .18s ease;
-  text-transform:none;
-  letter-spacing:0;
-}
-.info:hover::after{ opacity:1; transform:translateY(0); }
+.field:last-child{ margin-bottom:0; }
 
 input, select{
   width:100%;
-  padding:10px 11px;
+  padding:11px 12px;
   border:1px solid var(--line2);
-  border-radius:12px;
+  border-radius:14px;
   background:#fff;
   outline:none;
   font-size:14px;
   color:#111;
 }
-input:focus, select:focus{ border-color:rgba(0,0,0,0.22); }
-
-input[disabled]{
-  opacity:0.65;
-  background:rgba(0,0,0,0.02);
-  cursor:not-allowed;
+input:focus, select:focus{
+  border-color:rgba(0,0,0,.26);
 }
 
 .row2{
@@ -236,24 +192,24 @@ input[disabled]{
   .row3{ grid-template-columns:1fr; }
 }
 
-.lift{ margin-bottom:14px; }
+.lift{
+  margin-bottom:14px;
+}
 .lift:last-child{ margin-bottom:0; }
 
 .lift-name{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
   font-size:12px;
-  letter-spacing:0.22em;
+  letter-spacing:.22em;
   text-transform:uppercase;
-  color:rgba(0,0,0,0.55);
+  color:rgba(0,0,0,.55);
   margin-bottom:8px;
 }
 
-.helper{
-  margin:8px 0 0;
-  font-size:12px;
-  line-height:1.7;
-  color:rgba(0,0,0,0.50);
-}
-
+/* Buttons */
 .actions{
   margin-top:14px;
   display:flex;
@@ -266,366 +222,304 @@ input[disabled]{
 button{
   flex:1;
   padding:14px 14px;
-  border-radius:14px;
+  border-radius:16px;
   border:none;
   cursor:pointer;
   font-size:12px;
-  letter-spacing:0.22em;
+  letter-spacing:.22em;
   text-transform:uppercase;
 }
+
 .primary{ background:#111; color:#fff; }
-.primary:hover{ opacity:0.88; }
+.primary:hover{ opacity:.90; }
+
 .secondary{
   background:#fff;
   color:#111;
   border:1px solid var(--line2);
 }
-.secondary:hover{ background:rgba(0,0,0,0.02); }
+.secondary:hover{ background:rgba(0,0,0,.02); }
 
+/* Output blocks */
 .output{
   margin-top:14px;
   border:1px solid var(--line);
-  background:rgba(0,0,0,0.015);
-  border-radius:16px;
+  background:rgba(0,0,0,.015);
+  border-radius:var(--radius);
   padding:18px 16px;
   display:none;
 }
 
-.fade{
-  opacity:1;
-  transform:translateY(0);
-  transition:opacity .22s ease, transform .22s ease;
-}
-.fade.out{
-  opacity:0;
-  transform:translateY(6px);
-}
-
 .kpi{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
   gap:12px;
+  flex-wrap:wrap;
 }
-@media (max-width: 520px){
-  .kpi{ grid-template-columns:1fr; }
-}
-
-.metric{
-  border:1px solid rgba(0,0,0,0.06);
-  background:rgba(255,255,255,0.55);
-  border-radius:14px;
-  padding:12px 12px;
-}
-.metric .label{
-  font-size:11px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  color:rgba(0,0,0,0.45);
-  margin-bottom:6px;
-}
-.metric .value{
+.score{
   font-size:18px;
-  font-weight:600;
-  color:#111;
+  font-weight:650;
 }
-.metric .sub{
-  margin:6px 0 0;
+.badge{
   font-size:11px;
-  letter-spacing:0.18em;
+  letter-spacing:.22em;
   text-transform:uppercase;
-  color:rgba(0,0,0,0.45);
+  color:rgba(0,0,0,.55);
 }
-
-.triple{
-  display:grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap:12px;
-  margin-top:12px;
-}
-@media (max-width: 720px){
-  .triple{ grid-template-columns:1fr; }
-}
-
-.hr{ height:1px; background:rgba(0,0,0,0.06); margin:12px 0; }
-
-.mono{
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size:12px;
+.copy{
+  font-size:13px;
   line-height:1.75;
-  color:rgba(0,0,0,0.72);
+  color:rgba(0,0,0,.74);
   white-space:pre-line;
 }
 
-.notice{
-  font-size:12px;
-  color:rgba(0,0,0,0.55);
-  line-height:1.7;
+/* Week plan (fix: mobile scroll + desktop grid) */
+.weekWrap{
+  margin-top:14px;
+  border:1px solid var(--line);
+  background:rgba(0,0,0,.012);
+  border-radius:var(--radius);
+  padding:16px;
+  display:none;
 }
 
-.footer{
-  margin-top:22px;
-  text-align:center;
-  font-size:11px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  color:rgba(0,0,0,0.35);
-}
-
-/* Dynamic sport rows */
-.sport-row{
-  transition: opacity .2s ease, transform .2s ease, max-height .25s ease;
-  overflow:hidden;
-}
-.sport-row.hidden{
-  opacity:0;
-  transform:translateY(-4px);
-  max-height:0;
-  pointer-events:none;
-  margin:0;
-  padding:0;
-}
-
-/* Modal (glass) */
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(10,10,10,0.28);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  opacity:0;
-  pointer-events:none;
-  transition:opacity .25s ease;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:26px;
-  z-index:999;
-}
-.modal.active{ opacity:1; pointer-events:auto; }
-
-.modal-panel{
-  width:min(920px, 94vw);
-  background:rgba(255,255,255,0.82);
-  border:1px solid rgba(255,255,255,0.45);
-  box-shadow: var(--shadow);
-  border-radius:18px;
-  padding:22px 18px;
-}
-.modal-head{
+.weekHeader{
   display:flex;
   align-items:flex-start;
   justify-content:space-between;
   gap:12px;
   margin-bottom:12px;
 }
-.modal-title{
-  font-size:12px;
-  letter-spacing:0.28em;
-  text-transform:uppercase;
-  color:rgba(0,0,0,0.55);
-}
-.modal-close{
-  border:none;
-  background:transparent;
-  cursor:pointer;
-  font-size:14px;
-  letter-spacing:0.18em;
-  text-transform:uppercase;
-  color:rgba(0,0,0,0.55);
-  padding:6px 8px;
-}
-.modal-close:hover{ color:#000; }
 
-.modal-sub{
-  margin:6px 0 0;
-  font-size:12px;
-  line-height:1.7;
-  color:rgba(0,0,0,0.62);
-}
-
-.section-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-top:14px;
-}
-@media (max-width: 860px){
-  .section-grid{ grid-template-columns:1fr; }
-}
-.block{
-  border:1px solid rgba(0,0,0,0.08);
-  background:rgba(0,0,0,0.02);
-  border-radius:14px;
-  padding:12px 12px;
-}
-.block b{
-  display:block;
-  font-size:11px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  margin-bottom:8px;
-  color:rgba(0,0,0,0.55);
-}
-.block p, .block li{
-  margin:0;
-  font-size:12px;
-  line-height:1.7;
-  color:rgba(0,0,0,0.70);
-}
-.block ul{ margin:0; padding-left:18px; }
-.divline{ height:1px; background:rgba(0,0,0,0.06); margin:14px 0; }
-
-/* ---------- ULTRA PREMIUM WEEK OUTPUT ---------- */
-.weekWrap{
-  margin-top:14px;
-  border:1px solid rgba(0,0,0,0.06);
-  background:rgba(255,255,255,0.55);
-  border-radius:16px;
-  padding:14px 14px;
-}
-
-.weekHead{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:12px;
-  margin-bottom:10px;
-}
 .weekTitle{
   font-size:11px;
-  letter-spacing:0.28em;
+  letter-spacing:.28em;
   text-transform:uppercase;
-  color:rgba(0,0,0,0.50);
+  color:rgba(0,0,0,.45);
 }
 .weekMeta{
   font-size:11px;
-  letter-spacing:0.22em;
+  letter-spacing:.20em;
   text-transform:uppercase;
-  color:rgba(0,0,0,0.38);
+  color:rgba(0,0,0,.40);
   text-align:right;
 }
 
+/* On desktop: true 7-col grid */
 .weekGrid{
   display:grid;
-  grid-template-columns:repeat(7, 1fr);
+  grid-template-columns: repeat(7, minmax(120px, 1fr));
   gap:10px;
 }
-@media (max-width: 860px){
-  .weekGrid{ grid-template-columns:repeat(2, 1fr); }
-}
-@media (max-width: 520px){
-  .weekGrid{ grid-template-columns:1fr; }
+
+/* On small screens: horizontal scroll */
+@media (max-width: 840px){
+  .weekGrid{
+    display:flex;
+    gap:10px;
+    overflow:auto;
+    padding-bottom:6px;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+  }
+  .day{
+    min-width: 180px;
+    scroll-snap-align:start;
+  }
 }
 
-.dayTile{
-  position:relative;
+.day{
+  background:rgba(255,255,255,.72);
+  border:1px solid rgba(0,0,0,.06);
   border-radius:16px;
-  padding:12px 12px 12px;
-  border:1px solid rgba(0,0,0,0.08);
-  background:rgba(255,255,255,0.62);
-  box-shadow: 0 14px 40px rgba(0,0,0,0.06);
-  overflow:hidden;
-}
-
-.dayTile::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(120deg, rgba(255,255,255,0.65), rgba(255,255,255,0.20));
-  pointer-events:none;
+  padding:12px 12px;
+  box-shadow: 0 18px 50px rgba(0,0,0,.06);
 }
 
 .dayTop{
-  position:relative;
   display:flex;
-  justify-content:space-between;
   align-items:baseline;
-  gap:8px;
-  margin-bottom:10px;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:8px;
 }
+
 .dow{
   font-size:11px;
-  letter-spacing:0.28em;
+  letter-spacing:.28em;
   text-transform:uppercase;
-  color:rgba(0,0,0,0.55);
+  color:rgba(0,0,0,.50);
 }
 .tag{
   font-size:10px;
-  letter-spacing:0.22em;
+  letter-spacing:.22em;
   text-transform:uppercase;
-  color:rgba(0,0,0,0.38);
+  color:rgba(0,0,0,.36);
 }
 
-.big{
-  position:relative;
-  font-size:12px;
-  letter-spacing:0.18em;
-  text-transform:uppercase;
-  font-weight:600;
-  color:rgba(0,0,0,0.78);
-  line-height:1.35;
-  min-height:34px;
+.dayMain{
+  font-size:13px;
+  line-height:1.6;
+  color:rgba(0,0,0,.78);
 }
-.small{
-  position:relative;
-  font-size:11px;
-  letter-spacing:0.12em;
-  color:rgba(0,0,0,0.52);
-  margin-top:8px;
-  line-height:1.5;
+.dayMain strong{
+  font-weight:650;
 }
 
-.intensityPip{
-  position:absolute;
-  right:12px;
-  bottom:12px;
-  width:10px;
-  height:10px;
-  border-radius:6px;
-  border:1px solid rgba(0,0,0,0.10);
-  background:rgba(0,0,0,0.10);
-  opacity:0.9;
-}
-.pipLow{ background:rgba(0,0,0,0.08); }
-.pipMod{ background:rgba(0,0,0,0.14); }
-.pipHigh{ background:rgba(0,0,0,0.20); }
-
-.sessions{
-  margin-top:12px;
+/* session blocks */
+.sessionRow{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
+  grid-template-columns: 1fr 1fr;
+  gap:10px;
+  margin-top:12px;
 }
-@media (max-width: 860px){
-  .sessions{ grid-template-columns:1fr; }
+@media (max-width: 840px){
+  .sessionRow{ grid-template-columns:1fr; }
 }
-
 .sessionCard{
-  border:1px solid rgba(0,0,0,0.08);
-  background:rgba(0,0,0,0.02);
-  border-radius:14px;
-  padding:12px 12px;
+  background:rgba(255,255,255,.72);
+  border:1px solid rgba(0,0,0,.06);
+  border-radius:16px;
+  padding:14px 14px;
+  box-shadow: 0 18px 50px rgba(0,0,0,.06);
 }
 .sessionTitle{
   font-size:11px;
-  letter-spacing:0.22em;
+  letter-spacing:.28em;
   text-transform:uppercase;
-  color:rgba(0,0,0,0.55);
-  margin-bottom:8px;
+  color:rgba(0,0,0,.45);
+  margin-bottom:10px;
 }
 .sessionBody{
-  font-size:12px;
+  font-size:13px;
   line-height:1.7;
-  color:rgba(0,0,0,0.70);
+  color:rgba(0,0,0,.78);
+  white-space:pre-line;
 }
-.sessionBody .mono{ font-size:12px; }
 
-.recoveryCard{
-  margin-top:12px;
-  border:1px solid rgba(0,0,0,0.08);
-  background:rgba(0,0,0,0.02);
-  border-radius:14px;
-  padding:12px 12px;
+/* Footer */
+.footer{
+  margin-top:22px;
+  text-align:center;
+  font-size:11px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:rgba(0,0,0,.32);
+}
+
+/* Info icon + tooltip system (fix: no overlap, works on mobile + desktop) */
+.infoBtn{
+  flex:0 0 auto;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  border:1px solid rgba(0,0,0,.10);
+  background:rgba(255,255,255,.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  user-select:none;
+  position:relative;
+}
+.infoBtn:hover{ background:rgba(255,255,255,.92); }
+
+.infoBtn span{
+  font-size:12px;
+  color:rgba(0,0,0,.58);
+  font-weight:650;
+  transform: translateY(-.5px);
+}
+
+/* Desktop popover */
+.popover{
+  position:fixed;
+  z-index:999;
+  width:min(340px, 88vw);
+  background:var(--glass);
+  border:1px solid var(--glassLine);
+  border-radius:16px;
+  box-shadow: var(--shadow);
+  padding:14px 14px;
+  display:none;
+}
+.popover .popTitle{
+  font-size:11px;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:rgba(0,0,0,.50);
+  margin-bottom:8px;
+}
+.popover .popText{
+  font-size:13px;
+  line-height:1.65;
+  color:rgba(0,0,0,.78);
+}
+
+/* Mobile bottom sheet */
+.sheetOverlay{
+  position:fixed;
+  inset:0;
+  z-index:998;
+  background:rgba(0,0,0,.28);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  display:none;
+}
+.sheet{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:999;
+  border-top-left-radius:20px;
+  border-top-right-radius:20px;
+  background:rgba(255,255,255,.86);
+  border-top:1px solid rgba(255,255,255,.55);
+  box-shadow: 0 -30px 90px rgba(0,0,0,.18);
+  padding:16px 16px 18px;
+  transform: translateY(18px);
+  opacity:0;
+  transition: transform .25s ease, opacity .25s ease;
+  display:none;
+}
+.sheet.active{
+  transform: translateY(0);
+  opacity:1;
+}
+.sheetTop{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:10px;
+}
+.sheetTitle{
+  font-size:11px;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:rgba(0,0,0,.50);
+}
+.sheetClose{
+  width:34px; height:34px;
+  border-radius:12px;
+  border:1px solid rgba(0,0,0,.10);
+  background:rgba(255,255,255,.7);
+  cursor:pointer;
+}
+.sheetClose:hover{ background:rgba(255,255,255,.9); }
+.sheetBody{
+  font-size:13px;
+  line-height:1.65;
+  color:rgba(0,0,0,.78);
+}
+
+/* Prefer sheet on small screens */
+@media (max-width: 760px){
+  .popover{ display:none !important; }
 }
 </style>
 </head>
@@ -635,86 +529,84 @@ button{
 
   <div class="topbar">
     <a class="back" href="/">← Back</a>
-    <div class="brand">
-      <a class="ghostlink" href="#" id="openHow">How it works</a>
-      <span>Engine v0.5</span>
-    </div>
+    <div class="brand">Engine v0.2</div>
   </div>
 
   <h1>STORMIĒ</h1>
   <div class="sub">Performance Engine — Beta</div>
 
-  <div class="position">
+  <div class="hero">
     <div class="headline">Adaptive strength programming for fighters, climbers and hybrids.</div>
-    <p class="micro">Integrates strength with weekly sport load to prevent overreach and misdirected volume.</p>
-    <p class="problem">Most hybrid athletes guess strength volume. The result is fatigue without performance transfer.</p>
-  </div>
-
-  <div class="value">
-    <a href="#" id="openHow2">View outputs & definitions</a>
+    <div class="micro">Integrates strength with weekly sport load to prevent overreach and misdirected volume.</div>
   </div>
 
   <div class="grid">
 
     <!-- SETUP -->
     <div class="card">
-      <div class="card-title">Setup</div>
-
-      <div class="labelrow">
-        <label>Training Profile</label>
-        <span class="info" data-tip="Fighter hides climbing inputs. Climber hides Muay Thai inputs. Hybrid shows both.">i</span>
+      <div class="card-title">
+        <div>Setup</div>
+        <button class="infoBtn" type="button" data-title="What this does" data-text="You input weekly sport load + one representative strength set. The engine returns a weekly integration output: strength frequency, effort cap (RPE), back-off volume, structural bias, and a recovery directive."><span>i</span></button>
       </div>
-      <select id="profile">
-        <option value="fighter">Fighter</option>
-        <option value="climber">Climber</option>
-        <option value="hybrid" selected>Hybrid</option>
-      </select>
 
-      <div class="labelrow" style="margin-top:10px;">
-        <label>Strength training experience</label>
-        <span class="info" data-tip="Years of consistent resistance training (barbell/dumbbell/structured bodyweight). Not total sport experience. Used as a tolerance modifier.">i</span>
+      <div class="field">
+        <label>
+          Training Profile
+          <button class="infoBtn" type="button"
+            data-title="Training profile"
+            data-text="Fighter hides climbing inputs. Climber hides Muay Thai inputs. Hybrid shows both. This keeps the system clean and context-aware.">
+            <span>i</span>
+          </button>
+        </label>
+        <select id="profile" onchange="syncProfileUI()">
+          <option value="fighter">Fighter</option>
+          <option value="climber">Climber</option>
+          <option value="hybrid" selected>Hybrid</option>
+        </select>
       </div>
-      <select id="strengthExperience">
-        <option value="beginner">Beginner (0–2 years consistent)</option>
-        <option value="intermediate" selected>Intermediate (2–5 years)</option>
-        <option value="advanced">Advanced (5+ years)</option>
-      </select>
 
-      <div class="labelrow" style="margin-top:10px;">
-        <label>Strength equipment</label>
-        <span class="info" data-tip="Systemic stress modifier. Barbell tends to produce higher systemic load than dumbbells/bodyweight.">i</span>
-      </div>
-      <select id="equipment">
-        <option value="barbell" selected>Barbell</option>
-        <option value="dumbbell">Dumbbells / Kettlebells</option>
-        <option value="bodyweight">Bodyweight</option>
-        <option value="mixed">Mixed</option>
-      </select>
+      <div class="row2">
+        <div class="field">
+          <label>
+            Bodyweight (kg)
+            <button class="infoBtn" type="button"
+              data-title="Bodyweight"
+              data-text="Optional but recommended. It lets the engine score strength relative to size instead of absolute load.">
+              <span>i</span>
+            </button>
+          </label>
+          <input type="number" id="bw" min="30" max="200" step="0.1" placeholder="e.g. 65">
+        </div>
 
-      <div class="labelrow" style="margin-top:10px;">
-        <label>Bodyweight (kg)</label>
-        <span class="info" data-tip="Used for relative capacity scoring. Optional, but recommended for accuracy.">i</span>
+        <div class="field">
+          <label>
+            Current fatigue state
+            <button class="infoBtn" type="button"
+              data-title="Fatigue state"
+              data-text="A quick readiness input. Higher fatigue lowers the intensity cap and increases recovery bias for the week.">
+              <span>i</span>
+            </button>
+          </label>
+          <select id="fatigue">
+            <option value="low" selected>Low</option>
+            <option value="moderate">Moderate</option>
+            <option value="high">High</option>
+          </select>
+        </div>
       </div>
-      <input type="number" id="bw" min="30" max="200" step="0.1" placeholder="e.g. 65">
-
-      <div class="labelrow" style="margin-top:10px;">
-        <label>Current fatigue state</label>
-        <span class="info" data-tip="Subjective fatigue: Low (fresh), Moderate (normal), High (heavy legs, poor sleep, sore/tight). Used for Overreach Index.">i</span>
-      </div>
-      <select id="fatigue">
-        <option value="low" selected>Low</option>
-        <option value="moderate">Moderate</option>
-        <option value="high">High</option>
-      </select>
 
       <div class="hr"></div>
 
       <!-- Muay Thai -->
-      <div id="thaiRow" class="sport-row">
-        <div class="labelrow">
-          <label>Muay Thai load</label>
-          <span class="info" data-tip="TOTAL sessions/week includes all sessions. HIGH-INTENSITY is the subset inside total (sparring/hard pads). Example: total 5, high-intensity 2.">i</span>
-        </div>
+      <div class="field" id="thaiBlock">
+        <label>
+          Muay Thai load
+          <button class="infoBtn" type="button"
+            data-title="Muay Thai load"
+            data-text="TOTAL sessions/week includes all sessions. HIGH-INTENSITY is a subset inside total (sparring/hard pads). Example: total 5, high-intensity 2.">
+            <span>i</span>
+          </button>
+        </label>
         <div class="row2">
           <input type="number" id="thaiTotal" min="0" max="10" placeholder="total / week">
           <input type="number" id="thaiHard" min="0" max="10" placeholder="high-intensity / week">
@@ -722,11 +614,15 @@ button{
       </div>
 
       <!-- Climbing -->
-      <div id="climbRow" class="sport-row">
-        <div class="labelrow" style="margin-top:10px;">
-          <label>Climbing load</label>
-          <span class="info" data-tip="TOTAL sessions/week includes all sessions. HIGH-INTENSITY is the subset inside total (limit bouldering/max hangs/hard attempts). Example: total 4, high-intensity 1.">i</span>
-        </div>
+      <div class="field" id="climbBlock">
+        <label>
+          Climbing load
+          <button class="infoBtn" type="button"
+            data-title="Climbing load"
+            data-text="TOTAL sessions/week includes all sessions. HIGH-INTENSITY is a subset inside total (limit bouldering/max hangs/hard attempts). Example: total 4, high-intensity 1.">
+            <span>i</span>
+          </button>
+        </label>
         <div class="row2">
           <input type="number" id="climbTotal" min="0" max="10" placeholder="total / week">
           <input type="number" id="climbHard" min="0" max="10" placeholder="high-intensity / week">
@@ -739,198 +635,266 @@ button{
       </div>
 
       <div class="output" id="output">
-        <div class="fade" id="fadeBlock">
-          <div class="kpi">
-            <div class="metric">
-              <div class="label">PCI</div>
-              <div class="value" id="pciValue">—</div>
-              <div class="sub" id="pciBadge">Performance Capacity Index</div>
-            </div>
-
-            <div class="metric">
-              <div class="label">Overreach Index</div>
-              <div class="value" id="overreachValue">—</div>
-              <div class="sub" id="overreachStatus">—</div>
-            </div>
-          </div>
-
-          <div class="triple">
-            <div class="metric">
-              <div class="label">Lower</div>
-              <div class="value" id="lowerScore">—</div>
-              <div class="sub" id="lowerLabel">—</div>
-            </div>
-            <div class="metric">
-              <div class="label">Hinge</div>
-              <div class="value" id="hingeScore">—</div>
-              <div class="sub" id="hingeLabel">—</div>
-            </div>
-            <div class="metric">
-              <div class="label">Pull</div>
-              <div class="value" id="pullScore">—</div>
-              <div class="sub" id="pullLabel">—</div>
-            </div>
-          </div>
-
-          <!-- NEW: WEEK OUTPUT -->
-          <div class="weekWrap" id="weekWrap" style="display:none;">
-            <div class="weekHead">
-              <div>
-                <div class="weekTitle">Weekly Integration Output</div>
-                <div class="weekMeta" id="weekMeta">—</div>
-              </div>
-              <div class="weekMeta" id="weekMeta2">Updated</div>
-            </div>
-
-            <div class="weekGrid" id="weekGrid"></div>
-
-            <div class="sessions" id="sessionBlocks"></div>
-
-            <div class="recoveryCard" id="recoveryBlock"></div>
-          </div>
-
-          <div class="hr"></div>
-          <div class="mono" id="detailsText"></div>
+        <div class="kpi">
+          <div class="score" id="scoreText">—</div>
+          <div class="badge" id="badgeText">—</div>
         </div>
+        <div class="hr"></div>
+        <div class="copy" id="detailsText"></div>
+      </div>
+
+      <div class="weekWrap" id="weekWrap">
+        <div class="weekHeader">
+          <div class="weekTitle">Weekly Integration Output</div>
+          <div class="weekMeta" id="weekMeta">—</div>
+        </div>
+
+        <div class="weekGrid" id="weekGrid"></div>
+
+        <div class="sessionRow" id="sessionRow"></div>
+
+        <div class="hr"></div>
+        <div class="copy" id="recoveryText"></div>
       </div>
     </div>
 
     <!-- STRUCTURAL PERFORMANCE PROFILE -->
     <div class="card">
-      <div class="card-title">Structural Performance Profile</div>
+      <div class="card-title">
+        <div>Structural Performance Profile</div>
+        <button class="infoBtn" type="button"
+          data-title="Why these inputs"
+          data-text="One representative working set per pattern is enough for an MVP capacity snapshot. It’s not a max test. The engine uses e1RM + RPE to estimate what you can tolerate while still transferring to sport.">
+          <span>i</span>
+        </button>
+      </div>
 
-      <div class="notice" style="margin-bottom:14px;">
+      <div class="copy" style="margin-bottom:14px; color:rgba(0,0,0,.60);">
         Enter one representative working set per movement this week (not a max test).
       </div>
 
-      <!-- LOWER -->
       <div class="lift">
-        <div class="labelrow" style="margin-bottom:8px;">
-          <div class="lift-name" style="margin:0;">Lower Body Pattern</div>
-          <span class="info" data-tip="Movement choice affects systemic stress weighting. The engine uses your selected pattern to interpret capacity under hybrid load.">i</span>
+        <div class="lift-name">
+          Lower body pattern
+          <button class="infoBtn" type="button"
+            data-title="Lower body pattern"
+            data-text="Choose the movement that best represents your current lower-body strength exposure. This anchors the weekly bias and volume protection.">
+            <span>i</span>
+          </button>
         </div>
-
-        <select id="lowerMove" style="margin-bottom:10px;">
-          <option value="backSquat" selected>Back Squat</option>
-          <option value="frontSquat">Front Squat</option>
-          <option value="splitSquat">Split Squat</option>
-          <option value="legPress">Leg Press</option>
+        <select id="lowerPattern">
+          <option>Back Squat</option>
+          <option>Front Squat</option>
+          <option>Split Squat</option>
+          <option>Leg Press</option>
         </select>
-
-        <div class="row3">
-          <input type="number" id="lowerWeight" min="0" step="0.5" placeholder="kg">
+        <div class="row3" style="margin-top:10px;">
+          <input type="number" id="lowerKg" min="0" step="0.5" placeholder="kg">
           <input type="number" id="lowerReps" min="1" max="20" step="1" placeholder="reps">
           <input type="number" id="lowerRPE" min="6" max="10" step="0.5" placeholder="RPE">
         </div>
       </div>
 
-      <!-- HINGE -->
       <div class="lift">
-        <div class="labelrow" style="margin-bottom:8px;">
-          <div class="lift-name" style="margin:0;">Hinge Pattern</div>
-          <span class="info" data-tip="Deadlift tends to create higher systemic cost than RDL/hip thrust. Movement choice affects stress weighting.">i</span>
+        <div class="lift-name">
+          Hinge pattern
+          <button class="infoBtn" type="button"
+            data-title="Hinge pattern"
+            data-text="Hinge strength tends to be fatigue-expensive but important for fighters and hybrids. This helps the engine cap intensity when sport load is high.">
+            <span>i</span>
+          </button>
         </div>
-
-        <select id="hingeMove" style="margin-bottom:10px;">
-          <option value="deadlift" selected>Deadlift</option>
-          <option value="rdl">RDL</option>
-          <option value="hipThrust">Hip Thrust</option>
+        <select id="hingePattern">
+          <option>Deadlift</option>
+          <option>RDL</option>
+          <option>Hip Thrust</option>
         </select>
-
-        <div class="row3">
-          <input type="number" id="hingeWeight" min="0" step="0.5" placeholder="kg">
+        <div class="row3" style="margin-top:10px;">
+          <input type="number" id="hingeKg" min="0" step="0.5" placeholder="kg">
           <input type="number" id="hingeReps" min="1" max="20" step="1" placeholder="reps">
           <input type="number" id="hingeRPE" min="6" max="10" step="0.5" placeholder="RPE">
         </div>
       </div>
 
-      <!-- PULL -->
       <div class="lift">
-        <div class="labelrow" style="margin-bottom:8px;">
-          <div class="lift-name" style="margin:0;">Pull Pattern</div>
-          <span class="info" data-tip="Weighted pull-up uses ADDED kg. Bodyweight pull-up locks weight to 0. Rows/pulldowns use external load.">i</span>
+        <div class="lift-name">
+          Pull pattern
+          <button class="infoBtn" type="button"
+            data-title="Pull pattern"
+            data-text="Pull = vertical or horizontal pulling (weighted pull-ups, rows, pulldown). Climbers need pull strength, but high pull volume can be risky under heavy sport load.">
+            <span>i</span>
+          </button>
         </div>
-
-        <select id="pullMove" style="margin-bottom:10px;">
-          <option value="weightedPullup" selected>Weighted Pull-Up / Chin-Up</option>
-          <option value="bodyweightPullup">Pull-Up / Chin-Up (bodyweight)</option>
-          <option value="row">Row (barbell/dumbbell/cable)</option>
-          <option value="pulldown">Lat Pulldown</option>
+        <select id="pullPattern">
+          <option>Weighted Pull-up</option>
+          <option>Row</option>
+          <option>Pulldown</option>
         </select>
-
-        <div class="row3">
-          <input type="number" id="pullWeight" min="0" step="0.5" placeholder="added kg">
+        <div class="row3" style="margin-top:10px;">
+          <input type="number" id="pullKg" min="0" step="0.5" placeholder="kg">
           <input type="number" id="pullReps" min="1" max="20" step="1" placeholder="reps">
           <input type="number" id="pullRPE" min="6" max="10" step="0.5" placeholder="RPE">
         </div>
-
-        <div class="helper" id="pullHelper">Weighted pull-up: enter added load (e.g. +20kg), reps, and RPE.</div>
-      </div>
-
-      <div class="hr"></div>
-      <div class="notice">
-        This engine estimates capacity (<span class="mono">e1RM + RPE</span>), then regulates weekly strength stress against sport load.
       </div>
     </div>
 
   </div>
 
   <div class="footer">Open Access Beta • No accounts • Local computation</div>
+
 </div>
 
-<!-- How it works modal -->
-<div class="modal" id="how" aria-hidden="true">
-  <div class="modal-panel" role="dialog" aria-label="How it works">
-    <div class="modal-head">
-      <div>
-        <div class="modal-title">How it works</div>
-        <div class="modal-sub">The integration problem between strength and sport.</div>
-      </div>
-      <button class="modal-close" id="closeHow">Close</button>
-    </div>
+<!-- Desktop popover -->
+<div class="popover" id="popover" role="dialog" aria-hidden="true">
+  <div class="popTitle" id="popTitle">—</div>
+  <div class="popText" id="popText">—</div>
+</div>
 
-    <div class="section-grid">
-      <div class="block">
-        <b>After analysis, the engine generates</b>
-        <ul>
-          <li>PCI (global) + sub-scores (Lower/Hinge/Pull)</li>
-          <li>Aggressive imbalance detection + focus directive</li>
-          <li>Strength frequency (sessions/week)</li>
-          <li>Intensity limit (RPE cap)</li>
-          <li>Back-off volume adjustment</li>
-          <li>Weekly integrated plan (Mon–Sun)</li>
-          <li>Accessories + recovery directive</li>
-          <li>Overreach Index (0–100) + status</li>
-        </ul>
-        <div class="divline"></div>
-        <b>Soon</b>
-        <ul>
-          <li>Progression layer (history + trends)</li>
-          <li>Weekly templates per goal (strength / performance / aesthetics)</li>
-          <li>Imbalance warnings by sport mode</li>
-        </ul>
-      </div>
-
-      <div class="block">
-        <b>Definitions</b>
-        <p><strong>Total sessions</strong> = all sessions (easy + moderate + hard).</p>
-        <p><strong>High-intensity sessions</strong> = subset inside total (sparring/limit bouldering etc.). Example: total 5, high-intensity 2.</p>
-        <p><strong>Representative set</strong> = a hard clean set you could repeat next week (not a 1RM test).</p>
-        <p><strong>PCI</strong> = weighted capacity composite (hybrid-first) with strict imbalance sensitivity.</p>
-        <p><strong>Overreach Index</strong> = sport stress + effort + fatigue ± tolerance modifiers.</p>
-        <p><strong>RPE</strong> = effort rating (10 = max, 8 ≈ ~2 reps in reserve).</p>
-      </div>
-    </div>
-
-    <div class="divline"></div>
-    <div class="modal-sub">Most hybrid athletes guess strength volume. The result is fatigue without performance transfer.</div>
+<!-- Mobile sheet -->
+<div class="sheetOverlay" id="sheetOverlay" aria-hidden="true"></div>
+<div class="sheet" id="sheet" role="dialog" aria-hidden="true">
+  <div class="sheetTop">
+    <div class="sheetTitle" id="sheetTitle">—</div>
+    <button class="sheetClose" type="button" onclick="closeInfo()">✕</button>
   </div>
+  <div class="sheetBody" id="sheetBody">—</div>
 </div>
 
 <script>
-/* ---------- core math ---------- */
-function e1RM(weight, reps){ return weight * (1 + reps / 30); }
+/* ---------------------------
+   TOOLTIP SYSTEM (FIXED)
+----------------------------*/
+const popover = document.getElementById("popover");
+const popTitle = document.getElementById("popTitle");
+const popText  = document.getElementById("popText");
 
+const sheetOverlay = document.getElementById("sheetOverlay");
+const sheet = document.getElementById("sheet");
+const sheetTitle = document.getElementById("sheetTitle");
+const sheetBody  = document.getElementById("sheetBody");
+
+let currentAnchor = null;
+
+function isMobile(){
+  return window.matchMedia("(max-width: 760px)").matches;
+}
+
+function openInfo(anchor){
+  const title = anchor.getAttribute("data-title") || "Info";
+  const text  = anchor.getAttribute("data-text")  || "";
+
+  currentAnchor = anchor;
+
+  if(isMobile()){
+    sheetTitle.textContent = title;
+    sheetBody.textContent = text;
+    sheetOverlay.style.display = "block";
+    sheet.style.display = "block";
+    requestAnimationFrame(()=> sheet.classList.add("active"));
+    sheetOverlay.setAttribute("aria-hidden","false");
+    sheet.setAttribute("aria-hidden","false");
+    return;
+  }
+
+  popTitle.textContent = title;
+  popText.textContent  = text;
+
+  const r = anchor.getBoundingClientRect();
+  const pad = 10;
+
+  // place to the right if possible, else left, else centered
+  let x = r.right + 12;
+  let y = r.top + (r.height/2) - 10;
+
+  popover.style.display = "block";
+  popover.setAttribute("aria-hidden","false");
+
+  const pr = popover.getBoundingClientRect();
+  if(x + pr.width + pad > window.innerWidth){
+    x = r.left - pr.width - 12;
+  }
+  if(x < pad){
+    x = Math.max(pad, (window.innerWidth - pr.width)/2);
+  }
+  if(y + pr.height + pad > window.innerHeight){
+    y = window.innerHeight - pr.height - pad;
+  }
+  if(y < pad) y = pad;
+
+  popover.style.left = x + "px";
+  popover.style.top  = y + "px";
+}
+
+function closeInfo(){
+  // desktop
+  popover.style.display = "none";
+  popover.setAttribute("aria-hidden","true");
+
+  // mobile
+  sheet.classList.remove("active");
+  sheetOverlay.style.display = "none";
+  sheetOverlay.setAttribute("aria-hidden","true");
+  sheet.setAttribute("aria-hidden","true");
+  setTimeout(()=> { sheet.style.display = "none"; }, 200);
+
+  currentAnchor = null;
+}
+
+document.addEventListener("click", (e)=>{
+  const btn = e.target.closest(".infoBtn");
+  if(btn){
+    e.preventDefault();
+    e.stopPropagation();
+    // toggle same
+    if(currentAnchor === btn){
+      closeInfo();
+    }else{
+      openInfo(btn);
+    }
+    return;
+  }
+  // click outside closes
+  if(currentAnchor){
+    closeInfo();
+  }
+});
+
+window.addEventListener("keydown",(e)=>{
+  if(e.key === "Escape" && currentAnchor) closeInfo();
+});
+window.addEventListener("resize", ()=>{
+  if(currentAnchor && !isMobile()){
+    openInfo(currentAnchor);
+  }
+});
+sheetOverlay.addEventListener("click", closeInfo);
+
+/* ---------------------------
+   PROFILE UI (HIDE/SHOW)
+----------------------------*/
+function syncProfileUI(){
+  const profile = document.getElementById("profile").value;
+  const thaiBlock  = document.getElementById("thaiBlock");
+  const climbBlock = document.getElementById("climbBlock");
+
+  if(profile === "fighter"){
+    thaiBlock.style.display = "block";
+    climbBlock.style.display = "none";
+  }else if(profile === "climber"){
+    thaiBlock.style.display = "none";
+    climbBlock.style.display = "block";
+  }else{
+    thaiBlock.style.display = "block";
+    climbBlock.style.display = "block";
+  }
+}
+
+/* ---------------------------
+   ENGINE LOGIC (MVP+)
+----------------------------*/
+function e1RM(weight, reps){
+  return weight * (1 + reps / 30);
+}
 function rpeFactor(rpe){
   if (rpe >= 10) return 1.00;
   if (rpe >= 9)  return 0.97;
@@ -938,697 +902,261 @@ function rpeFactor(rpe){
   if (rpe >= 7)  return 0.90;
   return 0.85;
 }
-
-function isNum(x){ return typeof x === "number" && isFinite(x) && !isNaN(x); }
-function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
-
-/* ---------- movement multipliers (capacity interpretation) ---------- */
-const lowerMult = { backSquat:1.00, frontSquat:0.95, splitSquat:0.85, legPress:0.80 };
-const hingeMult = { deadlift:1.10, rdl:0.95, hipThrust:0.85 };
-const pullMult  = { weightedPullup:1.05, bodyweightPullup:1.00, row:0.95, pulldown:0.85 };
-
-const moveLabels = {
-  backSquat:"Back Squat", frontSquat:"Front Squat", splitSquat:"Split Squat", legPress:"Leg Press",
-  deadlift:"Deadlift", rdl:"RDL", hipThrust:"Hip Thrust",
-  weightedPullup:"Weighted Pull-Up", bodyweightPullup:"BW Pull-Up", row:"Row", pulldown:"Pulldown"
-};
-
-/* ---------- dynamic sport UI ---------- */
-const profileEl = document.getElementById("profile");
-const thaiRow = document.getElementById("thaiRow");
-const climbRow = document.getElementById("climbRow");
-
-function applyProfileUI(){
-  const p = profileEl.value;
-  if(p === "fighter"){
-    climbRow.classList.add("hidden");
-    thaiRow.classList.remove("hidden");
-  } else if(p === "climber"){
-    thaiRow.classList.add("hidden");
-    climbRow.classList.remove("hidden");
-  } else {
-    thaiRow.classList.remove("hidden");
-    climbRow.classList.remove("hidden");
-  }
+function isNum(x){
+  return typeof x === "number" && isFinite(x) && !isNaN(x);
 }
-profileEl.addEventListener("change", applyProfileUI);
-applyProfileUI();
+function clamp(n,min,max){ return Math.max(min, Math.min(max,n)); }
 
-/* ---------- sport input sanity: hard <= total ---------- */
-function enforceHardLETotal(totalId, hardId){
-  const t = document.getElementById(totalId);
-  const h = document.getElementById(hardId);
-  function fix(){
-    const total = parseInt(t.value || "0", 10) || 0;
-    let hard = parseInt(h.value || "0", 10) || 0;
-    if(hard > total) hard = total;
-    if(hard < 0) hard = 0;
-    if(total < 0) t.value = 0;
-    // keep blanks blank (premium)
-    if(t.value === "" && h.value === "") return;
-    h.value = hard;
-  }
-  t.addEventListener("input", fix);
-  h.addEventListener("input", fix);
-}
-enforceHardLETotal("thaiTotal","thaiHard");
-enforceHardLETotal("climbTotal","climbHard");
-
-/* ---------- modal ---------- */
-const how = document.getElementById("how");
-function openHow(e){ if(e) e.preventDefault(); how.classList.add("active"); how.setAttribute("aria-hidden","false"); }
-function closeHow(){ how.classList.remove("active"); how.setAttribute("aria-hidden","true"); }
-document.getElementById("openHow").addEventListener("click", openHow);
-document.getElementById("openHow2").addEventListener("click", openHow);
-document.getElementById("closeHow").addEventListener("click", closeHow);
-how.addEventListener("click", (e)=>{ if(e.target === how) closeHow(); });
-window.addEventListener("keydown",(e)=>{ if(e.key === "Escape" && how.classList.contains("active")) closeHow(); });
-
-/* ---------- pull behavior ---------- */
-const pullMoveEl = document.getElementById("pullMove");
-const pullWeightEl = document.getElementById("pullWeight");
-const pullHelperEl = document.getElementById("pullHelper");
-
-function applyPullUI(){
-  const p = pullMoveEl.value;
-  if(p === "weightedPullup"){
-    pullWeightEl.disabled = false;
-    pullWeightEl.placeholder = "added kg";
-    pullHelperEl.textContent = "Weighted pull-up: enter added load (e.g. +20kg), reps, and RPE.";
-  } else if(p === "bodyweightPullup"){
-    pullWeightEl.disabled = true;
-    pullWeightEl.value = 0;
-    pullWeightEl.placeholder = "0 (bodyweight)";
-    pullHelperEl.textContent = "Bodyweight pull-up: weight set to 0. Enter reps and RPE.";
-  } else if(p === "row"){
-    pullWeightEl.disabled = false;
-    pullWeightEl.placeholder = "kg (external load)";
-    pullHelperEl.textContent = "Row: enter external load (kg), reps, and RPE.";
-  } else {
-    pullWeightEl.disabled = false;
-    pullWeightEl.placeholder = "kg (stack/load)";
-    pullHelperEl.textContent = "Pulldown: enter stack/load (kg), reps, and RPE.";
-  }
-}
-pullMoveEl.addEventListener("change", applyPullUI);
-applyPullUI();
-
-/* ---------- overreach model ---------- */
-function fatiguePoints(level){
-  if(level === "high") return 16;
-  if(level === "moderate") return 8;
-  return 0;
-}
-function expTolerance(exp){
-  if(exp === "advanced") return 8;
-  if(exp === "intermediate") return 4;
-  return 0;
-}
-function equipmentStress(equip){
-  if(equip === "barbell") return 4;
-  if(equip === "mixed") return 3;
-  if(equip === "dumbbell") return 2;
-  return 1;
-}
-function overreachStatus(index){
-  if(index >= 65) return "ELEVATED";
-  if(index >= 35) return "CONTROLLED";
-  return "MINIMAL";
-}
-function sportStress(thaiTotal, thaiHard, climbTotal, climbHard){
-  // total + hard premium (subset)
-  const thai  = (thaiTotal * 1.00) + (thaiHard * 1.50);
-  const climb = (climbTotal * 0.90) + (climbHard * 1.40);
-  return thai + climb;
-}
-
-/* ---------- capacity scoring ---------- */
-function patternScore(e1rm, bw, mult){
-  const rel = (e1rm / bw) * mult;
-  return clamp(Math.round(rel * 40), 0, 100);
-}
-
-/* ---------- aggressive imbalance ---------- */
-function imbalanceReport(lowerS, hingeS, pullS){
-  const strongest = Math.max(lowerS, hingeS, pullS);
-  const ratios = {
-    lower: strongest ? (lowerS / strongest) : 1,
-    hinge: strongest ? (hingeS / strongest) : 1,
-    pull: strongest ? (pullS / strongest) : 1
-  };
-  const weakestKey = Object.entries(ratios).sort((a,b)=>a[1]-b[1])[0][0];
-  const weakestRatio = ratios[weakestKey];
-
-  let severity = "NONE";
-  if(weakestRatio < 0.75) severity = "CRITICAL";
-  else if(weakestRatio < 0.85) severity = "IMBALANCE";
-
-  return { strongest, ratios, weakestKey, weakestRatio, severity };
-}
-
-/* ---------- WEEK ENGINE ---------- */
-const DOW = ["MON","TUE","WED","THU","FRI","SAT","SUN"];
-
-function pickEvenDays(total){
-  // Even distribution over 7 days: indices roughly spaced.
-  if(total <= 0) return [];
-  const picks = [];
-  for(let i=0;i<total;i++){
-    const idx = Math.round(i * (6/(Math.max(1,total-1))));
-    picks.push(idx);
-  }
-  // De-dupe / resolve collisions
-  const used = new Set();
-  const out = [];
-  for(const p of picks){
-    let j = p;
-    while(used.has(j)) j = (j+1)%7;
-    used.add(j);
-    out.push(j);
-  }
-  return out.sort((a,b)=>a-b);
-}
-
-function markHardDays(totalDays, hardCount){
-  // Mark hard as the last ones (tends to protect early week) but spaced by choosing from totalDays.
-  if(hardCount <= 0) return new Set();
-  const hard = new Set();
-  const sorted = [...totalDays].sort((a,b)=>a-b);
-  // take from end backward
-  for(let i=0;i<hardCount && i<sorted.length;i++){
-    hard.add(sorted[sorted.length - 1 - i]);
-  }
-  return hard;
-}
-
-function makeEmptyWeek(){
-  return Array.from({length:7}, ()=>({ type:"OFF", micro:"Recovery", intensity:"low", detail:"" }));
-}
-
-function intensityToPip(intensity){
-  if(intensity === "high") return "pipHigh";
-  if(intensity === "mod") return "pipMod";
-  return "pipLow";
-}
-
-function isEmptySlot(day){ return day.type === "OFF"; }
-
-function placeSport(week, label, total, hard){
-  const days = pickEvenDays(total);
-  const hardSet = markHardDays(days, hard);
-
-  for(const d of days){
-    week[d] = {
-      type: label,
-      micro: hardSet.has(d) ? "Hard" : "Technical",
-      intensity: hardSet.has(d) ? "high" : "mod",
-      detail: hardSet.has(d) ? "High-intensity exposure" : "Skill / volume"
-    };
-  }
-  return { days, hardSet };
-}
-
-function preferredRecoveryDay(week){
-  // Prefer Sunday OFF. If taken, pick the lowest-intensity day to convert to recovery (but do not delete hard sport).
-  if(week[6].type === "OFF") return 6;
-
-  // pick an OFF slot if exists
-  for(let i=0;i<7;i++){
-    if(week[i].type === "OFF") return i;
-  }
-
-  // otherwise find least important non-hard sport day (technical), else a strength day, else fallback.
-  const scoreDay = (d)=>{
-    const x = week[d];
-    let s = 100;
-    if(x.type === "OFF") s = 0;
-    else if(x.micro === "Technical") s = 10;
-    else if(x.type === "Strength") s = 30;
-    else if(x.micro === "Hard") s = 80;
-    return s;
-  };
-
-  let best = 0, bestScore = scoreDay(0);
-  for(let i=1;i<7;i++){
-    const s = scoreDay(i);
-    if(s < bestScore){
-      best = i; bestScore = s;
-    }
-  }
-  return best;
-}
-
-function getPrevIndex(i){ return (i+6)%7; }
-
-function avoidHeavyBeforeHard(week, hardThaiSet, hardClimbSet, strengthDayIndex, focus){
-  // If the day BEFORE a hard Thai is this strength day, avoid hinge-heavy.
-  // If the day BEFORE a hard Climb is this strength day, avoid pull-heavy.
-  const next = (strengthDayIndex+1)%7;
-  if(hardThaiSet && hardThaiSet.has(next) && focus === "HINGE") return false;
-  if(hardClimbSet && hardClimbSet.has(next) && focus === "PULL") return false;
-  return true;
-}
-
-function chooseStrengthDays(week, sessions){
-  // Choose OFF days first, spaced: prefer Mon/Wed/Fri.
-  const preferred = [0,2,4,1,3,5]; // keep Sunday as recovery preference
-  const out = [];
-  for(const idx of preferred){
-    if(out.length >= sessions) break;
-    if(isEmptySlot(week[idx])) out.push(idx);
-  }
-  // if still missing, fill any non-hard technical day (never replace Hard)
-  for(let i=0;i<7 && out.length<sessions;i++){
-    if(out.includes(i)) continue;
-    const x = week[i];
-    if(x.micro === "Hard") continue;
-    if(x.type === "OFF" || x.micro === "Technical"){
-      out.push(i);
-    }
-  }
-  return out.slice(0,sessions).sort((a,b)=>a-b);
-}
-
-function buildSessionPrescription(focus, oStatus, rpeCap, imbalanceSeverity){
-  // Base top set schemes, then scale volume for CRITICAL.
-  // Keep it very “lab”: few lines, clear.
-  const base = {
-    LOWER: { main:"Lower", accessory:"Unilateral + trunk stability", note:"Force production + bracing" },
-    HINGE: { main:"Hinge", accessory:"Posterior chain isometrics", note:"Hip drive + resilience" },
-    PULL:  { main:"Pull",  accessory:"Scapular control + forearms", note:"Transfer to grip/clinching" }
-  }[focus];
-
-  let top, backoff, acc, rec;
-  if(oStatus === "ELEVATED"){
-    top    = `${base.main}: 3×4–5 @ RPE ${Math.min(rpeCap,8)}`;
-    backoff= `Secondary: 2–3×6 @ RPE ${Math.min(rpeCap,7)}`;
-    acc    = `Accessory: 2×10–12 (controlled)`;
-    rec    = `Recovery: mobility + easy aerobic 10–20 min`;
-  } else if(oStatus === "CONTROLLED"){
-    top    = `${base.main}: 4×4–6 @ RPE ${rpeCap}`;
-    backoff= `Secondary: 3×6–8 @ RPE ${Math.max(7, rpeCap-1)}`;
-    acc    = `Accessory: 3×10–12 (quality)`;
-    rec    = `Recovery: 8–12 min mobility`;
-  } else {
-    top    = `${base.main}: 1×4–6 @ RPE ${rpeCap} + 3×5–6 @ RPE ${Math.max(7, rpeCap-1)}`;
-    backoff= `Secondary: 3×6–10 @ RPE ${Math.max(7, rpeCap-1)}`;
-    acc    = `Accessory: 3×10–12 + 1 finisher set`;
-    rec    = `Recovery: 5–8 min mobility`;
-  }
-
-  // CRITICAL imbalance: reduce strong pattern volume elsewhere, but in the *focused* session we can keep full.
-  let bias = "";
-  if(imbalanceSeverity === "CRITICAL"){
-    bias = `Imbalance protection: strong patterns run at ~65% volume this week.`;
-  } else if(imbalanceSeverity === "IMBALANCE"){
-    bias = `Imbalance correction: prioritize the weakest pattern early in week.`;
-  } else {
-    bias = `Balance: maintain distribution.`;
-  }
-
-  return { title:`Strength — ${focus} Bias`, lines:[top, backoff, acc, rec, bias], note: base.note };
-}
-
-function recoveryDirective(oStatus){
-  if(oStatus === "ELEVATED"){
-    return {
-      title:"Recovery Directive",
-      body:[
-        "Protect output: reduce non-essential volume.",
-        "Sleep priority: +30–60 min in bed.",
-        "Mobility: hips / t-spine / ankles 8–12 min.",
-        "Easy aerobic: 10–20 min (Zone 2)."
-      ]
-    };
-  }
-  if(oStatus === "CONTROLLED"){
-    return {
-      title:"Recovery Directive",
-      body:[
-        "Maintain: cap intensity and progress selectively.",
-        "Mobility: 6–10 min after sessions.",
-        "Fuel: protein + carbs around sport days."
-      ]
-    };
-  }
-  return {
-    title:"Recovery Directive",
-    body:[
-      "Progress approved: add load gradually next week.",
-      "Keep 1 true recovery day.",
-      "Mobility: 5–8 min (maintenance)."
-    ]
-  };
-}
-
-function renderWeek(week, metaText){
-  const grid = document.getElementById("weekGrid");
-  grid.innerHTML = "";
-
-  for(let i=0;i<7;i++){
-    const d = week[i];
-    const tile = document.createElement("div");
-    tile.className = "dayTile";
-
-    const top = document.createElement("div");
-    top.className = "dayTop";
-
-    const dow = document.createElement("div");
-    dow.className = "dow";
-    dow.textContent = DOW[i];
-
-    const tag = document.createElement("div");
-    tag.className = "tag";
-    tag.textContent = d.type;
-
-    top.appendChild(dow);
-    top.appendChild(tag);
-
-    const big = document.createElement("div");
-    big.className = "big";
-    big.textContent = `${d.type} — ${d.micro}`;
-
-    const small = document.createElement("div");
-    small.className = "small";
-    small.textContent = d.detail || "";
-
-    const pip = document.createElement("div");
-    pip.className = "intensityPip " + intensityToPip(d.intensity);
-
-    tile.appendChild(top);
-    tile.appendChild(big);
-    tile.appendChild(small);
-    tile.appendChild(pip);
-
-    grid.appendChild(tile);
-  }
-
-  document.getElementById("weekMeta").textContent = metaText;
-}
-
-/* ---------- main analyze ---------- */
 function analyze(){
-  const output = document.getElementById("output");
-  const fadeBlock = document.getElementById("fadeBlock");
-  output.style.display = "block";
-
-  // smooth regeneration
-  fadeBlock.classList.add("out");
-  setTimeout(()=>{ fadeBlock.classList.remove("out"); }, 220);
-
-  const profile = profileEl.value;
-  const strengthExperience = document.getElementById("strengthExperience").value;
-  const equipment = document.getElementById("equipment").value;
+  const profile = document.getElementById("profile").value;
+  const fatigue = document.getElementById("fatigue").value;
 
   const bwRaw = parseFloat(document.getElementById("bw").value);
   const bw = (isNum(bwRaw) && bwRaw > 0) ? bwRaw : null;
 
-  const fatigue = document.getElementById("fatigue").value;
+  const thaiTotal  = parseInt(document.getElementById("thaiTotal").value, 10)  || 0;
+  const thaiHard   = parseInt(document.getElementById("thaiHard").value, 10)   || 0;
+  const climbTotal = parseInt(document.getElementById("climbTotal").value, 10) || 0;
+  const climbHard  = parseInt(document.getElementById("climbHard").value, 10)  || 0;
 
-  const thaiTotal = thaiRow.classList.contains("hidden") ? 0 : (parseInt(document.getElementById("thaiTotal").value,10) || 0);
-  const thaiHard  = thaiRow.classList.contains("hidden") ? 0 : (parseInt(document.getElementById("thaiHard").value,10)  || 0);
+  // Strength snapshot
+  const lowerKg = parseFloat(document.getElementById("lowerKg").value);
+  const lowerReps = parseFloat(document.getElementById("lowerReps").value);
+  const lowerRPE = parseFloat(document.getElementById("lowerRPE").value);
 
-  const climbTotal = climbRow.classList.contains("hidden") ? 0 : (parseInt(document.getElementById("climbTotal").value,10) || 0);
-  const climbHard  = climbRow.classList.contains("hidden") ? 0 : (parseInt(document.getElementById("climbHard").value,10)  || 0);
+  const hingeKg = parseFloat(document.getElementById("hingeKg").value);
+  const hingeReps = parseFloat(document.getElementById("hingeReps").value);
+  const hingeRPE = parseFloat(document.getElementById("hingeRPE").value);
 
-  const lowerMove = document.getElementById("lowerMove").value;
-  const hingeMove = document.getElementById("hingeMove").value;
-  const pullMove  = document.getElementById("pullMove").value;
+  const pullKg = parseFloat(document.getElementById("pullKg").value);
+  const pullReps = parseFloat(document.getElementById("pullReps").value);
+  const pullRPE = parseFloat(document.getElementById("pullRPE").value);
 
-  const lowerW = parseFloat(document.getElementById("lowerWeight").value);
-  const lowerR = parseFloat(document.getElementById("lowerReps").value);
-  const lowerP = parseFloat(document.getElementById("lowerRPE").value);
-
-  const hingeW = parseFloat(document.getElementById("hingeWeight").value);
-  const hingeR = parseFloat(document.getElementById("hingeReps").value);
-  const hingeP = parseFloat(document.getElementById("hingeRPE").value);
-
-  const pullW  = parseFloat(document.getElementById("pullWeight").value);
-  const pullR  = parseFloat(document.getElementById("pullReps").value);
-  const pullP  = parseFloat(document.getElementById("pullRPE").value);
-
-  const required = [lowerW, lowerR, lowerP, hingeW, hingeR, hingeP, pullW, pullR, pullP];
+  const required = [lowerKg,lowerReps,lowerRPE, hingeKg,hingeReps,hingeRPE, pullKg,pullReps,pullRPE];
   const ok = required.every(isNum);
 
-  const pciValueEl = document.getElementById("pciValue");
-  const pciBadgeEl = document.getElementById("pciBadge");
-  const overreachValueEl = document.getElementById("overreachValue");
-  const overreachStatusEl = document.getElementById("overreachStatus");
-
-  const lowerScoreEl = document.getElementById("lowerScore");
-  const hingeScoreEl = document.getElementById("hingeScore");
-  const pullScoreEl  = document.getElementById("pullScore");
-
-  const lowerLabelEl = document.getElementById("lowerLabel");
-  const hingeLabelEl = document.getElementById("hingeLabel");
-  const pullLabelEl  = document.getElementById("pullLabel");
-
+  const output = document.getElementById("output");
+  const scoreText = document.getElementById("scoreText");
+  const badgeText = document.getElementById("badgeText");
   const detailsText = document.getElementById("detailsText");
 
   const weekWrap = document.getElementById("weekWrap");
-  const sessionBlocks = document.getElementById("sessionBlocks");
-  const recoveryBlock = document.getElementById("recoveryBlock");
+  const weekGrid = document.getElementById("weekGrid");
+  const sessionRow = document.getElementById("sessionRow");
+  const weekMeta = document.getElementById("weekMeta");
+  const recoveryText = document.getElementById("recoveryText");
 
+  output.style.display = "block";
   weekWrap.style.display = "none";
-  sessionBlocks.innerHTML = "";
-  recoveryBlock.innerHTML = "";
 
   if(!ok){
-    pciValueEl.textContent = "—";
-    pciBadgeEl.textContent = "Performance Capacity Index";
-    overreachValueEl.textContent = "—";
-    overreachStatusEl.textContent = "COMPLETE INPUTS";
-
-    lowerScoreEl.textContent = "—";
-    hingeScoreEl.textContent = "—";
-    pullScoreEl.textContent  = "—";
-    lowerLabelEl.textContent = "—";
-    hingeLabelEl.textContent = "—";
-    pullLabelEl.textContent  = "—";
-
+    scoreText.textContent = "Missing inputs";
+    badgeText.textContent = "Complete strength snapshot";
     detailsText.textContent =
-      "Enter: kg / reps / RPE for Lower, Hinge, Pull.\n" +
-      "Bodyweight is optional but recommended.\n" +
-      "Sport load improves Overreach Index accuracy.";
+      "Enter: kg / reps / RPE for Lower, Hinge, and Pull.\n" +
+      "Bodyweight is optional but recommended.\n\n" +
+      "Tip: Use a representative working set from this week (not a max test).";
     return;
   }
 
+  // Validate subset logic (hard <= total)
+  const thaiHardAdj  = Math.min(thaiHard, thaiTotal);
+  const climbHardAdj = Math.min(climbHard, climbTotal);
+
+  // sport totals depending on profile
+  let sportTotal = 0, sportHard = 0;
+  if(profile === "fighter"){ sportTotal = thaiTotal; sportHard = thaiHardAdj; }
+  else if(profile === "climber"){ sportTotal = climbTotal; sportHard = climbHardAdj; }
+  else { sportTotal = thaiTotal + climbTotal; sportHard = thaiHardAdj + climbHardAdj; }
+
+  // strength capacity
+  const lower = e1RM(lowerKg, lowerReps) * rpeFactor(lowerRPE);
+  const hinge = e1RM(hingeKg, hingeReps) * rpeFactor(hingeRPE);
+  const pull  = e1RM(pullKg,  pullReps)  * rpeFactor(pullRPE);
+
+  // profile weighting
+  let wL=1.0, wH=1.0, wP=1.0;
+  if(profile === "fighter"){ wH=1.10; wP=1.05; }
+  if(profile === "climber"){ wP=1.20; wH=0.95; }
+  if(profile === "hybrid"){  wP=1.10; }
+
   const bwUsed = bw ?? 65;
+  const rel = (((lower/bwUsed)*wL)+((hinge/bwUsed)*wH)+((pull/bwUsed)*wP))/3;
+  const score = clamp(Math.round(rel * 40), 0, 100);
 
-  // capacity
-  const lowerE = e1RM(lowerW, lowerR) * rpeFactor(lowerP);
-  const hingeE = e1RM(hingeW, hingeR) * rpeFactor(hingeP);
-  const pullE  = e1RM(pullW,  pullR)  * rpeFactor(pullP);
+  // Overreach index (simple MVP): total + hard weighting + fatigue weighting
+  const hardWeight = 1.7;
+  const fatigueMult = (fatigue === "high") ? 1.25 : (fatigue === "moderate") ? 1.10 : 1.0;
+  const overreach = clamp(Math.round((sportTotal + (sportHard*hardWeight)) * fatigueMult * 6), 0, 100);
 
-  const lowerS = patternScore(lowerE, bwUsed, lowerMult[lowerMove] ?? 1.0);
-  const hingeS = patternScore(hingeE, bwUsed, hingeMult[hingeMove] ?? 1.0);
-  const pullS  = patternScore(pullE,  bwUsed, pullMult[pullMove]  ?? 1.0);
+  let loadBand, strengthSessions, rpeCap, volumeAdj;
+  if(overreach >= 70){
+    loadBand = "HIGH";
+    strengthSessions = 2;
+    rpeCap = 8;
+    volumeAdj = "−20% back-off volume";
+  }else if(overreach >= 40){
+    loadBand = "MODERATE";
+    strengthSessions = 3;
+    rpeCap = 9;
+    volumeAdj = "−10% back-off volume";
+  }else{
+    loadBand = "LOW";
+    strengthSessions = 3;
+    rpeCap = 9;
+    volumeAdj = "Full volume";
+  }
 
-  // hybrid-first pci
-  const pci = clamp(Math.round((lowerS * 0.33) + (hingeS * 0.30) + (pullS * 0.37)), 0, 100);
+  // structural bias: weakest pattern relative to strongest
+  const arr = [
+    {k:"LOWER", v:(lower*wL)},
+    {k:"HINGE", v:(hinge*wH)},
+    {k:"PULL",  v:(pull*wP)}
+  ];
+  arr.sort((a,b)=>a.v-b.v);
+  const weakest = arr[0], strongest = arr[2];
+  const ratio = strongest.v > 0 ? (weakest.v / strongest.v) : 1;
+  let imbalance = "MINIMAL";
+  if(ratio < 0.55) imbalance = "CRITICAL";
+  else if(ratio < 0.70) imbalance = "MODERATE";
 
-  // UI
-  lowerScoreEl.textContent = lowerS;
-  hingeScoreEl.textContent = hingeS;
-  pullScoreEl.textContent  = pullS;
+  const bias = weakest.k;
 
-  lowerLabelEl.textContent = moveLabels[lowerMove] ?? "Lower";
-  hingeLabelEl.textContent = moveLabels[hingeMove] ?? "Hinge";
-  pullLabelEl.textContent  = moveLabels[pullMove]  ?? "Pull";
+  // copy block
+  scoreText.textContent = "Performance Capacity Index: " + score;
+  badgeText.textContent = "Overreach index: " + overreach + " (" + loadBand + ")";
 
-  pciValueEl.textContent = pci;
-  pciBadgeEl.textContent = "Performance Capacity Index";
+  const bwNote = bw ? "" : "\n\nNote: bodyweight not set → using 65kg baseline (MVP).";
+  detailsText.textContent =
+    "The integration problem between strength and sport.\n\n" +
+    "After analysis, the engine generates:\n" +
+    "• Strength frequency (sessions/week)\n" +
+    "• Intensity limit (RPE cap)\n" +
+    "• Back-off volume adjustment\n" +
+    "• Structural focus bias\n" +
+    "• Performance protection directive\n\n" +
+    "Soon:\n" +
+    "• Weekly template\n" +
+    "• Imbalance warnings" +
+    bwNote;
 
-  // imbalance
-  const im = imbalanceReport(lowerS, hingeS, pullS);
+  // Build WEEK OUTPUT (requested)
+  weekWrap.style.display = "block";
+  weekGrid.innerHTML = "";
+  sessionRow.innerHTML = "";
 
-  // overreach
-  const sStress = sportStress(thaiTotal, thaiHard, climbTotal, climbHard);
-  const sportDemand  = clamp(Math.round(sStress * 10), 0, 80);
+  weekMeta.textContent =
+    "SPORT TOTAL " + sportTotal + " • HARD " + sportHard + " • STRENGTH " + strengthSessions + " • RPE CAP " + rpeCap;
 
-  const avgRPE = (lowerP + hingeP + pullP) / 3;
-  const effortDemand = clamp(Math.round((avgRPE - 6) * 6), 0, 28);
+  // simple scheduling (MVP): distribute sport + strength across week with off/recovery
+  const days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 
-  const fatPts = fatiguePoints(fatigue);
-  const eqStress = equipmentStress(equipment);
-  const tol = expTolerance(strengthExperience);
+  // placeholders for day types
+  const plan = days.map(d => ({ day:d, tag:"", main:"OFF", note:"Recovery / maintenance" }));
 
-  const strengthTolerance = Math.round((pci / 100) * 10);
+  // place strength sessions (Wed/Fri + Tue if 3)
+  const strengthDays = (strengthSessions === 2) ? ["Wed","Fri"] : ["Tue","Thu","Sat"];
+  strengthDays.forEach((d, i)=>{
+    const idx = days.indexOf(d);
+    plan[idx].main = "STRENGTH";
+    plan[idx].tag = (bias === "PULL" && i===0) ? "PULL BIAS" : (bias === "LOWER" && i===0) ? "LOWER BIAS" : (bias === "HINGE" && i===0) ? "HINGE BIAS" : "BALANCED";
+    plan[idx].note = "RPE cap " + rpeCap + " • " + volumeAdj;
+  });
 
-  const overreachIndex = clamp(
-    Math.round(sportDemand + effortDemand + fatPts + eqStress - (strengthTolerance + tol)),
-    0, 100
+  // place sport days lightly (MVP)
+  // hybrid: climbing on Mon, thai on Thu, plus one optional
+  if(profile === "hybrid"){
+    if(thaiTotal>0){ plan[3].main = "MUAY THAI"; plan[3].tag = (thaiHardAdj>0 ? "HARD INCLUDED" : "TECH"); plan[3].note = "Keep strength RPE cap " + rpeCap; }
+    if(climbTotal>0){ plan[0].main = "CLIMB"; plan[0].tag = (climbHardAdj>0 ? "HARD INCLUDED" : "TECH"); plan[0].note = "Skill / volume focus"; }
+  }else if(profile === "fighter"){
+    if(thaiTotal>0){ plan[1].main="MUAY THAI"; plan[1].tag=(thaiHardAdj>0?"HARD INCLUDED":"TECH"); plan[1].note="Manage fatigue"; }
+  }else{
+    if(climbTotal>0){ plan[1].main="CLIMB"; plan[1].tag=(climbHardAdj>0?"HARD INCLUDED":"TECH"); plan[1].note="Grip / volume control"; }
+  }
+
+  // render week grid
+  plan.forEach(p=>{
+    const el = document.createElement("div");
+    el.className = "day";
+    el.innerHTML = `
+      <div class="dayTop">
+        <div class="dow">${p.day}</div>
+        <div class="tag">${p.tag || ""}</div>
+      </div>
+      <div class="dayMain">
+        <strong>${p.main}</strong><br>
+        ${p.note || ""}
+      </div>
+    `;
+    weekGrid.appendChild(el);
+  });
+
+  // session cards (very MVP but premium copy)
+  const sessionA = makeSessionCard("Session 1 • Strength — " + bias + " bias",
+    biasLine(bias, rpeCap) +
+    "\nSecondary: 3×6–8 @ RPE " + Math.max(7, rpeCap-1) +
+    "\nAccessory: 3×10–12 (quality)" +
+    "\nRecovery: 8–12 min mobility" +
+    "\nImbalance protection: strong patterns run at ~65% volume this week."
   );
 
-  const oStatus = overreachStatus(overreachIndex);
-  overreachValueEl.textContent = overreachIndex;
-  overreachStatusEl.textContent = oStatus;
+  const sessionB = makeSessionCard("Session 2 • Strength — Lower bias",
+    biasLine("LOWER", rpeCap) +
+    "\nSecondary: 3×6–8 @ RPE " + Math.max(7, rpeCap-1) +
+    "\nAccessory: 3×10–12 (quality)" +
+    "\nRecovery: 8–12 min mobility" +
+    "\nImbalance protection: strong patterns run at ~65% volume this week."
+  );
 
-  // base prescription from overreach
-  let sessions, rpeCap, volumeAdjust, directive;
-  if(oStatus === "ELEVATED"){
-    sessions = 2; rpeCap = 8; volumeAdjust = "Back-off volume: -20%";
-    directive = "Protect output. Reduce strength stress and prioritize recovery.";
-  } else if(oStatus === "CONTROLLED"){
-    sessions = 3; rpeCap = 9; volumeAdjust = "Back-off volume: -10%";
-    directive = "Maintain. Progress selectively under an effort cap.";
-  } else {
-    sessions = 3; rpeCap = 9; volumeAdjust = "Back-off volume: full";
-    directive = "Progress approved. Add load gradually under an effort cap.";
-  }
+  sessionRow.appendChild(sessionA);
+  sessionRow.appendChild(sessionB);
 
-  // focus bias
-  let focusBias = "Structural focus bias: balanced";
-  if(im.severity !== "NONE"){
-    const weak = im.weakestKey.toUpperCase();
-    const tag = (im.severity === "CRITICAL") ? "CRITICAL" : "IMBALANCE";
-    focusBias = "Structural focus bias: " + weak + " (" + tag + ")";
-    directive = directive + " Prioritize the weakest pattern and reduce non-essential volume elsewhere.";
-    if(im.severity === "CRITICAL" && oStatus !== "MINIMAL"){
-      sessions = Math.min(sessions, 2);
-      rpeCap = Math.min(rpeCap, 8);
-      volumeAdjust = "Back-off volume: -20% (imbalance protection)";
-    }
-  }
+  // recovery directive
+  let directive = "Progress approved: add load gradually under an effort cap.";
+  if(loadBand === "HIGH") directive = "Protect output: reduce volume and cap intensity. Progress selectively.";
+  if(loadBand === "MODERATE") directive = "Maintain: cap intensity and progress selectively.";
 
-  // build week (sport first)
-  const week = makeEmptyWeek();
-
-  let thaiInfo = { days:[], hardSet:new Set() };
-  let climbInfo= { days:[], hardSet:new Set() };
-
-  if(!thaiRow.classList.contains("hidden") && thaiTotal > 0){
-    thaiInfo = placeSport(week, "Muay Thai", thaiTotal, thaiHard);
-  }
-  if(!climbRow.classList.contains("hidden") && climbTotal > 0){
-    climbInfo = placeSport(week, "Climb", climbTotal, climbHard);
-  }
-
-  // force one recovery day (prefer Sunday)
-  const recDay = preferredRecoveryDay(week);
-  week[recDay] = { type:"OFF", micro:"Recovery", intensity:"low", detail:"No structured training" };
-
-  // choose strength days
-  const strengthDays = chooseStrengthDays(week, sessions);
-
-  // determine focus order: weakest first, then others
-  const order = ["LOWER","HINGE","PULL"];
-  const weakMap = { lower:"PULL?no", hinge:"", pull:"" };
-  const weakest = im.weakestKey; // lower/hinge/pull
-  const focus1 = (weakest === "lower") ? "LOWER" : (weakest === "hinge") ? "HINGE" : "PULL";
-
-  const focusPool = ["LOWER","HINGE","PULL"].filter(x=>x!==focus1);
-  // slight hybrid pull priority as default
-  focusPool.sort((a,b)=>{
-    const w = {PULL:0, LOWER:1, HINGE:2};
-    return w[a]-w[b];
-  });
-  const focusList = [focus1, ...focusPool];
-
-  // place strength days with avoidance rules
-  const placedStrength = [];
-  for(let si=0; si<strengthDays.length; si++){
-    const dayIdx = strengthDays[si];
-    // pick focus that respects "avoid heavy before hard"
-    let chosen = focusList[Math.min(si, focusList.length-1)];
-    // try to find a focus that respects constraints
-    const tryOrder = [chosen, ...focusList.filter(f=>f!==chosen)];
-    for(const f of tryOrder){
-      if(avoidHeavyBeforeHard(week, thaiInfo.hardSet, climbInfo.hardSet, dayIdx, f)){
-        chosen = f; break;
-      }
-    }
-
-    week[dayIdx] = {
-      type:"Strength",
-      micro:`${chosen} Bias`,
-      intensity: (oStatus === "ELEVATED") ? "mod" : (oStatus === "CONTROLLED") ? "mod" : "high",
-      detail: `RPE cap ${rpeCap} • ${im.severity === "CRITICAL" ? "Imbalance protection" : "Adaptive volume"}`
-    };
-    placedStrength.push({ dayIdx, focus: chosen });
-  }
-
-  // session blocks (with CRITICAL scaling note)
-  sessionBlocks.innerHTML = "";
-  const sessionsOut = placedStrength.map((s, i)=>{
-    const pres = buildSessionPrescription(s.focus, oStatus, rpeCap, im.severity);
-    return { idx:i+1, day:s.dayIdx, ...pres };
-  });
-
-  for(const s of sessionsOut){
-    const card = document.createElement("div");
-    card.className = "sessionCard";
-
-    const t = document.createElement("div");
-    t.className = "sessionTitle";
-    t.textContent = `Session ${s.idx} • ${DOW[s.day]} • ${s.title}`;
-
-    const b = document.createElement("div");
-    b.className = "sessionBody";
-    b.innerHTML =
-      `<div class="mono">${s.lines.join("\n")}</div>`;
-
-    card.appendChild(t);
-    card.appendChild(b);
-    sessionBlocks.appendChild(card);
-  }
-
-  // recovery block
-  const rec = recoveryDirective(oStatus);
-  recoveryBlock.innerHTML =
-    `<div class="sessionTitle">${rec.title}</div>
-     <div class="sessionBody"><div class="mono">${rec.body.join("\n")}</div></div>`;
-
-  // render week
-  const sportTotal = thaiTotal + climbTotal;
-  const sportHardTotal = thaiHard + climbHard;
-  const meta = `Sport total ${sportTotal} • Hard ${sportHardTotal} • Strength ${sessions} • RPE cap ${rpeCap}`;
-  renderWeek(week, meta);
-
-  weekWrap.style.display = "block";
-
-  // details (lab)
-  const bwNote = bw ? "" : "Note: bodyweight not set → using 65kg baseline (MVP).";
-  detailsText.textContent =
-    "PCI: " + pci + " | Sub-scores (L/H/P): " + lowerS + "/" + hingeS + "/" + pullS + "\n" +
-    "Imbalance: " + im.severity + " (weakest: " + im.weakestKey.toUpperCase() + " @ " + Math.round(im.weakestRatio * 100) + "% of strongest)\n\n" +
-    "Overreach Index: " + overreachIndex + " (" + oStatus + ")\n" +
-    volumeAdjust + "\n" +
-    focusBias + "\n" +
-    "Directive: " + directive +
-    (bwNote ? ("\n\n" + bwNote) : "");
+  recoveryText.textContent =
+    "RECOVERY DIRECTIVE\n\n" +
+    directive + "\n" +
+    "Keep 1 true recovery day.\n" +
+    "Mobility: 6–10 min after sessions.\n" +
+    "Fuel: protein + carbs around sport days.";
 }
 
-/* ---------- reset ---------- */
+function biasLine(which, rpeCap){
+  if(which === "PULL")  return "Pull: 4×4–6 @ RPE " + rpeCap;
+  if(which === "HINGE") return "Hinge: 4×4–6 @ RPE " + rpeCap;
+  return "Lower: 4×4–6 @ RPE " + rpeCap;
+}
+
+function makeSessionCard(title, body){
+  const el = document.createElement("div");
+  el.className = "sessionCard";
+  el.innerHTML = `
+    <div class="sessionTitle">${title}</div>
+    <div class="sessionBody">${body}</div>
+  `;
+  return el;
+}
+
 function resetForm(){
-  document.getElementById("profile").value = "hybrid";
-  document.getElementById("strengthExperience").value = "intermediate";
-  document.getElementById("equipment").value = "barbell";
   document.getElementById("bw").value = "";
   document.getElementById("fatigue").value = "low";
 
-  // blank sport defaults (premium/clinical)
   document.getElementById("thaiTotal").value = "";
   document.getElementById("thaiHard").value = "";
   document.getElementById("climbTotal").value = "";
   document.getElementById("climbHard").value = "";
 
-  // movements
-  document.getElementById("lowerMove").value = "backSquat";
-  document.getElementById("hingeMove").value = "deadlift";
-  document.getElementById("pullMove").value = "weightedPullup";
-  applyPullUI();
-
-  ["lowerWeight","lowerReps","lowerRPE","hingeWeight","hingeReps","hingeRPE","pullWeight","pullReps","pullRPE"]
+  ["lowerKg","lowerReps","lowerRPE","hingeKg","hingeReps","hingeRPE","pullKg","pullReps","pullRPE"]
     .forEach(id => document.getElementById(id).value = "");
 
   document.getElementById("output").style.display = "none";
   document.getElementById("weekWrap").style.display = "none";
-  document.getElementById("weekGrid").innerHTML = "";
-  document.getElementById("sessionBlocks").innerHTML = "";
-  document.getElementById("recoveryBlock").innerHTML = "";
-  applyProfileUI();
 }
+
+syncProfileUI();
 </script>
 
 </body>
