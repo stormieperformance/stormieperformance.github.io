@@ -7,19 +7,15 @@
 
 <style>
 :root{
-  --text:#111;
-  --muted:rgba(0,0,0,.62);
-  --muted2:rgba(0,0,0,.42);
-  --line:rgba(0,0,0,.09);
-  --line2:rgba(0,0,0,.14);
-  --wash:rgba(0,0,0,.02);
-
-  /* glass */
-  --glass: rgba(255,255,255,.70);
-  --glassLine: rgba(255,255,255,.45);
-  --shadow: 0 30px 90px rgba(0,0,0,.14);
-
-  --radius: 18px;
+  --text:#0f0f10;
+  --muted:rgba(0,0,0,0.58);
+  --muted2:rgba(0,0,0,0.40);
+  --line:rgba(0,0,0,0.08);
+  --line2:rgba(0,0,0,0.12);
+  --wash:rgba(0,0,0,0.02);
+  --glass:rgba(255,255,255,0.72);
+  --glass2:rgba(255,255,255,0.86);
+  --shadow: 0 30px 90px rgba(0,0,0,0.16);
 }
 
 *{ box-sizing:border-box; }
@@ -28,118 +24,113 @@ body{
   margin:0;
   background:#fff;
   color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
   display:flex;
   justify-content:center;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
 }
 
+/* Layout */
 .container{
   width:min(980px, 92vw);
-  padding:54px 0 90px;
+  padding:56px 0 92px;
 }
 
-/* Top bar */
 .topbar{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  margin-bottom:22px;
+  margin-bottom:20px;
 }
 
 .back{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
+  display:inline-block;
   font-size:12px;
-  letter-spacing:.22em;
+  letter-spacing:0.22em;
   text-transform:uppercase;
   text-decoration:none;
   color:var(--muted);
-  border-bottom:1px solid rgba(0,0,0,.16);
+  border-bottom:1px solid rgba(0,0,0,0.16);
   padding-bottom:3px;
 }
-.back:hover{ color:#000; border-bottom-color:rgba(0,0,0,.32); }
+.back:hover{ color:#000; border-bottom-color:rgba(0,0,0,0.32); }
 
 .brand{
   text-align:right;
   font-size:11px;
-  letter-spacing:.28em;
+  letter-spacing:0.28em;
   text-transform:uppercase;
   color:var(--muted2);
 }
 
-/* Header */
 h1{
   margin:0;
   text-align:center;
   font-size:28px;
   font-weight:650;
-  letter-spacing:.18em;
+  letter-spacing:0.18em;
 }
 
-.sub{
+.headline{
   text-align:center;
-  margin:10px 0 10px;
-  color:var(--muted);
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  font-size:12px;
-}
-
-.hero{
-  text-align:center;
-  margin:14px auto 34px;
-  max-width: 720px;
-}
-
-.hero .headline{
+  margin:12px auto 6px;
+  max-width: 64ch;
   font-size:14px;
-  color:rgba(0,0,0,.72);
-  letter-spacing:.02em;
-  line-height:1.6;
-  margin-bottom:10px;
-}
-.hero .micro{
-  font-size:12px;
-  color:rgba(0,0,0,.52);
-  line-height:1.6;
+  line-height:1.55;
+  color:rgba(0,0,0,0.72);
 }
 
-/* Layout grid */
+.micro{
+  text-align:center;
+  margin:0 auto 26px;
+  max-width: 72ch;
+  font-size:12px;
+  line-height:1.6;
+  letter-spacing:0.04em;
+  color:rgba(0,0,0,0.52);
+}
+
+.problem{
+  text-align:center;
+  margin:0 auto 34px;
+  max-width: 70ch;
+  font-size:12px;
+  line-height:1.65;
+  color:rgba(0,0,0,0.55);
+}
+
 .grid{
   display:grid;
   grid-template-columns: 1fr 1fr;
   gap:14px;
 }
-@media (max-width: 840px){
-  .grid{ grid-template-columns:1fr; }
-}
+@media (max-width: 860px){ .grid{ grid-template-columns:1fr; } }
 
-/* Cards */
 .card{
   border:1px solid var(--line);
   background:var(--wash);
-  border-radius:var(--radius);
+  border-radius:18px;
   padding:18px 16px;
+  position:relative;
 }
 
 .card-title{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:12px;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.card-title .label{
   font-size:11px;
-  letter-spacing:.28em;
+  letter-spacing:0.28em;
   text-transform:uppercase;
   color:var(--muted2);
-  margin-bottom:12px;
 }
 
 .hr{
   height:1px;
-  background:rgba(0,0,0,.06);
+  background:rgba(0,0,0,0.06);
   margin:12px 0;
 }
 
@@ -150,51 +141,42 @@ label{
   justify-content:space-between;
   gap:10px;
   font-size:12px;
-  color:rgba(0,0,0,.72);
+  color:rgba(0,0,0,0.74);
   margin:0 0 6px;
 }
-
-.field{
-  position:relative;
-  margin-bottom:12px;
+.field-note{
+  font-size:11px;
+  color:rgba(0,0,0,0.42);
 }
-.field:last-child{ margin-bottom:0; }
 
 input, select{
   width:100%;
-  padding:11px 12px;
+  padding:10px 11px;
   border:1px solid var(--line2);
   border-radius:14px;
-  background:#fff;
+  background:rgba(255,255,255,0.95);
   outline:none;
   font-size:14px;
   color:#111;
+  transition:border-color .15s ease, background .15s ease;
 }
-input:focus, select:focus{
-  border-color:rgba(0,0,0,.26);
-}
+input:focus, select:focus{ border-color:rgba(0,0,0,0.22); background:#fff; }
 
 .row2{
   display:grid;
   grid-template-columns: 1fr 1fr;
   gap:10px;
 }
-@media (max-width: 520px){
-  .row2{ grid-template-columns:1fr; }
-}
+@media (max-width: 520px){ .row2{ grid-template-columns:1fr; } }
 
 .row3{
   display:grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap:10px;
 }
-@media (max-width: 520px){
-  .row3{ grid-template-columns:1fr; }
-}
+@media (max-width: 520px){ .row3{ grid-template-columns:1fr; } }
 
-.lift{
-  margin-bottom:14px;
-}
+.lift{ margin-bottom:14px; }
 .lift:last-child{ margin-bottom:0; }
 
 .lift-name{
@@ -203,10 +185,10 @@ input:focus, select:focus{
   justify-content:space-between;
   gap:10px;
   font-size:12px;
-  letter-spacing:.22em;
+  letter-spacing:0.22em;
   text-transform:uppercase;
-  color:rgba(0,0,0,.55);
-  margin-bottom:8px;
+  color:rgba(0,0,0,0.55);
+  margin:10px 0 8px;
 }
 
 /* Buttons */
@@ -215,38 +197,36 @@ input:focus, select:focus{
   display:flex;
   gap:12px;
 }
-@media (max-width: 520px){
-  .actions{ flex-direction:column; }
-}
+@media (max-width: 520px){ .actions{ flex-direction:column; } }
 
 button{
-  flex:1;
-  padding:14px 14px;
-  border-radius:16px;
+  appearance:none;
+  -webkit-appearance:none;
   border:none;
   cursor:pointer;
+  padding:14px 14px;
+  border-radius:16px;
   font-size:12px;
-  letter-spacing:.22em;
+  letter-spacing:0.22em;
   text-transform:uppercase;
 }
-
 .primary{ background:#111; color:#fff; }
-.primary:hover{ opacity:.90; }
+.primary:hover{ opacity:0.90; }
 
 .secondary{
   background:#fff;
   color:#111;
   border:1px solid var(--line2);
 }
-.secondary:hover{ background:rgba(0,0,0,.02); }
+.secondary:hover{ background:rgba(0,0,0,0.02); }
 
 /* Output blocks */
 .output{
   margin-top:14px;
   border:1px solid var(--line);
-  background:rgba(0,0,0,.015);
-  border-radius:var(--radius);
-  padding:18px 16px;
+  background:rgba(0,0,0,0.015);
+  border-radius:18px;
+  padding:16px 14px;
   display:none;
 }
 
@@ -263,139 +243,126 @@ button{
 }
 .badge{
   font-size:11px;
-  letter-spacing:.22em;
+  letter-spacing:0.22em;
   text-transform:uppercase;
-  color:rgba(0,0,0,.55);
+  color:rgba(0,0,0,0.55);
 }
-.copy{
+
+.readout{
   font-size:13px;
-  line-height:1.75;
-  color:rgba(0,0,0,.74);
+  line-height:1.7;
+  color:rgba(0,0,0,0.78);
   white-space:pre-line;
 }
 
-/* Week plan (fix: mobile scroll + desktop grid) */
-.weekWrap{
+/* Premium “terminal-lite” for summary lines only */
+.readout .mono{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size:12px;
+  color:rgba(0,0,0,0.70);
+}
+
+/* Weekly plan */
+.week-wrap{
   margin-top:14px;
   border:1px solid var(--line);
-  background:rgba(0,0,0,.012);
-  border-radius:var(--radius);
-  padding:16px;
-  display:none;
+  background:rgba(0,0,0,0.015);
+  border-radius:18px;
+  padding:14px;
 }
 
-.weekHeader{
+.week-head{
   display:flex;
-  align-items:flex-start;
   justify-content:space-between;
-  gap:12px;
-  margin-bottom:12px;
+  align-items:baseline;
+  gap:10px;
+  margin-bottom:10px;
+}
+.week-title{
+  font-size:11px;
+  letter-spacing:0.28em;
+  text-transform:uppercase;
+  color:rgba(0,0,0,0.45);
+}
+.week-meta{
+  font-size:11px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:rgba(0,0,0,0.35);
 }
 
-.weekTitle{
-  font-size:11px;
-  letter-spacing:.28em;
-  text-transform:uppercase;
-  color:rgba(0,0,0,.45);
-}
-.weekMeta{
-  font-size:11px;
-  letter-spacing:.20em;
-  text-transform:uppercase;
-  color:rgba(0,0,0,.40);
-  text-align:right;
-}
-
-/* On desktop: true 7-col grid */
-.weekGrid{
+.week-grid{
   display:grid;
   grid-template-columns: repeat(7, minmax(120px, 1fr));
   gap:10px;
 }
 
-/* On small screens: horizontal scroll */
-@media (max-width: 840px){
-  .weekGrid{
+@media (max-width: 980px){
+  .week-grid{
     display:flex;
     gap:10px;
-    overflow:auto;
-    padding-bottom:6px;
-    scroll-snap-type:x mandatory;
-    -webkit-overflow-scrolling:touch;
+    overflow-x:auto;
+    padding-bottom:8px;
+    -webkit-overflow-scrolling: touch;
   }
-  .day{
-    min-width: 180px;
-    scroll-snap-align:start;
-  }
+  .week-grid::-webkit-scrollbar{ height:8px; }
+  .week-grid > .day-card{ min-width: 170px; }
 }
 
-.day{
-  background:rgba(255,255,255,.72);
-  border:1px solid rgba(0,0,0,.06);
-  border-radius:16px;
-  padding:12px 12px;
-  box-shadow: 0 18px 50px rgba(0,0,0,.06);
+.day-card{
+  border:1px solid var(--line);
+  background:rgba(255,255,255,0.70);
+  border-radius:18px;
+  padding:12px;
 }
 
-.dayTop{
+.day-top{
   display:flex;
-  align-items:baseline;
   justify-content:space-between;
-  gap:10px;
+  align-items:baseline;
   margin-bottom:8px;
 }
-
-.dow{
+.day-name{
   font-size:11px;
-  letter-spacing:.28em;
+  letter-spacing:0.28em;
   text-transform:uppercase;
-  color:rgba(0,0,0,.50);
+  color:rgba(0,0,0,0.55);
 }
-.tag{
-  font-size:10px;
-  letter-spacing:.22em;
+.day-tag{
+  font-size:11px;
+  color:rgba(0,0,0,0.40);
+  letter-spacing:0.08em;
   text-transform:uppercase;
-  color:rgba(0,0,0,.36);
 }
 
-.dayMain{
+.day-body{
   font-size:13px;
   line-height:1.6;
-  color:rgba(0,0,0,.78);
-}
-.dayMain strong{
-  font-weight:650;
+  color:rgba(0,0,0,0.76);
 }
 
-/* session blocks */
-.sessionRow{
+/* Session cards */
+.sessions{
+  margin-top:12px;
   display:grid;
   grid-template-columns: 1fr 1fr;
   gap:10px;
-  margin-top:12px;
 }
-@media (max-width: 840px){
-  .sessionRow{ grid-template-columns:1fr; }
+@media (max-width: 760px){ .sessions{ grid-template-columns:1fr; } }
+
+.session-card{
+  border:1px solid var(--line);
+  background:rgba(255,255,255,0.70);
+  border-radius:18px;
+  padding:12px;
 }
-.sessionCard{
-  background:rgba(255,255,255,.72);
-  border:1px solid rgba(0,0,0,.06);
-  border-radius:16px;
-  padding:14px 14px;
-  box-shadow: 0 18px 50px rgba(0,0,0,.06);
-}
-.sessionTitle{
+
+.session-title{
   font-size:11px;
-  letter-spacing:.28em;
+  letter-spacing:0.28em;
   text-transform:uppercase;
-  color:rgba(0,0,0,.45);
-  margin-bottom:10px;
-}
-.sessionBody{
-  font-size:13px;
-  line-height:1.7;
-  color:rgba(0,0,0,.78);
-  white-space:pre-line;
+  color:rgba(0,0,0,0.55);
+  margin-bottom:8px;
 }
 
 /* Footer */
@@ -403,123 +370,106 @@ button{
   margin-top:22px;
   text-align:center;
   font-size:11px;
-  letter-spacing:.22em;
+  letter-spacing:0.22em;
   text-transform:uppercase;
-  color:rgba(0,0,0,.32);
+  color:rgba(0,0,0,0.35);
 }
 
-/* Info icon + tooltip system (fix: no overlap, works on mobile + desktop) */
-.infoBtn{
-  flex:0 0 auto;
-  width:26px;
-  height:26px;
-  border-radius:999px;
-  border:1px solid rgba(0,0,0,.10);
-  background:rgba(255,255,255,.75);
+/* ---------- Premium Info Sheet (global) ---------- */
+.info-btn{
+  width:28px;
+  height:28px;
+  border-radius:10px;
+  border:1px solid var(--line2);
+  background:rgba(255,255,255,0.75);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   display:inline-flex;
   align-items:center;
   justify-content:center;
   cursor:pointer;
-  user-select:none;
-  position:relative;
+  color:rgba(0,0,0,0.55);
+  transition:transform .15s ease, background .15s ease, color .15s ease;
+  flex:0 0 auto;
 }
-.infoBtn:hover{ background:rgba(255,255,255,.92); }
+.info-btn:hover{ transform:translateY(-1px); background:rgba(255,255,255,0.92); color:#000; }
 
-.infoBtn span{
-  font-size:12px;
-  color:rgba(0,0,0,.58);
-  font-weight:650;
-  transform: translateY(-.5px);
-}
-
-/* Desktop popover */
-.popover{
-  position:fixed;
-  z-index:999;
-  width:min(340px, 88vw);
-  background:var(--glass);
-  border:1px solid var(--glassLine);
-  border-radius:16px;
-  box-shadow: var(--shadow);
-  padding:14px 14px;
-  display:none;
-}
-.popover .popTitle{
-  font-size:11px;
-  letter-spacing:.28em;
-  text-transform:uppercase;
-  color:rgba(0,0,0,.50);
-  margin-bottom:8px;
-}
-.popover .popText{
-  font-size:13px;
-  line-height:1.65;
-  color:rgba(0,0,0,.78);
-}
-
-/* Mobile bottom sheet */
-.sheetOverlay{
+.info-sheet{
   position:fixed;
   inset:0;
-  z-index:998;
-  background:rgba(0,0,0,.28);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  display:none;
-}
-.sheet{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
   z-index:999;
-  border-top-left-radius:20px;
-  border-top-right-radius:20px;
-  background:rgba(255,255,255,.86);
-  border-top:1px solid rgba(255,255,255,.55);
-  box-shadow: 0 -30px 90px rgba(0,0,0,.18);
-  padding:16px 16px 18px;
-  transform: translateY(18px);
-  opacity:0;
-  transition: transform .25s ease, opacity .25s ease;
   display:none;
 }
-.sheet.active{
-  transform: translateY(0);
-  opacity:1;
-}
-.sheetTop{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  margin-bottom:10px;
-}
-.sheetTitle{
-  font-size:11px;
-  letter-spacing:.28em;
-  text-transform:uppercase;
-  color:rgba(0,0,0,.50);
-}
-.sheetClose{
-  width:34px; height:34px;
-  border-radius:12px;
-  border:1px solid rgba(0,0,0,.10);
-  background:rgba(255,255,255,.7);
-  cursor:pointer;
-}
-.sheetClose:hover{ background:rgba(255,255,255,.9); }
-.sheetBody{
-  font-size:13px;
-  line-height:1.65;
-  color:rgba(0,0,0,.78);
+.info-sheet.active{ display:block; }
+
+.info-sheet__backdrop{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.28);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
-/* Prefer sheet on small screens */
-@media (max-width: 760px){
-  .popover{ display:none !important; }
+.info-sheet__panel{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:min(720px, 92vw);
+  max-height:min(560px, 80vh);
+  overflow:auto;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,0.45);
+  background:rgba(255,255,255,0.86);
+  box-shadow: var(--shadow);
+  padding:18px 18px 16px;
+}
+
+@media (max-width: 520px){
+  .info-sheet__panel{
+    top:auto;
+    bottom:14px;
+    transform:translate(-50%,0);
+    width:min(720px, 94vw);
+    max-height:62vh;
+    border-radius:20px;
+  }
+}
+
+.info-sheet__top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:10px;
+}
+
+.info-sheet__title{
+  font-size:11px;
+  letter-spacing:0.28em;
+  text-transform:uppercase;
+  color:rgba(0,0,0,0.55);
+}
+
+.info-sheet__close{
+  width:34px;
+  height:34px;
+  border-radius:12px;
+  border:1px solid rgba(0,0,0,0.10);
+  background:rgba(255,255,255,0.7);
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:16px;
+  color:rgba(0,0,0,0.6);
+}
+.info-sheet__close:hover{ color:#000; background:rgba(255,255,255,0.92); }
+
+.info-sheet__body{
+  font-size:14px;
+  line-height:1.75;
+  color:rgba(0,0,0,0.78);
 }
 </style>
 </head>
@@ -529,62 +479,84 @@ button{
 
   <div class="topbar">
     <a class="back" href="/">← Back</a>
-    <div class="brand">Engine v0.2</div>
+    <div class="brand">Engine v0.3</div>
   </div>
 
   <h1>STORMIĒ</h1>
-  <div class="sub">Performance Engine — Beta</div>
 
-  <div class="hero">
-    <div class="headline">Adaptive strength programming for fighters, climbers and hybrids.</div>
-    <div class="micro">Integrates strength with weekly sport load to prevent overreach and misdirected volume.</div>
+  <div class="headline">
+    Adaptive strength programming for fighters, climbers and hybrids.
+  </div>
+
+  <div class="micro">
+    Integrates strength with weekly sport load to prevent overreach and misdirected volume.
+  </div>
+
+  <div class="problem">
+    Most hybrid athletes guess strength volume. The result is fatigue without performance transfer.
   </div>
 
   <div class="grid">
 
-    <!-- SETUP -->
+    <!-- SETUP / LOAD -->
     <div class="card">
       <div class="card-title">
-        <div>Setup</div>
-        <button class="infoBtn" type="button" data-title="What this does" data-text="You input weekly sport load + one representative strength set. The engine returns a weekly integration output: strength frequency, effort cap (RPE), back-off volume, structural bias, and a recovery directive."><span>i</span></button>
+        <div class="label">Setup</div>
+        <button class="info-btn" type="button"
+          data-info-title="What this engine does"
+          data-info-body="
+            After analysis, the engine generates:<br>
+            • Strength frequency (sessions/week)<br>
+            • Intensity limit (RPE cap)<br>
+            • Back-off volume adjustment<br>
+            • Structural focus bias<br>
+            • Performance protection directive<br><br>
+            <b>Soon</b>: weekly template + imbalance warnings.
+          ">
+          i
+        </button>
       </div>
 
-      <div class="field">
-        <label>
-          Training Profile
-          <button class="infoBtn" type="button"
-            data-title="Training profile"
-            data-text="Fighter hides climbing inputs. Climber hides Muay Thai inputs. Hybrid shows both. This keeps the system clean and context-aware.">
-            <span>i</span>
-          </button>
-        </label>
-        <select id="profile" onchange="syncProfileUI()">
-          <option value="fighter">Fighter</option>
-          <option value="climber">Climber</option>
-          <option value="hybrid" selected>Hybrid</option>
-        </select>
-      </div>
+      <label>
+        Training profile
+        <button class="info-btn" type="button"
+          data-info-title="Training profile"
+          data-info-body="
+            Select your primary sport identity.<br><br>
+            • <b>Fighter</b> → prioritizes hinge + trunk durability<br>
+            • <b>Climber</b> → prioritizes pull capacity + elbow/shoulder protection<br>
+            • <b>Hybrid</b> → balances both and protects recovery
+          ">
+          i
+        </button>
+      </label>
+      <select id="profile">
+        <option value="fighter">Fighter</option>
+        <option value="climber">Climber</option>
+        <option value="hybrid" selected>Hybrid</option>
+      </select>
 
-      <div class="row2">
-        <div class="field">
+      <div class="row2" style="margin-top:10px;">
+        <div>
           <label>
             Bodyweight (kg)
-            <button class="infoBtn" type="button"
-              data-title="Bodyweight"
-              data-text="Optional but recommended. It lets the engine score strength relative to size instead of absolute load.">
-              <span>i</span>
-            </button>
+            <span class="field-note">recommended</span>
           </label>
-          <input type="number" id="bw" min="30" max="200" step="0.1" placeholder="e.g. 65">
+          <input type="number" id="bw" min="30" max="200" step="0.1" placeholder="e.g. 65" />
         </div>
 
-        <div class="field">
+        <div>
           <label>
             Current fatigue state
-            <button class="infoBtn" type="button"
-              data-title="Fatigue state"
-              data-text="A quick readiness input. Higher fatigue lowers the intensity cap and increases recovery bias for the week.">
-              <span>i</span>
+            <button class="info-btn" type="button"
+              data-info-title="Fatigue state"
+              data-info-body="
+                Your current fatigue state adjusts how aggressively the engine pushes volume and intensity.<br><br>
+                • <b>Low</b>: normal progression<br>
+                • <b>Moderate</b>: tighter RPE cap<br>
+                • <b>High</b>: reduced strength volume + recovery bias
+              ">
+              i
             </button>
           </label>
           <select id="fatigue">
@@ -598,34 +570,44 @@ button{
       <div class="hr"></div>
 
       <!-- Muay Thai -->
-      <div class="field" id="thaiBlock">
+      <div id="thaiBlock">
         <label>
           Muay Thai load
-          <button class="infoBtn" type="button"
-            data-title="Muay Thai load"
-            data-text="TOTAL sessions/week includes all sessions. HIGH-INTENSITY is a subset inside total (sparring/hard pads). Example: total 5, high-intensity 2.">
-            <span>i</span>
+          <button class="info-btn" type="button"
+            data-info-title="Muay Thai load"
+            data-info-body="
+              <b>Total / week</b> includes all sessions.<br>
+              <b>High-intensity / week</b> is a subset inside total (sparring / hard pads).<br><br>
+              Example: total 5, high-intensity 2.
+            ">
+            i
           </button>
         </label>
+
         <div class="row2">
-          <input type="number" id="thaiTotal" min="0" max="10" placeholder="total / week">
-          <input type="number" id="thaiHard" min="0" max="10" placeholder="high-intensity / week">
+          <input type="number" id="thaiTotal" min="0" max="14" step="1" placeholder="total / week" />
+          <input type="number" id="thaiHard" min="0" max="14" step="1" placeholder="high-intensity / week" />
         </div>
       </div>
 
       <!-- Climbing -->
-      <div class="field" id="climbBlock">
+      <div id="climbBlock" style="margin-top:12px;">
         <label>
           Climbing load
-          <button class="infoBtn" type="button"
-            data-title="Climbing load"
-            data-text="TOTAL sessions/week includes all sessions. HIGH-INTENSITY is a subset inside total (limit bouldering/max hangs/hard attempts). Example: total 4, high-intensity 1.">
-            <span>i</span>
+          <button class="info-btn" type="button"
+            data-info-title="Climbing load"
+            data-info-body="
+              <b>Total / week</b> includes all sessions.<br>
+              <b>High-intensity / week</b> is a subset inside total (limit bouldering / max hangs / hard attempts).<br><br>
+              Example: total 4, high-intensity 1.
+            ">
+            i
           </button>
         </label>
+
         <div class="row2">
-          <input type="number" id="climbTotal" min="0" max="10" placeholder="total / week">
-          <input type="number" id="climbHard" min="0" max="10" placeholder="high-intensity / week">
+          <input type="number" id="climbTotal" min="0" max="14" step="1" placeholder="total / week" />
+          <input type="number" id="climbHard" min="0" max="14" step="1" placeholder="high-intensity / week" />
         </div>
       </div>
 
@@ -636,263 +618,194 @@ button{
 
       <div class="output" id="output">
         <div class="kpi">
-          <div class="score" id="scoreText">—</div>
-          <div class="badge" id="badgeText">—</div>
+          <div class="score" id="kpiMain">PCI: —</div>
+          <div class="badge" id="kpiBadge">—</div>
         </div>
         <div class="hr"></div>
-        <div class="copy" id="detailsText"></div>
-      </div>
+        <div class="readout" id="summaryText"></div>
 
-      <div class="weekWrap" id="weekWrap">
-        <div class="weekHeader">
-          <div class="weekTitle">Weekly Integration Output</div>
-          <div class="weekMeta" id="weekMeta">—</div>
+        <div class="week-wrap" id="weekWrap" style="display:none;">
+          <div class="week-head">
+            <div class="week-title">Weekly integration output</div>
+            <div class="week-meta" id="weekMeta">—</div>
+          </div>
+          <div class="week-grid" id="weekGrid"></div>
+
+          <div class="sessions" id="sessionGrid" style="margin-top:12px;"></div>
+
+          <div class="session-card" style="margin-top:10px;">
+            <div class="session-title">Recovery directive</div>
+            <div class="day-body" id="recoveryText">—</div>
+          </div>
         </div>
-
-        <div class="weekGrid" id="weekGrid"></div>
-
-        <div class="sessionRow" id="sessionRow"></div>
-
-        <div class="hr"></div>
-        <div class="copy" id="recoveryText"></div>
       </div>
     </div>
 
     <!-- STRUCTURAL PERFORMANCE PROFILE -->
     <div class="card">
       <div class="card-title">
-        <div>Structural Performance Profile</div>
-        <button class="infoBtn" type="button"
-          data-title="Why these inputs"
-          data-text="One representative working set per pattern is enough for an MVP capacity snapshot. It’s not a max test. The engine uses e1RM + RPE to estimate what you can tolerate while still transferring to sport.">
-          <span>i</span>
+        <div class="label">Structural performance profile</div>
+        <button class="info-btn" type="button"
+          data-info-title="Structural performance profile"
+          data-info-body="
+            Enter <b>one representative working set</b> per pattern this week (not a max test).<br><br>
+            The engine estimates structural capacity using <b>e1RM + RPE</b>, then biases programming toward your weakest pattern while protecting recovery under sport load.
+          ">
+          i
         </button>
       </div>
 
-      <div class="copy" style="margin-bottom:14px; color:rgba(0,0,0,.60);">
-        Enter one representative working set per movement this week (not a max test).
-      </div>
-
+      <!-- Lower -->
       <div class="lift">
         <div class="lift-name">
           Lower body pattern
-          <button class="infoBtn" type="button"
-            data-title="Lower body pattern"
-            data-text="Choose the movement that best represents your current lower-body strength exposure. This anchors the weekly bias and volume protection.">
-            <span>i</span>
+          <button class="info-btn" type="button"
+            data-info-title="Lower body pattern"
+            data-info-body="
+              Choose the movement that best represents your current lower-body strength exposure. This anchors the weekly bias and volume protection.
+            ">
+            i
           </button>
         </div>
+
         <select id="lowerPattern">
-          <option>Back Squat</option>
-          <option>Front Squat</option>
-          <option>Split Squat</option>
-          <option>Leg Press</option>
+          <option value="back_squat" selected>Back Squat</option>
+          <option value="front_squat">Front Squat</option>
+          <option value="split_squat">Split Squat</option>
+          <option value="leg_press">Leg Press</option>
         </select>
+
         <div class="row3" style="margin-top:10px;">
-          <input type="number" id="lowerKg" min="0" step="0.5" placeholder="kg">
-          <input type="number" id="lowerReps" min="1" max="20" step="1" placeholder="reps">
-          <input type="number" id="lowerRPE" min="6" max="10" step="0.5" placeholder="RPE">
+          <input type="number" id="lowerKg" min="0" step="0.5" placeholder="kg" />
+          <input type="number" id="lowerReps" min="1" max="25" step="1" placeholder="reps" />
+          <input type="number" id="lowerRPE" min="6" max="10" step="0.5" placeholder="RPE" />
         </div>
       </div>
 
+      <!-- Hinge -->
       <div class="lift">
         <div class="lift-name">
           Hinge pattern
-          <button class="infoBtn" type="button"
-            data-title="Hinge pattern"
-            data-text="Hinge strength tends to be fatigue-expensive but important for fighters and hybrids. This helps the engine cap intensity when sport load is high.">
-            <span>i</span>
+          <button class="info-btn" type="button"
+            data-info-title="Hinge pattern"
+            data-info-body="
+              Hinge = hip-dominant strength (deadlift / RDL / hip thrust). For fighters, hinge capacity supports power, trunk durability and posterior-chain resilience.
+            ">
+            i
           </button>
         </div>
+
         <select id="hingePattern">
-          <option>Deadlift</option>
-          <option>RDL</option>
-          <option>Hip Thrust</option>
+          <option value="deadlift" selected>Deadlift</option>
+          <option value="rdl">RDL</option>
+          <option value="hip_thrust">Hip Thrust</option>
         </select>
+
         <div class="row3" style="margin-top:10px;">
-          <input type="number" id="hingeKg" min="0" step="0.5" placeholder="kg">
-          <input type="number" id="hingeReps" min="1" max="20" step="1" placeholder="reps">
-          <input type="number" id="hingeRPE" min="6" max="10" step="0.5" placeholder="RPE">
+          <input type="number" id="hingeKg" min="0" step="0.5" placeholder="kg" />
+          <input type="number" id="hingeReps" min="1" max="25" step="1" placeholder="reps" />
+          <input type="number" id="hingeRPE" min="6" max="10" step="0.5" placeholder="RPE" />
         </div>
       </div>
 
+      <!-- Pull -->
       <div class="lift">
         <div class="lift-name">
           Pull pattern
-          <button class="infoBtn" type="button"
-            data-title="Pull pattern"
-            data-text="Pull = vertical or horizontal pulling (weighted pull-ups, rows, pulldown). Climbers need pull strength, but high pull volume can be risky under heavy sport load.">
-            <span>i</span>
+          <button class="info-btn" type="button"
+            data-info-title="Pull pattern"
+            data-info-body="
+              Pull = vertical or horizontal pulling (weighted pull-ups, rows, pulldown). Climbers need pull strength, but high pull volume can be risky under heavy sport load.
+            ">
+            i
           </button>
         </div>
+
         <select id="pullPattern">
-          <option>Weighted Pull-up</option>
-          <option>Row</option>
-          <option>Pulldown</option>
+          <option value="weighted_pullup" selected>Weighted Pull-up</option>
+          <option value="row">Row</option>
+          <option value="pulldown">Pulldown</option>
         </select>
+
         <div class="row3" style="margin-top:10px;">
-          <input type="number" id="pullKg" min="0" step="0.5" placeholder="kg">
-          <input type="number" id="pullReps" min="1" max="20" step="1" placeholder="reps">
-          <input type="number" id="pullRPE" min="6" max="10" step="0.5" placeholder="RPE">
+          <input type="number" id="pullKg" min="0" step="0.5" placeholder="kg" />
+          <input type="number" id="pullReps" min="1" max="25" step="1" placeholder="reps" />
+          <input type="number" id="pullRPE" min="6" max="10" step="0.5" placeholder="RPE" />
         </div>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="problem" style="margin:0; text-align:left;">
+        The integration problem between strength and sport.
       </div>
     </div>
 
   </div>
 
   <div class="footer">Open Access Beta • No accounts • Local computation</div>
-
 </div>
 
-<!-- Desktop popover -->
-<div class="popover" id="popover" role="dialog" aria-hidden="true">
-  <div class="popTitle" id="popTitle">—</div>
-  <div class="popText" id="popText">—</div>
-</div>
-
-<!-- Mobile sheet -->
-<div class="sheetOverlay" id="sheetOverlay" aria-hidden="true"></div>
-<div class="sheet" id="sheet" role="dialog" aria-hidden="true">
-  <div class="sheetTop">
-    <div class="sheetTitle" id="sheetTitle">—</div>
-    <button class="sheetClose" type="button" onclick="closeInfo()">✕</button>
+<!-- Premium Info Sheet (global) -->
+<div class="info-sheet" id="infoSheet" aria-hidden="true">
+  <div class="info-sheet__backdrop" id="infoSheetBackdrop"></div>
+  <div class="info-sheet__panel" role="dialog" aria-modal="true" aria-label="Info">
+    <div class="info-sheet__top">
+      <div class="info-sheet__title" id="infoSheetTitle">INFO</div>
+      <button class="info-sheet__close" id="infoSheetClose" aria-label="Close">×</button>
+    </div>
+    <div class="info-sheet__body" id="infoSheetBody"></div>
   </div>
-  <div class="sheetBody" id="sheetBody">—</div>
 </div>
 
 <script>
-/* ---------------------------
-   TOOLTIP SYSTEM (FIXED)
-----------------------------*/
-const popover = document.getElementById("popover");
-const popTitle = document.getElementById("popTitle");
-const popText  = document.getElementById("popText");
+/* ---------- Info Sheet logic ---------- */
+const infoSheet = document.getElementById("infoSheet");
+const infoSheetTitle = document.getElementById("infoSheetTitle");
+const infoSheetBody = document.getElementById("infoSheetBody");
+const infoSheetClose = document.getElementById("infoSheetClose");
+const infoSheetBackdrop = document.getElementById("infoSheetBackdrop");
 
-const sheetOverlay = document.getElementById("sheetOverlay");
-const sheet = document.getElementById("sheet");
-const sheetTitle = document.getElementById("sheetTitle");
-const sheetBody  = document.getElementById("sheetBody");
-
-let currentAnchor = null;
-
-function isMobile(){
-  return window.matchMedia("(max-width: 760px)").matches;
+function openInfoSheet(title, body){
+  infoSheetTitle.textContent = title || "INFO";
+  infoSheetBody.innerHTML = body || "";
+  infoSheet.classList.add("active");
+  infoSheet.setAttribute("aria-hidden", "false");
 }
-
-function openInfo(anchor){
-  const title = anchor.getAttribute("data-title") || "Info";
-  const text  = anchor.getAttribute("data-text")  || "";
-
-  currentAnchor = anchor;
-
-  if(isMobile()){
-    sheetTitle.textContent = title;
-    sheetBody.textContent = text;
-    sheetOverlay.style.display = "block";
-    sheet.style.display = "block";
-    requestAnimationFrame(()=> sheet.classList.add("active"));
-    sheetOverlay.setAttribute("aria-hidden","false");
-    sheet.setAttribute("aria-hidden","false");
-    return;
-  }
-
-  popTitle.textContent = title;
-  popText.textContent  = text;
-
-  const r = anchor.getBoundingClientRect();
-  const pad = 10;
-
-  // place to the right if possible, else left, else centered
-  let x = r.right + 12;
-  let y = r.top + (r.height/2) - 10;
-
-  popover.style.display = "block";
-  popover.setAttribute("aria-hidden","false");
-
-  const pr = popover.getBoundingClientRect();
-  if(x + pr.width + pad > window.innerWidth){
-    x = r.left - pr.width - 12;
-  }
-  if(x < pad){
-    x = Math.max(pad, (window.innerWidth - pr.width)/2);
-  }
-  if(y + pr.height + pad > window.innerHeight){
-    y = window.innerHeight - pr.height - pad;
-  }
-  if(y < pad) y = pad;
-
-  popover.style.left = x + "px";
-  popover.style.top  = y + "px";
+function closeInfoSheet(){
+  infoSheet.classList.remove("active");
+  infoSheet.setAttribute("aria-hidden", "true");
 }
-
-function closeInfo(){
-  // desktop
-  popover.style.display = "none";
-  popover.setAttribute("aria-hidden","true");
-
-  // mobile
-  sheet.classList.remove("active");
-  sheetOverlay.style.display = "none";
-  sheetOverlay.setAttribute("aria-hidden","true");
-  sheet.setAttribute("aria-hidden","true");
-  setTimeout(()=> { sheet.style.display = "none"; }, 200);
-
-  currentAnchor = null;
-}
-
-document.addEventListener("click", (e)=>{
-  const btn = e.target.closest(".infoBtn");
-  if(btn){
-    e.preventDefault();
-    e.stopPropagation();
-    // toggle same
-    if(currentAnchor === btn){
-      closeInfo();
-    }else{
-      openInfo(btn);
-    }
-    return;
-  }
-  // click outside closes
-  if(currentAnchor){
-    closeInfo();
-  }
+infoSheetClose.addEventListener("click", closeInfoSheet);
+infoSheetBackdrop.addEventListener("click", closeInfoSheet);
+window.addEventListener("keydown", (e) => {
+  if(e.key === "Escape" && infoSheet.classList.contains("active")) closeInfoSheet();
+});
+document.querySelectorAll("[data-info-title]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    openInfoSheet(btn.getAttribute("data-info-title"), btn.getAttribute("data-info-body"));
+  });
 });
 
-window.addEventListener("keydown",(e)=>{
-  if(e.key === "Escape" && currentAnchor) closeInfo();
-});
-window.addEventListener("resize", ()=>{
-  if(currentAnchor && !isMobile()){
-    openInfo(currentAnchor);
-  }
-});
-sheetOverlay.addEventListener("click", closeInfo);
+/* ---------- Profile → dynamic UI ---------- */
+const profileEl = document.getElementById("profile");
+const thaiBlock = document.getElementById("thaiBlock");
+const climbBlock = document.getElementById("climbBlock");
 
-/* ---------------------------
-   PROFILE UI (HIDE/SHOW)
-----------------------------*/
-function syncProfileUI(){
-  const profile = document.getElementById("profile").value;
-  const thaiBlock  = document.getElementById("thaiBlock");
-  const climbBlock = document.getElementById("climbBlock");
-
-  if(profile === "fighter"){
-    thaiBlock.style.display = "block";
-    climbBlock.style.display = "none";
-  }else if(profile === "climber"){
-    thaiBlock.style.display = "none";
-    climbBlock.style.display = "block";
-  }else{
-    thaiBlock.style.display = "block";
-    climbBlock.style.display = "block";
-  }
+function applyProfileUI(){
+  const p = profileEl.value;
+  thaiBlock.style.display  = (p === "climber") ? "none" : "block";
+  climbBlock.style.display = (p === "fighter") ? "none" : "block";
 }
+profileEl.addEventListener("change", applyProfileUI);
+applyProfileUI();
 
-/* ---------------------------
-   ENGINE LOGIC (MVP+)
-----------------------------*/
+/* ---------- Helpers ---------- */
+function isNum(x){ return typeof x === "number" && isFinite(x) && !isNaN(x); }
+function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+
 function e1RM(weight, reps){
+  // Simple Epley
   return weight * (1 + reps / 30);
 }
 function rpeFactor(rpe){
@@ -900,244 +813,342 @@ function rpeFactor(rpe){
   if (rpe >= 9)  return 0.97;
   if (rpe >= 8)  return 0.94;
   if (rpe >= 7)  return 0.90;
-  return 0.85;
+  return 0.86;
 }
-function isNum(x){
-  return typeof x === "number" && isFinite(x) && !isNaN(x);
-}
-function clamp(n,min,max){ return Math.max(min, Math.min(max,n)); }
 
+/* Pattern normalization so different lifts feel comparable (MVP) */
+const patternFactor = {
+  // Lower
+  back_squat: 1.00,
+  front_squat: 0.92,
+  split_squat: 0.72,
+  leg_press: 1.10,
+
+  // Hinge
+  deadlift: 1.00,
+  rdl: 0.90,
+  hip_thrust: 0.88,
+
+  // Pull
+  weighted_pullup: 0.78,
+  row: 0.72,
+  pulldown: 0.66
+};
+
+function getVal(id){
+  const v = parseFloat(document.getElementById(id).value);
+  return isNum(v) ? v : null;
+}
+
+function getInt(id){
+  const v = parseInt(document.getElementById(id).value, 10);
+  return isNum(v) ? v : 0;
+}
+
+/* ---------- Engine logic ---------- */
 function analyze(){
-  const profile = document.getElementById("profile").value;
+  // Core inputs
+  const profile = profileEl.value;
   const fatigue = document.getElementById("fatigue").value;
 
-  const bwRaw = parseFloat(document.getElementById("bw").value);
-  const bw = (isNum(bwRaw) && bwRaw > 0) ? bwRaw : null;
+  const bwRaw = getVal("bw");
+  const bw = (bwRaw && bwRaw > 0) ? bwRaw : null;
 
-  const thaiTotal  = parseInt(document.getElementById("thaiTotal").value, 10)  || 0;
-  const thaiHard   = parseInt(document.getElementById("thaiHard").value, 10)   || 0;
-  const climbTotal = parseInt(document.getElementById("climbTotal").value, 10) || 0;
-  const climbHard  = parseInt(document.getElementById("climbHard").value, 10)  || 0;
+  // Load inputs (total + high-intensity subset)
+  const thaiTotal = (profile === "climber") ? 0 : getInt("thaiTotal");
+  const thaiHard  = (profile === "climber") ? 0 : getInt("thaiHard");
+  const climbTotal = (profile === "fighter") ? 0 : getInt("climbTotal");
+  const climbHard  = (profile === "fighter") ? 0 : getInt("climbHard");
 
-  // Strength snapshot
-  const lowerKg = parseFloat(document.getElementById("lowerKg").value);
-  const lowerReps = parseFloat(document.getElementById("lowerReps").value);
-  const lowerRPE = parseFloat(document.getElementById("lowerRPE").value);
+  // Validate subsets: high-intensity must be <= total
+  const thaiHardSafe  = clamp(thaiHard,  0, thaiTotal);
+  const climbHardSafe = clamp(climbHard, 0, climbTotal);
 
-  const hingeKg = parseFloat(document.getElementById("hingeKg").value);
-  const hingeReps = parseFloat(document.getElementById("hingeReps").value);
-  const hingeRPE = parseFloat(document.getElementById("hingeRPE").value);
+  // Structural inputs
+  const lowerPattern = document.getElementById("lowerPattern").value;
+  const hingePattern = document.getElementById("hingePattern").value;
+  const pullPattern  = document.getElementById("pullPattern").value;
 
-  const pullKg = parseFloat(document.getElementById("pullKg").value);
-  const pullReps = parseFloat(document.getElementById("pullReps").value);
-  const pullRPE = parseFloat(document.getElementById("pullRPE").value);
+  const lowerKg = getVal("lowerKg"), lowerReps = getVal("lowerReps"), lowerRPE = getVal("lowerRPE");
+  const hingeKg = getVal("hingeKg"), hingeReps = getVal("hingeReps"), hingeRPE = getVal("hingeRPE");
+  const pullKg  = getVal("pullKg"),  pullReps  = getVal("pullReps"),  pullRPE  = getVal("pullRPE");
 
-  const required = [lowerKg,lowerReps,lowerRPE, hingeKg,hingeReps,hingeRPE, pullKg,pullReps,pullRPE];
-  const ok = required.every(isNum);
+  const required = [lowerKg, lowerReps, lowerRPE, hingeKg, hingeReps, hingeRPE, pullKg, pullReps, pullRPE];
+  const ok = required.every(v => isNum(v));
 
+  // Output nodes
   const output = document.getElementById("output");
-  const scoreText = document.getElementById("scoreText");
-  const badgeText = document.getElementById("badgeText");
-  const detailsText = document.getElementById("detailsText");
-
+  const kpiMain = document.getElementById("kpiMain");
+  const kpiBadge = document.getElementById("kpiBadge");
+  const summaryText = document.getElementById("summaryText");
   const weekWrap = document.getElementById("weekWrap");
-  const weekGrid = document.getElementById("weekGrid");
-  const sessionRow = document.getElementById("sessionRow");
   const weekMeta = document.getElementById("weekMeta");
+  const weekGrid = document.getElementById("weekGrid");
+  const sessionGrid = document.getElementById("sessionGrid");
   const recoveryText = document.getElementById("recoveryText");
 
   output.style.display = "block";
   weekWrap.style.display = "none";
 
   if(!ok){
-    scoreText.textContent = "Missing inputs";
-    badgeText.textContent = "Complete strength snapshot";
-    detailsText.textContent =
-      "Enter: kg / reps / RPE for Lower, Hinge, and Pull.\n" +
-      "Bodyweight is optional but recommended.\n\n" +
-      "Tip: Use a representative working set from this week (not a max test).";
+    kpiMain.textContent = "Missing inputs";
+    kpiBadge.textContent = "Complete structural profile";
+    summaryText.textContent =
+      "Enter: kg / reps / RPE for Lower, Hinge and Pull.\n" +
+      "Bodyweight is recommended (improves accuracy).\n" +
+      "Sport load totals are optional but improve integration quality.";
     return;
   }
 
-  // Validate subset logic (hard <= total)
-  const thaiHardAdj  = Math.min(thaiHard, thaiTotal);
-  const climbHardAdj = Math.min(climbHard, climbTotal);
+  // Compute pattern-adjusted capacities
+  const lowerCap = e1RM(lowerKg, lowerReps) * rpeFactor(lowerRPE) * (patternFactor[lowerPattern] ?? 1);
+  const hingeCap = e1RM(hingeKg, hingeReps) * rpeFactor(hingeRPE) * (patternFactor[hingePattern] ?? 1);
+  const pullCap  = e1RM(pullKg,  pullReps)  * rpeFactor(pullRPE)  * (patternFactor[pullPattern]  ?? 1);
 
-  // sport totals depending on profile
-  let sportTotal = 0, sportHard = 0;
-  if(profile === "fighter"){ sportTotal = thaiTotal; sportHard = thaiHardAdj; }
-  else if(profile === "climber"){ sportTotal = climbTotal; sportHard = climbHardAdj; }
-  else { sportTotal = thaiTotal + climbTotal; sportHard = thaiHardAdj + climbHardAdj; }
+  const bwUsed = bw ?? 65; // MVP fallback
+  const relLower = lowerCap / bwUsed;
+  const relHinge = hingeCap / bwUsed;
+  const relPull  = pullCap  / bwUsed;
 
-  // strength capacity
-  const lower = e1RM(lowerKg, lowerReps) * rpeFactor(lowerRPE);
-  const hinge = e1RM(hingeKg, hingeReps) * rpeFactor(hingeRPE);
-  const pull  = e1RM(pullKg,  pullReps)  * rpeFactor(pullRPE);
+  // Sub-scores (0–100 MVP map)
+  const lowerScore = clamp(Math.round(relLower * 40), 0, 100);
+  const hingeScore = clamp(Math.round(relHinge * 40), 0, 100);
+  const pullScore  = clamp(Math.round(relPull  * 40), 0, 100);
 
-  // profile weighting
-  let wL=1.0, wH=1.0, wP=1.0;
-  if(profile === "fighter"){ wH=1.10; wP=1.05; }
-  if(profile === "climber"){ wP=1.20; wH=0.95; }
-  if(profile === "hybrid"){  wP=1.10; }
+  // PCI (simple average + subtle profile bias)
+  let wL = 1.0, wH = 1.0, wP = 1.0;
+  if(profile === "fighter"){ wH = 1.12; wL = 1.06; }
+  if(profile === "climber"){ wP = 1.18; wH = 0.96; }
+  if(profile === "hybrid"){  wP = 1.08; }
 
-  const bwUsed = bw ?? 65;
-  const rel = (((lower/bwUsed)*wL)+((hinge/bwUsed)*wH)+((pull/bwUsed)*wP))/3;
-  const score = clamp(Math.round(rel * 40), 0, 100);
+  const pci = clamp(Math.round((lowerScore*wL + hingeScore*wH + pullScore*wP) / (wL+wH+wP)), 0, 100);
 
-  // Overreach index (simple MVP): total + hard weighting + fatigue weighting
-  const hardWeight = 1.7;
-  const fatigueMult = (fatigue === "high") ? 1.25 : (fatigue === "moderate") ? 1.10 : 1.0;
-  const overreach = clamp(Math.round((sportTotal + (sportHard*hardWeight)) * fatigueMult * 6), 0, 100);
+  // Imbalance detection
+  const scores = [
+    { key:"LOWER", v: lowerScore },
+    { key:"HINGE", v: hingeScore },
+    { key:"PULL",  v: pullScore  }
+  ].sort((a,b)=>b.v-a.v);
 
-  let loadBand, strengthSessions, rpeCap, volumeAdj;
-  if(overreach >= 70){
-    loadBand = "HIGH";
+  const strongest = scores[0], weakest = scores[2];
+  const ratio = weakest.v / Math.max(1, strongest.v);
+
+  let imbalanceLabel = "STABLE";
+  if(ratio < 0.55) imbalanceLabel = "CRITICAL";
+  else if(ratio < 0.75) imbalanceLabel = "MODERATE";
+
+  // Sport load integration (total includes high-intensity subset)
+  const sportTotal = thaiTotal + climbTotal;
+  const sportHard  = thaiHardSafe + climbHardSafe;
+
+  // Overreach Index (0–100): weighted by hard sessions + fatigue
+  const fatigueMult = (fatigue === "high") ? 1.25 : (fatigue === "moderate") ? 1.12 : 1.00;
+  const baseLoad = (sportTotal * 7) + (sportHard * 12); // hard sessions count more
+  const overreachIndex = clamp(Math.round((baseLoad / 10) * fatigueMult), 0, 100);
+
+  let overreachBand = "MINIMAL";
+  if(overreachIndex >= 70) overreachBand = "HIGH";
+  else if(overreachIndex >= 40) overreachBand = "MODERATE";
+
+  // Decide strength frequency + caps
+  let strengthSessions = 3;
+  let rpeCap = 9;
+  let backoff = "full";
+  let directive = "Progress approved. Add load gradually.";
+
+  // Protection logic
+  if(overreachBand === "HIGH"){
     strengthSessions = 2;
     rpeCap = 8;
-    volumeAdj = "−20% back-off volume";
-  }else if(overreach >= 40){
-    loadBand = "MODERATE";
+    backoff = "reduce ~20%";
+    directive = "Protect output. Reduce volume and cap intensity.";
+  } else if(overreachBand === "MODERATE"){
+    strengthSessions = 2;
+    rpeCap = 8.5;
+    backoff = "reduce ~10%";
+    directive = "Maintain. Progress selectively under an effort cap.";
+  } else {
     strengthSessions = 3;
-    rpeCap = 9;
-    volumeAdj = "−10% back-off volume";
-  }else{
-    loadBand = "LOW";
-    strengthSessions = 3;
-    rpeCap = 9;
-    volumeAdj = "Full volume";
+    rpeCap = (fatigue === "moderate") ? 8.5 : (fatigue === "high") ? 8 : 9;
+    backoff = (fatigue === "high") ? "reduce ~10%" : "full";
+    directive = (fatigue === "high")
+      ? "Protect recovery. Maintain load, reduce back-off volume."
+      : "Progress approved. Add load gradually.";
   }
 
-  // structural bias: weakest pattern relative to strongest
-  const arr = [
-    {k:"LOWER", v:(lower*wL)},
-    {k:"HINGE", v:(hinge*wH)},
-    {k:"PULL",  v:(pull*wP)}
-  ];
-  arr.sort((a,b)=>a.v-b.v);
-  const weakest = arr[0], strongest = arr[2];
-  const ratio = strongest.v > 0 ? (weakest.v / strongest.v) : 1;
-  let imbalance = "MINIMAL";
-  if(ratio < 0.55) imbalance = "CRITICAL";
-  else if(ratio < 0.70) imbalance = "MODERATE";
+  // Structural focus bias: prioritize weakest pattern (especially if imbalanced)
+  const focusBias = (imbalanceLabel === "CRITICAL") ? weakest.key + " (CRITICAL)" : weakest.key;
 
-  const bias = weakest.k;
+  // Copy output
+  const bwNote = bw ? "" : "Note: Bodyweight not set → using 65kg baseline (MVP).";
+  kpiMain.textContent = "PCI: " + pci + "  |  Sub-scores (L/H/P): " + lowerScore + "/" + hingeScore + "/" + pullScore;
+  kpiBadge.textContent = "Overreach: " + overreachIndex + " (" + overreachBand + ")";
 
-  // copy block
-  scoreText.textContent = "Performance Capacity Index: " + score;
-  badgeText.textContent = "Overreach index: " + overreach + " (" + loadBand + ")";
+  summaryText.innerHTML =
+    "<span class='mono'>" +
+    "Imbalance: " + imbalanceLabel + " (weakest: " + weakest.key + " @ " + weakest.v + "% of strongest)\n\n" +
+    "Sport total: " + sportTotal + " / week   |   Hard: " + sportHard + " / week\n" +
+    "Strength: " + strengthSessions + " sessions / week\n" +
+    "Effort cap: RPE " + rpeCap + "\n" +
+    "Back-off volume: " + backoff + "\n" +
+    "Structural focus bias: " + focusBias + "\n" +
+    "Directive: " + directive +
+    (bwNote ? ("\n\n" + bwNote) : "") +
+    "</span>";
 
-  const bwNote = bw ? "" : "\n\nNote: bodyweight not set → using 65kg baseline (MVP).";
-  detailsText.textContent =
-    "The integration problem between strength and sport.\n\n" +
-    "After analysis, the engine generates:\n" +
-    "• Strength frequency (sessions/week)\n" +
-    "• Intensity limit (RPE cap)\n" +
-    "• Back-off volume adjustment\n" +
-    "• Structural focus bias\n" +
-    "• Performance protection directive\n\n" +
-    "Soon:\n" +
-    "• Weekly template\n" +
-    "• Imbalance warnings" +
-    bwNote;
+  // Build week plan (viewable on desktop + phone)
+  const week = buildWeekPlan(profile, strengthSessions, sportTotal, sportHard, focusBias, rpeCap);
+  renderWeekPlan(week, sportTotal, sportHard, strengthSessions, rpeCap);
 
-  // Build WEEK OUTPUT (requested)
+  // Sessions (example strength session blocks)
+  const sessions = buildStrengthSessions(focusBias, rpeCap, overreachBand);
+  renderSessions(sessions);
+
+  // Recovery directive (clean copy)
+  recoveryText.textContent = buildRecoveryDirective(overreachBand, fatigue);
+
   weekWrap.style.display = "block";
-  weekGrid.innerHTML = "";
-  sessionRow.innerHTML = "";
 
-  weekMeta.textContent =
-    "SPORT TOTAL " + sportTotal + " • HARD " + sportHard + " • STRENGTH " + strengthSessions + " • RPE CAP " + rpeCap;
+  // small UX: auto-scroll to output on mobile
+  setTimeout(()=> output.scrollIntoView({behavior:"smooth", block:"start"}), 50);
 
-  // simple scheduling (MVP): distribute sport + strength across week with off/recovery
-  const days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  // --------- functions ----------
+  function buildWeekPlan(profile, strengthSessions, sportTotal, sportHard, focusBias, rpeCap){
+    const days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 
-  // placeholders for day types
-  const plan = days.map(d => ({ day:d, tag:"", main:"OFF", note:"Recovery / maintenance" }));
+    // Default: protect recovery between strength days
+    const plan = days.map(d => ({ day:d, tag:"OFF", body:"Recovery / mobility (8–12 min)" }));
 
-  // place strength sessions (Wed/Fri + Tue if 3)
-  const strengthDays = (strengthSessions === 2) ? ["Wed","Fri"] : ["Tue","Thu","Sat"];
-  strengthDays.forEach((d, i)=>{
-    const idx = days.indexOf(d);
-    plan[idx].main = "STRENGTH";
-    plan[idx].tag = (bias === "PULL" && i===0) ? "PULL BIAS" : (bias === "LOWER" && i===0) ? "LOWER BIAS" : (bias === "HINGE" && i===0) ? "HINGE BIAS" : "BALANCED";
-    plan[idx].note = "RPE cap " + rpeCap + " • " + volumeAdj;
-  });
+    // Decide strength day slots (2 or 3)
+    const strengthSlots = (strengthSessions === 2) ? ["Wed","Fri"] : ["Tue","Thu","Sat"];
+    strengthSlots.forEach((d, i) => {
+      let bias = (strengthSessions === 3)
+        ? (i===0 ? focusBias.split(" ")[0] : (i===1 ? "LOWER" : "HINGE"))
+        : (i===0 ? focusBias.split(" ")[0] : "LOWER");
 
-  // place sport days lightly (MVP)
-  // hybrid: climbing on Mon, thai on Thu, plus one optional
-  if(profile === "hybrid"){
-    if(thaiTotal>0){ plan[3].main = "MUAY THAI"; plan[3].tag = (thaiHardAdj>0 ? "HARD INCLUDED" : "TECH"); plan[3].note = "Keep strength RPE cap " + rpeCap; }
-    if(climbTotal>0){ plan[0].main = "CLIMB"; plan[0].tag = (climbHardAdj>0 ? "HARD INCLUDED" : "TECH"); plan[0].note = "Skill / volume focus"; }
-  }else if(profile === "fighter"){
-    if(thaiTotal>0){ plan[1].main="MUAY THAI"; plan[1].tag=(thaiHardAdj>0?"HARD INCLUDED":"TECH"); plan[1].note="Manage fatigue"; }
-  }else{
-    if(climbTotal>0){ plan[1].main="CLIMB"; plan[1].tag=(climbHardAdj>0?"HARD INCLUDED":"TECH"); plan[1].note="Grip / volume control"; }
+      plan[days.indexOf(d)] = {
+        day:d,
+        tag:"STRENGTH",
+        body:
+          (bias === "PULL" ? "Strength — PULL bias" :
+           bias === "HINGE" ? "Strength — HINGE bias" :
+           "Strength — LOWER bias") +
+          "\nRPE cap " + (typeof rpeCap === "number" ? rpeCap : "8") +
+          "\nImbalance protection active"
+      };
+    });
+
+    // Sport placeholders (not prescribing sport)
+    // If user has sport sessions, label “SPORT” on two days, otherwise leave off
+    if(sportTotal > 0){
+      const sportDays = (profile === "fighter") ? ["Mon","Thu"] :
+                        (profile === "climber") ? ["Mon","Wed"] :
+                        ["Mon","Wed"];
+      sportDays.forEach((d, idx) => {
+        const current = plan[days.indexOf(d)];
+        // Don't overwrite strength days
+        if(current.tag !== "STRENGTH"){
+          plan[days.indexOf(d)] = {
+            day:d,
+            tag:"SPORT",
+            body: (sportHard > 0 && idx === 0) ? "Sport session (hard)\nSkill / volume managed" : "Sport session\nSkill / volume managed"
+          };
+        }
+      });
+    }
+
+    return plan;
   }
 
-  // render week grid
-  plan.forEach(p=>{
-    const el = document.createElement("div");
-    el.className = "day";
-    el.innerHTML = `
-      <div class="dayTop">
-        <div class="dow">${p.day}</div>
-        <div class="tag">${p.tag || ""}</div>
-      </div>
-      <div class="dayMain">
-        <strong>${p.main}</strong><br>
-        ${p.note || ""}
-      </div>
-    `;
-    weekGrid.appendChild(el);
-  });
+  function renderWeekPlan(plan, sportTotal, sportHard, strengthSessions, rpeCap){
+    weekGrid.innerHTML = "";
+    weekMeta.textContent =
+      "sport total " + sportTotal + " • hard " + sportHard + " • strength " + strengthSessions + " • rpe cap " + (rpeCap ?? 8);
 
-  // session cards (very MVP but premium copy)
-  const sessionA = makeSessionCard("Session 1 • Strength — " + bias + " bias",
-    biasLine(bias, rpeCap) +
-    "\nSecondary: 3×6–8 @ RPE " + Math.max(7, rpeCap-1) +
-    "\nAccessory: 3×10–12 (quality)" +
-    "\nRecovery: 8–12 min mobility" +
-    "\nImbalance protection: strong patterns run at ~65% volume this week."
-  );
+    plan.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "day-card";
 
-  const sessionB = makeSessionCard("Session 2 • Strength — Lower bias",
-    biasLine("LOWER", rpeCap) +
-    "\nSecondary: 3×6–8 @ RPE " + Math.max(7, rpeCap-1) +
-    "\nAccessory: 3×10–12 (quality)" +
-    "\nRecovery: 8–12 min mobility" +
-    "\nImbalance protection: strong patterns run at ~65% volume this week."
-  );
+      const top = document.createElement("div");
+      top.className = "day-top";
 
-  sessionRow.appendChild(sessionA);
-  sessionRow.appendChild(sessionB);
+      const name = document.createElement("div");
+      name.className = "day-name";
+      name.textContent = item.day;
 
-  // recovery directive
-  let directive = "Progress approved: add load gradually under an effort cap.";
-  if(loadBand === "HIGH") directive = "Protect output: reduce volume and cap intensity. Progress selectively.";
-  if(loadBand === "MODERATE") directive = "Maintain: cap intensity and progress selectively.";
+      const tag = document.createElement("div");
+      tag.className = "day-tag";
+      tag.textContent = item.tag;
 
-  recoveryText.textContent =
-    "RECOVERY DIRECTIVE\n\n" +
-    directive + "\n" +
-    "Keep 1 true recovery day.\n" +
-    "Mobility: 6–10 min after sessions.\n" +
-    "Fuel: protein + carbs around sport days.";
-}
+      top.appendChild(name);
+      top.appendChild(tag);
 
-function biasLine(which, rpeCap){
-  if(which === "PULL")  return "Pull: 4×4–6 @ RPE " + rpeCap;
-  if(which === "HINGE") return "Hinge: 4×4–6 @ RPE " + rpeCap;
-  return "Lower: 4×4–6 @ RPE " + rpeCap;
-}
+      const body = document.createElement("div");
+      body.className = "day-body";
+      body.textContent = item.body;
 
-function makeSessionCard(title, body){
-  const el = document.createElement("div");
-  el.className = "sessionCard";
-  el.innerHTML = `
-    <div class="sessionTitle">${title}</div>
-    <div class="sessionBody">${body}</div>
-  `;
-  return el;
+      card.appendChild(top);
+      card.appendChild(body);
+      weekGrid.appendChild(card);
+    });
+  }
+
+  function buildStrengthSessions(focusBias, rpeCap, overreachBand){
+    const biasKey = focusBias.split(" ")[0]; // LOWER/HINGE/PULL
+    const secondary = (biasKey === "PULL") ? "LOWER" : "PULL";
+    const repsMain = (overreachBand === "HIGH") ? "3×4–6" : "4×4–6";
+    const repsSecondary = "3×6–8";
+    const repsAccessory = "3×10–12 (quality)";
+
+    const cap = (typeof rpeCap === "number") ? rpeCap : 8;
+
+    const template = (bias) => ({
+      title: "Strength — " + bias + " bias",
+      lines: [
+        bias + ": " + repsMain + " @ RPE " + Math.min(9, Math.round(cap)),
+        "Secondary: " + repsSecondary + " @ RPE " + Math.max(7, Math.round(cap-1)),
+        "Accessory: " + repsAccessory,
+        "Recovery: 8–12 min mobility",
+        "Imbalance protection: strong patterns run at ~65% volume this week."
+      ]
+    });
+
+    // 2–3 sessions
+    if(document.getElementById("profile").value === "hybrid"){
+      return [template(biasKey), template("LOWER")];
+    }
+    return [template(biasKey), template(secondary)];
+  }
+
+  function renderSessions(sessions){
+    sessionGrid.innerHTML = "";
+    sessions.forEach((s, idx) => {
+      const card = document.createElement("div");
+      card.className = "session-card";
+
+      const title = document.createElement("div");
+      title.className = "session-title";
+      title.textContent = "Session " + (idx+1) + " • " + s.title;
+
+      const body = document.createElement("div");
+      body.className = "day-body";
+      body.textContent = s.lines.join("\n");
+
+      card.appendChild(title);
+      card.appendChild(body);
+      sessionGrid.appendChild(card);
+    });
+  }
+
+  function buildRecoveryDirective(overreachBand, fatigue){
+    if(overreachBand === "HIGH" || fatigue === "high"){
+      return "Protect output: cap intensity, reduce back-off volume, keep 1 true recovery day. Mobility: 8–12 min. Fuel: protein + carbs around sport days.";
+    }
+    if(overreachBand === "MODERATE" || fatigue === "moderate"){
+      return "Maintain: progress selectively under an effort cap. Keep 1 true recovery day. Mobility: 6–10 min after sessions.";
+    }
+    return "Progress approved: add load gradually next week. Keep 1 true recovery day. Mobility: 6–10 min (maintenance).";
+  }
 }
 
 function resetForm(){
@@ -1149,15 +1160,20 @@ function resetForm(){
   document.getElementById("climbTotal").value = "";
   document.getElementById("climbHard").value = "";
 
+  document.getElementById("lowerPattern").value = "back_squat";
+  document.getElementById("hingePattern").value = "deadlift";
+  document.getElementById("pullPattern").value = "weighted_pullup";
+
   ["lowerKg","lowerReps","lowerRPE","hingeKg","hingeReps","hingeRPE","pullKg","pullReps","pullRPE"]
     .forEach(id => document.getElementById(id).value = "");
 
-  document.getElementById("output").style.display = "none";
-  document.getElementById("weekWrap").style.display = "none";
+  const output = document.getElementById("output");
+  const weekWrap = document.getElementById("weekWrap");
+  output.style.display = "none";
+  weekWrap.style.display = "none";
+
+  applyProfileUI();
 }
-
-syncProfileUI();
 </script>
-
 </body>
 </html>
