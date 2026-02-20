@@ -212,6 +212,12 @@ input, select{
 }
 input:focus, select:focus{ border-color:rgba(0,0,0,0.22); }
 
+input[disabled]{
+  opacity:0.65;
+  background:rgba(0,0,0,0.02);
+  cursor:not-allowed;
+}
+
 .row2{
   display:grid;
   grid-template-columns: 1fr 1fr;
@@ -457,7 +463,7 @@ button{
     <a class="back" href="/">← Back</a>
     <div class="brand">
       <a class="ghostlink" href="#" id="openHow">How it works</a>
-      <span>Engine v0.3</span>
+      <span>Engine v0.31</span>
     </div>
   </div>
 
@@ -490,10 +496,9 @@ button{
         <option value="hybrid" selected>Hybrid</option>
       </select>
 
-      <!-- NEW: Training age -->
       <div class="labelrow" style="margin-top:10px;">
         <label>Training age</label>
-        <span class="info" data-tip="Used as a tolerance modifier. Advanced athletes can usually tolerate slightly more stress; beginners should be more conservative.">i</span>
+        <span class="info" data-tip="Tolerance modifier. Advanced athletes can tolerate slightly more stress; beginners should be more conservative.">i</span>
       </div>
       <select id="trainingAge">
         <option value="beginner">Beginner (0–2 years consistent)</option>
@@ -501,10 +506,9 @@ button{
         <option value="advanced">Advanced (5+ years)</option>
       </select>
 
-      <!-- NEW: Equipment -->
       <div class="labelrow" style="margin-top:10px;">
         <label>Strength equipment</label>
-        <span class="info" data-tip="Affects interpretation and tolerance. Barbell tends to produce higher systemic stress than dumbbells/bodyweight.">i</span>
+        <span class="info" data-tip="Systemic stress modifier. Barbell tends to produce higher systemic load than dumbbells/bodyweight.">i</span>
       </div>
       <select id="equipment">
         <option value="barbell" selected>Barbell</option>
@@ -535,7 +539,7 @@ button{
       <div id="thaiRow" class="sport-row">
         <div class="labelrow">
           <label>Muay Thai load</label>
-          <span class="info" data-tip="Total sessions + high-intensity sessions (sparring / hard pads). Intensity influences Overreach Index.">i</span>
+          <span class="info" data-tip="TOTAL sessions/week includes all sessions. HIGH-INTENSITY is the subset inside total (sparring / hard pads). Example: total 5, high-intensity 2.">i</span>
         </div>
         <div class="row2">
           <input type="number" id="thaiTotal" min="0" max="10" value="2" placeholder="total / week">
@@ -547,7 +551,7 @@ button{
       <div id="climbRow" class="sport-row">
         <div class="labelrow" style="margin-top:10px;">
           <label>Climbing load</label>
-          <span class="info" data-tip="Total sessions + high-intensity sessions (limit bouldering / max hangs / very hard attempts).">i</span>
+          <span class="info" data-tip="TOTAL sessions/week includes all sessions. HIGH-INTENSITY is the subset inside total (limit bouldering / max hangs / very hard attempts). Example: total 4, high-intensity 1.">i</span>
         </div>
         <div class="row2">
           <input type="number" id="climbTotal" min="0" max="10" value="2" placeholder="total / week">
@@ -605,10 +609,9 @@ button{
       <div class="lift">
         <div class="labelrow" style="margin-bottom:8px;">
           <div class="lift-name" style="margin:0;">Pull Pattern</div>
-          <span class="info" data-tip="Defines what 'Pull' means. Select the pattern that best matches your representative top set.">i</span>
+          <span class="info" data-tip="Defines what 'Pull' means. Weighted pull-up uses ADDED kg. Bodyweight pull-up locks weight to 0. Rows/pulldowns use external load.">i</span>
         </div>
 
-        <!-- NEW: Pull Pattern dropdown -->
         <select id="pullPattern" style="margin-bottom:10px;">
           <option value="weightedPullup" selected>Weighted Pull-Up / Chin-Up</option>
           <option value="bodyweightPullup">Pull-Up / Chin-Up (bodyweight)</option>
@@ -618,11 +621,11 @@ button{
         </select>
 
         <div class="row3">
-          <input type="number" id="pullWeight" min="0" step="0.5" placeholder="kg">
+          <input type="number" id="pullWeight" min="0" step="0.5" placeholder="added kg">
           <input type="number" id="pullReps" min="1" max="20" step="1" placeholder="reps">
           <input type="number" id="pullRPE" min="6" max="10" step="0.5" placeholder="RPE">
         </div>
-        <div class="helper">This is the anchor for climbing carryover and upper-back resilience. Choose a pattern and keep it consistent.</div>
+        <div class="helper" id="pullHelper">Weighted pull-up: enter added load (e.g. +20kg), reps, and RPE.</div>
       </div>
 
       <div class="hr"></div>
@@ -668,11 +671,10 @@ button{
 
       <div class="block">
         <b>Definitions</b>
-        <p><strong>Top sets</strong> = a representative anchor set for each movement pattern (not a 1RM test).</p>
-        <p><strong>Pull pattern</strong> = vertical pull (pull-ups/chins), rows, or pulldowns — defined by your selection.</p>
-        <p><strong>Overreach Index</strong> = heuristic risk metric based on sport stress + effort + fatigue + tolerance modifiers.</p>
-        <p><strong>Intensity limit</strong> = maximum effort allowed under current integration stress (RPE cap).</p>
-        <p><strong>Back-off volume</strong> = volume after your top set (scaled down when stress is high).</p>
+        <p><strong>Total sessions</strong> = all sessions (easy + moderate + hard).</p>
+        <p><strong>High-intensity sessions</strong> = subset inside total (sparring/limit bouldering etc.). Example: total 5, high-intensity 2.</p>
+        <p><strong>Top sets</strong> = representative anchor sets (not 1RM tests).</p>
+        <p><strong>Overreach Index</strong> = sport stress + effort + fatigue ± tolerance modifiers.</p>
         <p><strong>RPE</strong> = effort rating (10 = max, 8 ≈ ~2 reps in reserve).</p>
       </div>
     </div>
@@ -751,7 +753,46 @@ document.getElementById("closeHow").addEventListener("click", closeHow);
 how.addEventListener("click", (e)=>{ if(e.target === how) closeHow(); });
 window.addEventListener("keydown",(e)=>{ if(e.key === "Escape" && how.classList.contains("active")) closeHow(); });
 
-/* Overreach Index model (sport-protection bias) */
+/* NEW: Pull UI behavior */
+const pullPatternEl = document.getElementById("pullPattern");
+const pullWeightEl  = document.getElementById("pullWeight");
+const pullHelperEl  = document.getElementById("pullHelper");
+
+function applyPullPatternUI(){
+  const p = pullPatternEl.value;
+
+  if(p === "weightedPullup"){
+    pullWeightEl.disabled = false;
+    pullWeightEl.placeholder = "added kg";
+    pullWeightEl.value = pullWeightEl.value; // keep
+    pullHelperEl.textContent = "Weighted pull-up: enter added load (e.g. +20kg), reps, and RPE.";
+  }
+  else if(p === "bodyweightPullup"){
+    pullWeightEl.disabled = true;
+    pullWeightEl.value = 0;
+    pullWeightEl.placeholder = "0 (bodyweight)";
+    pullHelperEl.textContent = "Bodyweight pull-up: weight is set to 0. Enter reps and RPE.";
+  }
+  else if(p === "row"){
+    pullWeightEl.disabled = false;
+    pullWeightEl.placeholder = "kg (external load)";
+    pullHelperEl.textContent = "Row: enter external load (kg), reps, and RPE.";
+  }
+  else if(p === "pulldown"){
+    pullWeightEl.disabled = false;
+    pullWeightEl.placeholder = "kg (stack)";
+    pullHelperEl.textContent = "Pulldown: enter stack/load (kg), reps, and RPE.";
+  }
+  else{
+    pullWeightEl.disabled = false;
+    pullWeightEl.placeholder = "kg";
+    pullHelperEl.textContent = "Other: enter the closest equivalent external load (kg), reps, and RPE.";
+  }
+}
+pullPatternEl.addEventListener("change", applyPullPatternUI);
+applyPullPatternUI();
+
+/* Overreach model */
 function fatiguePoints(level){
   if(level === "high") return 16;
   if(level === "moderate") return 8;
@@ -764,33 +805,27 @@ function overreachStatus(index){
   return "MINIMAL";
 }
 
-/* Training age tolerance modifier */
 function trainingAgeTolerance(age){
-  // tolerance points subtracted from index (higher = more tolerance)
   if(age === "advanced") return 8;
   if(age === "intermediate") return 4;
-  return 0; // beginner
+  return 0;
 }
 
-/* Equipment systemic stress modifier */
 function equipmentStress(equip){
-  // points added to index (barbell tends to be higher systemic stress)
   if(equip === "barbell") return 4;
   if(equip === "mixed") return 3;
   if(equip === "dumbbell") return 2;
-  return 1; // bodyweight
+  return 1;
 }
 
-/* Sport stress: total sessions + extra for high-intensity sessions */
 function sportStress(thaiTotal, thaiHard, climbTotal, climbHard){
   const thai = (thaiTotal * 1.0) + (thaiHard * 0.7);
   const climb = (climbTotal * 0.9) + (climbHard * 0.7);
-  return thai + climb; // typical range 0–~20
+  return thai + climb;
 }
 
 function analyze(){
   const profile = profileEl.value;
-
   const trainingAge = document.getElementById("trainingAge").value;
   const equipment = document.getElementById("equipment").value;
 
@@ -799,14 +834,12 @@ function analyze(){
 
   const fatigue = document.getElementById("fatigue").value;
 
-  // sport load (handle hidden fields)
   const thaiTotal = thaiRow.classList.contains("hidden") ? 0 : (parseInt(document.getElementById("thaiTotal").value,10) || 0);
   const thaiHard  = thaiRow.classList.contains("hidden") ? 0 : (parseInt(document.getElementById("thaiHard").value,10)  || 0);
 
   const climbTotal = climbRow.classList.contains("hidden") ? 0 : (parseInt(document.getElementById("climbTotal").value,10) || 0);
   const climbHard  = climbRow.classList.contains("hidden") ? 0 : (parseInt(document.getElementById("climbHard").value,10)  || 0);
 
-  // top sets
   const squatW = parseFloat(document.getElementById("squatWeight").value);
   const squatR = parseFloat(document.getElementById("squatReps").value);
   const squatP = parseFloat(document.getElementById("squatRPE").value);
@@ -843,12 +876,10 @@ function analyze(){
     return;
   }
 
-  // Capacity estimates
   const squat = e1RM(squatW, squatR) * rpeFactor(squatP);
   const hinge = e1RM(hingeW, hingeR) * rpeFactor(hingeP);
   const pull  = e1RM(pullW,  pullR)  * rpeFactor(pullP);
 
-  // Profile bias (subtle)
   let wSquat = 1.0, wHinge = 1.0, wPull = 1.0;
   let bias = "Structural focus bias: balanced";
 
@@ -863,22 +894,19 @@ function analyze(){
     ((pull  / bwUsed) * wPull)
   ) / 3;
 
-  // Strength score (0–100)
   const strengthScore = clamp(Math.round(rel * 40), 0, 100);
   strengthScoreEl.textContent = strengthScore;
 
-  // Overreach Index (0–100): sport-protection biased, stable
   const avgRPE = (squatP + hingeP + pullP) / 3;
-  const sStress = sportStress(thaiTotal, thaiHard, climbTotal, climbHard); // 0–20+
+  const sStress = sportStress(thaiTotal, thaiHard, climbTotal, climbHard);
   const fatiguePts = fatiguePoints(fatigue);
 
   const effortDemand = clamp(Math.round((avgRPE - 6) * 6), 0, 28);
   const sportDemand  = clamp(Math.round(sStress * 10), 0, 80);
 
-  // tolerance: strength + training age
-  const strengthTolerance = Math.round((strengthScore / 100) * 10); // 0–10
-  const ageTol = trainingAgeTolerance(trainingAge); // 0/4/8
-  const equipStress = equipmentStress(equipment); // 1–4 (adds)
+  const strengthTolerance = Math.round((strengthScore / 100) * 10);
+  const ageTol = trainingAgeTolerance(trainingAge);
+  const equipStress = equipmentStress(equipment);
 
   const overreachIndex = clamp(
     Math.round(sportDemand + effortDemand + fatiguePts + equipStress - (strengthTolerance + ageTol)),
@@ -889,30 +917,22 @@ function analyze(){
   overreachValueEl.textContent = overreachIndex;
   overreachStatusEl.textContent = status;
 
-  // Prescription rules (sport protection first)
   let sessions, rpeCap, volumeAdjust, directive, focusArea;
 
   if(status === "ELEVATED"){
-    sessions = 2;
-    rpeCap = 8;
-    volumeAdjust = "Back-off volume: -20%";
+    sessions = 2; rpeCap = 8; volumeAdjust = "Back-off volume: -20%";
     directive = "Protect sport output. Reduce stress and prioritize recovery.";
     focusArea = "Durability + tissue tolerance";
   } else if(status === "CONTROLLED"){
-    sessions = 3;
-    rpeCap = 9;
-    volumeAdjust = "Back-off volume: -10%";
+    sessions = 3; rpeCap = 9; volumeAdjust = "Back-off volume: -10%";
     directive = "Maintain. Progress selectively under an effort cap.";
     focusArea = "Strength maintenance";
   } else {
-    sessions = 3;
-    rpeCap = 9;
-    volumeAdjust = "Back-off volume: full";
+    sessions = 3; rpeCap = 9; volumeAdjust = "Back-off volume: full";
     directive = "Progress approved. Keep effort controlled and add load gradually.";
     focusArea = "Strength progression";
   }
 
-  // Fine tune focus area by profile
   if(profile === "fighter") focusArea = (status === "ELEVATED") ? "Resilience + power maintenance" : "Power + resilience";
   if(profile === "climber") focusArea = (status === "ELEVATED") ? "Pulling tolerance + durability" : "Pulling capacity";
   if(profile === "hybrid")  focusArea = (status === "ELEVATED") ? "Hybrid durability" : focusArea;
@@ -920,12 +940,11 @@ function analyze(){
   const sportTotal = thaiTotal + climbTotal;
   const sportHardTotal = thaiHard + climbHard;
 
-  // Pull pattern copy
   const pullLabelMap = {
-    weightedPullup: "Weighted Pull-Up/Chin-Up",
-    bodyweightPullup: "Pull-Up/Chin-Up (BW)",
-    row: "Row",
-    pulldown: "Lat Pulldown",
+    weightedPullup: "Weighted Pull-Up/Chin-Up (added kg)",
+    bodyweightPullup: "Pull-Up/Chin-Up (bodyweight)",
+    row: "Row (external load)",
+    pulldown: "Lat Pulldown (stack/load)",
     other: "Other Pull Pattern"
   };
   const pullLabel = pullLabelMap[pullPattern] || "Pull Pattern";
@@ -959,10 +978,12 @@ function resetForm(){
 
   document.getElementById("thaiTotal").value = 2;
   document.getElementById("thaiHard").value = 0;
+
   document.getElementById("climbTotal").value = 2;
   document.getElementById("climbHard").value = 0;
 
   document.getElementById("pullPattern").value = "weightedPullup";
+  applyPullPatternUI();
 
   ["squatWeight","squatReps","squatRPE","hingeWeight","hingeReps","hingeRPE","pullWeight","pullReps","pullRPE"]
     .forEach(id => document.getElementById(id).value = "");
@@ -974,4 +995,3 @@ function resetForm(){
 
 </body>
 </html>
-
