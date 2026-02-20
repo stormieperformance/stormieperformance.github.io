@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +27,7 @@ body{
 }
 
 .container{
-  width:min(860px, 92vw);
+  width:min(900px, 92vw);
   padding:54px 0 80px;
 }
 
@@ -107,7 +105,7 @@ h1{
 
 .value{
   margin:0 auto 28px;
-  width:min(820px, 100%);
+  width:min(860px, 100%);
   border:1px solid var(--line);
   background:var(--wash);
   border-radius:16px;
@@ -131,7 +129,7 @@ h1{
   grid-template-columns: 1fr 1fr;
   gap:14px;
 }
-@media (max-width: 760px){
+@media (max-width: 820px){
   .grid{ grid-template-columns:1fr; }
 }
 
@@ -184,7 +182,7 @@ label{
   position:absolute;
   right:0;
   top:26px;
-  width:min(360px, 78vw);
+  width:min(380px, 80vw);
   padding:10px 10px;
   border-radius:12px;
   background:rgba(255,255,255,0.86);
@@ -241,6 +239,13 @@ input:focus, select:focus{ border-color:rgba(0,0,0,0.22); }
   text-transform:uppercase;
   color:rgba(0,0,0,0.55);
   margin-bottom:8px;
+}
+
+.helper{
+  margin:8px 0 0;
+  font-size:12px;
+  line-height:1.7;
+  color:rgba(0,0,0,0.50);
 }
 
 .actions{
@@ -302,13 +307,6 @@ button{
   margin-bottom:6px;
 }
 .metric .value{
-  border:none;
-  background:transparent;
-  padding:0;
-  margin:0;
-  width:auto;
-  text-align:left;
-  border-radius:0;
   font-size:18px;
   font-weight:600;
   color:#111;
@@ -379,7 +377,7 @@ button{
 .modal.active{ opacity:1; pointer-events:auto; }
 
 .modal-panel{
-  width:min(860px, 94vw);
+  width:min(900px, 94vw);
   background:rgba(255,255,255,0.82);
   border:1px solid rgba(255,255,255,0.45);
   box-shadow: var(--shadow);
@@ -424,7 +422,7 @@ button{
   gap:12px;
   margin-top:14px;
 }
-@media (max-width: 760px){
+@media (max-width: 820px){
   .section-grid{ grid-template-columns:1fr; }
 }
 .block{
@@ -459,7 +457,7 @@ button{
     <a class="back" href="/">← Back</a>
     <div class="brand">
       <a class="ghostlink" href="#" id="openHow">How it works</a>
-      <span>Engine v0.2</span>
+      <span>Engine v0.3</span>
     </div>
   </div>
 
@@ -492,6 +490,29 @@ button{
         <option value="hybrid" selected>Hybrid</option>
       </select>
 
+      <!-- NEW: Training age -->
+      <div class="labelrow" style="margin-top:10px;">
+        <label>Training age</label>
+        <span class="info" data-tip="Used as a tolerance modifier. Advanced athletes can usually tolerate slightly more stress; beginners should be more conservative.">i</span>
+      </div>
+      <select id="trainingAge">
+        <option value="beginner">Beginner (0–2 years consistent)</option>
+        <option value="intermediate" selected>Intermediate (2–5 years)</option>
+        <option value="advanced">Advanced (5+ years)</option>
+      </select>
+
+      <!-- NEW: Equipment -->
+      <div class="labelrow" style="margin-top:10px;">
+        <label>Strength equipment</label>
+        <span class="info" data-tip="Affects interpretation and tolerance. Barbell tends to produce higher systemic stress than dumbbells/bodyweight.">i</span>
+      </div>
+      <select id="equipment">
+        <option value="barbell" selected>Barbell</option>
+        <option value="dumbbell">Dumbbells / Kettlebells</option>
+        <option value="bodyweight">Bodyweight</option>
+        <option value="mixed">Mixed</option>
+      </select>
+
       <div class="labelrow" style="margin-top:10px;">
         <label>Bodyweight (kg)</label>
         <span class="info" data-tip="Used for relative strength scoring. Optional, but recommended for accuracy.">i</span>
@@ -514,7 +535,7 @@ button{
       <div id="thaiRow" class="sport-row">
         <div class="labelrow">
           <label>Muay Thai load</label>
-          <span class="info" data-tip="Enter total sessions and how many are high-intensity (sparring / hard pads). Intensity influences Overreach Index.">i</span>
+          <span class="info" data-tip="Total sessions + high-intensity sessions (sparring / hard pads). Intensity influences Overreach Index.">i</span>
         </div>
         <div class="row2">
           <input type="number" id="thaiTotal" min="0" max="10" value="2" placeholder="total / week">
@@ -526,7 +547,7 @@ button{
       <div id="climbRow" class="sport-row">
         <div class="labelrow" style="margin-top:10px;">
           <label>Climbing load</label>
-          <span class="info" data-tip="Enter total sessions and how many are high-intensity (limit bouldering / max hangs / very hard attempts).">i</span>
+          <span class="info" data-tip="Total sessions + high-intensity sessions (limit bouldering / max hangs / very hard attempts).">i</span>
         </div>
         <div class="row2">
           <input type="number" id="climbTotal" min="0" max="10" value="2" placeholder="total / week">
@@ -544,7 +565,7 @@ button{
           <div class="metric">
             <div class="label">Structural Strength Score</div>
             <div class="value" id="strengthScore">—</div>
-            <div class="sub" id="strengthSub">relative capacity</div>
+            <div class="sub">relative capacity</div>
           </div>
           <div class="metric">
             <div class="label">Overreach Index</div>
@@ -562,35 +583,51 @@ button{
       <div class="card-title">Top Sets</div>
 
       <div class="lift">
-        <div class="lift-name">Squat</div>
+        <div class="lift-name">Squat Pattern</div>
         <div class="row3">
           <input type="number" id="squatWeight" min="0" step="0.5" placeholder="kg">
           <input type="number" id="squatReps" min="1" max="20" step="1" placeholder="reps">
           <input type="number" id="squatRPE" min="6" max="10" step="0.5" placeholder="RPE">
         </div>
+        <div class="helper">Representative top set for your squat pattern this week (not a max). Use the hardest clean set you’d repeat next week.</div>
       </div>
 
       <div class="lift">
-        <div class="lift-name">Hinge</div>
+        <div class="lift-name">Hinge Pattern</div>
         <div class="row3">
           <input type="number" id="hingeWeight" min="0" step="0.5" placeholder="kg">
           <input type="number" id="hingeReps" min="1" max="20" step="1" placeholder="reps">
           <input type="number" id="hingeRPE" min="6" max="10" step="0.5" placeholder="RPE">
         </div>
+        <div class="helper">Representative top set for your hinge pattern (deadlift/RDL/hip thrust etc.). Consistency beats perfect selection.</div>
       </div>
 
       <div class="lift">
-        <div class="lift-name">Pull</div>
+        <div class="labelrow" style="margin-bottom:8px;">
+          <div class="lift-name" style="margin:0;">Pull Pattern</div>
+          <span class="info" data-tip="Defines what 'Pull' means. Select the pattern that best matches your representative top set.">i</span>
+        </div>
+
+        <!-- NEW: Pull Pattern dropdown -->
+        <select id="pullPattern" style="margin-bottom:10px;">
+          <option value="weightedPullup" selected>Weighted Pull-Up / Chin-Up</option>
+          <option value="bodyweightPullup">Pull-Up / Chin-Up (bodyweight)</option>
+          <option value="row">Row (barbell/dumbbell/cable)</option>
+          <option value="pulldown">Lat Pulldown</option>
+          <option value="other">Other (closest equivalent)</option>
+        </select>
+
         <div class="row3">
           <input type="number" id="pullWeight" min="0" step="0.5" placeholder="kg">
           <input type="number" id="pullReps" min="1" max="20" step="1" placeholder="reps">
           <input type="number" id="pullRPE" min="6" max="10" step="0.5" placeholder="RPE">
         </div>
+        <div class="helper">This is the anchor for climbing carryover and upper-back resilience. Choose a pattern and keep it consistent.</div>
       </div>
 
       <div class="hr"></div>
       <div class="notice">
-        Enter one representative top set per movement pattern. The engine estimates capacity using <span class="mono">e1RM + RPE</span>.
+        This engine uses a fast capacity snapshot (<span class="mono">e1RM + RPE</span>) to regulate strength stress against weekly sport load.
       </div>
     </div>
 
@@ -631,10 +668,11 @@ button{
 
       <div class="block">
         <b>Definitions</b>
-        <p><strong>Overreach Index</strong> = heuristic risk metric based on sport stress + effort + fatigue state.</p>
+        <p><strong>Top sets</strong> = a representative anchor set for each movement pattern (not a 1RM test).</p>
+        <p><strong>Pull pattern</strong> = vertical pull (pull-ups/chins), rows, or pulldowns — defined by your selection.</p>
+        <p><strong>Overreach Index</strong> = heuristic risk metric based on sport stress + effort + fatigue + tolerance modifiers.</p>
         <p><strong>Intensity limit</strong> = maximum effort allowed under current integration stress (RPE cap).</p>
         <p><strong>Back-off volume</strong> = volume after your top set (scaled down when stress is high).</p>
-        <p><strong>Performance protection</strong> = prioritize sport output when fatigue risk is elevated.</p>
         <p><strong>RPE</strong> = effort rating (10 = max, 8 ≈ ~2 reps in reserve).</p>
       </div>
     </div>
@@ -713,7 +751,7 @@ document.getElementById("closeHow").addEventListener("click", closeHow);
 how.addEventListener("click", (e)=>{ if(e.target === how) closeHow(); });
 window.addEventListener("keydown",(e)=>{ if(e.key === "Escape" && how.classList.contains("active")) closeHow(); });
 
-/* Overreach Index model (v0.2 heuristic, sport-protection bias) */
+/* Overreach Index model (sport-protection bias) */
 function fatiguePoints(level){
   if(level === "high") return 16;
   if(level === "moderate") return 8;
@@ -726,18 +764,35 @@ function overreachStatus(index){
   return "MINIMAL";
 }
 
-/* Sport stress: total sessions + extra for high-intensity sessions
-   (kept simple but meaningful; stable; "hard" adds additional stress) */
+/* Training age tolerance modifier */
+function trainingAgeTolerance(age){
+  // tolerance points subtracted from index (higher = more tolerance)
+  if(age === "advanced") return 8;
+  if(age === "intermediate") return 4;
+  return 0; // beginner
+}
+
+/* Equipment systemic stress modifier */
+function equipmentStress(equip){
+  // points added to index (barbell tends to be higher systemic stress)
+  if(equip === "barbell") return 4;
+  if(equip === "mixed") return 3;
+  if(equip === "dumbbell") return 2;
+  return 1; // bodyweight
+}
+
+/* Sport stress: total sessions + extra for high-intensity sessions */
 function sportStress(thaiTotal, thaiHard, climbTotal, climbHard){
-  // Muay Thai: base 1.0 per session, hard adds +0.7
   const thai = (thaiTotal * 1.0) + (thaiHard * 0.7);
-  // Climbing: base 0.9 per session, hard adds +0.7
   const climb = (climbTotal * 0.9) + (climbHard * 0.7);
   return thai + climb; // typical range 0–~20
 }
 
 function analyze(){
   const profile = profileEl.value;
+
+  const trainingAge = document.getElementById("trainingAge").value;
+  const equipment = document.getElementById("equipment").value;
 
   const bwRaw = parseFloat(document.getElementById("bw").value);
   const bw = (isNum(bwRaw) && bwRaw > 0) ? bwRaw : null;
@@ -751,6 +806,7 @@ function analyze(){
   const climbTotal = climbRow.classList.contains("hidden") ? 0 : (parseInt(document.getElementById("climbTotal").value,10) || 0);
   const climbHard  = climbRow.classList.contains("hidden") ? 0 : (parseInt(document.getElementById("climbHard").value,10)  || 0);
 
+  // top sets
   const squatW = parseFloat(document.getElementById("squatWeight").value);
   const squatR = parseFloat(document.getElementById("squatReps").value);
   const squatP = parseFloat(document.getElementById("squatRPE").value);
@@ -762,6 +818,8 @@ function analyze(){
   const pullW  = parseFloat(document.getElementById("pullWeight").value);
   const pullR  = parseFloat(document.getElementById("pullReps").value);
   const pullP  = parseFloat(document.getElementById("pullRPE").value);
+
+  const pullPattern = document.getElementById("pullPattern").value;
 
   const required = [squatW, squatR, squatP, hingeW, hingeR, hingeP, pullW, pullR, pullP];
   const ok = required.every(isNum);
@@ -781,7 +839,7 @@ function analyze(){
     detailsText.textContent =
       "Enter: kg / reps / RPE for Squat, Hinge and Pull.\n" +
       "Bodyweight is optional but recommended.\n" +
-      "Sport inputs improve Overreach Index accuracy.";
+      "Sport + fatigue inputs improve Overreach Index accuracy.";
     return;
   }
 
@@ -793,6 +851,7 @@ function analyze(){
   // Profile bias (subtle)
   let wSquat = 1.0, wHinge = 1.0, wPull = 1.0;
   let bias = "Structural focus bias: balanced";
+
   if(profile === "fighter"){ wHinge = 1.10; wPull = 1.05; bias = "Structural focus bias: posterior chain + resilience"; }
   if(profile === "climber"){ wPull  = 1.20; wHinge = 0.95; bias = "Structural focus bias: pulling capacity + tissue tolerance"; }
   if(profile === "hybrid"){  wPull  = 1.10; bias = "Structural focus bias: hybrid durability"; }
@@ -808,19 +867,23 @@ function analyze(){
   const strengthScore = clamp(Math.round(rel * 40), 0, 100);
   strengthScoreEl.textContent = strengthScore;
 
-  // Overreach Index (0–100), sport-protection biased and stable
+  // Overreach Index (0–100): sport-protection biased, stable
   const avgRPE = (squatP + hingeP + pullP) / 3;
-  const sStress = sportStress(thaiTotal, thaiHard, climbTotal, climbHard); // ~0–20+
+  const sStress = sportStress(thaiTotal, thaiHard, climbTotal, climbHard); // 0–20+
   const fatiguePts = fatiguePoints(fatigue);
 
-  // Strength demand from effort (RPE) — minimal at 6, higher at 9–10
-  const effortDemand = clamp(Math.round((avgRPE - 6) * 6), 0, 28); // 6->0, 10->24
-  // Sport drives most of the index
+  const effortDemand = clamp(Math.round((avgRPE - 6) * 6), 0, 28);
   const sportDemand  = clamp(Math.round(sStress * 10), 0, 80);
-  // Stronger athletes tolerate stress slightly better (small stabilizer)
-  const tolerance = Math.round((strengthScore / 100) * 10); // 0–10
 
-  const overreachIndex = clamp(Math.round(sportDemand + effortDemand + fatiguePts - tolerance), 0, 100);
+  // tolerance: strength + training age
+  const strengthTolerance = Math.round((strengthScore / 100) * 10); // 0–10
+  const ageTol = trainingAgeTolerance(trainingAge); // 0/4/8
+  const equipStress = equipmentStress(equipment); // 1–4 (adds)
+
+  const overreachIndex = clamp(
+    Math.round(sportDemand + effortDemand + fatiguePts + equipStress - (strengthTolerance + ageTol)),
+    0, 100
+  );
   const status = overreachStatus(overreachIndex);
 
   overreachValueEl.textContent = overreachIndex;
@@ -828,6 +891,7 @@ function analyze(){
 
   // Prescription rules (sport protection first)
   let sessions, rpeCap, volumeAdjust, directive, focusArea;
+
   if(status === "ELEVATED"){
     sessions = 2;
     rpeCap = 8;
@@ -856,32 +920,49 @@ function analyze(){
   const sportTotal = thaiTotal + climbTotal;
   const sportHardTotal = thaiHard + climbHard;
 
+  // Pull pattern copy
+  const pullLabelMap = {
+    weightedPullup: "Weighted Pull-Up/Chin-Up",
+    bodyweightPullup: "Pull-Up/Chin-Up (BW)",
+    row: "Row",
+    pulldown: "Lat Pulldown",
+    other: "Other Pull Pattern"
+  };
+  const pullLabel = pullLabelMap[pullPattern] || "Pull Pattern";
+
   const bwNote = bw ? "" : "Note: bodyweight not set → using 65kg baseline (MVP).";
   const stressNote =
     "Sport stress: " + sStress.toFixed(1) + " (total sessions " + sportTotal + ", high-intensity " + sportHardTotal + ").";
 
   detailsText.textContent =
     "Profile: " + profile.toUpperCase() + "\n" +
+    "Training age: " + trainingAge.toUpperCase() + "\n" +
+    "Equipment: " + equipment.toUpperCase() + "\n" +
     "Fatigue state: " + fatigue.toUpperCase() + "\n" +
     stressNote + "\n\n" +
     "Strength frequency: " + sessions + "/week\n" +
     "Intensity limit (RPE cap): " + rpeCap + "\n" +
     volumeAdjust + "\n" +
     bias + "\n" +
+    "Pull definition: " + pullLabel + "\n" +
     "Focus area: " + focusArea + "\n" +
     "Directive: " + directive + "\n" +
     (bwNote ? ("\n\n" + bwNote) : "");
 }
 
 function resetForm(){
+  document.getElementById("profile").value = "hybrid";
+  document.getElementById("trainingAge").value = "intermediate";
+  document.getElementById("equipment").value = "barbell";
   document.getElementById("bw").value = "";
   document.getElementById("fatigue").value = "low";
 
   document.getElementById("thaiTotal").value = 2;
   document.getElementById("thaiHard").value = 0;
-
   document.getElementById("climbTotal").value = 2;
   document.getElementById("climbHard").value = 0;
+
+  document.getElementById("pullPattern").value = "weightedPullup";
 
   ["squatWeight","squatReps","squatRPE","hingeWeight","hingeReps","hingeRPE","pullWeight","pullReps","pullRPE"]
     .forEach(id => document.getElementById(id).value = "");
@@ -893,3 +974,4 @@ function resetForm(){
 
 </body>
 </html>
+
