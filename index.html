@@ -6,261 +6,264 @@
 <title>STORMIĒ</title>
 
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-  height:100vh;
-  background:#ffffff;
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  overflow:hidden;
+height:100vh;
+background:#fff;
+font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+overflow:hidden;
 }
 
-/* LOGO */
+/* Logo */
 .logo{
-  font-size:64px;
-  letter-spacing:10px;
-  font-weight:600;
-  opacity:0;
-  transform:translateY(12px);
-  animation:reveal 1.4s ease forwards;
+font-size:64px;
+letter-spacing:10px;
+font-weight:600;
+opacity:0;
+transform:translateY(12px);
+animation:reveal 1.4s ease forwards;
 }
-.logo:hover{ opacity:0.92; }
+.logo:hover{opacity:.92;}
 
 .sub{
-  margin-top:14px;
-  font-size:13px;
-  letter-spacing:4px;
-  text-transform:uppercase;
-  opacity:0;
-  line-height:1.6;
-  animation:fadeIn 1s ease forwards;
-  animation-delay:1.2s;
+margin-top:14px;
+font-size:13px;
+letter-spacing:4px;
+text-transform:uppercase;
+opacity:0;
+animation:fadeIn 1s ease forwards;
+animation-delay:1.2s;
 }
 
 .engine-hint{
-  display:inline-block;
-  margin-top:26px;
-  font-size:10px;
-  letter-spacing:0.32em;
-  text-transform:uppercase;
-  opacity:0;
-  transform:translateY(6px);
-  animation:hintIn .9s ease forwards;
-  animation-delay:2.2s;
-  background:none;
-  border:none;
-  color:rgba(0,0,0,0.6);
-  cursor:pointer;
+display:inline-block;
+margin-top:26px;
+font-size:10px;
+letter-spacing:.32em;
+text-transform:uppercase;
+background:none;
+border:none;
+color:rgba(0,0,0,.6);
+cursor:pointer;
+opacity:0;
+animation:hintIn .9s ease forwards;
+animation-delay:2.2s;
 }
-.engine-hint:hover{
-  opacity:1;
-  color:rgba(0,0,0,0.9);
-}
+.engine-hint:hover{color:#000;}
 
-@keyframes reveal{ to{ opacity:1; transform:translateY(0);} }
-@keyframes fadeIn{ to{ opacity:0.55;} }
-@keyframes hintIn{ to{ opacity:0.28; transform:translateY(0);} }
+@keyframes reveal{to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{to{opacity:.55;}}
+@keyframes hintIn{to{opacity:.28;}}
 
-/* MENU */
+/* Menu */
 .menu-btn{
-  position:fixed;
-  top:18px;
-  left:18px;
-  width:44px;
-  height:44px;
-  border:1px solid rgba(0,0,0,0.1);
-  background:rgba(255,255,255,0.9);
-  border-radius:12px;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+position:fixed;
+top:18px;
+left:18px;
+width:44px;
+height:44px;
+border:1px solid rgba(0,0,0,.1);
+background:#fff;
+border-radius:12px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:100;
 }
-
-.icon{ width:18px; height:12px; position:relative; }
+.icon{width:18px;height:12px;position:relative;}
 .icon span{
-  position:absolute;
-  left:0; right:0;
-  height:2px;
-  background:#000;
-  border-radius:2px;
-  transition:.25s ease;
+position:absolute;left:0;right:0;height:2px;background:#000;border-radius:2px;transition:.25s;
 }
-.icon span:nth-child(1){ top:0;}
-.icon span:nth-child(2){ top:5px;}
-.icon span:nth-child(3){ top:10px;}
-.menu-btn.open .icon span:nth-child(1){ top:5px; transform:rotate(45deg);}
-.menu-btn.open .icon span:nth-child(2){ opacity:0;}
-.menu-btn.open .icon span:nth-child(3){ top:5px; transform:rotate(-45deg);}
+.icon span:nth-child(1){top:0;}
+.icon span:nth-child(2){top:5px;}
+.icon span:nth-child(3){top:10px;}
+.menu-btn.open .icon span:nth-child(1){top:5px;transform:rotate(45deg);}
+.menu-btn.open .icon span:nth-child(2){opacity:0;}
+.menu-btn.open .icon span:nth-child(3){top:5px;transform:rotate(-45deg);}
 
-/* ABOUT + GATE OVERLAY */
+/* Overlays */
 .overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.45);
-  opacity:0;
-  pointer-events:none;
-  transition:opacity .3s ease;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:40px;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.45);
+opacity:0;
+pointer-events:none;
+transition:.3s;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:40px;
 }
 .overlay.active{
-  opacity:1;
-  pointer-events:auto;
+opacity:1;
+pointer-events:auto;
 }
 
 .panel{
-  width:min(520px, 92vw);
-  background:#fff;
-  border-radius:18px;
-  padding:32px 24px;
-  box-shadow:0 30px 80px rgba(0,0,0,0.18);
-  transform:translateY(10px);
-  opacity:0;
-  transition:.3s ease;
+width:min(520px,92vw);
+background:#fff;
+border-radius:18px;
+padding:32px 24px;
+box-shadow:0 30px 80px rgba(0,0,0,.18);
+transform:translateY(10px);
+opacity:0;
+transition:.3s;
 }
 .overlay.active .panel{
-  transform:translateY(0);
-  opacity:1;
+transform:translateY(0);
+opacity:1;
 }
 
 .panel h2{
-  font-size:12px;
-  letter-spacing:0.28em;
-  text-transform:uppercase;
-  opacity:0.7;
-  margin-bottom:14px;
+font-size:12px;
+letter-spacing:.28em;
+text-transform:uppercase;
+opacity:.7;
+margin-bottom:14px;
 }
-
-.panel .headline{
-  font-size:22px;
-  letter-spacing:0.18em;
-  font-weight:600;
-  margin-bottom:12px;
+.headline{
+font-size:22px;
+letter-spacing:.18em;
+font-weight:600;
+margin-bottom:12px;
 }
-
 .meta{
-  font-size:11px;
-  letter-spacing:0.26em;
-  text-transform:uppercase;
-  opacity:0.55;
-  margin-bottom:12px;
+font-size:11px;
+letter-spacing:.26em;
+text-transform:uppercase;
+opacity:.55;
+margin-bottom:12px;
 }
-
 .copy{
-  font-size:14px;
-  line-height:1.7;
-  opacity:0.75;
+font-size:14px;
+line-height:1.7;
+opacity:.75;
+}
+.panel a{
+display:inline-block;
+margin-top:16px;
+font-size:12px;
+letter-spacing:.22em;
+text-transform:uppercase;
+text-decoration:none;
+color:#000;
+border-bottom:1px solid rgba(0,0,0,.25);
+padding-bottom:3px;
 }
 
 .field{
-  margin-top:18px;
-  display:flex;
-  gap:10px;
+margin-top:18px;
+display:flex;
+gap:10px;
 }
 .input{
-  flex:1;
-  padding:12px;
-  border-radius:14px;
-  border:1px solid rgba(0,0,0,0.12);
-  font-size:14px;
+flex:1;
+padding:12px;
+border-radius:14px;
+border:1px solid rgba(0,0,0,.12);
 }
 .btn{
-  padding:12px 14px;
-  border-radius:14px;
-  border:none;
-  cursor:pointer;
-  font-size:12px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
+padding:12px 14px;
+border-radius:14px;
+border:none;
+cursor:pointer;
+font-size:12px;
+letter-spacing:.22em;
+text-transform:uppercase;
 }
-.primary{ background:#111; color:#fff;}
-.primary:hover{ opacity:.9;}
-.secondary{ background:#fff; border:1px solid rgba(0,0,0,0.12);}
-.secondary:hover{ background:rgba(0,0,0,0.03);}
-
-.error{
-  margin-top:10px;
-  font-size:12px;
-  opacity:0;
-}
-.error.show{ opacity:1;}
+.primary{background:#111;color:#fff;}
+.secondary{background:#fff;border:1px solid rgba(0,0,0,.12);}
+.error{margin-top:10px;font-size:12px;opacity:0;}
+.error.show{opacity:1;}
 </style>
 </head>
 
 <body>
 
 <button class="menu-btn" id="menuBtn">
-  <div class="icon"><span></span><span></span><span></span></div>
+<div class="icon"><span></span><span></span><span></span></div>
 </button>
 
 <div>
-  <div class="logo">STORMIĒ</div>
-  <div class="sub">Hybrid Performance<br>Launching Soon</div>
-  <button class="engine-hint" id="engineBtn">Access Engine</button>
+<div class="logo">STORMIĒ</div>
+<div class="sub">Hybrid Performance<br>Launching Soon</div>
+<button class="engine-hint" id="engineBtn">Access Engine</button>
 </div>
 
-<!-- GATE -->
+<!-- ABOUT -->
+<div class="overlay" id="about">
+<div class="panel">
+<h2>ABOUT</h2>
+<div class="headline">Hybrid Performance Lab</div>
+<div class="copy">
+Stormiē is a tech-driven hybrid performance lab focused on structured progression,
+strength architecture and durability.
+
+Developed by Storm Kolmodin.
+Licensed Personal Trainer since 2018.
+</div>
+<a href="https://ptlicens.trueoriginal.com/licensierad-personlig-tranare-denise-kolmodin-138305lEsdYeph88/?ref=linkedin-profile&zone=true_08&lang=en" target="_blank">
+Verify PT License
+</a>
+</div>
+</div>
+
+<!-- ENGINE GATE -->
 <div class="overlay" id="gate">
-  <div class="panel">
-    <h2>ENGINE</h2>
-    <div class="headline">Test Phase</div>
-    <div class="meta">CLOSED TEST PHASE</div>
+<div class="panel">
+<h2>ENGINE</h2>
+<div class="headline">Test Phase</div>
+<div class="meta">CLOSED TEST PHASE</div>
+<div class="copy">
+The Engine is currently under construction.<br>
+Access is limited to invited testers only.<br><br>
+If you have been invited, enter your password below.
+</div>
 
-    <div class="copy">
-      The Engine is currently under construction.<br>
-      Access is limited to invited testers only.<br><br>
-      If you have been invited, enter your password below.
-    </div>
+<div class="field">
+<input class="input" id="pw" type="password" placeholder="Password">
+<button class="btn primary" id="enter">Enter</button>
+<button class="btn secondary" id="closeGate">Close</button>
+</div>
 
-    <div class="field">
-      <input class="input" id="pw" type="password" placeholder="Password">
-      <button class="btn primary" id="enter">Enter</button>
-      <button class="btn secondary" id="close">Close</button>
-    </div>
-
-    <div class="error" id="error">Incorrect password.</div>
-  </div>
+<div class="error" id="error">Incorrect password.</div>
+</div>
 </div>
 
 <script>
-const PASSWORD = "stormtest"; // change this
+const PASSWORD="stormtest"; // change this
 
-const gate = document.getElementById("gate");
-const engineBtn = document.getElementById("engineBtn");
-const enterBtn = document.getElementById("enter");
-const closeBtn = document.getElementById("close");
-const pw = document.getElementById("pw");
-const error = document.getElementById("error");
+const about=document.getElementById("about");
+const gate=document.getElementById("gate");
+const menuBtn=document.getElementById("menuBtn");
 
-engineBtn.onclick = () => {
-  gate.classList.add("active");
-  pw.focus();
+menuBtn.onclick=()=>{
+about.classList.toggle("active");
+menuBtn.classList.toggle("open");
 };
 
-closeBtn.onclick = () => {
-  gate.classList.remove("active");
-  error.classList.remove("show");
+document.getElementById("engineBtn").onclick=()=>gate.classList.add("active");
+document.getElementById("closeGate").onclick=()=>gate.classList.remove("active");
+
+document.getElementById("enter").onclick=()=>{
+if(document.getElementById("pw").value===PASSWORD){
+window.location.href="/engine.html";
+}else{
+document.getElementById("error").classList.add("show");
+}
 };
 
-enterBtn.onclick = () => {
-  if(pw.value === PASSWORD){
-    window.location.href = "/engine.html";
-  }else{
-    error.classList.add("show");
-    pw.value = "";
-  }
-};
-
-window.addEventListener("keydown", (e)=>{
-  if(e.key==="Escape") gate.classList.remove("active");
-  if(e.key==="Enter" && gate.classList.contains("active")) enterBtn.click();
+window.addEventListener("keydown",e=>{
+if(e.key==="Escape"){
+about.classList.remove("active");
+gate.classList.remove("active");
+}
 });
 </script>
 
