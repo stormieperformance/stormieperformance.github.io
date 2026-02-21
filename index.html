@@ -28,8 +28,6 @@ body{
   transform:translateY(12px);
   animation:reveal 1.4s ease forwards;
   user-select:none;
-
-  /* premium micro cue */
   transition: opacity .25s ease;
 }
 .logo:hover{ opacity: 0.92; }
@@ -45,7 +43,10 @@ body{
   animation-delay:1.2s;
 }
 
-/* Premium hint line (subtle) — now clickable */
+@keyframes reveal{ to{ opacity:1; transform:translateY(0); } }
+@keyframes fadeIn{ to{ opacity:0.55; } }
+
+/* Premium hint line (subtle) — now button */
 .engine-hint{
   display:inline-block;
   margin-top: 26px;
@@ -58,27 +59,21 @@ body{
   animation-delay: 2.2s;
 
   text-decoration: none;
+  background: transparent;
+  border: 0;
   color: rgba(0,0,0,0.60);
   transition: opacity .25s ease, transform .25s ease, color .25s ease;
   user-select: none;
+  cursor: pointer;
 }
 .engine-hint:hover{
   opacity: 1;
   color: rgba(0,0,0,0.90);
 }
-
 @keyframes hintIn{
   to{ opacity: 0.28; transform: translateY(0); }
 }
-
-/* When logo is hovered, hint becomes slightly clearer */
-.logo:hover + .sub + .engine-hint,
-.logo:focus-within + .sub + .engine-hint{
-  opacity: 0.48;
-}
-
-@keyframes reveal{ to{ opacity:1; transform:translateY(0); } }
-@keyframes fadeIn{ to{ opacity:0.55; } }
+.logo:hover + .sub + .engine-hint{ opacity: 0.48; }
 
 /* --- MENU BUTTON (hamburger -> X) --- */
 .menu-btn{
@@ -99,15 +94,9 @@ body{
   justify-content:center;
   transition: transform .2s ease, background .2s ease;
 }
-
 .menu-btn:hover{ transform: translateY(-1px); background:rgba(255,255,255,0.9); }
 
-.icon{
-  width:18px;
-  height:12px;
-  position:relative;
-}
-
+.icon{ width:18px; height:12px; position:relative; }
 .icon span{
   position:absolute;
   left:0; right:0;
@@ -116,16 +105,14 @@ body{
   border-radius:2px;
   transition: transform .25s ease, top .25s ease, opacity .2s ease;
 }
-
 .icon span:nth-child(1){ top:0; }
 .icon span:nth-child(2){ top:5px; }
 .icon span:nth-child(3){ top:10px; }
-
 .menu-btn.open .icon span:nth-child(1){ top:5px; transform: rotate(45deg); }
 .menu-btn.open .icon span:nth-child(2){ opacity:0; }
 .menu-btn.open .icon span:nth-child(3){ top:5px; transform: rotate(-45deg); }
 
-/* --- GLASS OVERLAY --- */
+/* --- GLASS OVERLAY: ABOUT --- */
 .about{
   position:fixed;
   inset:0;
@@ -141,11 +128,7 @@ body{
   align-items:center;
   padding:40px;
 }
-
-.about.active{
-  opacity:1;
-  pointer-events:auto;
-}
+.about.active{ opacity:1; pointer-events:auto; }
 
 .panel{
   width:min(720px, 92vw);
@@ -158,11 +141,7 @@ body{
   opacity:0;
   transition: transform .35s ease, opacity .35s ease;
 }
-
-.about.active .panel{
-  transform: translateY(0);
-  opacity:1;
-}
+.about.active .panel{ transform: translateY(0); opacity:1; }
 
 .panel h2{
   font-size:12px;
@@ -171,20 +150,17 @@ body{
   opacity:0.7;
   margin-bottom:14px;
 }
-
 .panel .headline{
   font-size:22px;
   letter-spacing:0.18em;
   font-weight:600;
   margin-bottom:18px;
 }
-
 .panel p{
   font-size:14px;
   line-height:1.8;
   opacity:0.75;
 }
-
 .panel a{
   display:inline-block;
   margin-top:18px;
@@ -198,7 +174,6 @@ body{
   padding-bottom:3px;
 }
 .panel a:hover{ opacity:1; }
-
 .hint{
   margin-top:18px;
   font-size:11px;
@@ -206,6 +181,84 @@ body{
   text-transform:uppercase;
   opacity:0.45;
 }
+
+/* --- GLASS OVERLAY: ENGINE GATE --- */
+.gate{
+  position:fixed;
+  inset:0;
+  background:rgba(10,10,10,0.28);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.35s ease;
+  z-index:95;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:40px;
+}
+.gate.active{ opacity:1; pointer-events:auto; }
+
+.gate .panel{ width:min(520px, 92vw); }
+
+.gate .meta{
+  font-size:11px;
+  letter-spacing:0.26em;
+  text-transform:uppercase;
+  opacity:0.55;
+  margin-bottom:10px;
+}
+
+.gate .copy{
+  font-size:14px;
+  line-height:1.75;
+  opacity:0.74;
+}
+
+.field{
+  margin-top:18px;
+  display:flex;
+  gap:10px;
+}
+@media (max-width:520px){ .field{ flex-direction:column; } }
+
+.input{
+  flex:1;
+  padding:12px 12px;
+  border-radius:14px;
+  border:1px solid rgba(0,0,0,0.12);
+  background:rgba(255,255,255,0.92);
+  outline:none;
+  font-size:14px;
+}
+.input:focus{ border-color:rgba(0,0,0,0.22); background:#fff; }
+
+.btn{
+  padding:12px 14px;
+  border-radius:14px;
+  border:none;
+  cursor:pointer;
+  font-size:12px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+}
+.btn.primary{ background:#111; color:#fff; }
+.btn.primary:hover{ opacity:0.9; }
+.btn.secondary{
+  background:#fff;
+  border:1px solid rgba(0,0,0,0.12);
+}
+.btn.secondary:hover{ background:rgba(0,0,0,0.02); }
+
+.error{
+  margin-top:10px;
+  font-size:12px;
+  opacity:0;
+  color:rgba(0,0,0,0.55);
+  transition:opacity .2s ease;
+}
+.error.show{ opacity:1; }
 </style>
 </head>
 
@@ -225,12 +278,12 @@ body{
     Launching Soon
   </div>
 
-  <a class="engine-hint" href="/engine.html" aria-label="Access Engine">
+  <button class="engine-hint" id="engineBtn" type="button" aria-label="Access Engine">
     Access Engine
-  </a>
+  </button>
 </div>
 
-<!-- Glass overlay -->
+<!-- ABOUT overlay -->
 <div class="about" id="about" aria-hidden="true">
   <div class="panel" role="dialog" aria-label="About Stormie">
     <h2>ABOUT</h2>
@@ -240,7 +293,6 @@ body{
       Stormiē is a tech-driven hybrid performance lab focused on strength,
       durability and structured progression.
       Developed by Storm Kolmodin, Licensed Personal Trainer since 2018.
-      
       License verification updated 2023.
     </p>
 
@@ -253,9 +305,43 @@ body{
   </div>
 </div>
 
+<!-- ENGINE gate overlay -->
+<div class="gate" id="gate" aria-hidden="true">
+  <div class="panel" role="dialog" aria-label="Engine access">
+    <h2>ENGINE</h2>
+    <div class="headline">Test Phase</div>
+    <div class="meta">UNDER CONSTRUCTION</div>
+
+    <div class="copy">
+      The Engine is currently in a closed test phase.<br>
+      If you have access, enter the password to continue.
+    </div>
+
+    <div class="field">
+      <input class="input" id="pw" type="password" placeholder="Password" autocomplete="off" />
+      <button class="btn primary" id="pwGo" type="button">Enter</button>
+      <button class="btn secondary" id="pwClose" type="button">Close</button>
+    </div>
+
+    <div class="error" id="pwErr">Incorrect password.</div>
+    <div class="hint">Press ESC to close</div>
+  </div>
+</div>
+
 <script>
+/* ====== CHANGE THIS ====== */
+const ENGINE_PASSWORD = "YOURPASSWORD"; // <-- set your password here
+/* ========================= */
+
 const menuBtn = document.getElementById("menuBtn");
 const about = document.getElementById("about");
+
+const engineBtn = document.getElementById("engineBtn");
+const gate = document.getElementById("gate");
+const pw = document.getElementById("pw");
+const pwGo = document.getElementById("pwGo");
+const pwClose = document.getElementById("pwClose");
+const pwErr = document.getElementById("pwErr");
 
 function openAbout(){
   about.classList.add("active");
@@ -274,17 +360,44 @@ menuBtn.addEventListener("click", () => {
   if (about.classList.contains("active")) closeAbout();
   else openAbout();
 });
+about.addEventListener("click", (e) => { if (e.target === about) closeAbout(); });
 
-// Click outside panel closes
-about.addEventListener("click", (e) => {
-  if (e.target === about) closeAbout();
+function openGate(){
+  gate.classList.add("active");
+  gate.setAttribute("aria-hidden","false");
+  pw.value = "";
+  pwErr.classList.remove("show");
+  setTimeout(()=> pw.focus(), 50);
+}
+function closeGate(){
+  gate.classList.remove("active");
+  gate.setAttribute("aria-hidden","true");
+  pwErr.classList.remove("show");
+}
+
+engineBtn.addEventListener("click", openGate);
+pwClose.addEventListener("click", closeGate);
+gate.addEventListener("click", (e) => { if (e.target === gate) closeGate(); });
+
+function tryEnter(){
+  const val = (pw.value || "").trim();
+  if(val === ENGINE_PASSWORD){
+    window.location.href = "/engine.html";
+  }else{
+    pwErr.classList.add("show");
+    pw.value = "";
+    pw.focus();
+  }
+}
+pwGo.addEventListener("click", tryEnter);
+pw.addEventListener("keydown", (e) => {
+  if(e.key === "Enter") tryEnter();
 });
 
-// ESC closes
 window.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && about.classList.contains("active")) closeAbout();
+  if (e.key === "Escape"){
+    if (gate.classList.contains("active")) closeGate();
+    if (about.classList.contains("active")) closeAbout();
+  }
 });
 </script>
-
-</body>
-</html>
