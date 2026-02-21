@@ -1,123 +1,1218 @@
-function buildStrengthSessions(primary, correction, effortLimit, strainBand){
-  const cap = effortLimit;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Stormiē Performance Engine</title>
 
-  // Decide block style from goal
-  // primary is LOWER/HINGE/PULL/PUSH/BALANCED (goal-driven)
-  const isHypertrophyLower = (document.getElementById("goal").value === "lower");
+<style>
+:root{
+  --text:#0f0f10;
+  --muted:rgba(0,0,0,0.58);
+  --muted2:rgba(0,0,0,0.40);
+  --line:rgba(0,0,0,0.08);
+  --line2:rgba(0,0,0,0.12);
+  --wash:rgba(0,0,0,0.02);
+  --glass:rgba(255,255,255,0.72);
+  --glass2:rgba(255,255,255,0.88);
+  --shadow: 0 30px 90px rgba(0,0,0,0.16);
+}
 
-  // Volume scaling based on strain
-  const volumeScale = (strainBand === "HIGH") ? 0.65 : (strainBand === "MEDIUM") ? 0.80 : 1.00;
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  background:#fff;
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  display:flex;
+  justify-content:center;
+}
 
-  // Helper: rounds to clean set counts
-  const scaledSets = (base) => Math.max(2, Math.round(base * volumeScale));
+.container{
+  width:min(1040px, 92vw);
+  padding:56px 0 92px;
+}
 
-  // Pick focus order
-  const primaryKey = (primary === "BALANCED") ? "LOWER" : primary;
-  const secondaryKey = correction ? correction : pickSecondary(primaryKey);
-  const tertiaryKey = pickSecondary(secondaryKey);
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:20px;
+}
+.back{
+  display:inline-block;
+  font-size:12px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  text-decoration:none;
+  color:var(--muted);
+  border-bottom:1px solid rgba(0,0,0,0.16);
+  padding-bottom:3px;
+}
+.back:hover{ color:#000; border-bottom-color:rgba(0,0,0,0.32); }
 
-  // --- HYPERTROPHY (glutes/legs) template ---
-  // This is goal-driven: when goal is lower-body growth, sessions switch to growth ranges and more lower-body work.
-  function hypertrophyLowerSession(title, emphasis){
-    const topSetEffort = Math.min(9, Math.round(cap)); // still safe under fatigue
-    const pumpEffort = Math.max(7, Math.round(cap-2));
+.brand{
+  text-align:right;
+  font-size:11px;
+  letter-spacing:0.28em;
+  text-transform:uppercase;
+  color:var(--muted2);
+}
 
-    // base weekly structure: 2–3 lower sessions, each with ~8–14 "work sets" total (scaled by sport load)
-    // NOTE: you can later swap these to exercise pickers (dropdowns) per slot.
-    const A = scaledSets(emphasis === "glute" ? 4 : 3);
-    const B = scaledSets(3);
-    const C = scaledSets(3);
+h1{
+  margin:0;
+  text-align:center;
+  font-size:28px;
+  font-weight:650;
+  letter-spacing:0.18em;
+}
 
-    return {
-      title,
-      lines: [
-        "Main (glutes/legs): " + A + "×6–10 at effort " + topSetEffort + "/10",
-        "Support (hinge or squat): " + B + "×8–12 at effort " + pumpEffort + "/10",
-        "Accessory (glute pump): " + C + "×10–15 at effort " + pumpEffort + "/10",
-        "If you climb/fight hard this week: keep 1–2 reps in reserve on accessories."
-      ]
-    };
+.headline{
+  text-align:center;
+  margin:12px auto 6px;
+  max-width: 66ch;
+  font-size:14px;
+  line-height:1.55;
+  color:rgba(0,0,0,0.74);
+}
+
+.micro{
+  text-align:center;
+  margin:0 auto 18px;
+  max-width: 72ch;
+  font-size:12px;
+  line-height:1.6;
+  letter-spacing:0.03em;
+  color:rgba(0,0,0,0.52);
+}
+
+.problem{
+  text-align:center;
+  margin:0 auto 30px;
+  max-width: 72ch;
+  font-size:12px;
+  line-height:1.65;
+  color:rgba(0,0,0,0.55);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:14px;
+}
+@media (max-width: 900px){ .grid{ grid-template-columns:1fr; } }
+
+.card{
+  border:1px solid var(--line);
+  background:var(--wash);
+  border-radius:18px;
+  padding:18px 16px;
+  position:relative;
+}
+
+.card-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:12px;
+}
+.card-title .label{
+  font-size:11px;
+  letter-spacing:0.28em;
+  text-transform:uppercase;
+  color:var(--muted2);
+}
+
+.hr{
+  height:1px;
+  background:rgba(0,0,0,0.06);
+  margin:12px 0;
+}
+
+/* Inputs */
+label{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  font-size:12px;
+  color:rgba(0,0,0,0.74);
+  margin:0 0 6px;
+}
+
+.field-note{
+  font-size:11px;
+  color:rgba(0,0,0,0.42);
+}
+
+input, select{
+  width:100%;
+  padding:10px 11px;
+  border:1px solid var(--line2);
+  border-radius:14px;
+  background:rgba(255,255,255,0.96);
+  outline:none;
+  font-size:14px;
+  color:#111;
+  transition:border-color .15s ease, background .15s ease;
+}
+input:focus, select:focus{ border-color:rgba(0,0,0,0.22); background:#fff; }
+
+.row2{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:10px;
+}
+@media (max-width: 520px){ .row2{ grid-template-columns:1fr; } }
+
+.row3{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap:10px;
+}
+@media (max-width: 520px){ .row3{ grid-template-columns:1fr; } }
+
+.lift{ margin-bottom:14px; }
+.lift:last-child{ margin-bottom:0; }
+
+.lift-name{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  font-size:12px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:rgba(0,0,0,0.55);
+  margin:10px 0 8px;
+}
+
+/* Buttons */
+.actions{
+  margin-top:14px;
+  display:flex;
+  gap:12px;
+}
+@media (max-width: 520px){ .actions{ flex-direction:column; } }
+
+button{
+  appearance:none;
+  -webkit-appearance:none;
+  border:none;
+  cursor:pointer;
+  padding:14px 14px;
+  border-radius:16px;
+  font-size:12px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+}
+.primary{ background:#111; color:#fff; }
+.primary:hover{ opacity:0.90; }
+
+.secondary{
+  background:#fff;
+  color:#111;
+  border:1px solid var(--line2);
+}
+.secondary:hover{ background:rgba(0,0,0,0.02); }
+
+/* Output */
+.output{
+  margin-top:14px;
+  border:1px solid var(--line);
+  background:rgba(0,0,0,0.015);
+  border-radius:18px;
+  padding:16px 14px;
+  display:none;
+}
+
+.kpi{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.score{
+  font-size:16px;
+  font-weight:650;
+}
+.badge{
+  font-size:11px;
+  letter-spacing:0.20em;
+  text-transform:uppercase;
+  color:rgba(0,0,0,0.55);
+}
+
+.readout{
+  font-size:13px;
+  line-height:1.7;
+  color:rgba(0,0,0,0.80);
+  white-space:pre-line;
+}
+
+/* Weekly plan */
+.week-wrap{
+  margin-top:14px;
+  border:1px solid var(--line);
+  background:rgba(0,0,0,0.015);
+  border-radius:18px;
+  padding:14px;
+}
+
+.week-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:10px;
+  margin-bottom:10px;
+}
+.week-title{
+  font-size:11px;
+  letter-spacing:0.24em;
+  text-transform:uppercase;
+  color:rgba(0,0,0,0.45);
+}
+.week-meta{
+  font-size:11px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:rgba(0,0,0,0.35);
+}
+
+/* Desktop: true 7-column grid */
+.week-grid{
+  display:grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap:10px;
+}
+
+/* Smaller screens: horizontal scroll cards */
+@media (max-width: 980px){
+  .week-grid{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    padding-bottom:8px;
+    -webkit-overflow-scrolling: touch;
   }
+  .week-grid::-webkit-scrollbar{ height:8px; }
+  .week-grid > .day-card{ min-width: 176px; }
+}
 
-  // --- STRENGTH template (fallback for non-hypertrophy goals) ---
-  function strengthSession(focus){
-    const mainHard = (strainBand === "HIGH") ? "3×4–6" : "4×4–6";
-    const second = "3×6–8";
-    const easy = "2–3 easy sets (optional)";
-    const reduceLine = (strainBand !== "LOW")
-      ? "Reduce extra exercises this week."
-      : "Add a little load if it feels good.";
+.day-card{
+  border:1px solid var(--line);
+  background:rgba(255,255,255,0.74);
+  border-radius:18px;
+  padding:12px;
+}
 
-    return {
-      title: (isProMode ? focus : prettyPillar(focus)),
-      lines: [
-        "Main work (" + focus + "): " + mainHard + " at effort " + Math.min(9, Math.round(cap)) + "/10",
-        "Support work: " + second + " at effort " + Math.max(7, Math.round(cap-1)) + "/10",
-        "Small extras: " + easy,
-        reduceLine
-      ]
-    };
-  }
+.day-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  margin-bottom:8px;
+}
+.day-name{
+  font-size:11px;
+  letter-spacing:0.24em;
+  text-transform:uppercase;
+  color:rgba(0,0,0,0.58);
+}
+.day-tag{
+  font-size:11px;
+  color:rgba(0,0,0,0.38);
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+}
 
-  // Build sessions
-  let sessions = [];
+.day-body{
+  font-size:13px;
+  line-height:1.55;
+  color:rgba(0,0,0,0.78);
+}
 
-  if(isHypertrophyLower){
-    // Make the plan obviously “glute growth”
-    // Session 1: glute emphasis
-    sessions.push(hypertrophyLowerSession("Lower (glutes) — growth", "glute"));
+/* Session cards */
+.sessions{
+  margin-top:12px;
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:10px;
+}
+@media (max-width: 760px){ .sessions{ grid-template-columns:1fr; } }
 
-    // Session 2: minimum correction if needed, otherwise upper push/pull maintenance
-    if(correction){
-      sessions.push(strengthSession(correction));
-    } else {
-      sessions.push({
-        title: "Upper body — keep strong",
-        lines: [
-          "Choose PUSH or PULL: " + scaledSets(3) + "×6–10 at effort " + Math.max(7, Math.round(cap-1)) + "/10",
-          "Second move: " + scaledSets(3) + "×8–12 at effort " + Math.max(7, Math.round(cap-2)) + "/10",
-          "Keep it short. Save energy for sport + glutes."
-        ]
-      });
-    }
+.session-card{
+  border:1px solid var(--line);
+  background:rgba(255,255,255,0.74);
+  border-radius:18px;
+  padding:12px;
+}
 
-    // Session 3: legs/hinge growth (if strain allows)
-    if(strainBand === "LOW"){
-      sessions.push(hypertrophyLowerSession("Lower (legs/hinge) — growth", "leg"));
-    } else {
-      // If strain is medium/high: don’t force the 3rd long session
-      sessions.push({
-        title: "Optional mini glute session (10–20 min)",
-        lines: [
-          "1–2 glute exercises: " + scaledSets(2) + "×10–15",
-          "Stop before you feel destroyed.",
-          "This is to keep frequency, not to crush you."
-        ]
-      });
-    }
+.session-title{
+  font-size:11px;
+  letter-spacing:0.24em;
+  text-transform:uppercase;
+  color:rgba(0,0,0,0.55);
+  margin-bottom:8px;
+}
 
-    return sessions;
-  }
+.footer{
+  margin-top:22px;
+  text-align:center;
+  font-size:11px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:rgba(0,0,0,0.35);
+}
 
-  // Non-hypertrophy goals = strength base
-  sessions.push(strengthSession(primaryKey));
-  sessions.push(strengthSession(secondaryKey));
-  if(strainBand === "LOW"){
-    sessions.push(strengthSession(tertiaryKey));
-  }
-  return sessions;
+/* ---------- Info Sheet (global, mobile-safe) ---------- */
+.info-btn{
+  width:28px;
+  height:28px;
+  border-radius:10px;
+  border:1px solid var(--line2);
+  background:rgba(255,255,255,0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  color:rgba(0,0,0,0.55);
+  transition:transform .15s ease, background .15s ease, color .15s ease;
+  flex:0 0 auto;
+}
+.info-btn:hover{ transform:translateY(-1px); background:rgba(255,255,255,0.94); color:#000; }
 
-  // Helpers
-  function prettyPillar(k){
-    return ({
-      LOWER:"Lower (legs/glutes)",
-      HINGE:"Hinge (hips)",
-      PULL:"Pull (back/grip)",
-      PUSH:"Push (pressing)"
-    }[k] || k);
-  }
-  function pickSecondary(current){
-    const options = ["LOWER","HINGE","PULL","PUSH"].filter(x => x !== current);
-    return options[0];
+.info-sheet{
+  position:fixed;
+  inset:0;
+  z-index:999;
+  display:none;
+}
+.info-sheet.active{ display:block; }
+
+.info-sheet__backdrop{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.28);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.info-sheet__panel{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:min(740px, 92vw);
+  max-height:min(560px, 80vh);
+  overflow:auto;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,0.45);
+  background:rgba(255,255,255,0.88);
+  box-shadow: var(--shadow);
+  padding:18px 18px 16px;
+}
+
+@media (max-width: 520px){
+  .info-sheet__panel{
+    top:auto;
+    bottom:14px;
+    transform:translate(-50%,0);
+    width:min(740px, 94vw);
+    max-height:62vh;
+    border-radius:20px;
   }
 }
+
+.info-sheet__top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:10px;
+}
+.info-sheet__title{
+  font-size:11px;
+  letter-spacing:0.26em;
+  text-transform:uppercase;
+  color:rgba(0,0,0,0.55);
+}
+.info-sheet__close{
+  width:34px;
+  height:34px;
+  border-radius:12px;
+  border:1px solid rgba(0,0,0,0.10);
+  background:rgba(255,255,255,0.74);
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:16px;
+  color:rgba(0,0,0,0.6);
+}
+.info-sheet__close:hover{ color:#000; background:rgba(255,255,255,0.94); }
+.info-sheet__body{
+  font-size:14px;
+  line-height:1.75;
+  color:rgba(0,0,0,0.80);
+}
+.info-sheet__body b{ color:#000; }
+.info-sheet__body .small{ font-size:12px; color:rgba(0,0,0,0.62); }
+</style>
+</head>
+
+<body>
+<div class="container">
+
+  <div class="topbar">
+    <a class="back" href="/">← Back</a>
+    <div class="brand">Engine v0.4</div>
+  </div>
+
+  <h1>STORMIĒ</h1>
+
+  <div class="headline">
+    Adaptive strength planning for fighters, climbers and hybrids.
+  </div>
+
+  <div class="micro">
+    You enter your weekly sport load + a simple strength snapshot. The engine returns a safe strength plan that still moves you forward.
+  </div>
+
+  <div class="problem">
+    Most hybrid athletes guess strength volume. The result is fatigue without real transfer to sport.
+  </div>
+
+  <div class="grid">
+
+    <!-- SETUP / LOAD -->
+    <div class="card">
+      <div class="card-title">
+        <div class="label">Setup</div>
+        <button class="info-btn" type="button"
+          data-info-title="What this tool gives you"
+          data-info-body="
+            <b>After you analyze</b>, you get:<br>
+            • How many strength sessions to do this week<br>
+            • How hard to push (effort limit)<br>
+            • When to reduce volume (to protect sport performance)<br>
+            • What to focus on (your weakest area)<br>
+            • A simple week layout (so you can plan fast)<br><br>
+            <span class='small'>This is a planning tool. It helps you choose a week that fits your real sport load.</span>
+          ">
+          i
+        </button>
+      </div>
+
+      <label>
+        Training profile
+        <button class="info-btn" type="button"
+          data-info-title="Training profile"
+          data-info-body="
+            Choose what you mainly train right now.<br><br>
+            <b>Fighter</b>: protects legs + back when striking / clinch load is high<br>
+            <b>Climber</b>: protects elbows / shoulders when pulling load is high<br>
+            <b>Hybrid</b>: balances both and protects recovery
+          ">
+          i
+        </button>
+      </label>
+      <select id="profile">
+        <option value="fighter">Fighter</option>
+        <option value="climber">Climber</option>
+        <option value="hybrid" selected>Hybrid</option>
+      </select>
+
+      <div class="row2" style="margin-top:10px;">
+        <div>
+          <label>
+            Bodyweight (kg)
+            <span class="field-note">recommended</span>
+          </label>
+          <input type="number" id="bw" min="30" max="200" step="0.1" placeholder="e.g. 65" />
+        </div>
+
+        <div>
+          <label>
+            How tired do you feel today?
+            <button class="info-btn" type="button"
+              data-info-title="How tired do you feel?"
+              data-info-body="
+                This changes how aggressive the plan will be.<br><br>
+                <b>Fresh</b>: normal progress<br>
+                <b>Some fatigue</b>: slightly safer plan<br>
+                <b>Very tired</b>: protect recovery and reduce load
+              ">
+              i
+            </button>
+          </label>
+          <select id="fatigue">
+            <option value="fresh" selected>Fresh</option>
+            <option value="some">Some fatigue</option>
+            <option value="very">Very tired</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+
+      <label>
+        Primary objective (this block)
+        <button class="info-btn" type="button"
+          data-info-title="Primary objective"
+          data-info-body="
+            Pick <b>one</b> objective for the next training block.<br><br>
+            <b>Hypertrophy (structural growth)</b>: build muscle base that supports future strength<br>
+            <b>Max strength</b>: lift heavier for reps (force production)<br>
+            <b>Strength endurance</b>: repeat hard efforts without fading<br>
+            <b>Power / explosiveness</b>: move fast, keep output sharp
+          ">
+          i
+        </button>
+      </label>
+      <select id="goal">
+        <option value="hypertrophy" selected>Hypertrophy (structural growth)</option>
+        <option value="strength">Max strength</option>
+        <option value="endurance">Strength endurance</option>
+        <option value="power">Power / explosiveness</option>
+      </select>
+
+      <div class="hr"></div>
+
+      <!-- Muay Thai -->
+      <div id="thaiBlock">
+        <label>
+          Muay Thai load
+          <button class="info-btn" type="button"
+            data-info-title="Muay Thai load"
+            data-info-body="
+              <b>Total / week</b> = all sessions.<br>
+              <b>Hard / week</b> = a subset inside total (sparring, hard pads).<br><br>
+              Example: Total 5, Hard 2.
+            ">
+            i
+          </button>
+        </label>
+        <div class="row2">
+          <input type="number" id="thaiTotal" min="0" max="14" step="1" placeholder="total / week" />
+          <input type="number" id="thaiHard" min="0" max="14" step="1" placeholder="hard / week" />
+        </div>
+      </div>
+
+      <!-- Climbing -->
+      <div id="climbBlock" style="margin-top:12px;">
+        <label>
+          Climbing load
+          <button class="info-btn" type="button"
+            data-info-title="Climbing load"
+            data-info-body="
+              <b>Total / week</b> = all sessions.<br>
+              <b>Hard / week</b> = a subset inside total (limit bouldering, max hangs, very hard tries).<br><br>
+              Example: Total 4, Hard 1.
+            ">
+            i
+          </button>
+        </label>
+        <div class="row2">
+          <input type="number" id="climbTotal" min="0" max="14" step="1" placeholder="total / week" />
+          <input type="number" id="climbHard" min="0" max="14" step="1" placeholder="hard / week" />
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="primary" type="button" onclick="analyze()">Analyze</button>
+        <button class="secondary" type="button" onclick="resetForm()">Reset</button>
+      </div>
+
+      <div class="output" id="output">
+        <div class="kpi">
+          <div class="score" id="kpiMain">Plan: —</div>
+          <div class="badge" id="kpiBadge">—</div>
+        </div>
+        <div class="hr"></div>
+        <div class="readout" id="summaryText"></div>
+
+        <div class="week-wrap" id="weekWrap" style="display:none;">
+          <div class="week-head">
+            <div class="week-title">Suggested week layout</div>
+            <div class="week-meta" id="weekMeta">—</div>
+          </div>
+          <div class="week-grid" id="weekGrid"></div>
+
+          <div class="sessions" id="sessionGrid" style="margin-top:12px;"></div>
+
+          <div class="session-card" style="margin-top:10px;">
+            <div class="session-title">Recovery note</div>
+            <div class="day-body" id="recoveryText">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STRUCTURAL SNAPSHOT -->
+    <div class="card">
+      <div class="card-title">
+        <div class="label">Strength snapshot</div>
+        <button class="info-btn" type="button"
+          data-info-title="Strength snapshot"
+          data-info-body="
+            Enter <b>one real working set</b> per movement pattern from this week.<br><br>
+            Not a max test.<br>
+            The engine uses it to estimate your current capacity and choose what to prioritize.
+          ">
+          i
+        </button>
+      </div>
+
+      <!-- Lower -->
+      <div class="lift">
+        <div class="lift-name">
+          Lower body
+          <button class="info-btn" type="button"
+            data-info-title="Lower body"
+            data-info-body="
+              Pick the main lower-body movement you actually do.<br>
+              Example: squat, split squat, or leg press.
+            ">
+            i
+          </button>
+        </div>
+
+        <select id="lowerPattern">
+          <option value="back_squat" selected>Back squat</option>
+          <option value="front_squat">Front squat</option>
+          <option value="split_squat">Split squat</option>
+          <option value="leg_press">Leg press</option>
+        </select>
+
+        <div class="row3" style="margin-top:10px;">
+          <input type="number" id="lowerKg" min="0" step="0.5" placeholder="kg" />
+          <input type="number" id="lowerReps" min="1" max="25" step="1" placeholder="reps" />
+          <input type="number" id="lowerEffort" min="6" max="10" step="0.5" placeholder="effort (6–10)" />
+        </div>
+      </div>
+
+      <!-- Hinge -->
+      <div class="lift">
+        <div class="lift-name">
+          Hinge (hip-dominant)
+          <button class="info-btn" type="button"
+            data-info-title="Hinge"
+            data-info-body="
+              Hinge = hip-dominant strength.<br>
+              Examples: deadlift, RDL, hip thrust.
+            ">
+            i
+          </button>
+        </div>
+
+        <select id="hingePattern">
+          <option value="deadlift" selected>Deadlift</option>
+          <option value="rdl">RDL</option>
+          <option value="hip_thrust">Hip thrust</option>
+        </select>
+
+        <div class="row3" style="margin-top:10px;">
+          <input type="number" id="hingeKg" min="0" step="0.5" placeholder="kg" />
+          <input type="number" id="hingeReps" min="1" max="25" step="1" placeholder="reps" />
+          <input type="number" id="hingeEffort" min="6" max="10" step="0.5" placeholder="effort (6–10)" />
+        </div>
+      </div>
+
+      <!-- Pull -->
+      <div class="lift">
+        <div class="lift-name">
+          Pull (back / arms)
+          <button class="info-btn" type="button"
+            data-info-title="Pull"
+            data-info-body="
+              Pull = vertical or horizontal pulling.<br>
+              Examples: pull-ups, rows, pulldown.
+            ">
+            i
+          </button>
+        </div>
+
+        <select id="pullPattern">
+          <option value="weighted_pullup" selected>Weighted pull-up</option>
+          <option value="row">Row</option>
+          <option value="pulldown">Pulldown</option>
+        </select>
+
+        <div class="row3" style="margin-top:10px;">
+          <input type="number" id="pullKg" min="0" step="0.5" placeholder="kg" />
+          <input type="number" id="pullReps" min="1" max="25" step="1" placeholder="reps" />
+          <input type="number" id="pullEffort" min="6" max="10" step="0.5" placeholder="effort (6–10)" />
+        </div>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="problem" style="margin:0; text-align:left;">
+        This tool solves one thing: <b>how to combine strength with sport without burning out.</b>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">Open access beta • No accounts • Runs in your browser</div>
+</div>
+
+<!-- Info Sheet -->
+<div class="info-sheet" id="infoSheet" aria-hidden="true">
+  <div class="info-sheet__backdrop" id="infoSheetBackdrop"></div>
+  <div class="info-sheet__panel" role="dialog" aria-modal="true" aria-label="Info">
+    <div class="info-sheet__top">
+      <div class="info-sheet__title" id="infoSheetTitle">INFO</div>
+      <button class="info-sheet__close" id="infoSheetClose" aria-label="Close">×</button>
+    </div>
+    <div class="info-sheet__body" id="infoSheetBody"></div>
+  </div>
+</div>
+
+<script>
+/* ---------- Info Sheet ---------- */
+const infoSheet = document.getElementById("infoSheet");
+const infoSheetTitle = document.getElementById("infoSheetTitle");
+const infoSheetBody = document.getElementById("infoSheetBody");
+const infoSheetClose = document.getElementById("infoSheetClose");
+const infoSheetBackdrop = document.getElementById("infoSheetBackdrop");
+
+function openInfoSheet(title, body){
+  infoSheetTitle.textContent = title || "INFO";
+  infoSheetBody.innerHTML = body || "";
+  infoSheet.classList.add("active");
+  infoSheet.setAttribute("aria-hidden", "false");
+}
+function closeInfoSheet(){
+  infoSheet.classList.remove("active");
+  infoSheet.setAttribute("aria-hidden", "true");
+}
+infoSheetClose.addEventListener("click", closeInfoSheet);
+infoSheetBackdrop.addEventListener("click", closeInfoSheet);
+window.addEventListener("keydown", (e) => {
+  if(e.key === "Escape" && infoSheet.classList.contains("active")) closeInfoSheet();
+});
+document.querySelectorAll("[data-info-title]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    openInfoSheet(btn.getAttribute("data-info-title"), btn.getAttribute("data-info-body"));
+  });
+});
+
+/* ---------- Profile UI ---------- */
+const profileEl = document.getElementById("profile");
+const thaiBlock = document.getElementById("thaiBlock");
+const climbBlock = document.getElementById("climbBlock");
+
+function applyProfileUI(){
+  const p = profileEl.value;
+  thaiBlock.style.display  = (p === "climber") ? "none" : "block";
+  climbBlock.style.display = (p === "fighter") ? "none" : "block";
+}
+profileEl.addEventListener("change", applyProfileUI);
+applyProfileUI();
+
+/* ---------- Helpers ---------- */
+function isNum(x){ return typeof x === "number" && isFinite(x) && !isNaN(x); }
+function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+
+function e1RM(weight, reps){
+  return weight * (1 + reps / 30);
+}
+function effortFactor(effort){
+  // effort 6–10 (simple scaling)
+  if (effort >= 10) return 1.00;
+  if (effort >= 9)  return 0.97;
+  if (effort >= 8)  return 0.94;
+  if (effort >= 7)  return 0.90;
+  return 0.86;
+}
+
+const patternFactor = {
+  back_squat: 1.00,
+  front_squat: 0.92,
+  split_squat: 0.72,
+  leg_press: 1.10,
+
+  deadlift: 1.00,
+  rdl: 0.90,
+  hip_thrust: 0.88,
+
+  weighted_pullup: 0.78,
+  row: 0.72,
+  pulldown: 0.66
+};
+
+function getVal(id){
+  const v = parseFloat(document.getElementById(id).value);
+  return isNum(v) ? v : null;
+}
+function getInt(id){
+  const v = parseInt(document.getElementById(id).value, 10);
+  return isNum(v) ? v : 0;
+}
+
+/* ---------- Engine ---------- */
+function analyze(){
+  const profile = profileEl.value;
+  const goal = document.getElementById("goal").value;
+  const fatigue = document.getElementById("fatigue").value;
+
+  const bwRaw = getVal("bw");
+  const bw = (bwRaw && bwRaw > 0) ? bwRaw : null;
+
+  // Sport load
+  const thaiTotal = (profile === "climber") ? 0 : getInt("thaiTotal");
+  const thaiHard  = (profile === "climber") ? 0 : getInt("thaiHard");
+  const climbTotal = (profile === "fighter") ? 0 : getInt("climbTotal");
+  const climbHard  = (profile === "fighter") ? 0 : getInt("climbHard");
+
+  const thaiHardSafe  = clamp(thaiHard,  0, thaiTotal);
+  const climbHardSafe = clamp(climbHard, 0, climbTotal);
+
+  const sportTotal = thaiTotal + climbTotal;
+  const sportHard  = thaiHardSafe + climbHardSafe;
+
+  // Strength snapshot
+  const lowerPattern = document.getElementById("lowerPattern").value;
+  const hingePattern = document.getElementById("hingePattern").value;
+  const pullPattern  = document.getElementById("pullPattern").value;
+
+  const lowerKg = getVal("lowerKg"), lowerReps = getVal("lowerReps"), lowerEffort = getVal("lowerEffort");
+  const hingeKg = getVal("hingeKg"), hingeReps = getVal("hingeReps"), hingeEffort = getVal("hingeEffort");
+  const pullKg  = getVal("pullKg"),  pullReps  = getVal("pullReps"),  pullEffort  = getVal("pullEffort");
+
+  const required = [lowerKg, lowerReps, lowerEffort, hingeKg, hingeReps, hingeEffort, pullKg, pullReps, pullEffort];
+  const ok = required.every(v => isNum(v));
+
+  // Output nodes
+  const output = document.getElementById("output");
+  const kpiMain = document.getElementById("kpiMain");
+  const kpiBadge = document.getElementById("kpiBadge");
+  const summaryText = document.getElementById("summaryText");
+  const weekWrap = document.getElementById("weekWrap");
+  const weekMeta = document.getElementById("weekMeta");
+  const weekGrid = document.getElementById("weekGrid");
+  const sessionGrid = document.getElementById("sessionGrid");
+  const recoveryText = document.getElementById("recoveryText");
+
+  output.style.display = "block";
+  weekWrap.style.display = "none";
+
+  if(!ok){
+    kpiMain.textContent = "Plan: missing strength inputs";
+    kpiBadge.textContent = "Fill all three snapshot rows";
+    summaryText.textContent =
+      "Add kg, reps, and effort for Lower / Hinge / Pull.\n" +
+      "Sport load is optional, but improves the plan.";
+    return;
+  }
+
+  // Capacity estimates (normalized)
+  const lowerCap = e1RM(lowerKg, lowerReps) * effortFactor(lowerEffort) * (patternFactor[lowerPattern] ?? 1);
+  const hingeCap = e1RM(hingeKg, hingeReps) * effortFactor(hingeEffort) * (patternFactor[hingePattern] ?? 1);
+  const pullCap  = e1RM(pullKg,  pullReps)  * effortFactor(pullEffort)  * (patternFactor[pullPattern]  ?? 1);
+
+  const bwUsed = bw ?? 65;
+  const relLower = lowerCap / bwUsed;
+  const relHinge = hingeCap / bwUsed;
+  const relPull  = pullCap  / bwUsed;
+
+  // Simple scaled scores 0–100
+  const lowerScore = clamp(Math.round(relLower * 40), 0, 100);
+  const hingeScore = clamp(Math.round(relHinge * 40), 0, 100);
+  const pullScore  = clamp(Math.round(relPull  * 40), 0, 100);
+
+  // Weakest area
+  const areas = [
+    { key:"Lower", v: lowerScore },
+    { key:"Hinge", v: hingeScore },
+    { key:"Pull",  v: pullScore  }
+  ].sort((a,b)=>a.v-b.v);
+  const weakest = areas[0];
+  const strongest = areas[2];
+  const balance = weakest.v / Math.max(1, strongest.v);
+
+  let balanceLabel = "Balanced";
+  if(balance < 0.55) balanceLabel = "Big gap";
+  else if(balance < 0.75) balanceLabel = "Some gap";
+
+  // Load pressure score
+  const fatigueMult = (fatigue === "very") ? 1.25 : (fatigue === "some") ? 1.12 : 1.00;
+  const loadPressure = clamp(Math.round(((sportTotal * 7) + (sportHard * 12)) * fatigueMult / 10), 0, 100);
+
+  let loadBand = "Low";
+  if(loadPressure >= 70) loadBand = "High";
+  else if(loadPressure >= 40) loadBand = "Medium";
+
+  // Decide strength sessions + effort limit
+  let strengthSessions = 3;
+  let effortLimit = 9;
+  let volumeNote = "Normal volume";
+  let directive = "Push forward carefully.";
+
+  if(loadBand === "High"){
+    strengthSessions = 2;
+    effortLimit = 8;
+    volumeNote = "Reduce volume (~20%)";
+    directive = "Protect sport performance. Keep strength short and controlled.";
+  } else if(loadBand === "Medium"){
+    strengthSessions = 2;
+    effortLimit = 8.5;
+    volumeNote = "Reduce volume (~10%)";
+    directive = "Keep progress, but stay under an effort limit.";
+  } else {
+    strengthSessions = 3;
+    effortLimit = (fatigue === "some") ? 8.5 : (fatigue === "very") ? 8 : 9;
+    volumeNote = (fatigue === "very") ? "Reduce volume (~10%)" : "Normal volume";
+    directive = (fatigue === "very") ? "Protect recovery this week." : "Progress approved.";
+  }
+
+  // Goal tweaks (objective changes the session design)
+  // If sport load is high, power/hypertrophy gets constrained more.
+  if(goal === "power" && loadBand !== "Low"){
+    strengthSessions = Math.min(strengthSessions, 2);
+    effortLimit = Math.min(effortLimit, 8.5);
+    volumeNote = "Low volume, high quality";
+    directive = "Keep output sharp. No grind reps.";
+  }
+  if(goal === "hypertrophy" && loadBand === "High"){
+    strengthSessions = 2;
+    effortLimit = 8;
+    volumeNote = "Small pump work only";
+    directive = "You can build, but not at the cost of sport recovery.";
+  }
+
+  // Output text (plain english)
+  const goalName = (
+    goal === "hypertrophy" ? "Hypertrophy (structural growth)" :
+    goal === "strength" ? "Max strength" :
+    goal === "endurance" ? "Strength endurance" :
+    "Power / explosiveness"
+  );
+
+  kpiMain.textContent = "Plan: " + strengthSessions + " strength sessions this week";
+  kpiBadge.textContent = "Load pressure: " + loadBand + " • Goal: " + goalName;
+
+  const bwNote = bw ? "" : "\nNote: bodyweight not set → using 65kg baseline.";
+
+  summaryText.textContent =
+    "Your weakest area: " + weakest.key + " (" + weakest.v + "/100)\n" +
+    "Balance check: " + balanceLabel + "\n\n" +
+    "Sport sessions planned: " + sportTotal + " / week\n" +
+    "Hard sport sessions: " + sportHard + " / week\n\n" +
+    "Strength sessions: " + strengthSessions + " / week\n" +
+    "Effort limit: " + effortLimit + " (10 = max)\n" +
+    "Volume: " + volumeNote + "\n\n" +
+    directive +
+    bwNote;
+
+  // Week plan
+  const week = buildWeekPlan(profile, strengthSessions, sportTotal, sportHard, weakest.key, goal);
+  renderWeekPlan(week, sportTotal, sportHard, strengthSessions, effortLimit);
+
+  // Session templates (based on goal)
+  const sessions = buildStrengthSessions(goal, weakest.key, effortLimit, loadBand);
+  renderSessions(sessions);
+
+  // Recovery note
+  recoveryText.textContent = buildRecoveryNote(loadBand, fatigue);
+
+  weekWrap.style.display = "block";
+  setTimeout(()=> output.scrollIntoView({behavior:"smooth", block:"start"}), 50);
+
+  function buildWeekPlan(profile, strengthSessions, sportTotal, sportHard, weakestKey, goal){
+    const days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+    const plan = days.map(d => ({ day:d, tag:"OFF", body:"Recovery / mobility (8–12 min)" }));
+
+    // Strength slots
+    const strengthSlots = (strengthSessions === 2) ? ["Tue","Fri"] : ["Tue","Thu","Sat"];
+    strengthSlots.forEach((d, i) => {
+      const bias = (i===0) ? weakestKey : (i===1 ? "Lower" : "Hinge");
+      plan[days.indexOf(d)] = {
+        day:d,
+        tag:"STRENGTH",
+        body: "Strength (" + goalLabel(goal) + ")\nFocus: " + bias + "\nShort, clean session"
+      };
+    });
+
+    // Sport labels (not prescribing exact sport days, just showing integration)
+    if(sportTotal > 0){
+      const sportDays = (profile === "fighter") ? ["Mon","Thu"] :
+                        (profile === "climber") ? ["Mon","Wed"] :
+                        ["Mon","Wed"];
+      sportDays.forEach((d, idx) => {
+        const current = plan[days.indexOf(d)];
+        if(current.tag !== "STRENGTH"){
+          plan[days.indexOf(d)] = {
+            day:d,
+            tag:"SPORT",
+            body: (sportHard > 0 && idx === 0) ? "Sport (hard)\nKeep strength conservative" : "Sport\nKeep strength controlled"
+          };
+        }
+      });
+    }
+
+    // Always keep 1 true OFF day (Sunday)
+    plan[days.indexOf("Sun")] = { day:"Sun", tag:"OFF", body:"True rest (walk + mobility)" };
+    return plan;
+  }
+
+  function goalLabel(goal){
+    if(goal==="hypertrophy") return "growth";
+    if(goal==="strength") return "strength";
+    if(goal==="endurance") return "endurance";
+    return "power";
+  }
+
+  function renderWeekPlan(plan, sportTotal, sportHard, strengthSessions, effortLimit){
+    weekGrid.innerHTML = "";
+    weekMeta.textContent =
+      "sport " + sportTotal + " • hard " + sportHard + " • strength " + strengthSessions + " • effort limit " + effortLimit;
+
+    plan.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "day-card";
+
+      const top = document.createElement("div");
+      top.className = "day-top";
+
+      const name = document.createElement("div");
+      name.className = "day-name";
+      name.textContent = item.day;
+
+      const tag = document.createElement("div");
+      tag.className = "day-tag";
+      tag.textContent = item.tag;
+
+      top.appendChild(name);
+      top.appendChild(tag);
+
+      const body = document.createElement("div");
+      body.className = "day-body";
+      body.textContent = item.body;
+
+      card.appendChild(top);
+      card.appendChild(body);
+      weekGrid.appendChild(card);
+    });
+  }
+
+  function buildStrengthSessions(goal, weakestKey, effortLimit, loadBand){
+    const cap = (typeof effortLimit === "number") ? effortLimit : 8.5;
+
+    // Base volumes adjust under load
+    const conservative = (loadBand === "High");
+
+    // Templates: very plain english
+    const templates = {
+      hypertrophy: {
+        name: "Hypertrophy (structural growth)",
+        main: conservative ? "3 sets × 8–10 reps" : "4 sets × 6–10 reps",
+        second: conservative ? "2–3 sets × 10–12 reps" : "3 sets × 8–12 reps",
+        note: "Stop 1–2 reps before failure. Keep form perfect."
+      },
+      strength: {
+        name: "Max strength",
+        main: conservative ? "4 sets × 3–5 reps" : "5 sets × 3–5 reps",
+        second: conservative ? "3 sets × 5–6 reps" : "3–4 sets × 4–6 reps",
+        note: "No grinding. If speed drops, stop."
+      },
+      endurance: {
+        name: "Strength endurance",
+        main: conservative ? "3 sets × 10–15 reps" : "4 sets × 10–15 reps",
+        second: conservative ? "2–3 sets × 12–18 reps" : "3 sets × 12–18 reps",
+        note: "Smooth reps. Short rests. Do not chase failure."
+      },
+      power: {
+        name: "Power / explosiveness",
+        main: conservative ? "6 sets × 2 reps (fast)" : "8 sets × 2 reps (fast)",
+        second: conservative ? "3 sets × 3 reps (fast)" : "4 sets × 3 reps (fast)",
+        note: "Every rep should feel fast. Stop early if reps slow down."
+      }
+    };
+
+    const t = templates[goal] || templates.hypertrophy;
+
+    // Two sessions for most plans; three sessions if engine chose 3
+    const sessionsWanted = (strengthSessions === 3) ? 3 : 2;
+
+    const session = (idx, focus) => ({
+      title: t.name + " • Focus: " + focus,
+      lines: [
+        "Main focus (" + focus + "): " + t.main + " • effort ≤ " + cap,
+        "Secondary: " + t.second + " • effort ≤ " + Math.max(7, cap - 1),
+        "Accessory: 2 sets × 12 reps (easy) • optional",
+        "Note: " + t.note
+      ]
+    });
+
+    const s1 = session(1, weakestKey);
+    const s2 = session(2, "Lower");
+    const s3 = session(3, "Hinge");
+
+    return (sessionsWanted === 3) ? [s1,s2,s3] : [s1,s2];
+  }
+
+  function renderSessions(sessions){
+    sessionGrid.innerHTML = "";
+    sessions.forEach((s, idx) => {
+      const card = document.createElement("div");
+      card.className = "session-card";
+
+      const title = document.createElement("div");
+      title.className = "session-title";
+      title.textContent = "Session " + (idx+1) + " • " + s.title;
+
+      const body = document.createElement("div");
+      body.className = "day-body";
+      body.textContent = s.lines.join("\n");
+
+      card.appendChild(title);
+      card.appendChild(body);
+      sessionGrid.appendChild(card);
+    });
+  }
+
+  function buildRecoveryNote(loadBand, fatigue){
+    if(loadBand === "High" || fatigue === "very"){
+      return "This week is about protecting recovery. Keep strength short, keep sport quality high, and keep at least 1 true rest day.";
+    }
+    if(loadBand === "Medium" || fatigue === "some"){
+      return "Stay controlled. You can progress, but do not chase fatigue. Keep 1 true rest day.";
+    }
+    return "You can progress normally. Add load slowly, keep technique clean, and keep 1 true rest day.";
+  }
+}
+
+function resetForm(){
+  document.getElementById("bw").value = "";
+  document.getElementById("fatigue").value = "fresh";
+  document.getElementById("goal").value = "hypertrophy";
+
+  document.getElementById("thaiTotal").value = "";
+  document.getElementById("thaiHard").value = "";
+  document.getElementById("climbTotal").value = "";
+  document.getElementById("climbHard").value = "";
+
+  document.getElementById("lowerPattern").value = "back_squat";
+  document.getElementById("hingePattern").value = "deadlift";
+  document.getElementById("pullPattern").value = "weighted_pullup";
+
+  ["lowerKg","lowerReps","lowerEffort","hingeKg","hingeReps","hingeEffort","pullKg","pullReps","pullEffort"]
+    .forEach(id => document.getElementById(id).value = "");
+
+  const output = document.getElementById("output");
+  const weekWrap = document.getElementById("weekWrap");
+  output.style.display = "none";
+  weekWrap.style.display = "none";
+
+  applyProfileUI();
+}
+</script>
+</body>
+</html>
