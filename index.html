@@ -19,7 +19,7 @@ body{
   overflow:hidden;
 }
 
-/* --- LOGO ANIMATION --- */
+/* LOGO */
 .logo{
   font-size:64px;
   letter-spacing:10px;
@@ -27,10 +27,8 @@ body{
   opacity:0;
   transform:translateY(12px);
   animation:reveal 1.4s ease forwards;
-  user-select:none;
-  transition: opacity .25s ease;
 }
-.logo:hover{ opacity: 0.92; }
+.logo:hover{ opacity:0.92; }
 
 .sub{
   margin-top:14px;
@@ -43,58 +41,45 @@ body{
   animation-delay:1.2s;
 }
 
-@keyframes reveal{ to{ opacity:1; transform:translateY(0); } }
-@keyframes fadeIn{ to{ opacity:0.55; } }
-
-/* Premium hint line (subtle) — now button */
 .engine-hint{
   display:inline-block;
-  margin-top: 26px;
-  font-size: 10px;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  opacity: 0;
-  transform: translateY(6px);
-  animation: hintIn .9s ease forwards;
-  animation-delay: 2.2s;
-
-  text-decoration: none;
-  background: transparent;
-  border: 0;
-  color: rgba(0,0,0,0.60);
-  transition: opacity .25s ease, transform .25s ease, color .25s ease;
-  user-select: none;
-  cursor: pointer;
+  margin-top:26px;
+  font-size:10px;
+  letter-spacing:0.32em;
+  text-transform:uppercase;
+  opacity:0;
+  transform:translateY(6px);
+  animation:hintIn .9s ease forwards;
+  animation-delay:2.2s;
+  background:none;
+  border:none;
+  color:rgba(0,0,0,0.6);
+  cursor:pointer;
 }
 .engine-hint:hover{
-  opacity: 1;
-  color: rgba(0,0,0,0.90);
+  opacity:1;
+  color:rgba(0,0,0,0.9);
 }
-@keyframes hintIn{
-  to{ opacity: 0.28; transform: translateY(0); }
-}
-.logo:hover + .sub + .engine-hint{ opacity: 0.48; }
 
-/* --- MENU BUTTON (hamburger -> X) --- */
+@keyframes reveal{ to{ opacity:1; transform:translateY(0);} }
+@keyframes fadeIn{ to{ opacity:0.55;} }
+@keyframes hintIn{ to{ opacity:0.28; transform:translateY(0);} }
+
+/* MENU */
 .menu-btn{
   position:fixed;
   top:18px;
   left:18px;
   width:44px;
   height:44px;
-  border:1px solid rgba(0,0,0,0.10);
-  background:rgba(255,255,255,0.75);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  border:1px solid rgba(0,0,0,0.1);
+  background:rgba(255,255,255,0.9);
   border-radius:12px;
   cursor:pointer;
-  z-index:100;
   display:flex;
   align-items:center;
   justify-content:center;
-  transition: transform .2s ease, background .2s ease;
 }
-.menu-btn:hover{ transform: translateY(-1px); background:rgba(255,255,255,0.9); }
 
 .icon{ width:18px; height:12px; position:relative; }
 .icon span{
@@ -103,45 +88,47 @@ body{
   height:2px;
   background:#000;
   border-radius:2px;
-  transition: transform .25s ease, top .25s ease, opacity .2s ease;
+  transition:.25s ease;
 }
-.icon span:nth-child(1){ top:0; }
-.icon span:nth-child(2){ top:5px; }
-.icon span:nth-child(3){ top:10px; }
-.menu-btn.open .icon span:nth-child(1){ top:5px; transform: rotate(45deg); }
-.menu-btn.open .icon span:nth-child(2){ opacity:0; }
-.menu-btn.open .icon span:nth-child(3){ top:5px; transform: rotate(-45deg); }
+.icon span:nth-child(1){ top:0;}
+.icon span:nth-child(2){ top:5px;}
+.icon span:nth-child(3){ top:10px;}
+.menu-btn.open .icon span:nth-child(1){ top:5px; transform:rotate(45deg);}
+.menu-btn.open .icon span:nth-child(2){ opacity:0;}
+.menu-btn.open .icon span:nth-child(3){ top:5px; transform:rotate(-45deg);}
 
-/* --- GLASS OVERLAY: ABOUT --- */
-.about{
+/* ABOUT + GATE OVERLAY */
+.overlay{
   position:fixed;
   inset:0;
-  background:rgba(10,10,10,0.28);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  background:rgba(0,0,0,0.45);
   opacity:0;
   pointer-events:none;
-  transition:opacity 0.35s ease;
-  z-index:90;
+  transition:opacity .3s ease;
   display:flex;
   justify-content:center;
   align-items:center;
   padding:40px;
 }
-.about.active{ opacity:1; pointer-events:auto; }
+.overlay.active{
+  opacity:1;
+  pointer-events:auto;
+}
 
 .panel{
-  width:min(720px, 92vw);
-  background:rgba(255,255,255,0.82);
-  border:1px solid rgba(255,255,255,0.45);
-  box-shadow: 0 30px 80px rgba(0,0,0,0.18);
+  width:min(520px, 92vw);
+  background:#fff;
   border-radius:18px;
-  padding:34px 28px;
-  transform: translateY(10px);
+  padding:32px 24px;
+  box-shadow:0 30px 80px rgba(0,0,0,0.18);
+  transform:translateY(10px);
   opacity:0;
-  transition: transform .35s ease, opacity .35s ease;
+  transition:.3s ease;
 }
-.about.active .panel{ transform: translateY(0); opacity:1; }
+.overlay.active .panel{
+  transform:translateY(0);
+  opacity:1;
+}
 
 .panel h2{
   font-size:12px;
@@ -150,70 +137,26 @@ body{
   opacity:0.7;
   margin-bottom:14px;
 }
+
 .panel .headline{
   font-size:22px;
   letter-spacing:0.18em;
   font-weight:600;
-  margin-bottom:18px;
-}
-.panel p{
-  font-size:14px;
-  line-height:1.8;
-  opacity:0.75;
-}
-.panel a{
-  display:inline-block;
-  margin-top:18px;
-  font-size:12px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  text-decoration:none;
-  color:#000;
-  opacity:0.75;
-  border-bottom:1px solid rgba(0,0,0,0.25);
-  padding-bottom:3px;
-}
-.panel a:hover{ opacity:1; }
-.hint{
-  margin-top:18px;
-  font-size:11px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  opacity:0.45;
+  margin-bottom:12px;
 }
 
-/* --- GLASS OVERLAY: ENGINE GATE --- */
-.gate{
-  position:fixed;
-  inset:0;
-  background:rgba(10,10,10,0.28);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  opacity:0;
-  pointer-events:none;
-  transition:opacity 0.35s ease;
-  z-index:95;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:40px;
-}
-.gate.active{ opacity:1; pointer-events:auto; }
-
-.gate .panel{ width:min(520px, 92vw); }
-
-.gate .meta{
+.meta{
   font-size:11px;
   letter-spacing:0.26em;
   text-transform:uppercase;
   opacity:0.55;
-  margin-bottom:10px;
+  margin-bottom:12px;
 }
 
-.gate .copy{
+.copy{
   font-size:14px;
-  line-height:1.75;
-  opacity:0.74;
+  line-height:1.7;
+  opacity:0.75;
 }
 
 .field{
@@ -221,19 +164,13 @@ body{
   display:flex;
   gap:10px;
 }
-@media (max-width:520px){ .field{ flex-direction:column; } }
-
 .input{
   flex:1;
-  padding:12px 12px;
+  padding:12px;
   border-radius:14px;
   border:1px solid rgba(0,0,0,0.12);
-  background:rgba(255,255,255,0.92);
-  outline:none;
   font-size:14px;
 }
-.input:focus{ border-color:rgba(0,0,0,0.22); background:#fff; }
-
 .btn{
   padding:12px 14px;
   border-radius:14px;
@@ -243,161 +180,89 @@ body{
   letter-spacing:0.22em;
   text-transform:uppercase;
 }
-.btn.primary{ background:#111; color:#fff; }
-.btn.primary:hover{ opacity:0.9; }
-.btn.secondary{
-  background:#fff;
-  border:1px solid rgba(0,0,0,0.12);
-}
-.btn.secondary:hover{ background:rgba(0,0,0,0.02); }
+.primary{ background:#111; color:#fff;}
+.primary:hover{ opacity:.9;}
+.secondary{ background:#fff; border:1px solid rgba(0,0,0,0.12);}
+.secondary:hover{ background:rgba(0,0,0,0.03);}
 
 .error{
   margin-top:10px;
   font-size:12px;
   opacity:0;
-  color:rgba(0,0,0,0.55);
-  transition:opacity .2s ease;
 }
-.error.show{ opacity:1; }
+.error.show{ opacity:1;}
 </style>
 </head>
 
 <body>
 
-<button class="menu-btn" id="menuBtn" aria-label="About" aria-expanded="false">
-  <div class="icon" aria-hidden="true">
-    <span></span><span></span><span></span>
-  </div>
+<button class="menu-btn" id="menuBtn">
+  <div class="icon"><span></span><span></span><span></span></div>
 </button>
 
 <div>
-  <div class="logo" aria-label="STORMIĒ">STORMIĒ</div>
-
-  <div class="sub">
-    Hybrid Performance<br>
-    Launching Soon
-  </div>
-
-  <button class="engine-hint" id="engineBtn" type="button" aria-label="Access Engine">
-    Access Engine
-  </button>
+  <div class="logo">STORMIĒ</div>
+  <div class="sub">Hybrid Performance<br>Launching Soon</div>
+  <button class="engine-hint" id="engineBtn">Access Engine</button>
 </div>
 
-<!-- ABOUT overlay -->
-<div class="about" id="about" aria-hidden="true">
-  <div class="panel" role="dialog" aria-label="About Stormie">
-    <h2>ABOUT</h2>
-    <div class="headline">Hybrid Performance Lab</div>
-
-    <p>
-      Stormiē is a tech-driven hybrid performance lab focused on strength,
-      durability and structured progression.
-      Developed by Storm Kolmodin, Licensed Personal Trainer since 2018.
-      License verification updated 2023.
-    </p>
-
-    <a href="https://ptlicens.trueoriginal.com/licensierad-personlig-tranare-denise-kolmodin-138305lEsdYeph88/?ref=linkedin-profile&zone=true_08&lang=en"
-       target="_blank" rel="noopener noreferrer">
-      Verify PT License
-    </a>
-
-    <div class="hint">Press ESC to close</div>
-  </div>
-</div>
-
-<!-- ENGINE gate overlay -->
-<div class="gate" id="gate" aria-hidden="true">
-  <div class="panel" role="dialog" aria-label="Engine access">
+<!-- GATE -->
+<div class="overlay" id="gate">
+  <div class="panel">
     <h2>ENGINE</h2>
     <div class="headline">Test Phase</div>
-    <div class="meta">UNDER CONSTRUCTION</div>
+    <div class="meta">CLOSED TEST PHASE</div>
 
     <div class="copy">
-      The Engine is currently in a closed test phase.<br>
-      If you have access, enter the password to continue.
+      The Engine is currently under construction.<br>
+      Access is limited to invited testers only.<br><br>
+      If you have been invited, enter your password below.
     </div>
 
     <div class="field">
-      <input class="input" id="pw" type="password" placeholder="Password" autocomplete="off" />
-      <button class="btn primary" id="pwGo" type="button">Enter</button>
-      <button class="btn secondary" id="pwClose" type="button">Close</button>
+      <input class="input" id="pw" type="password" placeholder="Password">
+      <button class="btn primary" id="enter">Enter</button>
+      <button class="btn secondary" id="close">Close</button>
     </div>
 
-    <div class="error" id="pwErr">Incorrect password.</div>
-    <div class="hint">Press ESC to close</div>
+    <div class="error" id="error">Incorrect password.</div>
   </div>
 </div>
 
 <script>
-/* ====== CHANGE THIS ====== */
-const ENGINE_PASSWORD = "YOURPASSWORD"; // <-- set your password here
-/* ========================= */
+const PASSWORD = "stormtest"; // change this
 
-const menuBtn = document.getElementById("menuBtn");
-const about = document.getElementById("about");
-
-const engineBtn = document.getElementById("engineBtn");
 const gate = document.getElementById("gate");
+const engineBtn = document.getElementById("engineBtn");
+const enterBtn = document.getElementById("enter");
+const closeBtn = document.getElementById("close");
 const pw = document.getElementById("pw");
-const pwGo = document.getElementById("pwGo");
-const pwClose = document.getElementById("pwClose");
-const pwErr = document.getElementById("pwErr");
+const error = document.getElementById("error");
 
-function openAbout(){
-  about.classList.add("active");
-  about.setAttribute("aria-hidden", "false");
-  menuBtn.classList.add("open");
-  menuBtn.setAttribute("aria-expanded", "true");
-}
-function closeAbout(){
-  about.classList.remove("active");
-  about.setAttribute("aria-hidden", "true");
-  menuBtn.classList.remove("open");
-  menuBtn.setAttribute("aria-expanded", "false");
-}
-
-menuBtn.addEventListener("click", () => {
-  if (about.classList.contains("active")) closeAbout();
-  else openAbout();
-});
-about.addEventListener("click", (e) => { if (e.target === about) closeAbout(); });
-
-function openGate(){
+engineBtn.onclick = () => {
   gate.classList.add("active");
-  gate.setAttribute("aria-hidden","false");
-  pw.value = "";
-  pwErr.classList.remove("show");
-  setTimeout(()=> pw.focus(), 50);
-}
-function closeGate(){
+  pw.focus();
+};
+
+closeBtn.onclick = () => {
   gate.classList.remove("active");
-  gate.setAttribute("aria-hidden","true");
-  pwErr.classList.remove("show");
-}
+  error.classList.remove("show");
+};
 
-engineBtn.addEventListener("click", openGate);
-pwClose.addEventListener("click", closeGate);
-gate.addEventListener("click", (e) => { if (e.target === gate) closeGate(); });
-
-function tryEnter(){
-  const val = (pw.value || "").trim();
-  if(val === ENGINE_PASSWORD){
+enterBtn.onclick = () => {
+  if(pw.value === PASSWORD){
     window.location.href = "/engine.html";
   }else{
-    pwErr.classList.add("show");
+    error.classList.add("show");
     pw.value = "";
-    pw.focus();
   }
-}
-pwGo.addEventListener("click", tryEnter);
-pw.addEventListener("keydown", (e) => {
-  if(e.key === "Enter") tryEnter();
-});
+};
 
-window.addEventListener("keydown", (e) => {
-  if (e.key === "Escape"){
-    if (gate.classList.contains("active")) closeGate();
-    if (about.classList.contains("active")) closeAbout();
-  }
+window.addEventListener("keydown", (e)=>{
+  if(e.key==="Escape") gate.classList.remove("active");
+  if(e.key==="Enter" && gate.classList.contains("active")) enterBtn.click();
 });
 </script>
+
+</body>
+</html>
