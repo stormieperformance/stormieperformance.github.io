@@ -1,309 +1,636 @@
 <!DOCTYPE html>
-<html lang="sv">
+<html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>STORMIĒ</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STORMIĒ</title>
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
+  <style>
+    :root{
+      --text:#0f0f10;
+      --muted:rgba(0,0,0,0.56);
+      --muted2:rgba(0,0,0,0.40);
+      --line:rgba(0,0,0,0.10);
+      --glass:rgba(255,255,255,0.78);
+      --glass2:rgba(255,255,255,0.92);
+      --shadow: 0 30px 90px rgba(0,0,0,0.18);
+      --radius:22px;
+    }
 
-body{
-height:100vh;
-background:#fff;
-font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
-display:flex;
-justify-content:center;
-align-items:center;
-text-align:center;
-overflow:hidden;
-}
+    *{ margin:0; padding:0; box-sizing:border-box; }
+    html,body{ height:100%; }
 
-/* Logo */
-.logo{
-font-size:64px;
-letter-spacing:10px;
-font-weight:600;
-opacity:0;
-transform:translateY(12px);
-animation:reveal 1.4s ease forwards;
-}
-.logo:hover{opacity:.92;}
+    body{
+      background:#fff;
+      color:var(--text);
+      font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      overflow:hidden;
+    }
 
-.sub{
-margin-top:14px;
-font-size:13px;
-letter-spacing:4px;
-text-transform:uppercase;
-opacity:0;
-animation:fadeIn 1s ease forwards;
-animation-delay:1.2s;
-}
+    /* Background wrapper that we blur (NOT the modals) */
+    .app{
+      width:100%;
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition: filter .28s ease;
+    }
+    .app.is-blurred{
+      filter: blur(18px);
+    }
 
-.engine-hint{
-display:inline-block;
-margin-top:26px;
-font-size:10px;
-letter-spacing:.32em;
-text-transform:uppercase;
-background:none;
-border:none;
-color:rgba(0,0,0,.6);
-cursor:pointer;
-opacity:0;
-animation:hintIn .9s ease forwards;
-animation-delay:2.2s;
-}
-.engine-hint:hover{color:#000;}
+    /* --- LOGO ANIMATION --- */
+    .logo{
+      font-size:64px;
+      letter-spacing:10px;
+      font-weight:650;
+      opacity:0;
+      transform:translateY(12px);
+      animation:reveal 1.4s ease forwards;
+      user-select:none;
+      transition: opacity .25s ease;
+    }
+    .logo:hover{ opacity:0.92; }
 
-@keyframes reveal{to{opacity:1;transform:translateY(0);}}
-@keyframes fadeIn{to{opacity:.55;}}
-@keyframes hintIn{to{opacity:.28;}}
+    .sub{
+      margin-top:14px;
+      font-size:13px;
+      letter-spacing:4px;
+      text-transform:uppercase;
+      opacity:0;
+      line-height:1.6;
+      animation:fadeIn 1s ease forwards;
+      animation-delay:1.2s;
+      color:rgba(0,0,0,0.62);
+      user-select:none;
+    }
 
-/* Menu */
-.menu-btn{
-position:fixed;
-top:18px;
-left:18px;
-width:44px;
-height:44px;
-border:1px solid rgba(0,0,0,.1);
-background:#fff;
-border-radius:12px;
-cursor:pointer;
-display:flex;
-align-items:center;
-justify-content:center;
-z-index:100;
-}
-.icon{width:18px;height:12px;position:relative;}
-.icon span{
-position:absolute;left:0;right:0;height:2px;background:#000;border-radius:2px;transition:.25s;
-}
-.icon span:nth-child(1){top:0;}
-.icon span:nth-child(2){top:5px;}
-.icon span:nth-child(3){top:10px;}
-.menu-btn.open .icon span:nth-child(1){top:5px;transform:rotate(45deg);}
-.menu-btn.open .icon span:nth-child(2){opacity:0;}
-.menu-btn.open .icon span:nth-child(3){top:5px;transform:rotate(-45deg);}
+    .engine-hint{
+      display:inline-block;
+      margin-top:26px;
+      font-size:10px;
+      letter-spacing:0.32em;
+      text-transform:uppercase;
+      opacity:0;
+      transform:translateY(6px);
+      animation: hintIn .9s ease forwards;
+      animation-delay:2.2s;
 
-/* Overlays */
-.overlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.45);
-opacity:0;
-pointer-events:none;
-transition:.3s;
-display:flex;
-justify-content:center;
-align-items:center;
-padding:40px;
-}
-.overlay.active{
-opacity:1;
-pointer-events:auto;
-}
+      text-decoration:none;
+      color:rgba(0,0,0,0.55);
+      transition: opacity .25s ease, transform .25s ease, color .25s ease;
+      user-select:none;
+      padding-bottom:4px;
+      border-bottom:1px solid rgba(0,0,0,0.18);
+    }
+    .engine-hint:hover{
+      opacity:1;
+      color:rgba(0,0,0,0.90);
+      border-bottom-color:rgba(0,0,0,0.32);
+    }
 
-.panel{
-width:min(520px,92vw);
-background:#fff;
-border-radius:18px;
-padding:32px 24px;
-box-shadow:0 30px 80px rgba(0,0,0,.18);
-transform:translateY(10px);
-opacity:0;
-transition:.3s;
-}
-.overlay.active .panel{
-transform:translateY(0);
-opacity:1;
-}
+    @keyframes hintIn{ to{ opacity:0.30; transform:translateY(0); } }
+    @keyframes reveal{ to{ opacity:1; transform:translateY(0); } }
+    @keyframes fadeIn{ to{ opacity:1; } }
 
-.panel h2{
-font-size:12px;
-letter-spacing:.28em;
-text-transform:uppercase;
-opacity:.7;
-margin-bottom:14px;
-}
-.headline{
-font-size:22px;
-letter-spacing:.18em;
-font-weight:600;
-margin-bottom:12px;
-}
-.meta{
-font-size:11px;
-letter-spacing:.26em;
-text-transform:uppercase;
-opacity:.55;
-margin-bottom:12px;
-}
-.copy{
-font-size:14px;
-line-height:1.7;
-opacity:.75;
-}
-.panel a{
-display:inline-block;
-margin-top:16px;
-font-size:12px;
-letter-spacing:.22em;
-text-transform:uppercase;
-text-decoration:none;
-color:#000;
-border-bottom:1px solid rgba(0,0,0,.25);
-padding-bottom:3px;
-}
+    /* --- MENU BUTTON (hamburger -> X) --- */
+    .menu-btn{
+      position:fixed;
+      top:18px;
+      left:18px;
+      width:44px;
+      height:44px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius:12px;
+      cursor:pointer;
+      z-index:50;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition: transform .2s ease, background .2s ease;
+    }
+    .menu-btn:hover{ transform: translateY(-1px); background:rgba(255,255,255,0.92); }
 
-.field{
-margin-top:18px;
-display:flex;
-gap:10px;
-}
-.input{
-flex:1;
-padding:12px;
-border-radius:14px;
-border:1px solid rgba(0,0,0,.12);
-}
-.btn{
-padding:12px 14px;
-border-radius:14px;
-border:none;
-cursor:pointer;
-font-size:12px;
-letter-spacing:.22em;
-text-transform:uppercase;
-}
-.primary{background:#111;color:#fff;}
-.secondary{background:#fff;border:1px solid rgba(0,0,0,.12);}
-.error{margin-top:10px;font-size:12px;opacity:0;}
-.error.show{opacity:1;}
-</style>
+    .icon{ width:18px; height:12px; position:relative; }
+    .icon span{
+      position:absolute; left:0; right:0;
+      height:2px; background:#000; border-radius:2px;
+      transition: transform .25s ease, top .25s ease, opacity .2s ease;
+    }
+    .icon span:nth-child(1){ top:0; }
+    .icon span:nth-child(2){ top:5px; }
+    .icon span:nth-child(3){ top:10px; }
+
+    .menu-btn.open .icon span:nth-child(1){ top:5px; transform: rotate(45deg); }
+    .menu-btn.open .icon span:nth-child(2){ opacity:0; }
+    .menu-btn.open .icon span:nth-child(3){ top:5px; transform: rotate(-45deg); }
+
+    /* ---------- MODAL BASE ---------- */
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(10,10,10,0.30);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .28s ease;
+      z-index:60;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:28px;
+    }
+    .overlay.active{
+      opacity:1;
+      pointer-events:auto;
+    }
+
+    .panel{
+      width:min(760px, 92vw);
+      background:var(--glass2);
+      border:1px solid rgba(255,255,255,0.50);
+      box-shadow: var(--shadow);
+      border-radius:28px;
+      padding:34px 28px 28px;
+      transform: translateY(10px);
+      opacity:0;
+      transition: transform .28s ease, opacity .28s ease;
+      position:relative;
+    }
+    .overlay.active .panel{
+      transform: translateY(0);
+      opacity:1;
+    }
+
+    .panel-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:14px;
+    }
+
+    .kicker{
+      font-size:12px;
+      letter-spacing:0.28em;
+      text-transform:uppercase;
+      color:rgba(0,0,0,0.55);
+    }
+
+    .close-btn{
+      width:40px; height:40px;
+      border-radius:14px;
+      border:1px solid rgba(0,0,0,0.10);
+      background:rgba(255,255,255,0.70);
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:18px;
+      color:rgba(0,0,0,0.65);
+      transition: background .2s ease, color .2s ease, transform .2s ease;
+    }
+    .close-btn:hover{
+      background:rgba(255,255,255,0.95);
+      color:#000;
+      transform: translateY(-1px);
+    }
+
+    .panel h2{
+      font-size:34px;
+      letter-spacing:0.14em;
+      font-weight:650;
+      margin:6px 0 8px;
+    }
+
+    .panel .subhead{
+      font-size:12px;
+      letter-spacing:0.30em;
+      text-transform:uppercase;
+      color:rgba(0,0,0,0.45);
+      margin-bottom:18px;
+    }
+
+    .copy{
+      font-size:15px;
+      line-height:1.85;
+      color:rgba(0,0,0,0.78);
+      max-width:62ch;
+      margin:0 auto;
+    }
+    .copy p{ margin:0 0 12px; }
+    .copy h3{
+      font-size:14px;
+      letter-spacing:0.22em;
+      text-transform:uppercase;
+      color:rgba(0,0,0,0.55);
+      margin:8px 0 10px;
+    }
+    .copy ul{
+      list-style:none;
+      padding:0;
+      margin:10px 0 14px;
+      display:grid;
+      gap:8px;
+    }
+    .copy li{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      justify-content:center;
+      text-align:left;
+    }
+    .dot{
+      width:6px; height:6px;
+      border-radius:99px;
+      background:rgba(0,0,0,0.55);
+      margin-top:9px;
+      flex:0 0 auto;
+    }
+
+    .license{
+      display:inline-block;
+      margin-top:12px;
+      font-size:12px;
+      letter-spacing:0.22em;
+      text-transform:uppercase;
+      text-decoration:none;
+      color:#000;
+      opacity:0.72;
+      border-bottom:1px solid rgba(0,0,0,0.22);
+      padding-bottom:3px;
+    }
+    .license:hover{ opacity:1; border-bottom-color:rgba(0,0,0,0.35); }
+
+    /* ---------- Engine gate panel (password) ---------- */
+    .gate-note{
+      font-size:18px;
+      line-height:1.65;
+      color:rgba(0,0,0,0.72);
+      margin:0 auto 18px;
+      max-width:62ch;
+    }
+
+    .gate-note strong{ color:#000; }
+
+    .form-row{
+      margin-top:10px;
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    input[type="password"]{
+      width:min(360px, 86vw);
+      padding:14px 14px;
+      border-radius:16px;
+      border:1px solid rgba(0,0,0,0.14);
+      background:rgba(255,255,255,0.88);
+      font-size:16px;
+      outline:none;
+      transition:border-color .15s ease, background .15s ease;
+    }
+    input[type="password"]:focus{
+      border-color:rgba(0,0,0,0.28);
+      background:#fff;
+    }
+
+    .btn{
+      appearance:none;
+      -webkit-appearance:none;
+      border:none;
+      cursor:pointer;
+      padding:14px 16px;
+      border-radius:16px;
+      font-size:12px;
+      letter-spacing:0.22em;
+      text-transform:uppercase;
+      transition: transform .15s ease, opacity .15s ease, background .15s ease;
+      min-width:120px;
+    }
+    .btn:active{ transform: translateY(1px); }
+
+    .btn-primary{ background:#111; color:#fff; }
+    .btn-primary:hover{ opacity:0.92; }
+
+    .btn-ghost{
+      background:rgba(255,255,255,0.75);
+      border:1px solid rgba(0,0,0,0.12);
+      color:#111;
+    }
+    .btn-ghost:hover{ background:#fff; }
+
+    .msg{
+      margin-top:12px;
+      font-size:13px;
+      line-height:1.6;
+      color:rgba(0,0,0,0.60);
+      min-height:22px;
+    }
+    .msg.error{ color:rgba(160,0,0,0.80); }
+    .msg.ok{ color:rgba(0,120,0,0.80); }
+
+    @media (max-width:520px){
+      .logo{ font-size:56px; letter-spacing:8px; }
+      .panel{ padding:28px 18px 22px; border-radius:24px; }
+      .panel h2{ font-size:30px; }
+    }
+  </style>
 </head>
 
 <body>
 
-<button class="menu-btn" id="menuBtn">
-<div class="icon"><span></span><span></span><span></span></div>
-</button>
+  <!-- Menu -->
+  <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">
+    <div class="icon" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+  </button>
 
-<div>
-<div class="logo">STORMIĒ</div>
-<div class="sub">Hybrid Performance<br>Launching Soon</div>
-<button class="engine-hint" id="engineBtn">Access Engine</button>
-</div>
+  <!-- Background content (this is what gets blurred) -->
+  <div class="app" id="app">
+    <div>
+      <div class="logo" aria-label="STORMIĒ">STORMIĒ</div>
 
-<!-- ABOUT -->
-<div class="overlay" id="about">
-<div class="panel">
-<h2>ABOUT</h2>
-<div class="headline">Hybrid Performance Lab</div>
-<div class="copy">
+      <div class="sub">
+        Hybrid Performance<br/>
+        Launching Soon
+      </div>
 
-h3>Hybrid Strength System</h3>
+      <!-- Access Engine opens the gate modal -->
+      <a class="engine-hint" href="#" id="accessEngineLink" aria-label="Access Engine">
+        Access Engine
+      </a>
+    </div>
+  </div>
 
-  <p>
-    StormiePerformance is a structured strength decision system for athletes
-    who train more than one discipline.
-  </p>
+  <!-- ABOUT MODAL -->
+  <div class="overlay" id="aboutOverlay" aria-hidden="true">
+    <div class="panel" role="dialog" aria-modal="true" aria-label="About">
+      <div class="panel-top">
+        <div class="kicker">ABOUT</div>
+        <button class="close-btn" type="button" id="aboutClose" aria-label="Close">×</button>
+      </div>
 
-  <p>
-    If you combine gym training with combat sports, climbing, endurance
-    or other high-intensity work, strength becomes difficult to manage.
-  </p>
+      <h2>Hybrid Performance<br/>Lab</h2>
+      <div class="subhead">What Stormiē is</div>
 
-  <p>Most people guess.</p>
+      <div class="copy">
+        <p>
+          Stormiē is a strength decision system for people who train more than one thing
+          (gym + sport). It helps you avoid doing too much, too little, or the wrong work.
+        </p>
 
-  <ul>
-    <li>Train too much and stall</li>
-    <li>Train too little and don’t grow</li>
-    <li>Never adjust volume when life changes</li>
-  </ul>
+        <h3>It helps you decide</h3>
+        <ul>
+          <li><span class="dot"></span><span>How many gym sessions to do this week</span></li>
+          <li><span class="dot"></span><span>How hard to train</span></li>
+          <li><span class="dot"></span><span>What to focus on right now</span></li>
+        </ul>
 
-  <p>StormiePerformance helps you decide:</p>
+        <p>
+          Developed by Storm Kolmodin. Licensed Personal Trainer since 2018.
+        </p>
 
-  <ul>
-    <li>How many strength sessions to run</li>
-    <li>How hard to train</li>
-    <li>How much volume to use</li>
-    <li>What to prioritize this week</li>
-  </ul>
+        <a class="license"
+          href="https://ptlicens.trueoriginal.com/licensierad-personlig-tranare-denise-kolmodin-138305lEsdYeph88/?ref=linkedin-profile&zone=true_08&lang=en"
+          target="_blank" rel="noopener noreferrer">
+          Verify PT License
+        </a>
+      </div>
+    </div>
+  </div>
 
-  <p>
-    Based on your real training load and your current goal.
-  </p>
+  <!-- ENGINE GATE MODAL -->
+  <div class="overlay" id="gateOverlay" aria-hidden="true">
+    <div class="panel" role="dialog" aria-modal="true" aria-label="Engine test phase">
+      <div class="panel-top">
+        <div class="kicker">ENGINE</div>
+        <button class="close-btn" type="button" id="gateClose" aria-label="Close">×</button>
+      </div>
 
-  <p>
-    This is not random programming.<br>
-    It is structured prioritization.
-  </p>
+      <h2>Test Phase</h2>
+      <div class="subhead">Closed test phase</div>
 
-  <p>
-    Developed by Storm Kolmodin.<br>
-    Licensed Personal Trainer since 2018.
-  </p>
-</div>
-<a href="https://ptlicens.trueoriginal.com/licensierad-personlig-tranare-denise-kolmodin-138305lEsdYeph88/?ref=linkedin-profile&zone=true_08&lang=en" target="_blank">
-Verify PT License
-</a>
-</div>
-</div>
+      <div class="gate-note">
+        The Engine is currently under construction.<br/>
+        Access is limited to invited testers only.
+        <br/><br/>
+        <strong>If you have been invited</strong>, enter your password below.
+      </div>
 
-<!-- ENGINE GATE -->
-<div class="overlay" id="gate">
-<div class="panel">
-<h2>ENGINE</h2>
-<div class="headline">Test Phase</div>
-<div class="meta">CLOSED TEST PHASE</div>
-<div class="copy">
-The Engine is currently under construction.<br>
-Access is limited to invited testers only.<br><br>
-If you have been invited, enter your password below.
-</div>
+      <div class="form-row">
+        <input id="pwInput" type="password" placeholder="Password" autocomplete="off" inputmode="text" />
+        <button class="btn btn-primary" id="pwEnter" type="button">Enter</button>
+        <button class="btn btn-ghost" id="pwCancel" type="button">Close</button>
+      </div>
 
-<div class="field">
-<input class="input" id="pw" type="password" placeholder="Password">
-<button class="btn primary" id="enter">Enter</button>
-<button class="btn secondary" id="closeGate">Close</button>
-</div>
+      <div class="msg" id="pwMsg" aria-live="polite"></div>
+    </div>
+  </div>
 
-<div class="error" id="error">Incorrect password.</div>
-</div>
-</div>
+  <script>
+    // -------------------------
+    // SETTINGS (edit these)
+    // -------------------------
+    const ENGINE_URL = "/engine.html";
 
-<script>
-const PASSWORD="stormtest"; // change this
+    // Soft gate password (NOT secure on GitHub Pages; anyone can view source)
+    const BETA_PASSWORD = "STORMIEBETA"; // <-- change this
 
-const about=document.getElementById("about");
-const gate=document.getElementById("gate");
-const menuBtn=document.getElementById("menuBtn");
+    // Basic local rate limit (prevents endless attempts in the same browser)
+    const MAX_TRIES = 6;
+    const LOCK_MINUTES = 10;
 
-menuBtn.onclick=()=>{
-about.classList.toggle("active");
-menuBtn.classList.toggle("open");
-};
+    // -------------------------
+    // ELEMENTS
+    // -------------------------
+    const app = document.getElementById("app");
 
-document.getElementById("engineBtn").onclick=()=>gate.classList.add("active");
-document.getElementById("closeGate").onclick=()=>gate.classList.remove("active");
+    const menuBtn = document.getElementById("menuBtn");
+    const aboutOverlay = document.getElementById("aboutOverlay");
+    const aboutClose = document.getElementById("aboutClose");
 
-document.getElementById("enter").onclick=()=>{
-if(document.getElementById("pw").value===PASSWORD){
-window.location.href="/engine.html";
-}else{
-document.getElementById("error").classList.add("show");
-}
-};
+    const gateOverlay = document.getElementById("gateOverlay");
+    const gateClose = document.getElementById("gateClose");
+    const pwCancel = document.getElementById("pwCancel");
+    const pwEnter = document.getElementById("pwEnter");
+    const pwInput = document.getElementById("pwInput");
+    const pwMsg = document.getElementById("pwMsg");
 
-window.addEventListener("keydown",e=>{
-if(e.key==="Escape"){
-about.classList.remove("active");
-gate.classList.remove("active");
-}
-});
-</script>
+    const accessEngineLink = document.getElementById("accessEngineLink");
 
+    // -------------------------
+    // BLUR CONTROL
+    // -------------------------
+    function setBlur(on){
+      app.classList.toggle("is-blurred", !!on);
+    }
+
+    function openOverlay(overlay){
+      overlay.classList.add("active");
+      overlay.setAttribute("aria-hidden", "false");
+      setBlur(true);
+    }
+    function closeOverlay(overlay){
+      overlay.classList.remove("active");
+      overlay.setAttribute("aria-hidden", "true");
+      // Only remove blur if both modals are closed
+      const anyOpen = aboutOverlay.classList.contains("active") || gateOverlay.classList.contains("active");
+      setBlur(anyOpen);
+    }
+
+    // -------------------------
+    // ABOUT
+    // -------------------------
+    function openAbout(){
+      openOverlay(aboutOverlay);
+      menuBtn.classList.add("open");
+      menuBtn.setAttribute("aria-expanded", "true");
+    }
+    function closeAbout(){
+      closeOverlay(aboutOverlay);
+      menuBtn.classList.remove("open");
+      menuBtn.setAttribute("aria-expanded", "false");
+    }
+
+    menuBtn.addEventListener("click", () => {
+      const isOpen = aboutOverlay.classList.contains("active");
+      if(isOpen) closeAbout();
+      else openAbout();
+    });
+    aboutClose.addEventListener("click", closeAbout);
+    aboutOverlay.addEventListener("click", (e) => { if(e.target === aboutOverlay) closeAbout(); });
+
+    // -------------------------
+    // ENGINE GATE
+    // -------------------------
+    function openGate(){
+      pwMsg.textContent = "";
+      pwMsg.className = "msg";
+      pwInput.value = "";
+      openOverlay(gateOverlay);
+      setTimeout(()=> pwInput.focus(), 50);
+      refreshLockMessage();
+    }
+    function closeGate(){
+      closeOverlay(gateOverlay);
+    }
+
+    accessEngineLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      openGate();
+    });
+
+    gateClose.addEventListener("click", closeGate);
+    pwCancel.addEventListener("click", closeGate);
+    gateOverlay.addEventListener("click", (e) => { if(e.target === gateOverlay) closeGate(); });
+
+    pwInput.addEventListener("keydown", (e) => {
+      if(e.key === "Enter") attemptAccess();
+    });
+    pwEnter.addEventListener("click", attemptAccess);
+
+    // -------------------------
+    // LOCAL RATE LIMIT
+    // -------------------------
+    const triesKey = "stormie_gate_tries";
+    const lockKey  = "stormie_gate_lock_until";
+
+    function nowMs(){ return Date.now(); }
+
+    function getLockUntil(){
+      const v = parseInt(localStorage.getItem(lockKey) || "0", 10);
+      return Number.isFinite(v) ? v : 0;
+    }
+    function setLock(minutes){
+      const until = nowMs() + minutes * 60 * 1000;
+      localStorage.setItem(lockKey, String(until));
+      localStorage.setItem(triesKey, "0");
+      return until;
+    }
+    function getTries(){
+      const v = parseInt(localStorage.getItem(triesKey) || "0", 10);
+      return Number.isFinite(v) ? v : 0;
+    }
+    function setTries(n){
+      localStorage.setItem(triesKey, String(n));
+    }
+    function isLocked(){
+      return getLockUntil() > nowMs();
+    }
+    function refreshLockMessage(){
+      if(!gateOverlay.classList.contains("active")) return;
+
+      if(isLocked()){
+        const minsLeft = Math.max(1, Math.ceil((getLockUntil() - nowMs()) / 60000));
+        pwMsg.textContent = "Too many tries. Please wait " + minsLeft + " min and try again.";
+        pwMsg.className = "msg error";
+        pwEnter.disabled = true;
+        pwInput.disabled = true;
+      }else{
+        pwEnter.disabled = false;
+        pwInput.disabled = false;
+      }
+    }
+
+    setInterval(refreshLockMessage, 1000);
+
+    function attemptAccess(){
+      refreshLockMessage();
+      if(isLocked()) return;
+
+      const typed = (pwInput.value || "").trim();
+
+      // Correct
+      if(typed === BETA_PASSWORD){
+        pwMsg.textContent = "Access granted.";
+        pwMsg.className = "msg ok";
+        setTries(0);
+
+        // Small delay so message feels intentional
+        setTimeout(() => {
+          window.location.href = ENGINE_URL;
+        }, 220);
+        return;
+      }
+
+      // Wrong
+      let tries = getTries() + 1;
+      setTries(tries);
+
+      const remaining = Math.max(0, MAX_TRIES - tries);
+      pwMsg.textContent = remaining > 0
+        ? ("Wrong password. " + remaining + " tries left.")
+        : ("Too many tries. Locked for " + LOCK_MINUTES + " min.");
+      pwMsg.className = "msg error";
+
+      if(tries >= MAX_TRIES){
+        setLock(LOCK_MINUTES);
+        refreshLockMessage();
+      }
+    }
+
+    // -------------------------
+    // ESC closes topmost overlay
+    // -------------------------
+    window.addEventListener("keydown", (e) => {
+      if(e.key !== "Escape") return;
+
+      if(gateOverlay.classList.contains("active")) closeGate();
+      else if(aboutOverlay.classList.contains("active")) closeAbout();
+    });
+  </script>
 </body>
 </html>
