@@ -19,7 +19,7 @@ body{
   overflow:hidden;
 }
 
-/* --- LOGO ANIMATION --- */
+/* --- LOGO --- */
 .logo{
   font-size:64px;
   letter-spacing:10px;
@@ -28,8 +28,6 @@ body{
   transform:translateY(12px);
   animation:reveal 1.4s ease forwards;
   user-select:none;
-
-  /* premium micro cue */
   transition: opacity .25s ease;
 }
 .logo:hover{ opacity: 0.92; }
@@ -45,42 +43,50 @@ body{
   animation-delay:1.2s;
 }
 
-/* Premium hint line (subtle) — now clickable */
-.engine-hint{
-  display:inline-block;
-  margin-top: 26px;
-  font-size: 10px;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  opacity: 0;
+/* --- CTA BUTTONS --- */
+.cta-wrapper{
+  margin-top: 32px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  align-items:center;
+  opacity:0;
   transform: translateY(6px);
   animation: hintIn .9s ease forwards;
   animation-delay: 2.2s;
-
-  text-decoration: none;
-  color: rgba(0,0,0,0.60);
-  transition: opacity .25s ease, transform .25s ease, color .25s ease;
-  user-select: none;
-}
-.engine-hint:hover{
-  opacity: 1;
-  color: rgba(0,0,0,0.90);
 }
 
-@keyframes hintIn{
-  to{ opacity: 0.28; transform: translateY(0); }
+.cta-primary{
+  padding:14px 28px;
+  border-radius:16px;
+  background:#000;
+  color:#fff;
+  text-decoration:none;
+  font-size:12px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  transition: all .25s ease;
 }
 
-/* When logo is hovered, hint becomes slightly clearer */
-.logo:hover + .sub + .engine-hint,
-.logo:focus-within + .sub + .engine-hint{
-  opacity: 0.48;
+.cta-primary:hover{
+  transform:translateY(-1px);
+  opacity:0.92;
 }
 
-@keyframes reveal{ to{ opacity:1; transform:translateY(0); } }
-@keyframes fadeIn{ to{ opacity:0.55; } }
+.cta-secondary{
+  font-size:10px;
+  letter-spacing:0.32em;
+  text-transform:uppercase;
+  text-decoration:none;
+  color:rgba(0,0,0,0.55);
+  transition: opacity .25s ease;
+}
 
-/* --- MENU BUTTON (hamburger -> X) --- */
+.cta-secondary:hover{
+  opacity:1;
+}
+
+/* --- MENU BUTTON --- */
 .menu-btn{
   position:fixed;
   top:18px;
@@ -206,46 +212,55 @@ body{
   text-transform:uppercase;
   opacity:0.45;
 }
+
+@keyframes reveal{ to{ opacity:1; transform:translateY(0); } }
+@keyframes fadeIn{ to{ opacity:0.55; } }
+@keyframes hintIn{ to{ opacity:1; transform: translateY(0); } }
+
 </style>
 </head>
 
 <body>
 
 <button class="menu-btn" id="menuBtn" aria-label="About" aria-expanded="false">
-  <div class="icon" aria-hidden="true">
+  <div class="icon">
     <span></span><span></span><span></span>
   </div>
 </button>
 
 <div>
-  <div class="logo" aria-label="STORMIĒ">STORMIĒ</div>
+  <div class="logo">STORMIĒ</div>
 
   <div class="sub">
     Hybrid Performance<br>
-    Launching Soon
+    Intelligent Training System
   </div>
 
-  <a class="engine-hint" href="/engine.html" aria-label="Access Engine">
-    Access Engine
-  </a>
+  <div class="cta-wrapper">
+    <a class="cta-primary" href="/daily.html">
+      Start Training
+    </a>
+
+    <a class="cta-secondary" href="/engine.html">
+      Advanced Mode
+    </a>
+  </div>
 </div>
 
 <!-- Glass overlay -->
-<div class="about" id="about" aria-hidden="true">
-  <div class="panel" role="dialog" aria-label="About Stormie">
+<div class="about" id="about">
+  <div class="panel">
     <h2>ABOUT</h2>
     <div class="headline">Hybrid Performance Lab</div>
 
     <p>
-      Stormiē is a tech-driven hybrid performance lab focused on strength,
-      durability and structured progression.
-      Developed by Storm Kolmodin, Licensed Personal Trainer since 2018.
-      
-      License verification updated 2023.
+      Stormiē is a structured training system for athletes who combine
+      combat sports, climbing and strength training.
+      Built to help you train hard without burning out.
     </p>
 
     <a href="https://ptlicens.trueoriginal.com/licensierad-personlig-tranare-denise-kolmodin-138305lEsdYeph88/?ref=linkedin-profile&zone=true_08&lang=en"
-       target="_blank" rel="noopener noreferrer">
+       target="_blank">
       Verify PT License
     </a>
 
@@ -257,32 +272,23 @@ body{
 const menuBtn = document.getElementById("menuBtn");
 const about = document.getElementById("about");
 
-function openAbout(){
-  about.classList.add("active");
-  about.setAttribute("aria-hidden", "false");
-  menuBtn.classList.add("open");
-  menuBtn.setAttribute("aria-expanded", "true");
-}
-function closeAbout(){
-  about.classList.remove("active");
-  about.setAttribute("aria-hidden", "true");
-  menuBtn.classList.remove("open");
-  menuBtn.setAttribute("aria-expanded", "false");
-}
-
 menuBtn.addEventListener("click", () => {
-  if (about.classList.contains("active")) closeAbout();
-  else openAbout();
+  about.classList.toggle("active");
+  menuBtn.classList.toggle("open");
 });
 
-// Click outside panel closes
 about.addEventListener("click", (e) => {
-  if (e.target === about) closeAbout();
+  if (e.target === about) {
+    about.classList.remove("active");
+    menuBtn.classList.remove("open");
+  }
 });
 
-// ESC closes
 window.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && about.classList.contains("active")) closeAbout();
+  if (e.key === "Escape") {
+    about.classList.remove("active");
+    menuBtn.classList.remove("open");
+  }
 });
 </script>
 
