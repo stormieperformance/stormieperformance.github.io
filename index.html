@@ -94,6 +94,31 @@
       border-bottom-color:rgba(0,0,0,0.32);
     }
 
+    /* FeatureForge link should look identical to Access Engine, just staggered */
+    .tool-hint{
+      display:inline-block;
+      margin-top:14px;
+      font-size:10px;
+      letter-spacing:0.32em;
+      text-transform:uppercase;
+      opacity:0;
+      transform:translateY(6px);
+      animation: hintIn .9s ease forwards;
+      animation-delay:2.45s;
+
+      text-decoration:none;
+      color:rgba(0,0,0,0.55);
+      transition: opacity .25s ease, transform .25s ease, color .25s ease;
+      user-select:none;
+      padding-bottom:4px;
+      border-bottom:1px solid rgba(0,0,0,0.18);
+    }
+    .tool-hint:hover{
+      opacity:1;
+      color:rgba(0,0,0,0.90);
+      border-bottom-color:rgba(0,0,0,0.32);
+    }
+
     @keyframes hintIn{ to{ opacity:0.30; transform:translateY(0); } }
     @keyframes reveal{ to{ opacity:1; transform:translateY(0); } }
     @keyframes fadeIn{ to{ opacity:1; } }
@@ -372,6 +397,15 @@
       <a class="engine-hint" href="#" id="accessEngineLink" aria-label="Access Engine">
         Access Engine
       </a>
+
+      <!-- FeatureForge opens in new tab -->
+      <a class="tool-hint"
+         href="https://feature-spark-15.lovable.app"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Open FeatureForge">
+        FeatureForge
+      </a>
     </div>
   </div>
 
@@ -383,20 +417,20 @@
         <button class="close-btn" type="button" id="aboutClose" aria-label="Close">×</button>
       </div>
 
-      <h2>Hybrid Performance <br/>Lab</h2>
+      <h2>Hybrid Performance Lab</h2>
       <div class="subhead">What Stormiē is</div>
 
       <div class="copy">
         <p>
-          Stormiē is a strength decision system for people who train more than one thing
-          (gym + sport). It helps you avoid doing too much, too little, or the wrong work.
+          Stormiē is a hybrid performance lab — systems, tools, and prototypes.
+          It started as a strength decision engine for people who train more than one thing (gym + sport),
+          and now also includes small digital tools built through rapid experimentation.
         </p>
 
-        <h3>It helps you decide</h3>
+        <h3>Current tools</h3>
         <ul>
-          <li><span class="dot"></span><span>How many gym sessions to do this week</span></li>
-          <li><span class="dot"></span><span>How hard to train</span></li>
-          <li><span class="dot"></span><span>What to focus on right now</span></li>
+          <li><span class="dot"></span><span><strong>Engine</strong> — strength decision system (closed test phase)</span></li>
+          <li><span class="dot"></span><span><strong>FeatureForge</strong> — game feature breakdown tool (user stories, acceptance criteria, MVP scope)</span></li>
         </ul>
 
         <p>
@@ -634,3 +668,7 @@
   </script>
 </body>
 </html>
+  
+
+  
+  
