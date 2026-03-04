@@ -57,6 +57,7 @@
     }
     .logo:hover{ opacity:0.92; }
 
+    /* Fade-in text under logo (KEEP THIS) */
     .sub{
       margin-top:14px;
       font-size:13px;
@@ -70,50 +71,36 @@
       user-select:none;
     }
 
+    /* FeatureForge + Access Engine links (stacked) */
+    .tool-hint,
     .engine-hint{
-      display:inline-block;
-      margin-top:26px;
+      display:block; /* <— forces new line */
+      margin-top:18px;
       font-size:10px;
       letter-spacing:0.32em;
       text-transform:uppercase;
       opacity:0;
       transform:translateY(6px);
-      animation: hintIn .9s ease forwards;
-      animation-delay:2.2s;
-
       text-decoration:none;
       color:rgba(0,0,0,0.55);
       transition: opacity .25s ease, transform .25s ease, color .25s ease;
       user-select:none;
       padding-bottom:4px;
       border-bottom:1px solid rgba(0,0,0,0.18);
+      width:fit-content;
+      margin-left:auto;
+      margin-right:auto;
     }
-    .engine-hint:hover{
-      opacity:1;
-      color:rgba(0,0,0,0.90);
-      border-bottom-color:rgba(0,0,0,0.32);
-    }
-
-    /* FeatureForge link should look identical to Access Engine, just staggered */
     .tool-hint{
-      display:inline-block;
-      margin-top:14px;
-      font-size:10px;
-      letter-spacing:0.32em;
-      text-transform:uppercase;
-      opacity:0;
-      transform:translateY(6px);
       animation: hintIn .9s ease forwards;
-      animation-delay:2.45s;
-
-      text-decoration:none;
-      color:rgba(0,0,0,0.55);
-      transition: opacity .25s ease, transform .25s ease, color .25s ease;
-      user-select:none;
-      padding-bottom:4px;
-      border-bottom:1px solid rgba(0,0,0,0.18);
+      animation-delay:2.0s; /* FeatureForge first */
     }
-    .tool-hint:hover{
+    .engine-hint{
+      animation: hintIn .9s ease forwards;
+      animation-delay:2.25s;
+    }
+    .tool-hint:hover,
+    .engine-hint:hover{
       opacity:1;
       color:rgba(0,0,0,0.90);
       border-bottom-color:rgba(0,0,0,0.32);
@@ -260,19 +247,22 @@
       color:rgba(0,0,0,0.55);
       margin:8px 0 10px;
     }
+
     .copy ul{
       list-style:none;
       padding:0;
       margin:10px 0 14px;
       display:grid;
-      gap:8px;
+      gap:10px;
     }
     .copy li{
       display:flex;
       gap:10px;
       align-items:flex-start;
-      justify-content:center;
+      justify-content:flex-start;
       text-align:left;
+      max-width:62ch;
+      margin:0 auto;
     }
     .dot{
       width:6px; height:6px;
@@ -280,6 +270,18 @@
       background:rgba(0,0,0,0.55);
       margin-top:9px;
       flex:0 0 auto;
+    }
+
+    .tool-link{
+      color:#000;
+      text-decoration:none;
+      border-bottom:1px solid rgba(0,0,0,0.22);
+      padding-bottom:2px;
+      opacity:0.85;
+    }
+    .tool-link:hover{
+      opacity:1;
+      border-bottom-color:rgba(0,0,0,0.35);
     }
 
     .license{
@@ -370,6 +372,7 @@
       .logo{ font-size:56px; letter-spacing:8px; }
       .panel{ padding:28px 18px 22px; border-radius:24px; }
       .panel h2{ font-size:30px; }
+      .tool-hint, .engine-hint{ margin-top:14px; }
     }
   </style>
 </head>
@@ -393,18 +396,18 @@
         Systems · Tools · Prototypes
       </div>
 
-      <!-- Access Engine opens the gate modal -->
-      <a class="engine-hint" href="#" id="accessEngineLink" aria-label="Access Engine">
-        Access Engine
-      </a>
-
-      <!-- FeatureForge opens in new tab -->
+      <!-- FeatureForge FIRST -->
       <a class="tool-hint"
          href="https://feature-spark-15.lovable.app"
          target="_blank"
          rel="noopener noreferrer"
          aria-label="Open FeatureForge">
         FeatureForge
+      </a>
+
+      <!-- Access Engine opens the gate modal -->
+      <a class="engine-hint" href="#" id="accessEngineLink" aria-label="Access Engine">
+        Access Engine
       </a>
     </div>
   </div>
@@ -417,20 +420,39 @@
         <button class="close-btn" type="button" id="aboutClose" aria-label="Close">×</button>
       </div>
 
-      <h2>Hybrid Performance Lab</h2>
+      <h2>Hybrid Performance <br/>Lab</h2>
       <div class="subhead">What Stormiē is</div>
 
       <div class="copy">
         <p>
-          Stormiē is a hybrid performance lab — systems, tools, and prototypes.
+          Stormiē is a hybrid performance lab for building small tools and systems.
+        </p>
+
+        <p>
           It started as a strength decision engine for people who train more than one thing (gym + sport),
-          and now also includes small digital tools built through rapid experimentation.
+          and now includes experimental digital tools.
         </p>
 
         <h3>Current tools</h3>
         <ul>
-          <li><span class="dot"></span><span><strong>Engine</strong> — strength decision system (closed test phase)</span></li>
-          <li><span class="dot"></span><span><strong>FeatureForge</strong> — game feature breakdown tool (user stories, acceptance criteria, MVP scope)</span></li>
+          <li>
+            <span class="dot"></span>
+            <span>
+              <strong>
+                <a class="tool-link" href="https://feature-spark-15.lovable.app" target="_blank" rel="noopener noreferrer">
+                  FeatureForge
+                </a>
+              </strong>
+              — game feature breakdown tool (user stories, acceptance criteria, MVP scope)
+            </span>
+          </li>
+
+          <li>
+            <span class="dot"></span>
+            <span>
+              <strong>Engine</strong> — strength decision system (closed test phase)
+            </span>
+          </li>
         </ul>
 
         <p>
