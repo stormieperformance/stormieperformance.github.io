@@ -84,52 +84,121 @@
       padding:0 18px;
     }
 
-    /* Project links (stacked) */
-    .tool-hint,
-    .similarity-hint,
-    .liveops-hint{
-      display:block;
-      margin-top:18px;
+    .tools{
+      margin-top:22px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:14px;
+      width:min(620px, 92vw);
+      opacity:0;
+      animation:fadeIn 1s ease forwards;
+      animation-delay:1.9s;
+    }
+
+    .tool-card{
+      width:min(520px, 92vw);
+      text-align:center;
+    }
+
+    .tool-toggle{
+      width:100%;
+      appearance:none;
+      border:none;
+      background:transparent;
+      cursor:pointer;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      padding:0;
+      color:rgba(0,0,0,0.55);
+      transition: color .25s ease;
+    }
+
+    .tool-toggle:hover{
+      color:rgba(0,0,0,0.90);
+    }
+
+    .tool-title{
       font-size:10px;
       letter-spacing:0.32em;
       text-transform:uppercase;
-      opacity:0;
-      transform:translateY(6px);
-      text-decoration:none;
-      color:rgba(0,0,0,0.55);
-      transition: opacity .25s ease, transform .25s ease, color .25s ease;
-      user-select:none;
       padding-bottom:4px;
       border-bottom:1px solid rgba(0,0,0,0.18);
       width:fit-content;
-      margin-left:auto;
-      margin-right:auto;
+      margin:0 auto;
     }
 
-    .tool-hint{
-      animation: hintIn .9s ease forwards;
-      animation-delay:2.0s;
+    .tool-chevron{
+      font-size:11px;
+      color:rgba(0,0,0,0.38);
+      transition: transform .22s ease;
     }
 
-    .similarity-hint{
-      animation: hintIn .9s ease forwards;
-      animation-delay:2.2s;
+    .tool-card.open .tool-chevron{
+      transform:rotate(180deg);
     }
 
-    .liveops-hint{
-      animation: hintIn .9s ease forwards;
-      animation-delay:2.4s;
+    .tool-panel{
+      max-height:0;
+      overflow:hidden;
+      opacity:0;
+      transform:translateY(-4px);
+      transition:max-height .28s ease, opacity .22s ease, transform .22s ease, margin-top .22s ease;
+      margin-top:0;
     }
 
-    .tool-hint:hover,
-    .similarity-hint:hover,
-    .liveops-hint:hover{
+    .tool-card.open .tool-panel{
+      max-height:260px;
       opacity:1;
-      color:rgba(0,0,0,0.90);
-      border-bottom-color:rgba(0,0,0,0.32);
+      transform:translateY(0);
+      margin-top:10px;
     }
 
-    @keyframes hintIn{ to{ opacity:0.30; transform:translateY(0); } }
+    .tool-panel-inner{
+      background:rgba(255,255,255,0.72);
+      border:1px solid rgba(0,0,0,0.08);
+      border-radius:18px;
+      padding:16px 18px 14px;
+      box-shadow:0 18px 40px rgba(0,0,0,0.08);
+      text-align:left;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .tool-panel-inner p{
+      font-size:14px;
+      line-height:1.7;
+      color:rgba(0,0,0,0.75);
+      margin:0 0 10px;
+    }
+
+    .tool-meta{
+      font-size:12px;
+      line-height:1.6;
+      color:rgba(0,0,0,0.52);
+      margin-bottom:12px;
+    }
+
+    .tool-launch{
+      display:inline-block;
+      text-decoration:none;
+      color:#000;
+      border-bottom:1px solid rgba(0,0,0,0.22);
+      padding-bottom:2px;
+      font-size:12px;
+      letter-spacing:0.18em;
+      text-transform:uppercase;
+      opacity:0.85;
+    }
+
+    .tool-launch:hover{
+      opacity:1;
+      border-bottom-color:rgba(0,0,0,0.35);
+    }
+
     @keyframes reveal{ to{ opacity:1; transform:translateY(0); } }
     @keyframes fadeIn{ to{ opacity:1; } }
 
@@ -309,8 +378,9 @@
       .logo{ font-size:56px; letter-spacing:8px; }
       .panel{ padding:28px 18px 22px; border-radius:24px; }
       .panel h2{ font-size:30px; }
-      .tool-hint, .similarity-hint, .liveops-hint{ margin-top:14px; }
       .tagline{ font-size:11px; }
+      .tool-panel-inner p{ font-size:13px; }
+      .tool-meta{ font-size:11px; }
     }
   </style>
 </head>
@@ -336,29 +406,63 @@
         Experimental tools for game development workflows and live service operations
       </div>
 
-      <a class="tool-hint"
-         href="https://feature-spark-15.lovable.app"
-         target="_blank"
-         rel="noopener noreferrer"
-         aria-label="Open FeatureForge">
-        FeatureForge
-      </a>
+      <div class="tools">
+        <div class="tool-card">
+          <button class="tool-toggle" type="button">
+            <span class="tool-title">FeatureForge</span>
+            <span class="tool-chevron">⌄</span>
+          </button>
+          <div class="tool-panel">
+            <div class="tool-panel-inner">
+              <p>Structures feature ideas into user stories, acceptance criteria, and MVP scope.</p>
+              <div class="tool-meta">Used during early feature planning and production definition.</div>
+              <a class="tool-launch" href="https://feature-spark-15.lovable.app" target="_blank" rel="noopener noreferrer">Launch Tool</a>
+            </div>
+          </div>
+        </div>
 
-      <a class="similarity-hint"
-         href="https://asset-twin-finder.lovable.app"
-         target="_blank"
-         rel="noopener noreferrer"
-         aria-label="Open Game Asset Similarity Finder">
-        Asset Similarity Finder
-      </a>
+        <div class="tool-card">
+          <button class="tool-toggle" type="button">
+            <span class="tool-title">Feature Dependency Map</span>
+            <span class="tool-chevron">⌄</span>
+          </button>
+          <div class="tool-panel">
+            <div class="tool-panel-inner">
+              <p>Visualizes how a feature connects to systems, teams, dependencies, and production risks.</p>
+              <div class="tool-meta">Explores cross-team impact before a feature enters full production.</div>
+              <a class="tool-launch" href="https://lovable.dev/projects/81220184-f47e-4abc-8ddb-9f05f815fc03" target="_blank" rel="noopener noreferrer">Open Project</a>
+            </div>
+          </div>
+        </div>
 
-      <a class="liveops-hint"
-         href="https://incidentconsole.lovable.app"
-         target="_blank"
-         rel="noopener noreferrer"
-         aria-label="Open LiveOps Incident Console">
-        LiveOps Incident Console
-      </a>
+        <div class="tool-card">
+          <button class="tool-toggle" type="button">
+            <span class="tool-title">Asset Similarity Finder</span>
+            <span class="tool-chevron">⌄</span>
+          </button>
+          <div class="tool-panel">
+            <div class="tool-panel-inner">
+              <p>Helps discover reusable or replacement assets using semantic and visual similarity.</p>
+              <div class="tool-meta">Explores asset discovery and content workflows in large libraries.</div>
+              <a class="tool-launch" href="https://asset-twin-finder.lovable.app" target="_blank" rel="noopener noreferrer">Launch Tool</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="tool-card">
+          <button class="tool-toggle" type="button">
+            <span class="tool-title">LiveOps Incident Console</span>
+            <span class="tool-chevron">⌄</span>
+          </button>
+          <div class="tool-panel">
+            <div class="tool-panel-inner">
+              <p>Aggregates operational signals to detect incidents, route issues, and track ownership.</p>
+              <div class="tool-meta">Explores live service workflows and incident coordination across teams.</div>
+              <a class="tool-launch" href="https://incidentconsole.lovable.app" target="_blank" rel="noopener noreferrer">Launch Tool</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -399,6 +503,18 @@
             <span class="dot"></span>
             <span>
               <strong>
+                <a class="tool-link" href="https://lovable.dev/projects/81220184-f47e-4abc-8ddb-9f05f815fc03" target="_blank" rel="noopener noreferrer">
+                  Feature Dependency Map
+                </a>
+              </strong>
+              — prototype planning tool for visualizing how features connect to systems, teams, dependencies, and risks
+            </span>
+          </li>
+
+          <li>
+            <span class="dot"></span>
+            <span>
+              <strong>
                 <a class="tool-link" href="https://asset-twin-finder.lovable.app" target="_blank" rel="noopener noreferrer">
                   Game Asset Similarity Finder
                 </a>
@@ -421,7 +537,7 @@
         </ul>
 
         <p>
-          Developed by Storm Kolmodin. 
+          Built by Storm Kolmodin.
         </p>
       </div>
     </div>
@@ -429,10 +545,10 @@
 
   <script>
     const app = document.getElementById("app");
-
     const menuBtn = document.getElementById("menuBtn");
     const aboutOverlay = document.getElementById("aboutOverlay");
     const aboutClose = document.getElementById("aboutClose");
+    const toolCards = document.querySelectorAll(".tool-card");
 
     function setBlur(on){
       app.classList.toggle("is-blurred", !!on);
@@ -477,6 +593,17 @@
       if(e.key === "Escape" && aboutOverlay.classList.contains("active")) {
         closeAbout();
       }
+    });
+
+    toolCards.forEach((card) => {
+      const toggle = card.querySelector(".tool-toggle");
+      toggle.addEventListener("click", () => {
+        const isOpen = card.classList.contains("open");
+        toolCards.forEach(c => c.classList.remove("open"));
+        if(!isOpen){
+          card.classList.add("open");
+        }
+      });
     });
   </script>
 </body>
