@@ -71,10 +71,11 @@
       user-select:none;
     }
 
-    /* FeatureForge + Access Engine links (stacked) */
+    /* Project links (stacked) */
     .tool-hint,
+    .similarity-hint,
     .engine-hint{
-      display:block; /* <— forces new line */
+      display:block;
       margin-top:18px;
       font-size:10px;
       letter-spacing:0.32em;
@@ -91,15 +92,24 @@
       margin-left:auto;
       margin-right:auto;
     }
+
     .tool-hint{
       animation: hintIn .9s ease forwards;
-      animation-delay:2.0s; /* FeatureForge first */
+      animation-delay:2.0s;
     }
+
+    .similarity-hint{
+      animation: hintIn .9s ease forwards;
+      animation-delay:2.2s;
+    }
+
     .engine-hint{
       animation: hintIn .9s ease forwards;
-      animation-delay:2.25s;
+      animation-delay:2.4s;
     }
+
     .tool-hint:hover,
+    .similarity-hint:hover,
     .engine-hint:hover{
       opacity:1;
       color:rgba(0,0,0,0.90);
@@ -372,7 +382,7 @@
       .logo{ font-size:56px; letter-spacing:8px; }
       .panel{ padding:28px 18px 22px; border-radius:24px; }
       .panel h2{ font-size:30px; }
-      .tool-hint, .engine-hint{ margin-top:14px; }
+      .tool-hint, .similarity-hint, .engine-hint{ margin-top:14px; }
     }
   </style>
 </head>
@@ -403,6 +413,15 @@
          rel="noopener noreferrer"
          aria-label="Open FeatureForge">
         FeatureForge
+      </a>
+
+      <!-- Game Asset Similarity Finder -->
+      <a class="similarity-hint"
+         href="https://asset-twin-finder.lovable.app"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Open Game Asset Similarity Finder">
+        Asset Similarity Finder
       </a>
 
       <!-- Access Engine opens the gate modal -->
@@ -444,6 +463,18 @@
                 </a>
               </strong>
               — game feature breakdown tool (user stories, acceptance criteria, MVP scope)
+            </span>
+          </li>
+
+          <li>
+            <span class="dot"></span>
+            <span>
+              <strong>
+                <a class="tool-link" href="https://asset-twin-finder.lovable.app" target="_blank" rel="noopener noreferrer">
+                  Game Asset Similarity Finder
+                </a>
+              </strong>
+              — prototype tool for discovering replacement assets using semantic and visual similarity
             </span>
           </li>
 
@@ -542,7 +573,6 @@
     function closeOverlay(overlay){
       overlay.classList.remove("active");
       overlay.setAttribute("aria-hidden", "true");
-      // Only remove blur if both modals are closed
       const anyOpen = aboutOverlay.classList.contains("active") || gateOverlay.classList.contains("active");
       setBlur(anyOpen);
     }
@@ -649,20 +679,17 @@
 
       const typed = (pwInput.value || "").trim();
 
-      // Correct
       if(typed === BETA_PASSWORD){
         pwMsg.textContent = "Access granted.";
         pwMsg.className = "msg ok";
         setTries(0);
 
-        // Small delay so message feels intentional
         setTimeout(() => {
           window.location.href = ENGINE_URL;
         }, 220);
         return;
       }
 
-      // Wrong
       let tries = getTries() + 1;
       setTries(tries);
 
