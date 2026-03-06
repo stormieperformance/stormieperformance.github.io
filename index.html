@@ -68,11 +68,26 @@
       user-select:none;
     }
 
+    .tagline{
+      margin-top:16px;
+      font-size:12px;
+      letter-spacing:0.08em;
+      line-height:1.7;
+      color:rgba(0,0,0,0.52);
+      opacity:0;
+      animation:fadeIn 1s ease forwards;
+      animation-delay:1.55s;
+      user-select:none;
+      max-width:620px;
+      margin-left:auto;
+      margin-right:auto;
+      padding:0 18px;
+    }
+
     /* Project links (stacked) */
     .tool-hint,
     .similarity-hint,
-    .liveops-hint,
-    .engine-hint{
+    .liveops-hint{
       display:block;
       margin-top:18px;
       font-size:10px;
@@ -106,15 +121,9 @@
       animation-delay:2.4s;
     }
 
-    .engine-hint{
-      animation: hintIn .9s ease forwards;
-      animation-delay:2.6s;
-    }
-
     .tool-hint:hover,
     .similarity-hint:hover,
-    .liveops-hint:hover,
-    .engine-hint:hover{
+    .liveops-hint:hover{
       opacity:1;
       color:rgba(0,0,0,0.90);
       border-bottom-color:rgba(0,0,0,0.32);
@@ -296,94 +305,12 @@
       border-bottom-color:rgba(0,0,0,0.35);
     }
 
-    .license{
-      display:inline-block;
-      margin-top:12px;
-      font-size:12px;
-      letter-spacing:0.22em;
-      text-transform:uppercase;
-      text-decoration:none;
-      color:#000;
-      opacity:0.72;
-      border-bottom:1px solid rgba(0,0,0,0.22);
-      padding-bottom:3px;
-    }
-    .license:hover{ opacity:1; border-bottom-color:rgba(0,0,0,0.35); }
-
-    .gate-note{
-      font-size:18px;
-      line-height:1.65;
-      color:rgba(0,0,0,0.72);
-      margin:0 auto 18px;
-      max-width:62ch;
-    }
-
-    .gate-note strong{ color:#000; }
-
-    .form-row{
-      margin-top:10px;
-      display:flex;
-      gap:12px;
-      justify-content:center;
-      align-items:center;
-      flex-wrap:wrap;
-    }
-
-    input[type="password"]{
-      width:min(360px, 86vw);
-      padding:14px 14px;
-      border-radius:16px;
-      border:1px solid rgba(0,0,0,0.14);
-      background:rgba(255,255,255,0.88);
-      font-size:16px;
-      outline:none;
-      transition:border-color .15s ease, background .15s ease;
-    }
-    input[type="password"]:focus{
-      border-color:rgba(0,0,0,0.28);
-      background:#fff;
-    }
-
-    .btn{
-      appearance:none;
-      -webkit-appearance:none;
-      border:none;
-      cursor:pointer;
-      padding:14px 16px;
-      border-radius:16px;
-      font-size:12px;
-      letter-spacing:0.22em;
-      text-transform:uppercase;
-      transition: transform .15s ease, opacity .15s ease, background .15s ease;
-      min-width:120px;
-    }
-    .btn:active{ transform: translateY(1px); }
-
-    .btn-primary{ background:#111; color:#fff; }
-    .btn-primary:hover{ opacity:0.92; }
-
-    .btn-ghost{
-      background:rgba(255,255,255,0.75);
-      border:1px solid rgba(0,0,0,0.12);
-      color:#111;
-    }
-    .btn-ghost:hover{ background:#fff; }
-
-    .msg{
-      margin-top:12px;
-      font-size:13px;
-      line-height:1.6;
-      color:rgba(0,0,0,0.60);
-      min-height:22px;
-    }
-    .msg.error{ color:rgba(160,0,0,0.80); }
-    .msg.ok{ color:rgba(0,120,0,0.80); }
-
     @media (max-width:520px){
       .logo{ font-size:56px; letter-spacing:8px; }
       .panel{ padding:28px 18px 22px; border-radius:24px; }
       .panel h2{ font-size:30px; }
-      .tool-hint, .similarity-hint, .liveops-hint, .engine-hint{ margin-top:14px; }
+      .tool-hint, .similarity-hint, .liveops-hint{ margin-top:14px; }
+      .tagline{ font-size:11px; }
     }
   </style>
 </head>
@@ -401,8 +328,12 @@
       <div class="logo" aria-label="STORMIĒ">STORMIĒ</div>
 
       <div class="sub">
-        Hybrid Performance Lab <br/>
-        Systems · Tools · Prototypes
+        Internal Tools Lab <br/>
+        Game Development · LiveOps · Prototypes
+      </div>
+
+      <div class="tagline">
+        Experimental tools for game development workflows and live service operations
       </div>
 
       <a class="tool-hint"
@@ -428,10 +359,6 @@
          aria-label="Open LiveOps Incident Console">
         LiveOps Incident Console
       </a>
-
-      <a class="engine-hint" href="#" id="accessEngineLink" aria-label="Access Engine">
-        Access Engine
-      </a>
     </div>
   </div>
 
@@ -442,17 +369,16 @@
         <button class="close-btn" type="button" id="aboutClose" aria-label="Close">×</button>
       </div>
 
-      <h2>Hybrid Performance <br/>Lab</h2>
+      <h2>Internal Tools <br/>Lab</h2>
       <div class="subhead">What Stormiē is</div>
 
       <div class="copy">
         <p>
-          Stormiē is a hybrid performance lab for building small tools and systems.
+          Stormiē is an experimental internal tools lab focused on game development workflows and live service operations.
         </p>
 
         <p>
-          It started as a strength decision engine for people who train more than one thing (gym + sport),
-          and now includes experimental digital tools.
+          The platform brings together lightweight prototype applications designed to explore production workflows, content systems, and LiveOps incident handling.
         </p>
 
         <h3>Current tools</h3>
@@ -465,7 +391,7 @@
                   FeatureForge
                 </a>
               </strong>
-              — game feature breakdown tool (user stories, acceptance criteria, MVP scope)
+              — game feature breakdown tool for structuring ideas into user stories, acceptance criteria, and MVP scope
             </span>
           </li>
 
@@ -489,78 +415,24 @@
                   LiveOps Incident Console
                 </a>
               </strong>
-              — prototype operations tool for detecting incidents, routing issues to the correct teams, and tracking ownership and resolution across live service workflows
-            </span>
-          </li>
-
-          <li>
-            <span class="dot"></span>
-            <span>
-              <strong>Engine</strong> — strength decision system (closed test phase)
+              — prototype operations tool for detecting incidents, routing issues to the correct teams, and tracking ownership across live service workflows
             </span>
           </li>
         </ul>
 
         <p>
-          Developed by Storm Kolmodin. Licensed Personal Trainer since 2018.
+          Developed by Storm Kolmodin. The Stormiē landing page is built and hosted via GitHub Pages, with connected tool prototypes deployed as external web applications.
         </p>
-
-        <a class="license"
-          href="https://ptlicens.trueoriginal.com/licensierad-personlig-tranare-denise-kolmodin-138305lEsdYeph88/?ref=linkedin-profile&zone=true_08&lang=en"
-          target="_blank" rel="noopener noreferrer">
-          Verify PT License
-        </a>
       </div>
-    </div>
-  </div>
-
-  <div class="overlay" id="gateOverlay" aria-hidden="true">
-    <div class="panel" role="dialog" aria-modal="true" aria-label="Engine test phase">
-      <div class="panel-top">
-        <div class="kicker">ENGINE</div>
-        <button class="close-btn" type="button" id="gateClose" aria-label="Close">×</button>
-      </div>
-
-      <h2>Test Phase</h2>
-      <div class="subhead">Closed test phase</div>
-
-      <div class="gate-note">
-        The Engine is currently under construction.<br/>
-        Access is limited to invited testers only.
-        <br/><br/>
-        <strong>If you have been invited</strong>, enter your password below.
-      </div>
-
-      <div class="form-row">
-        <input id="pwInput" type="password" placeholder="Password" autocomplete="off" inputmode="text" />
-        <button class="btn btn-primary" id="pwEnter" type="button">Enter</button>
-        <button class="btn btn-ghost" id="pwCancel" type="button">Close</button>
-      </div>
-
-      <div class="msg" id="pwMsg" aria-live="polite"></div>
     </div>
   </div>
 
   <script>
-    const ENGINE_URL = "/engine.html";
-    const BETA_PASSWORD = "STORMIEBETA";
-    const MAX_TRIES = 6;
-    const LOCK_MINUTES = 10;
-
     const app = document.getElementById("app");
 
     const menuBtn = document.getElementById("menuBtn");
     const aboutOverlay = document.getElementById("aboutOverlay");
     const aboutClose = document.getElementById("aboutClose");
-
-    const gateOverlay = document.getElementById("gateOverlay");
-    const gateClose = document.getElementById("gateClose");
-    const pwCancel = document.getElementById("pwCancel");
-    const pwEnter = document.getElementById("pwEnter");
-    const pwInput = document.getElementById("pwInput");
-    const pwMsg = document.getElementById("pwMsg");
-
-    const accessEngineLink = document.getElementById("accessEngineLink");
 
     function setBlur(on){
       app.classList.toggle("is-blurred", !!on);
@@ -575,8 +447,7 @@
     function closeOverlay(overlay){
       overlay.classList.remove("active");
       overlay.setAttribute("aria-hidden", "true");
-      const anyOpen = aboutOverlay.classList.contains("active") || gateOverlay.classList.contains("active");
-      setBlur(anyOpen);
+      setBlur(false);
     }
 
     function openAbout(){
@@ -602,124 +473,11 @@
       if(e.target === aboutOverlay) closeAbout();
     });
 
-    function openGate(){
-      pwMsg.textContent = "";
-      pwMsg.className = "msg";
-      pwInput.value = "";
-      openOverlay(gateOverlay);
-      setTimeout(() => pwInput.focus(), 50);
-      refreshLockMessage();
-    }
-
-    function closeGate(){
-      closeOverlay(gateOverlay);
-    }
-
-    accessEngineLink.addEventListener("click", (e) => {
-      e.preventDefault();
-      openGate();
-    });
-
-    gateClose.addEventListener("click", closeGate);
-    pwCancel.addEventListener("click", closeGate);
-    gateOverlay.addEventListener("click", (e) => {
-      if(e.target === gateOverlay) closeGate();
-    });
-
-    pwInput.addEventListener("keydown", (e) => {
-      if(e.key === "Enter") attemptAccess();
-    });
-
-    pwEnter.addEventListener("click", attemptAccess);
-
-    const triesKey = "stormie_gate_tries";
-    const lockKey  = "stormie_gate_lock_until";
-
-    function nowMs(){ return Date.now(); }
-
-    function getLockUntil(){
-      const v = parseInt(localStorage.getItem(lockKey) || "0", 10);
-      return Number.isFinite(v) ? v : 0;
-    }
-
-    function setLock(minutes){
-      const until = nowMs() + minutes * 60 * 1000;
-      localStorage.setItem(lockKey, String(until));
-      localStorage.setItem(triesKey, "0");
-      return until;
-    }
-
-    function getTries(){
-      const v = parseInt(localStorage.getItem(triesKey) || "0", 10);
-      return Number.isFinite(v) ? v : 0;
-    }
-
-    function setTries(n){
-      localStorage.setItem(triesKey, String(n));
-    }
-
-    function isLocked(){
-      return getLockUntil() > nowMs();
-    }
-
-    function refreshLockMessage(){
-      if(!gateOverlay.classList.contains("active")) return;
-
-      if(isLocked()){
-        const minsLeft = Math.max(1, Math.ceil((getLockUntil() - nowMs()) / 60000));
-        pwMsg.textContent = "Too many tries. Please wait " + minsLeft + " min and try again.";
-        pwMsg.className = "msg error";
-        pwEnter.disabled = true;
-        pwInput.disabled = true;
-      }else{
-        pwEnter.disabled = false;
-        pwInput.disabled = false;
-      }
-    }
-
-    setInterval(refreshLockMessage, 1000);
-
-    function attemptAccess(){
-      refreshLockMessage();
-      if(isLocked()) return;
-
-      const typed = (pwInput.value || "").trim();
-
-      if(typed === BETA_PASSWORD){
-        pwMsg.textContent = "Access granted.";
-        pwMsg.className = "msg ok";
-        setTries(0);
-
-        setTimeout(() => {
-          window.location.href = ENGINE_URL;
-        }, 220);
-        return;
-      }
-
-      let tries = getTries() + 1;
-      setTries(tries);
-
-      const remaining = Math.max(0, MAX_TRIES - tries);
-      pwMsg.textContent = remaining > 0
-        ? ("Wrong password. " + remaining + " tries left.")
-        : ("Too many tries. Locked for " + LOCK_MINUTES + " min.");
-      pwMsg.className = "msg error";
-
-      if(tries >= MAX_TRIES){
-        setLock(LOCK_MINUTES);
-        refreshLockMessage();
-      }
-    }
-
     window.addEventListener("keydown", (e) => {
-      if(e.key !== "Escape") return;
-
-      if(gateOverlay.classList.contains("active")) closeGate();
-      else if(aboutOverlay.classList.contains("active")) closeAbout();
+      if(e.key === "Escape" && aboutOverlay.classList.contains("active")) {
+        closeAbout();
+      }
     });
   </script>
 </body>
 </html>
-
-  
-  
