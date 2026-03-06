@@ -13,7 +13,7 @@
       --line:rgba(0,0,0,0.10);
       --glass:rgba(255,255,255,0.78);
       --glass2:rgba(255,255,255,0.92);
-      --shadow: 0 30px 90px rgba(0,0,0,0.18);
+      --shadow:0 30px 90px rgba(0,0,0,0.18);
       --radius:22px;
     }
 
@@ -37,10 +37,11 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      transition: filter .28s ease;
+      transition:filter .28s ease;
     }
+
     .app.is-blurred{
-      filter: blur(18px);
+      filter:blur(18px);
     }
 
     .logo{
@@ -51,8 +52,9 @@
       transform:translateY(12px);
       animation:reveal 1.4s ease forwards;
       user-select:none;
-      transition: opacity .25s ease;
+      transition:opacity .25s ease;
     }
+
     .logo:hover{ opacity:0.92; }
 
     .sub{
@@ -99,6 +101,8 @@
     .tool-card{
       width:min(520px, 92vw);
       text-align:center;
+      margin-left:auto;
+      margin-right:auto;
     }
 
     .tool-toggle{
@@ -114,7 +118,7 @@
       gap:6px;
       padding:0;
       color:rgba(0,0,0,0.55);
-      transition: color .25s ease;
+      transition:color .25s ease;
     }
 
     .tool-toggle:hover{
@@ -134,7 +138,7 @@
     .tool-chevron{
       font-size:11px;
       color:rgba(0,0,0,0.38);
-      transition: transform .22s ease;
+      transition:transform .22s ease;
     }
 
     .tool-card.open .tool-chevron{
@@ -163,9 +167,9 @@
       border-radius:18px;
       padding:16px 18px 14px;
       box-shadow:0 18px 40px rgba(0,0,0,0.08);
-      text-align:left;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      text-align:center;
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
     }
 
     .tool-panel-inner p{
@@ -199,8 +203,16 @@
       border-bottom-color:rgba(0,0,0,0.35);
     }
 
-    @keyframes reveal{ to{ opacity:1; transform:translateY(0); } }
-    @keyframes fadeIn{ to{ opacity:1; } }
+    @keyframes reveal{
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    @keyframes fadeIn{
+      to{ opacity:1; }
+    }
 
     .menu-btn{
       position:fixed;
@@ -210,38 +222,62 @@
       height:44px;
       border:1px solid var(--line);
       background:rgba(255,255,255,0.75);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
       border-radius:12px;
       cursor:pointer;
       z-index:50;
       display:flex;
       align-items:center;
       justify-content:center;
-      transition: transform .2s ease, background .2s ease;
+      transition:transform .2s ease, background .2s ease;
     }
-    .menu-btn:hover{ transform: translateY(-1px); background:rgba(255,255,255,0.92); }
 
-    .icon{ width:18px; height:12px; position:relative; }
-    .icon span{
-      position:absolute; left:0; right:0;
-      height:2px; background:#000; border-radius:2px;
-      transition: transform .25s ease, top .25s ease, opacity .2s ease;
+    .menu-btn:hover{
+      transform:translateY(-1px);
+      background:rgba(255,255,255,0.92);
     }
+
+    .icon{
+      width:18px;
+      height:12px;
+      position:relative;
+    }
+
+    .icon span{
+      position:absolute;
+      left:0;
+      right:0;
+      height:2px;
+      background:#000;
+      border-radius:2px;
+      transition:transform .25s ease, top .25s ease, opacity .2s ease;
+    }
+
     .icon span:nth-child(1){ top:0; }
     .icon span:nth-child(2){ top:5px; }
     .icon span:nth-child(3){ top:10px; }
 
-    .menu-btn.open .icon span:nth-child(1){ top:5px; transform: rotate(45deg); }
-    .menu-btn.open .icon span:nth-child(2){ opacity:0; }
-    .menu-btn.open .icon span:nth-child(3){ top:5px; transform: rotate(-45deg); }
+    .menu-btn.open .icon span:nth-child(1){
+      top:5px;
+      transform:rotate(45deg);
+    }
+
+    .menu-btn.open .icon span:nth-child(2){
+      opacity:0;
+    }
+
+    .menu-btn.open .icon span:nth-child(3){
+      top:5px;
+      transform:rotate(-45deg);
+    }
 
     .overlay{
       position:fixed;
       inset:0;
       background:rgba(10,10,10,0.30);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
       opacity:0;
       pointer-events:none;
       transition:opacity .28s ease;
@@ -251,6 +287,7 @@
       align-items:center;
       padding:28px;
     }
+
     .overlay.active{
       opacity:1;
       pointer-events:auto;
@@ -260,16 +297,17 @@
       width:min(760px, 92vw);
       background:var(--glass2);
       border:1px solid rgba(255,255,255,0.50);
-      box-shadow: var(--shadow);
+      box-shadow:var(--shadow);
       border-radius:28px;
       padding:34px 28px 28px;
-      transform: translateY(10px);
+      transform:translateY(10px);
       opacity:0;
-      transition: transform .28s ease, opacity .28s ease;
+      transition:transform .28s ease, opacity .28s ease;
       position:relative;
     }
+
     .overlay.active .panel{
-      transform: translateY(0);
+      transform:translateY(0);
       opacity:1;
     }
 
@@ -289,7 +327,8 @@
     }
 
     .close-btn{
-      width:40px; height:40px;
+      width:40px;
+      height:40px;
       border-radius:14px;
       border:1px solid rgba(0,0,0,0.10);
       background:rgba(255,255,255,0.70);
@@ -299,12 +338,13 @@
       justify-content:center;
       font-size:18px;
       color:rgba(0,0,0,0.65);
-      transition: background .2s ease, color .2s ease, transform .2s ease;
+      transition:background .2s ease, color .2s ease, transform .2s ease;
     }
+
     .close-btn:hover{
       background:rgba(255,255,255,0.95);
       color:#000;
-      transform: translateY(-1px);
+      transform:translateY(-1px);
     }
 
     .panel h2{
@@ -329,7 +369,9 @@
       max-width:62ch;
       margin:0 auto;
     }
+
     .copy p{ margin:0 0 12px; }
+
     .copy h3{
       font-size:14px;
       letter-spacing:0.22em;
@@ -345,6 +387,7 @@
       display:grid;
       gap:10px;
     }
+
     .copy li{
       display:flex;
       gap:10px;
@@ -354,8 +397,10 @@
       max-width:62ch;
       margin:0 auto;
     }
+
     .dot{
-      width:6px; height:6px;
+      width:6px;
+      height:6px;
       border-radius:99px;
       background:rgba(0,0,0,0.55);
       margin-top:9px;
@@ -369,18 +414,56 @@
       padding-bottom:2px;
       opacity:0.85;
     }
+
     .tool-link:hover{
       opacity:1;
       border-bottom-color:rgba(0,0,0,0.35);
     }
 
     @media (max-width:520px){
-      .logo{ font-size:56px; letter-spacing:8px; }
-      .panel{ padding:28px 18px 22px; border-radius:24px; }
-      .panel h2{ font-size:30px; }
-      .tagline{ font-size:11px; }
-      .tool-panel-inner p{ font-size:13px; }
-      .tool-meta{ font-size:11px; }
+      body{
+        overflow:auto;
+      }
+
+      .app{
+        align-items:flex-start;
+        min-height:100vh;
+        padding:120px 0 80px;
+      }
+
+      .logo{
+        font-size:56px;
+        letter-spacing:8px;
+      }
+
+      .panel{
+        padding:28px 18px 22px;
+        border-radius:24px;
+      }
+
+      .panel h2{
+        font-size:30px;
+      }
+
+      .tagline{
+        font-size:11px;
+      }
+
+      .tool-panel-inner p{
+        font-size:13px;
+      }
+
+      .tool-meta{
+        font-size:11px;
+      }
+
+      .tools{
+        width:min(94vw, 620px);
+      }
+
+      .tool-card{
+        width:min(94vw, 520px);
+      }
     }
   </style>
 </head>
@@ -399,7 +482,7 @@
 
       <div class="sub">
         Internal Tools Lab <br/>
-        Game Development · Prototypes
+        Game Development · Production Workflows · LiveOps
       </div>
 
       <div class="tagline">
@@ -430,7 +513,7 @@
             <div class="tool-panel-inner">
               <p>Visualizes how a feature connects to systems, teams, dependencies, and production risks.</p>
               <div class="tool-meta">Explores cross-team impact before a feature enters full production.</div>
-              <a class="tool-launch" href="https://lovable.dev/projects/81220184-f47e-4abc-8ddb-9f05f815fc03" target="_blank" rel="noopener noreferrer">Open Project</a>
+              <a class="tool-launch" href="https://featuredependancymap.lovable.app" target="_blank" rel="noopener noreferrer">Launch Tool</a>
             </div>
           </div>
         </div>
@@ -503,7 +586,7 @@
             <span class="dot"></span>
             <span>
               <strong>
-                <a class="tool-link" href="https://lovable.dev/projects/81220184-f47e-4abc-8ddb-9f05f815fc03" target="_blank" rel="noopener noreferrer">
+                <a class="tool-link" href="https://featuredependancymap.lovable.app" target="_blank" rel="noopener noreferrer">
                   Feature Dependency Map
                 </a>
               </strong>
@@ -538,6 +621,10 @@
 
         <p>
           Built by Storm Kolmodin.
+        </p>
+
+        <p>
+          Tools are experimental prototypes exploring production workflows for modern game development.
         </p>
       </div>
     </div>
