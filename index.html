@@ -31,7 +31,6 @@
       overflow:hidden;
     }
 
-    /* Background wrapper that we blur (NOT the modals) */
     .app{
       width:100%;
       height:100%;
@@ -44,7 +43,6 @@
       filter: blur(18px);
     }
 
-    /* --- LOGO ANIMATION --- */
     .logo{
       font-size:64px;
       letter-spacing:10px;
@@ -57,7 +55,6 @@
     }
     .logo:hover{ opacity:0.92; }
 
-    /* Fade-in text under logo (KEEP THIS) */
     .sub{
       margin-top:14px;
       font-size:13px;
@@ -74,6 +71,7 @@
     /* Project links (stacked) */
     .tool-hint,
     .similarity-hint,
+    .liveops-hint,
     .engine-hint{
       display:block;
       margin-top:18px;
@@ -103,13 +101,19 @@
       animation-delay:2.2s;
     }
 
-    .engine-hint{
+    .liveops-hint{
       animation: hintIn .9s ease forwards;
       animation-delay:2.4s;
     }
 
+    .engine-hint{
+      animation: hintIn .9s ease forwards;
+      animation-delay:2.6s;
+    }
+
     .tool-hint:hover,
     .similarity-hint:hover,
+    .liveops-hint:hover,
     .engine-hint:hover{
       opacity:1;
       color:rgba(0,0,0,0.90);
@@ -120,7 +124,6 @@
     @keyframes reveal{ to{ opacity:1; transform:translateY(0); } }
     @keyframes fadeIn{ to{ opacity:1; } }
 
-    /* --- MENU BUTTON (hamburger -> X) --- */
     .menu-btn{
       position:fixed;
       top:18px;
@@ -155,7 +158,6 @@
     .menu-btn.open .icon span:nth-child(2){ opacity:0; }
     .menu-btn.open .icon span:nth-child(3){ top:5px; transform: rotate(-45deg); }
 
-    /* ---------- MODAL BASE ---------- */
     .overlay{
       position:fixed;
       inset:0;
@@ -308,7 +310,6 @@
     }
     .license:hover{ opacity:1; border-bottom-color:rgba(0,0,0,0.35); }
 
-    /* ---------- Engine gate panel (password) ---------- */
     .gate-note{
       font-size:18px;
       line-height:1.65;
@@ -382,21 +383,19 @@
       .logo{ font-size:56px; letter-spacing:8px; }
       .panel{ padding:28px 18px 22px; border-radius:24px; }
       .panel h2{ font-size:30px; }
-      .tool-hint, .similarity-hint, .engine-hint{ margin-top:14px; }
+      .tool-hint, .similarity-hint, .liveops-hint, .engine-hint{ margin-top:14px; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Menu -->
   <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">
     <div class="icon" aria-hidden="true">
       <span></span><span></span><span></span>
     </div>
   </button>
 
-  <!-- Background content (this is what gets blurred) -->
   <div class="app" id="app">
     <div>
       <div class="logo" aria-label="STORMIĒ">STORMIĒ</div>
@@ -406,7 +405,6 @@
         Systems · Tools · Prototypes
       </div>
 
-      <!-- FeatureForge FIRST -->
       <a class="tool-hint"
          href="https://feature-spark-15.lovable.app"
          target="_blank"
@@ -415,7 +413,6 @@
         FeatureForge
       </a>
 
-      <!-- Game Asset Similarity Finder -->
       <a class="similarity-hint"
          href="https://asset-twin-finder.lovable.app"
          target="_blank"
@@ -424,14 +421,20 @@
         Asset Similarity Finder
       </a>
 
-      <!-- Access Engine opens the gate modal -->
+      <a class="liveops-hint"
+         href="https://incidentconsole.lovable.app"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Open LiveOps Incident Console">
+        LiveOps Incident Console
+      </a>
+
       <a class="engine-hint" href="#" id="accessEngineLink" aria-label="Access Engine">
         Access Engine
       </a>
     </div>
   </div>
 
-  <!-- ABOUT MODAL -->
   <div class="overlay" id="aboutOverlay" aria-hidden="true">
     <div class="panel" role="dialog" aria-modal="true" aria-label="About">
       <div class="panel-top">
@@ -481,6 +484,18 @@
           <li>
             <span class="dot"></span>
             <span>
+              <strong>
+                <a class="tool-link" href="https://incidentconsole.lovable.app" target="_blank" rel="noopener noreferrer">
+                  LiveOps Incident Console
+                </a>
+              </strong>
+              — prototype operations tool for detecting incidents, routing issues to the correct teams, and tracking ownership and resolution across live service workflows
+            </span>
+          </li>
+
+          <li>
+            <span class="dot"></span>
+            <span>
               <strong>Engine</strong> — strength decision system (closed test phase)
             </span>
           </li>
@@ -499,7 +514,6 @@
     </div>
   </div>
 
-  <!-- ENGINE GATE MODAL -->
   <div class="overlay" id="gateOverlay" aria-hidden="true">
     <div class="panel" role="dialog" aria-modal="true" aria-label="Engine test phase">
       <div class="panel-top">
@@ -528,21 +542,11 @@
   </div>
 
   <script>
-    // -------------------------
-    // SETTINGS (edit these)
-    // -------------------------
     const ENGINE_URL = "/engine.html";
-
-    // Soft gate password (NOT secure on GitHub Pages; anyone can view source)
-    const BETA_PASSWORD = "STORMIEBETA"; // <-- change this
-
-    // Basic local rate limit (prevents endless attempts in the same browser)
+    const BETA_PASSWORD = "STORMIEBETA";
     const MAX_TRIES = 6;
     const LOCK_MINUTES = 10;
 
-    // -------------------------
-    // ELEMENTS
-    // -------------------------
     const app = document.getElementById("app");
 
     const menuBtn = document.getElementById("menuBtn");
@@ -558,9 +562,6 @@
 
     const accessEngineLink = document.getElementById("accessEngineLink");
 
-    // -------------------------
-    // BLUR CONTROL
-    // -------------------------
     function setBlur(on){
       app.classList.toggle("is-blurred", !!on);
     }
@@ -570,6 +571,7 @@
       overlay.setAttribute("aria-hidden", "false");
       setBlur(true);
     }
+
     function closeOverlay(overlay){
       overlay.classList.remove("active");
       overlay.setAttribute("aria-hidden", "true");
@@ -577,14 +579,12 @@
       setBlur(anyOpen);
     }
 
-    // -------------------------
-    // ABOUT
-    // -------------------------
     function openAbout(){
       openOverlay(aboutOverlay);
       menuBtn.classList.add("open");
       menuBtn.setAttribute("aria-expanded", "true");
     }
+
     function closeAbout(){
       closeOverlay(aboutOverlay);
       menuBtn.classList.remove("open");
@@ -596,20 +596,21 @@
       if(isOpen) closeAbout();
       else openAbout();
     });
-    aboutClose.addEventListener("click", closeAbout);
-    aboutOverlay.addEventListener("click", (e) => { if(e.target === aboutOverlay) closeAbout(); });
 
-    // -------------------------
-    // ENGINE GATE
-    // -------------------------
+    aboutClose.addEventListener("click", closeAbout);
+    aboutOverlay.addEventListener("click", (e) => {
+      if(e.target === aboutOverlay) closeAbout();
+    });
+
     function openGate(){
       pwMsg.textContent = "";
       pwMsg.className = "msg";
       pwInput.value = "";
       openOverlay(gateOverlay);
-      setTimeout(()=> pwInput.focus(), 50);
+      setTimeout(() => pwInput.focus(), 50);
       refreshLockMessage();
     }
+
     function closeGate(){
       closeOverlay(gateOverlay);
     }
@@ -621,16 +622,16 @@
 
     gateClose.addEventListener("click", closeGate);
     pwCancel.addEventListener("click", closeGate);
-    gateOverlay.addEventListener("click", (e) => { if(e.target === gateOverlay) closeGate(); });
+    gateOverlay.addEventListener("click", (e) => {
+      if(e.target === gateOverlay) closeGate();
+    });
 
     pwInput.addEventListener("keydown", (e) => {
       if(e.key === "Enter") attemptAccess();
     });
+
     pwEnter.addEventListener("click", attemptAccess);
 
-    // -------------------------
-    // LOCAL RATE LIMIT
-    // -------------------------
     const triesKey = "stormie_gate_tries";
     const lockKey  = "stormie_gate_lock_until";
 
@@ -640,22 +641,27 @@
       const v = parseInt(localStorage.getItem(lockKey) || "0", 10);
       return Number.isFinite(v) ? v : 0;
     }
+
     function setLock(minutes){
       const until = nowMs() + minutes * 60 * 1000;
       localStorage.setItem(lockKey, String(until));
       localStorage.setItem(triesKey, "0");
       return until;
     }
+
     function getTries(){
       const v = parseInt(localStorage.getItem(triesKey) || "0", 10);
       return Number.isFinite(v) ? v : 0;
     }
+
     function setTries(n){
       localStorage.setItem(triesKey, String(n));
     }
+
     function isLocked(){
       return getLockUntil() > nowMs();
     }
+
     function refreshLockMessage(){
       if(!gateOverlay.classList.contains("active")) return;
 
@@ -705,9 +711,6 @@
       }
     }
 
-    // -------------------------
-    // ESC closes topmost overlay
-    // -------------------------
     window.addEventListener("keydown", (e) => {
       if(e.key !== "Escape") return;
 
@@ -717,7 +720,6 @@
   </script>
 </body>
 </html>
-  
 
   
   
