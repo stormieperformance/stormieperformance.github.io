@@ -3,727 +3,564 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>STORMIĒ</title>
-
+  <title>Stormiē Performance</title>
+  <meta
+    name="description"
+    content="Stormiē Performance — portfolio, internal tools, product experiments, and digital projects by Storm Kolmodin."
+  />
   <style>
-    :root{
-      --text:#0f0f10;
-      --muted:rgba(0,0,0,0.56);
-      --muted2:rgba(0,0,0,0.40);
-      --line:rgba(0,0,0,0.10);
-      --glass:rgba(255,255,255,0.78);
-      --glass2:rgba(255,255,255,0.92);
-      --shadow:0 30px 90px rgba(0,0,0,0.18);
-      --radius:22px;
+    :root {
+      --bg: #0a0a0a;
+      --panel: #111111;
+      --soft: #171717;
+      --text: #f5f5f5;
+      --muted: #b3b3b3;
+      --line: rgba(255,255,255,0.08);
+      --accent: #ffffff;
+      --max: 1120px;
+      --radius: 20px;
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
     }
 
-    *{ margin:0; padding:0; box-sizing:border-box; }
-    html,body{ height:100%; }
-
-    body{
-      background:#fff;
-      color:var(--text);
-      font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      text-align:center;
-      overflow:hidden;
+    * {
+      box-sizing: border-box;
     }
 
-    .app{
-      width:100%;
-      height:100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      transition:filter .28s ease;
+    html {
+      scroll-behavior: smooth;
     }
 
-    .app.is-blurred{
-      filter:blur(18px);
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.06), transparent 30%),
+        linear-gradient(180deg, #0a0a0a 0%, #090909 100%);
+      color: var(--text);
+      line-height: 1.5;
     }
 
-    .logo{
-      font-size:64px;
-      letter-spacing:10px;
-      font-weight:650;
-      opacity:0;
-      transform:translateY(12px);
-      animation:reveal 1.4s ease forwards;
-      user-select:none;
-      transition:opacity .25s ease;
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
-    .logo:hover{ opacity:0.92; }
-
-    .sub{
-      margin-top:14px;
-      font-size:13px;
-      letter-spacing:4px;
-      text-transform:uppercase;
-      opacity:0;
-      line-height:1.6;
-      animation:fadeIn 1s ease forwards;
-      animation-delay:1.2s;
-      color:rgba(0,0,0,0.62);
-      user-select:none;
+    img {
+      max-width: 100%;
+      display: block;
     }
 
-    .tagline{
-      margin-top:16px;
-      font-size:12px;
-      letter-spacing:0.08em;
-      line-height:1.7;
-      color:rgba(0,0,0,0.52);
-      opacity:0;
-      animation:fadeIn 1s ease forwards;
-      animation-delay:1.55s;
-      user-select:none;
-      max-width:620px;
-      margin-left:auto;
-      margin-right:auto;
-      padding:0 18px;
+    .container {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
     }
 
-    .tools{
-      margin-top:22px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:14px;
-      width:min(620px, 92vw);
-      opacity:0;
-      animation:fadeIn 1s ease forwards;
-      animation-delay:1.9s;
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(12px);
+      background: rgba(10,10,10,0.75);
+      border-bottom: 1px solid var(--line);
     }
 
-    .tool-card{
-      width:min(520px, 92vw);
-      text-align:center;
-      margin-left:auto;
-      margin-right:auto;
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 72px;
+      gap: 16px;
     }
 
-    .tool-toggle{
-      width:100%;
-      appearance:none;
-      border:none;
-      background:transparent;
-      cursor:pointer;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap:6px;
-      padding:0;
-      color:rgba(0,0,0,0.55);
-      transition:color .25s ease;
+    .brand {
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      white-space: nowrap;
     }
 
-    .tool-toggle:hover{
-      color:rgba(0,0,0,0.90);
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
     }
 
-    .tool-title{
-      font-size:10px;
-      letter-spacing:0.32em;
-      text-transform:uppercase;
-      padding-bottom:4px;
-      border-bottom:1px solid rgba(0,0,0,0.18);
-      width:fit-content;
-      margin:0 auto;
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.95rem;
+      transition: 0.2s ease;
     }
 
-    .tool-chevron{
-      font-size:11px;
-      color:rgba(0,0,0,0.38);
-      transition:transform .22s ease;
+    .nav-links a:hover {
+      color: var(--text);
     }
 
-    .tool-card.open .tool-chevron{
-      transform:rotate(180deg);
+    .hero {
+      padding: 88px 0 64px;
     }
 
-    .tool-panel{
-      max-height:0;
-      overflow:hidden;
-      opacity:0;
-      transform:translateY(-4px);
-      transition:max-height .28s ease, opacity .22s ease, transform .22s ease, margin-top .22s ease;
-      margin-top:0;
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.9fr;
+      gap: 24px;
+      align-items: stretch;
     }
 
-    .tool-card.open .tool-panel{
-      max-height:260px;
-      opacity:1;
-      transform:translateY(0);
-      margin-top:10px;
+    .hero-card,
+    .panel {
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
     }
 
-    .tool-panel-inner{
-      background:rgba(255,255,255,0.72);
-      border:1px solid rgba(0,0,0,0.08);
-      border-radius:18px;
-      padding:16px 18px 14px;
-      box-shadow:0 18px 40px rgba(0,0,0,0.08);
-      text-align:center;
-      backdrop-filter:blur(10px);
-      -webkit-backdrop-filter:blur(10px);
+    .hero-card {
+      padding: 40px;
+      min-height: 460px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
-    .tool-panel-inner p{
-      font-size:14px;
-      line-height:1.7;
-      color:rgba(0,0,0,0.75);
-      margin:0 0 10px;
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
     }
 
-    .tool-meta{
-      font-size:12px;
-      line-height:1.6;
-      color:rgba(0,0,0,0.52);
-      margin-bottom:12px;
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ffffff;
+      opacity: 0.9;
     }
 
-    .tool-launch{
-      display:inline-block;
-      text-decoration:none;
-      color:#000;
-      border-bottom:1px solid rgba(0,0,0,0.22);
-      padding-bottom:2px;
-      font-size:12px;
-      letter-spacing:0.18em;
-      text-transform:uppercase;
-      opacity:0.85;
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 5.2rem);
+      line-height: 0.95;
+      margin: 0 0 20px;
+      letter-spacing: -0.04em;
     }
 
-    .tool-launch:hover{
-      opacity:1;
-      border-bottom-color:rgba(0,0,0,0.35);
+    .lead {
+      font-size: 1.1rem;
+      max-width: 760px;
+      color: var(--muted);
+      margin: 0 0 28px;
     }
 
-    @keyframes reveal{
-      to{
-        opacity:1;
-        transform:translateY(0);
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: #ffffff;
+      color: #0a0a0a;
+      border-color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      opacity: 0.95;
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      background: transparent;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.04);
+    }
+
+    .hero-side {
+      padding: 20px;
+      display: grid;
+      gap: 16px;
+      align-content: stretch;
+    }
+
+    .mini-card {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .mini-label {
+      color: var(--muted);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 10px;
+    }
+
+    .mini-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .mini-text {
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .section {
+      padding: 24px 0 72px;
+    }
+
+    .section-head {
+      margin-bottom: 24px;
+    }
+
+    .kicker {
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.8rem;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 3vw, 3rem);
+      line-height: 1.05;
+      margin: 0 0 10px;
+      letter-spacing: -0.03em;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      max-width: 740px;
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .project {
+      padding: 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      transition: 0.2s ease;
+    }
+
+    .project:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,0.16);
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 14px;
+    }
+
+    .project h3 {
+      margin: 0 0 10px;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .project p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 0.97rem;
+    }
+
+    .project-link {
+      font-weight: 600;
+      font-size: 0.96rem;
+    }
+
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .about .panel {
+      padding: 28px;
+    }
+
+    .about p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .list {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .list-item {
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--soft);
+      color: var(--text);
+    }
+
+    .footer {
+      padding: 40px 0 60px;
+      border-top: 1px solid var(--line);
+      margin-top: 16px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .grid,
+      .about {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-card {
+        min-height: auto;
       }
     }
 
-    @keyframes fadeIn{
-      to{ opacity:1; }
-    }
-
-    .menu-btn{
-      position:fixed;
-      top:18px;
-      left:18px;
-      width:44px;
-      height:44px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,0.75);
-      backdrop-filter:blur(12px);
-      -webkit-backdrop-filter:blur(12px);
-      border-radius:12px;
-      cursor:pointer;
-      z-index:50;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      transition:transform .2s ease, background .2s ease;
-    }
-
-    .menu-btn:hover{
-      transform:translateY(-1px);
-      background:rgba(255,255,255,0.92);
-    }
-
-    .icon{
-      width:18px;
-      height:12px;
-      position:relative;
-    }
-
-    .icon span{
-      position:absolute;
-      left:0;
-      right:0;
-      height:2px;
-      background:#000;
-      border-radius:2px;
-      transition:transform .25s ease, top .25s ease, opacity .2s ease;
-    }
-
-    .icon span:nth-child(1){ top:0; }
-    .icon span:nth-child(2){ top:5px; }
-    .icon span:nth-child(3){ top:10px; }
-
-    .menu-btn.open .icon span:nth-child(1){
-      top:5px;
-      transform:rotate(45deg);
-    }
-
-    .menu-btn.open .icon span:nth-child(2){
-      opacity:0;
-    }
-
-    .menu-btn.open .icon span:nth-child(3){
-      top:5px;
-      transform:rotate(-45deg);
-    }
-
-    .overlay{
-      position:fixed;
-      inset:0;
-      background:rgba(10,10,10,0.30);
-      backdrop-filter:blur(18px);
-      -webkit-backdrop-filter:blur(18px);
-      opacity:0;
-      pointer-events:none;
-      transition:opacity .28s ease;
-      z-index:60;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      padding:28px;
-    }
-
-    .overlay.active{
-      opacity:1;
-      pointer-events:auto;
-    }
-
-    .panel{
-      width:min(760px, 92vw);
-      background:var(--glass2);
-      border:1px solid rgba(255,255,255,0.50);
-      box-shadow:var(--shadow);
-      border-radius:28px;
-      padding:34px 28px 28px;
-      transform:translateY(10px);
-      opacity:0;
-      transition:transform .28s ease, opacity .28s ease;
-      position:relative;
-    }
-
-    .overlay.active .panel{
-      transform:translateY(0);
-      opacity:1;
-    }
-
-    .panel-top{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom:14px;
-    }
-
-    .kicker{
-      font-size:12px;
-      letter-spacing:0.28em;
-      text-transform:uppercase;
-      color:rgba(0,0,0,0.55);
-    }
-
-    .close-btn{
-      width:40px;
-      height:40px;
-      border-radius:14px;
-      border:1px solid rgba(0,0,0,0.10);
-      background:rgba(255,255,255,0.70);
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:18px;
-      color:rgba(0,0,0,0.65);
-      transition:background .2s ease, color .2s ease, transform .2s ease;
-    }
-
-    .close-btn:hover{
-      background:rgba(255,255,255,0.95);
-      color:#000;
-      transform:translateY(-1px);
-    }
-
-    .panel h2{
-      font-size:34px;
-      letter-spacing:0.14em;
-      font-weight:650;
-      margin:6px 0 8px;
-    }
-
-    .panel .subhead{
-      font-size:12px;
-      letter-spacing:0.30em;
-      text-transform:uppercase;
-      color:rgba(0,0,0,0.45);
-      margin-bottom:18px;
-    }
-
-    .copy{
-      font-size:15px;
-      line-height:1.85;
-      color:rgba(0,0,0,0.78);
-      max-width:62ch;
-      margin:0 auto;
-    }
-
-    .copy p{ margin:0 0 12px; }
-
-    .copy h3{
-      font-size:14px;
-      letter-spacing:0.22em;
-      text-transform:uppercase;
-      color:rgba(0,0,0,0.55);
-      margin:8px 0 10px;
-    }
-
-    .copy ul{
-      list-style:none;
-      padding:0;
-      margin:10px 0 14px;
-      display:grid;
-      gap:10px;
-    }
-
-    .copy li{
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-      justify-content:flex-start;
-      text-align:left;
-      max-width:62ch;
-      margin:0 auto;
-    }
-
-    .dot{
-      width:6px;
-      height:6px;
-      border-radius:99px;
-      background:rgba(0,0,0,0.55);
-      margin-top:9px;
-      flex:0 0 auto;
-    }
-
-    .tool-link{
-      color:#000;
-      text-decoration:none;
-      border-bottom:1px solid rgba(0,0,0,0.22);
-      padding-bottom:2px;
-      opacity:0.85;
-    }
-
-    .tool-link:hover{
-      opacity:1;
-      border-bottom-color:rgba(0,0,0,0.35);
-    }
-
-    @media (max-width:520px){
-      body{
-        overflow:auto;
+    @media (max-width: 640px) {
+      .hero {
+        padding: 64px 0 44px;
       }
 
-      .app{
-        align-items:flex-start;
-        min-height:100vh;
-        padding:120px 0 80px;
+      .hero-card,
+      .hero-side,
+      .panel,
+      .project {
+        padding: 20px;
       }
 
-      .logo{
-        font-size:56px;
-        letter-spacing:8px;
+      .nav-inner {
+        min-height: 64px;
       }
 
-      .sub{
-        font-size:11px;
-        letter-spacing:3px;
-        line-height:1.5;
+      .nav-links {
+        gap: 14px;
       }
 
-      .panel{
-        padding:28px 18px 22px;
-        border-radius:24px;
-      }
-
-      .panel h2{
-        font-size:30px;
-      }
-
-      .tagline{
-        font-size:11px;
-      }
-
-      .tool-panel-inner p{
-        font-size:13px;
-      }
-
-      .tool-meta{
-        font-size:11px;
-      }
-
-      .tools{
-        width:min(94vw, 620px);
-      }
-
-      .tool-card{
-        width:min(94vw, 520px);
+      .lead {
+        font-size: 1rem;
       }
     }
   </style>
 </head>
-
 <body>
-
-  <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">
-    <div class="icon" aria-hidden="true">
-      <span></span><span></span><span></span>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="#" class="brand">Stormiē Performance</a>
+      <nav class="nav-links">
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+        <a href="#contact">Links</a>
+      </nav>
     </div>
-  </button>
+  </header>
 
-  <div class="app" id="app">
-    <div>
-      <div class="logo" aria-label="STORMIĒ">STORMIĒ</div>
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-card">
+          <div>
+            <div class="eyebrow">
+              <span class="dot"></span>
+              Digital products · prototypes · performance systems
+            </div>
 
-      <div class="sub">
-        Internal Tools Lab <br/>
-        Game Dev · Production · LiveOps
+            <h1>Built by Storm Kolmodin.</h1>
+
+            <p class="lead">
+              Stormiē Performance is a portfolio hub for digital product experiments,
+              internal tools, training-related concepts, and interactive prototypes.
+              A focused space connecting product thinking, game production interest,
+              and builder-driven execution.
+            </p>
+
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#projects">View Projects</a>
+              <a class="btn btn-secondary" href="https://stormiemoves.com" target="_blank" rel="noopener noreferrer">Open Stormie Moves</a>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-side hero-card">
+          <div class="mini-card">
+            <div class="mini-label">Current focus</div>
+            <div class="mini-title">Builder portfolio</div>
+            <div class="mini-text">
+              A growing collection of product ideas, prototypes, and brand concepts
+              presented under one clear identity.
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <div class="mini-label">Projects</div>
+            <div class="mini-title">Apps, brand, game prototype</div>
+            <div class="mini-text">
+              Stormie Moves, Clinch Athletics, and Storm Wylder each represent a different
+              direction within the same ecosystem.
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <div class="mini-label">Profile</div>
+            <div class="mini-title">Agile + product-driven</div>
+            <div class="mini-text">
+              Product thinking, experimentation, iteration, and a strong interest in tools,
+              systems, and creative digital work.
+            </div>
+          </div>
+        </aside>
       </div>
+    </section>
 
-      <div class="tagline">
-        Concept prototypes exploring tools for game development workflows, production systems, and live operations
+    <section class="section" id="projects">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">Projects</div>
+          <h2>A small ecosystem of things I’m building.</h2>
+          <p class="section-sub">
+            Each project has a different purpose: portfolio, product, brand, or prototype.
+          </p>
+        </div>
+
+        <div class="grid">
+          <a class="project" href="https://stormiemoves.com" target="_blank" rel="noopener noreferrer">
+            <div class="tag">Product</div>
+            <h3>Stormie Moves</h3>
+            <p>
+              A training-focused app concept exploring structured movement, progress,
+              and user-facing digital product design.
+            </p>
+            <div class="project-link">Visit project →</div>
+          </a>
+
+          <a class="project" href="https://clinchathletics.com" target="_blank" rel="noopener noreferrer">
+            <div class="tag">Brand</div>
+            <h3>Clinch Athletics</h3>
+            <p>
+              A combat sports brand concept focused on premium identity, visual direction,
+              and e-commerce-driven product storytelling.
+            </p>
+            <div class="project-link">Visit project →</div>
+          </a>
+
+          <a class="project" href="https://stormwylder.itch.io/storm-wylder-vertical-slice-prototype" target="_blank" rel="noopener noreferrer">
+            <div class="tag">Game Prototype</div>
+            <h3>Storm Wylder</h3>
+            <p>
+              A Unity-based vertical slice prototype exploring gameplay loops, production flow,
+              and practical experimentation through shipped work.
+            </p>
+            <div class="project-link">Open prototype →</div>
+          </a>
+        </div>
       </div>
+    </section>
 
-      <div class="tools">
-        <div class="tool-card">
-          <button class="tool-toggle" type="button">
-            <span class="tool-title">FeatureForge</span>
-            <span class="tool-chevron">⌄</span>
-          </button>
-          <div class="tool-panel">
-            <div class="tool-panel-inner">
-              <p>Structures feature ideas into user stories, acceptance criteria, and MVP scope.</p>
-              <div class="tool-meta">Used during early feature planning and production definition.</div>
-              <a class="tool-launch" href="https://feature-spark-15.lovable.app" target="_blank" rel="noopener noreferrer">Launch Tool</a>
-            </div>
-          </div>
+    <section class="section" id="about">
+      <div class="container about">
+        <div class="panel">
+          <div class="kicker">About</div>
+          <h2>One hub, multiple directions.</h2>
+          <p>
+            Stormiē Performance functions as the central hub for my digital projects.
+            Instead of mixing everything into one product, this site connects different
+            categories of work under one portfolio: apps, concepts, experiments, and prototypes.
+          </p>
         </div>
 
-        <div class="tool-card">
-          <button class="tool-toggle" type="button">
-            <span class="tool-title">FeatureScope</span>
-            <span class="tool-chevron">⌄</span>
-          </button>
-          <div class="tool-panel">
-            <div class="tool-panel-inner">
-              <p>Estimates feature complexity based on teams, systems, dependencies, and risks.</p>
-              <div class="tool-meta">Helps producers evaluate scope before committing a feature to production.</div>
-              <a class="tool-launch" href="https://featurescope.base44.app" target="_blank" rel="noopener noreferrer">Launch Tool</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="tool-card">
-          <button class="tool-toggle" type="button">
-            <span class="tool-title">Feature Dependency Map</span>
-            <span class="tool-chevron">⌄</span>
-          </button>
-          <div class="tool-panel">
-            <div class="tool-panel-inner">
-              <p>Visualizes how a feature connects to systems, teams, dependencies, and production risks.</p>
-              <div class="tool-meta">Explores cross-team impact before a feature enters full production.</div>
-              <a class="tool-launch" href="https://featuredependancymap.lovable.app" target="_blank" rel="noopener noreferrer">Launch Tool</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="tool-card">
-          <button class="tool-toggle" type="button">
-            <span class="tool-title">Asset Similarity Finder</span>
-            <span class="tool-chevron">⌄</span>
-          </button>
-          <div class="tool-panel">
-            <div class="tool-panel-inner">
-              <p>Helps discover reusable or replacement assets using semantic and visual similarity.</p>
-              <div class="tool-meta">Explores asset discovery and content workflows in large libraries.</div>
-              <a class="tool-launch" href="https://asset-twin-finder.lovable.app" target="_blank" rel="noopener noreferrer">Launch Tool</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="tool-card">
-          <button class="tool-toggle" type="button">
-            <span class="tool-title">LiveOps Incident Console</span>
-            <span class="tool-chevron">⌄</span>
-          </button>
-          <div class="tool-panel">
-            <div class="tool-panel-inner">
-              <p>Aggregates operational signals to detect incidents, route issues, and track ownership.</p>
-              <div class="tool-meta">Explores live service workflows and incident coordination across teams.</div>
-              <a class="tool-launch" href="https://incidentconsole.lovable.app" target="_blank" rel="noopener noreferrer">Launch Tool</a>
-            </div>
+        <div class="panel">
+          <div class="kicker">What this site is</div>
+          <div class="list">
+            <div class="list-item">Portfolio hub for current and future projects</div>
+            <div class="list-item">Landing page for product experiments and prototypes</div>
+            <div class="list-item">Clear overview of the ecosystem behind the Stormiē brand</div>
           </div>
         </div>
       </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">Links</div>
+          <h2>Where to go next.</h2>
+        </div>
+
+        <div class="grid">
+          <a class="project" href="https://stormieperformance.com" target="_blank" rel="noopener noreferrer">
+            <div class="tag">Main Hub</div>
+            <h3>Stormiē Performance</h3>
+            <p>Main portfolio and ecosystem overview.</p>
+            <div class="project-link">Open →</div>
+          </a>
+
+          <a class="project" href="https://stormiemoves.com" target="_blank" rel="noopener noreferrer">
+            <div class="tag">App</div>
+            <h3>Stormie Moves</h3>
+            <p>Training product and user-facing app concept.</p>
+            <div class="project-link">Open →</div>
+          </a>
+
+          <a class="project" href="https://clinchathletics.com" target="_blank" rel="noopener noreferrer">
+            <div class="tag">Brand</div>
+            <h3>Clinch Athletics</h3>
+            <p>Combat sports brand and product direction.</p>
+            <div class="project-link">Open →</div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>© 2026 Stormiē Performance</div>
+      <div>Built by Storm Kolmodin</div>
     </div>
-  </div>
-
-  <div class="overlay" id="aboutOverlay" aria-hidden="true">
-    <div class="panel" role="dialog" aria-modal="true" aria-label="About">
-      <div class="panel-top">
-        <div class="kicker">ABOUT</div>
-        <button class="close-btn" type="button" id="aboutClose" aria-label="Close">×</button>
-      </div>
-
-      <h2>Internal Tools <br/>Lab</h2>
-      <div class="subhead">What Stormiē is</div>
-
-      <div class="copy">
-        <p>
-          Stormiē is an experimental internal tools lab focused on game development workflows and live service operations.
-        </p>
-
-        <p>
-          The platform brings together lightweight prototype applications designed to explore production workflows, content systems, and LiveOps incident handling.
-        </p>
-
-        <h3>Current tools</h3>
-        <ul>
-          <li>
-            <span class="dot"></span>
-            <span>
-              <strong>
-                <a class="tool-link" href="https://feature-spark-15.lovable.app" target="_blank" rel="noopener noreferrer">
-                  FeatureForge
-                </a>
-              </strong>
-              — game feature breakdown tool for structuring ideas into user stories, acceptance criteria, and MVP scope
-            </span>
-          </li>
-
-          <li>
-            <span class="dot"></span>
-            <span>
-              <strong>
-                <a class="tool-link" href="https://featurescope.base44.app" target="_blank" rel="noopener noreferrer">
-                  FeatureScope
-                </a>
-              </strong>
-              — scope and complexity analysis tool for evaluating feature size, risk, dependencies, and delivery difficulty
-            </span>
-          </li>
-
-          <li>
-            <span class="dot"></span>
-            <span>
-              <strong>
-                <a class="tool-link" href="https://featuredependancymap.lovable.app" target="_blank" rel="noopener noreferrer">
-                  Feature Dependency Map
-                </a>
-              </strong>
-              — prototype planning tool for visualizing how features connect to systems, teams, dependencies, and risks
-            </span>
-          </li>
-
-          <li>
-            <span class="dot"></span>
-            <span>
-              <strong>
-                <a class="tool-link" href="https://asset-twin-finder.lovable.app" target="_blank" rel="noopener noreferrer">
-                  Game Asset Similarity Finder
-                </a>
-              </strong>
-              — prototype tool for discovering replacement assets using semantic and visual similarity
-            </span>
-          </li>
-
-          <li>
-            <span class="dot"></span>
-            <span>
-              <strong>
-                <a class="tool-link" href="https://incidentconsole.lovable.app" target="_blank" rel="noopener noreferrer">
-                  LiveOps Incident Console
-                </a>
-              </strong>
-              — prototype operations tool for detecting incidents, routing issues to the correct teams, and tracking ownership across live service workflows
-            </span>
-          </li>
-        </ul>
-
-        <p>
-          Built by Storm Kolmodin.
-        </p>
-
-        <p>
-          Tools are experimental prototypes exploring production workflows for modern game development.
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const app = document.getElementById("app");
-    const menuBtn = document.getElementById("menuBtn");
-    const aboutOverlay = document.getElementById("aboutOverlay");
-    const aboutClose = document.getElementById("aboutClose");
-    const toolCards = document.querySelectorAll(".tool-card");
-
-    function setBlur(on){
-      app.classList.toggle("is-blurred", !!on);
-    }
-
-    function openOverlay(overlay){
-      overlay.classList.add("active");
-      overlay.setAttribute("aria-hidden", "false");
-      setBlur(true);
-    }
-
-    function closeOverlay(overlay){
-      overlay.classList.remove("active");
-      overlay.setAttribute("aria-hidden", "true");
-      setBlur(false);
-    }
-
-    function openAbout(){
-      openOverlay(aboutOverlay);
-      menuBtn.classList.add("open");
-      menuBtn.setAttribute("aria-expanded", "true");
-    }
-
-    function closeAbout(){
-      closeOverlay(aboutOverlay);
-      menuBtn.classList.remove("open");
-      menuBtn.setAttribute("aria-expanded", "false");
-    }
-
-    menuBtn.addEventListener("click", () => {
-      const isOpen = aboutOverlay.classList.contains("active");
-      if(isOpen) closeAbout();
-      else openAbout();
-    });
-
-    aboutClose.addEventListener("click", closeAbout);
-    aboutOverlay.addEventListener("click", (e) => {
-      if(e.target === aboutOverlay) closeAbout();
-    });
-
-    window.addEventListener("keydown", (e) => {
-      if(e.key === "Escape" && aboutOverlay.classList.contains("active")) {
-        closeAbout();
-      }
-    });
-
-    toolCards.forEach((card) => {
-      const toggle = card.querySelector(".tool-toggle");
-      toggle.addEventListener("click", () => {
-        const isOpen = card.classList.contains("open");
-        toolCards.forEach(c => c.classList.remove("open"));
-        if(!isOpen){
-          card.classList.add("open");
-        }
-      });
-    });
-  </script>
+  </footer>
 </body>
 </html>
