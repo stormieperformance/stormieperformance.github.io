@@ -9,9 +9,12 @@
     :root{
       --text:#0f0f10;
       --muted:rgba(0,0,0,0.56);
+      --muted2:rgba(0,0,0,0.40);
       --line:rgba(0,0,0,0.10);
+      --glass:rgba(255,255,255,0.78);
       --glass2:rgba(255,255,255,0.92);
       --shadow:0 30px 90px rgba(0,0,0,0.18);
+      --radius:22px;
     }
 
     *{ margin:0; padding:0; box-sizing:border-box; }
@@ -77,7 +80,7 @@
       animation:fadeIn 1s ease forwards;
       animation-delay:1.55s;
       user-select:none;
-      max-width:560px;
+      max-width:620px;
       margin-left:auto;
       margin-right:auto;
       padding:0 18px;
@@ -152,7 +155,7 @@
     }
 
     .project-card.open .project-panel{
-      max-height:280px;
+      max-height:320px;
       opacity:1;
       transform:translateY(0);
       margin-top:10px;
@@ -183,7 +186,8 @@
       margin-bottom:12px;
     }
 
-    .project-launch{
+    .project-launch,
+    .overlay-link{
       display:inline-block;
       text-decoration:none;
       color:#000;
@@ -193,9 +197,16 @@
       letter-spacing:0.18em;
       text-transform:uppercase;
       opacity:0.85;
+      background:none;
+      border-top:none;
+      border-left:none;
+      border-right:none;
+      cursor:pointer;
+      font-family:inherit;
     }
 
-    .project-launch:hover{
+    .project-launch:hover,
+    .overlay-link:hover{
       opacity:1;
       border-bottom-color:rgba(0,0,0,0.35);
     }
@@ -291,7 +302,7 @@
     }
 
     .panel{
-      width:min(720px, 92vw);
+      width:min(760px, 92vw);
       background:var(--glass2);
       border:1px solid rgba(255,255,255,0.50);
       box-shadow:var(--shadow);
@@ -363,18 +374,26 @@
       font-size:15px;
       line-height:1.85;
       color:rgba(0,0,0,0.78);
-      max-width:60ch;
+      max-width:62ch;
       margin:0 auto;
     }
 
     .copy p{ margin:0 0 12px; }
+
+    .copy h3{
+      font-size:13px;
+      letter-spacing:0.22em;
+      text-transform:uppercase;
+      color:rgba(0,0,0,0.55);
+      margin:12px 0 12px;
+    }
 
     .copy ul{
       list-style:none;
       padding:0;
       margin:10px 0 14px;
       display:grid;
-      gap:10px;
+      gap:12px;
     }
 
     .copy li{
@@ -383,7 +402,7 @@
       align-items:flex-start;
       justify-content:flex-start;
       text-align:left;
-      max-width:60ch;
+      max-width:62ch;
       margin:0 auto;
     }
 
@@ -394,6 +413,26 @@
       background:rgba(0,0,0,0.55);
       margin-top:9px;
       flex:0 0 auto;
+    }
+
+    .tool-link{
+      color:#000;
+      text-decoration:none;
+      border-bottom:1px solid rgba(0,0,0,0.22);
+      padding-bottom:2px;
+      opacity:0.88;
+    }
+
+    .tool-link:hover{
+      opacity:1;
+      border-bottom-color:rgba(0,0,0,0.35);
+    }
+
+    .note{
+      color:rgba(0,0,0,0.50);
+      font-size:12px;
+      line-height:1.7;
+      margin-top:10px;
     }
 
     @media (max-width:520px){
@@ -452,7 +491,7 @@
 
 <body>
 
-  <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">
+  <button class="menu-btn" id="menuBtn" aria-label="About Me" aria-expanded="false">
     <div class="icon" aria-hidden="true">
       <span></span><span></span><span></span>
     </div>
@@ -463,12 +502,11 @@
       <div class="logo" aria-label="STORMIĒ">STORMIĒ</div>
 
       <div class="sub">
-        Digital Projects <br/>
-        Products · Brand · Game · Tools
+        Products · Games · Systems
       </div>
 
       <div class="tagline">
-        A small portfolio of products, concepts, and experimental tools by Storm Kolmodin.
+        A small lab of digital products, playable prototypes, and operational systems built by Storm Kolmodin.
       </div>
 
       <div class="projects">
@@ -479,8 +517,10 @@
           </button>
           <div class="project-panel">
             <div class="project-panel-inner">
-              <p>A movement and training app concept focused on structure, progress, and usability.</p>
-              <div class="project-meta">Product concept · fitness / performance</div>
+              <p>
+                AI-powered training planner that generates personalized multi-sport workouts based on sport, experience level, training time, and goals.
+              </p>
+              <div class="project-meta">Product · AI training app</div>
               <a class="project-launch" href="https://stormiemoves.com" target="_blank" rel="noopener noreferrer">Open Project</a>
             </div>
           </div>
@@ -493,8 +533,10 @@
           </button>
           <div class="project-panel">
             <div class="project-panel-inner">
-              <p>A premium combat sports brand concept exploring identity, product direction, and e-commerce.</p>
-              <div class="project-meta">Brand concept · combat sports</div>
+              <p>
+                Combat sports brand and e-commerce platform for premium training gear, built around controlled releases and distinct product series.
+              </p>
+              <div class="project-meta">Brand · commerce · Muay Thai</div>
               <a class="project-launch" href="https://clinchathletics.com" target="_blank" rel="noopener noreferrer">Open Project</a>
             </div>
           </div>
@@ -507,7 +549,9 @@
           </button>
           <div class="project-panel">
             <div class="project-panel-inner">
-              <p>A Unity vertical slice prototype exploring gameplay loops, production flow, and shipped iteration.</p>
+              <p>
+                Playable Unity vertical slice prototype featuring movement, camera follow, companion behaviour, checkpoints, and goal-triggered UI feedback.
+              </p>
               <div class="project-meta">Game prototype · Unity</div>
               <a class="project-launch" href="https://stormwylder.itch.io/storm-wylder-vertical-slice-prototype" target="_blank" rel="noopener noreferrer">Open Project</a>
             </div>
@@ -516,14 +560,16 @@
 
         <div class="project-card">
           <button class="project-toggle" type="button">
-            <span class="project-title">Internal Tools Lab</span>
+            <span class="project-title">Systems &amp; AI</span>
             <span class="project-chevron">⌄</span>
           </button>
           <div class="project-panel">
             <div class="project-panel-inner">
-              <p>Prototype tools for feature planning, scope analysis, dependency mapping, asset discovery, and LiveOps workflows.</p>
-              <div class="project-meta">Includes FeatureForge, FeatureScope, Dependency Map, Asset Similarity Finder, and Incident Console</div>
-              <button class="project-launch" id="openToolsOverlay" type="button">View Tools</button>
+              <p>
+                Experimental tools and automation systems for game development workflows, planning, and AI-supported operations.
+              </p>
+              <div class="project-meta">Includes Internal Tools Lab and Clinch AI Assistant</div>
+              <button class="project-launch" id="openSystemsOverlay" type="button">View Systems</button>
             </div>
           </div>
         </div>
@@ -532,29 +578,91 @@
   </div>
 
   <div class="overlay" id="aboutOverlay" aria-hidden="true">
-    <div class="panel" role="dialog" aria-modal="true" aria-label="Internal Tools Lab">
+    <div class="panel" role="dialog" aria-modal="true" aria-label="About Me">
       <div class="panel-top">
-        <div class="kicker">Internal Tools Lab</div>
+        <div class="kicker">About</div>
         <button class="close-btn" type="button" id="aboutClose" aria-label="Close">×</button>
       </div>
 
-      <h2>Prototype Tools</h2>
-      <div class="subhead">Game dev · production · LiveOps</div>
+      <h2>Storm Kolmodin</h2>
+      <div class="subhead">Builder · Product · Games · Systems</div>
 
       <div class="copy">
         <p>
-          A set of experimental tools exploring planning, production systems, and live operations workflows.
+          I build digital products, playable prototypes, brand concepts, and operational systems.
+        </p>
+        <p>
+          Current work spans AI training products, combat sports e-commerce, Unity game prototyping, internal game development tools, and AI-assisted workflows.
+        </p>
+        <p>
+          This site brings those projects together under one small lab: STORMIĒ.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="systemsOverlay" aria-hidden="true">
+    <div class="panel" role="dialog" aria-modal="true" aria-label="Systems and AI">
+      <div class="panel-top">
+        <div class="kicker">Systems &amp; AI</div>
+        <button class="close-btn" type="button" id="systemsClose" aria-label="Close">×</button>
+      </div>
+
+      <h2>Internal Tools Lab</h2>
+      <div class="subhead">Game dev · production · operations</div>
+
+      <div class="copy">
+        <p>
+          Prototype tools for feature planning, scope analysis, dependency mapping, asset discovery, and live operations workflows.
         </p>
 
         <ul>
-          <li><span class="dot"></span><span><strong>FeatureForge</strong> — feature breakdown and MVP framing</span></li>
-          <li><span class="dot"></span><span><strong>FeatureScope</strong> — scope, risk, and complexity analysis</span></li>
-          <li><span class="dot"></span><span><strong>Feature Dependency Map</strong> — systems and cross-team dependency mapping</span></li>
-          <li><span class="dot"></span><span><strong>Asset Similarity Finder</strong> — reusable asset discovery concept</span></li>
-          <li><span class="dot"></span><span><strong>LiveOps Incident Console</strong> — incident routing and ownership tracking</span></li>
+          <li>
+            <span class="dot"></span>
+            <span>
+              <a class="tool-link" href="https://feature-spark-15.lovable.app" target="_blank" rel="noopener noreferrer"><strong>FeatureForge</strong></a>
+              — breaks feature ideas into user stories, acceptance criteria, and MVP scope
+            </span>
+          </li>
+
+          <li>
+            <span class="dot"></span>
+            <span>
+              <a class="tool-link" href="https://featurescope.base44.app" target="_blank" rel="noopener noreferrer"><strong>FeatureScope</strong></a>
+              — analyzes feature complexity across teams, systems, dependencies, and risks
+            </span>
+          </li>
+
+          <li>
+            <span class="dot"></span>
+            <span>
+              <a class="tool-link" href="https://featuredependancymap.lovable.app" target="_blank" rel="noopener noreferrer"><strong>Feature Dependency Map</strong></a>
+              — visualizes production dependencies across systems and teams
+            </span>
+          </li>
+
+          <li>
+            <span class="dot"></span>
+            <span>
+              <a class="tool-link" href="https://asset-twin-finder.lovable.app" target="_blank" rel="noopener noreferrer"><strong>Asset Similarity Finder</strong></a>
+              — helps discover reusable or replacement assets in large libraries
+            </span>
+          </li>
+
+          <li>
+            <span class="dot"></span>
+            <span>
+              <a class="tool-link" href="https://incidentconsole.lovable.app" target="_blank" rel="noopener noreferrer"><strong>LiveOps Incident Console</strong></a>
+              — aggregates player reports and telemetry signals into operational incidents
+            </span>
+          </li>
         </ul>
 
-        <p>Built by Storm Kolmodin.</p>
+        <h3>Clinch AI Assistant</h3>
+        <p>
+          AI-supported email workflow for Clinch Athletics, designed to automate customer support and operational handling through Zapier.
+        </p>
+        <div class="note">In development</div>
       </div>
     </div>
   </div>
@@ -562,47 +670,84 @@
   <script>
     const app = document.getElementById("app");
     const menuBtn = document.getElementById("menuBtn");
+
     const aboutOverlay = document.getElementById("aboutOverlay");
     const aboutClose = document.getElementById("aboutClose");
-    const openToolsOverlay = document.getElementById("openToolsOverlay");
+
+    const systemsOverlay = document.getElementById("systemsOverlay");
+    const systemsClose = document.getElementById("systemsClose");
+    const openSystemsOverlay = document.getElementById("openSystemsOverlay");
+
     const projectCards = document.querySelectorAll(".project-card");
 
     function setBlur(on){
       app.classList.toggle("is-blurred", !!on);
     }
 
-    function openOverlay(){
-      aboutOverlay.classList.add("active");
-      aboutOverlay.setAttribute("aria-hidden", "false");
-      setBlur(true);
+    function anyOverlayOpen(){
+      return aboutOverlay.classList.contains("active") || systemsOverlay.classList.contains("active");
+    }
+
+    function syncBlur(){
+      setBlur(anyOverlayOpen());
+    }
+
+    function openOverlay(overlay){
+      overlay.classList.add("active");
+      overlay.setAttribute("aria-hidden", "false");
+      syncBlur();
+    }
+
+    function closeOverlay(overlay){
+      overlay.classList.remove("active");
+      overlay.setAttribute("aria-hidden", "true");
+      syncBlur();
+    }
+
+    function openAbout(){
+      openOverlay(aboutOverlay);
       menuBtn.classList.add("open");
       menuBtn.setAttribute("aria-expanded", "true");
     }
 
-    function closeOverlay(){
-      aboutOverlay.classList.remove("active");
-      aboutOverlay.setAttribute("aria-hidden", "true");
-      setBlur(false);
+    function closeAbout(){
+      closeOverlay(aboutOverlay);
       menuBtn.classList.remove("open");
       menuBtn.setAttribute("aria-expanded", "false");
     }
 
     menuBtn.addEventListener("click", () => {
       const isOpen = aboutOverlay.classList.contains("active");
-      if(isOpen) closeOverlay();
-      else openOverlay();
+      if(isOpen) closeAbout();
+      else openAbout();
     });
 
-    openToolsOverlay.addEventListener("click", openOverlay);
-    aboutClose.addEventListener("click", closeOverlay);
+    aboutClose.addEventListener("click", closeAbout);
 
-    aboutOverlay.addEventListener("click", (e) => {
-      if(e.target === aboutOverlay) closeOverlay();
+    openSystemsOverlay.addEventListener("click", () => {
+      openOverlay(systemsOverlay);
+    });
+
+    systemsClose.addEventListener("click", () => {
+      closeOverlay(systemsOverlay);
+    });
+
+    [aboutOverlay, systemsOverlay].forEach((overlay) => {
+      overlay.addEventListener("click", (e) => {
+        if(e.target === overlay){
+          closeOverlay(overlay);
+          if(overlay === aboutOverlay){
+            menuBtn.classList.remove("open");
+            menuBtn.setAttribute("aria-expanded", "false");
+          }
+        }
+      });
     });
 
     window.addEventListener("keydown", (e) => {
-      if(e.key === "Escape" && aboutOverlay.classList.contains("active")) {
-        closeOverlay();
+      if(e.key === "Escape"){
+        if(aboutOverlay.classList.contains("active")) closeAbout();
+        if(systemsOverlay.classList.contains("active")) closeOverlay(systemsOverlay);
       }
     });
 
