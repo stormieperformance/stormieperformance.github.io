@@ -46,8 +46,8 @@
 
     .logo{
       font-size:64px;
-      letter-spacing:10px;
-      font-weight:650;
+      letter-spacing:12px;
+      font-weight:600;
       opacity:0;
       transform:translateY(12px);
       animation:reveal 1.4s ease forwards;
@@ -87,11 +87,11 @@
     }
 
     .projects{
-      margin-top:24px;
+      margin-top:40px;
       display:flex;
       flex-direction:column;
       align-items:center;
-      gap:14px;
+      gap:16px;
       width:min(620px, 92vw);
       opacity:0;
       animation:fadeIn 1s ease forwards;
@@ -126,7 +126,7 @@
     }
 
     .project-title{
-      font-size:10px;
+      font-size:11px;
       letter-spacing:0.32em;
       text-transform:uppercase;
       padding-bottom:4px;
@@ -136,7 +136,7 @@
     }
 
     .project-sub{
-      font-size:11px;
+      font-size:12px;
       letter-spacing:0.18em;
       text-transform:uppercase;
       color:rgba(0,0,0,0.45);
@@ -366,7 +366,7 @@
 
     .panel h2{
       font-size:34px;
-      letter-spacing:0.14em;
+      letter-spacing:0.10em;
       font-weight:650;
       margin:6px 0 8px;
     }
@@ -388,61 +388,6 @@
     }
 
     .copy p{ margin:0 0 12px; }
-
-    .copy h3{
-      font-size:13px;
-      letter-spacing:0.22em;
-      text-transform:uppercase;
-      color:rgba(0,0,0,0.55);
-      margin:12px 0 12px;
-    }
-
-    .copy ul{
-      list-style:none;
-      padding:0;
-      margin:10px 0 14px;
-      display:grid;
-      gap:12px;
-    }
-
-    .copy li{
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-      justify-content:flex-start;
-      text-align:left;
-      max-width:62ch;
-      margin:0 auto;
-    }
-
-    .dot{
-      width:6px;
-      height:6px;
-      border-radius:99px;
-      background:rgba(0,0,0,0.55);
-      margin-top:9px;
-      flex:0 0 auto;
-    }
-
-    .tool-link{
-      color:#000;
-      text-decoration:none;
-      border-bottom:1px solid rgba(0,0,0,0.22);
-      padding-bottom:2px;
-      opacity:0.88;
-    }
-
-    .tool-link:hover{
-      opacity:1;
-      border-bottom-color:rgba(0,0,0,0.35);
-    }
-
-    .note{
-      color:rgba(0,0,0,0.50);
-      font-size:12px;
-      line-height:1.7;
-      margin-top:10px;
-    }
 
     .menu-links{
       display:flex;
@@ -544,11 +489,11 @@
       <div class="logo" aria-label="STORM KOLMODIN">STORM KOLMODIN</div>
 
       <div class="sub">
-        AI · Products · Systems
+        AI · AUTOMATION · DIGITAL PRODUCTS
       </div>
 
       <div class="tagline">
-        A small lab for AI systems, digital products, and experimental prototypes.
+        Portfolio of AI assistants, automation systems, digital products, and experimental prototypes.
       </div>
 
       <div class="projects">
@@ -562,10 +507,10 @@
           <div class="project-panel">
             <div class="project-panel-inner">
               <p>
-                AI assistants and workflow automations that handle tasks such as customer support, lead handling, and operational processes.
+                Portfolio entry for AI assistants and workflow automations focused on customer support, inbox workflows, lead handling, and operational systems.
               </p>
               <div class="project-meta">AI workflows · Customer support · Operations</div>
-              <button class="project-launch" id="openSystemsOverlay" type="button">View Systems</button>
+              <a class="project-launch" href="https://stormie.app" target="_blank" rel="noopener noreferrer">View Systems</a>
             </div>
           </div>
         </div>
@@ -632,7 +577,7 @@
         <button class="close-btn" type="button" id="menuClose" aria-label="Close">×</button>
       </div>
 
-      <h2>STORMIĒ</h2>
+      <h2>STORM KOLMODIN</h2>
       <div class="subhead">About · Contact</div>
 
       <div class="menu-links">
@@ -650,47 +595,18 @@
       </div>
 
       <h2>Storm Kolmodin</h2>
-      <div class="subhead">Builder · Product · AI · Systems</div>
+      <div class="subhead">AI Builder · Automation Systems · Digital Products</div>
 
       <div class="copy">
         <p>
-          I build AI assistants, digital products, brand concepts, and experimental prototypes.
+          I build AI assistants, automation systems, and digital products.
         </p>
         <p>
-          Current work spans AI workflow automation, training products, combat sports e-commerce, and game prototyping.
+          Current work focuses on AI workflow automation, digital products, and experimental prototypes.
         </p>
         <p>
-          This site brings those projects together under one small lab: STORMIĒ.
+          This portfolio brings those projects together in one place.
         </p>
-      </div>
-    </div>
-  </div>
-
-  <div class="overlay" id="systemsOverlay" aria-hidden="true">
-    <div class="panel" role="dialog" aria-modal="true" aria-label="Systems and AI">
-      <div class="panel-top">
-        <div class="kicker">AI Assistants</div>
-        <button class="close-btn" type="button" id="systemsClose" aria-label="Close">×</button>
-      </div>
-
-      <h2>AI Systems &amp; Tools</h2>
-      <div class="subhead">Automation · workflows · prototypes</div>
-
-      <div class="copy">
-        <p>
-          AI assistants and workflow automations that handle tasks such as customer support, lead handling, and operational processes.
-        </p>
-
-        <h3>Clinch AI Assistant</h3>
-        <p>
-          AI-supported email workflow for Clinch Athletics, designed to automate customer support and operational handling.
-        </p>
-        <div class="note">In development</div>
-
-        
-            </span>
-          </li>
-        </ul>
       </div>
     </div>
   </div>
@@ -706,10 +622,6 @@
     const aboutClose = document.getElementById("aboutClose");
     const openAboutFromMenu = document.getElementById("openAboutFromMenu");
 
-    const systemsOverlay = document.getElementById("systemsOverlay");
-    const systemsClose = document.getElementById("systemsClose");
-    const openSystemsOverlay = document.getElementById("openSystemsOverlay");
-
     const projectCards = document.querySelectorAll(".project-card");
 
     function setBlur(on){
@@ -718,8 +630,7 @@
 
     function anyOverlayOpen(){
       return menuOverlay.classList.contains("active") ||
-             aboutOverlay.classList.contains("active") ||
-             systemsOverlay.classList.contains("active");
+             aboutOverlay.classList.contains("active");
     }
 
     function syncBlur(){
@@ -772,15 +683,7 @@
       openAbout();
     });
 
-    openSystemsOverlay.addEventListener("click", () => {
-      openOverlay(systemsOverlay);
-    });
-
-    systemsClose.addEventListener("click", () => {
-      closeOverlay(systemsOverlay);
-    });
-
-    [menuOverlay, aboutOverlay, systemsOverlay].forEach((overlay) => {
+    [menuOverlay, aboutOverlay].forEach((overlay) => {
       overlay.addEventListener("click", (e) => {
         if(e.target === overlay){
           closeOverlay(overlay);
@@ -796,7 +699,6 @@
       if(e.key === "Escape"){
         if(menuOverlay.classList.contains("active")) closeMenu();
         if(aboutOverlay.classList.contains("active")) closeAbout();
-        if(systemsOverlay.classList.contains("active")) closeOverlay(systemsOverlay);
 
         if(!anyOverlayOpen()){
           menuBtn.classList.remove("open");
