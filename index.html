@@ -328,6 +328,31 @@
       opacity:1;
     }
 
+    /* About panel custom intro animation */
+    #aboutOverlay .panel{
+      transform:translateY(16px) scale(0.985);
+      opacity:0;
+      filter:blur(8px);
+      transition:none;
+    }
+
+    #aboutOverlay.active .panel{
+      animation:aboutPanelReveal 0.9s ease forwards;
+    }
+
+    @keyframes aboutPanelReveal{
+      from{
+        opacity:0;
+        transform:translateY(16px) scale(0.985);
+        filter:blur(8px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+        filter:blur(0);
+      }
+    }
+
     .panel-top{
       display:flex;
       align-items:flex-start;
@@ -637,10 +662,21 @@
       setBlur(anyOverlayOpen());
     }
 
+    function restartAboutAnimation(){
+      const aboutPanel = aboutOverlay.querySelector(".panel");
+      aboutPanel.style.animation = "none";
+      aboutPanel.offsetHeight;
+      aboutPanel.style.animation = "";
+    }
+
     function openOverlay(overlay){
       overlay.classList.add("active");
       overlay.setAttribute("aria-hidden", "false");
       syncBlur();
+
+      if(overlay === aboutOverlay){
+        restartAboutAnimation();
+      }
     }
 
     function closeOverlay(overlay){
@@ -680,7 +716,9 @@
 
     openAboutFromMenu.addEventListener("click", () => {
       closeMenu();
-      openAbout();
+      setTimeout(() => {
+        openAbout();
+      }, 80);
     });
 
     [menuOverlay, aboutOverlay].forEach((overlay) => {
