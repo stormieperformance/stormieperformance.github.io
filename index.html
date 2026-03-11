@@ -328,7 +328,8 @@
       opacity:1;
     }
 
-    /* About panel custom intro animation */
+    /* Menu + About panel custom intro animation */
+    #menuOverlay .panel,
     #aboutOverlay .panel{
       transform:translateY(16px) scale(0.985);
       opacity:0;
@@ -336,11 +337,12 @@
       transition:none;
     }
 
+    #menuOverlay.active .panel,
     #aboutOverlay.active .panel{
-      animation:aboutPanelReveal 0.9s ease forwards;
+      animation:overlayPanelReveal 0.9s ease forwards;
     }
 
-    @keyframes aboutPanelReveal{
+    @keyframes overlayPanelReveal{
       from{
         opacity:0;
         transform:translateY(16px) scale(0.985);
@@ -662,11 +664,11 @@
       setBlur(anyOverlayOpen());
     }
 
-    function restartAboutAnimation(){
-      const aboutPanel = aboutOverlay.querySelector(".panel");
-      aboutPanel.style.animation = "none";
-      aboutPanel.offsetHeight;
-      aboutPanel.style.animation = "";
+    function restartPanelAnimation(overlay){
+      const panel = overlay.querySelector(".panel");
+      panel.style.animation = "none";
+      panel.offsetHeight;
+      panel.style.animation = "";
     }
 
     function openOverlay(overlay){
@@ -674,8 +676,8 @@
       overlay.setAttribute("aria-hidden", "false");
       syncBlur();
 
-      if(overlay === aboutOverlay){
-        restartAboutAnimation();
+      if(overlay === menuOverlay || overlay === aboutOverlay){
+        restartPanelAnimation(overlay);
       }
     }
 
