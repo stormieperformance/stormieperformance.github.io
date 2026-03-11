@@ -328,6 +328,31 @@
       opacity:1;
     }
 
+    /* About panel custom intro animation */
+    #aboutOverlay .panel{
+      transform:translateY(16px) scale(0.985);
+      opacity:0;
+      filter:blur(8px);
+      transition:none;
+    }
+
+    #aboutOverlay.active .panel{
+      animation:aboutPanelReveal 0.9s ease forwards;
+    }
+
+    @keyframes aboutPanelReveal{
+      from{
+        opacity:0;
+        transform:translateY(16px) scale(0.985);
+        filter:blur(8px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+        filter:blur(0);
+      }
+    }
+
     .panel-top{
       display:flex;
       align-items:flex-start;
@@ -420,58 +445,6 @@
     .menu-links button:hover{
       opacity:1;
       border-bottom-color:rgba(0,0,0,0.35);
-    }
-
-    /* ABOUT TEXT-ONLY ANIMATION */
-    #aboutOverlay .kicker,
-    #aboutOverlay h2,
-    #aboutOverlay .subhead,
-    #aboutOverlay .copy p{
-      opacity:0;
-      transform:translateY(10px);
-      filter:blur(6px);
-    }
-
-    #aboutOverlay.active .kicker{
-      animation:aboutTextReveal 0.65s ease forwards;
-    }
-
-    #aboutOverlay.active h2{
-      animation:aboutTextReveal 0.65s ease forwards;
-      animation-delay:0.08s;
-    }
-
-    #aboutOverlay.active .subhead{
-      animation:aboutTextReveal 0.65s ease forwards;
-      animation-delay:0.16s;
-    }
-
-    #aboutOverlay.active .copy p:nth-of-type(1){
-      animation:aboutTextReveal 0.65s ease forwards;
-      animation-delay:0.24s;
-    }
-
-    #aboutOverlay.active .copy p:nth-of-type(2){
-      animation:aboutTextReveal 0.65s ease forwards;
-      animation-delay:0.32s;
-    }
-
-    #aboutOverlay.active .copy p:nth-of-type(3){
-      animation:aboutTextReveal 0.65s ease forwards;
-      animation-delay:0.40s;
-    }
-
-    @keyframes aboutTextReveal{
-      from{
-        opacity:0;
-        transform:translateY(10px);
-        filter:blur(6px);
-      }
-      to{
-        opacity:1;
-        transform:translateY(0);
-        filter:blur(0);
-      }
     }
 
     @media (max-width:520px){
@@ -690,17 +663,10 @@
     }
 
     function restartAboutAnimation(){
-      const animatedEls = aboutOverlay.querySelectorAll(".kicker, h2, .subhead, .copy p");
-
-      animatedEls.forEach((el) => {
-        el.style.animation = "none";
-      });
-
-      void aboutOverlay.offsetWidth;
-
-      animatedEls.forEach((el) => {
-        el.style.animation = "";
-      });
+      const aboutPanel = aboutOverlay.querySelector(".panel");
+      aboutPanel.style.animation = "none";
+      aboutPanel.offsetHeight;
+      aboutPanel.style.animation = "";
     }
 
     function openOverlay(overlay){
