@@ -225,33 +225,33 @@
       border-bottom-color:rgba(0,0,0,0.35);
     }
 
-    /* SECRET EASTER EGG */
     .secret-trigger{
-      width:8px;
-      height:8px;
+      width:10px;
+      height:10px;
       border:none;
       border-radius:999px;
-      background:rgba(0,0,0,0.10);
+      background:rgba(0,0,0,0.18);
       display:block;
       margin:8px auto 0;
       cursor:pointer;
-      opacity:0.12;
+      opacity:0.22;
       transition:opacity .22s ease, transform .22s ease, background .22s ease;
+      text-decoration:none;
       appearance:none;
       -webkit-appearance:none;
     }
 
     .secret-trigger:hover{
-      opacity:0.28;
-      transform:scale(1.06);
-      background:rgba(0,0,0,0.18);
+      opacity:0.42;
+      transform:scale(1.08);
+      background:rgba(0,0,0,0.28);
     }
 
     .secret-trigger:focus-visible{
       outline:none;
-      opacity:0.32;
-      background:rgba(0,0,0,0.22);
+      opacity:0.42;
       transform:scale(1.08);
+      background:rgba(0,0,0,0.28);
     }
 
     .secret-trigger-label{
@@ -375,8 +375,7 @@
     }
 
     #menuOverlay .panel,
-    #aboutOverlay .panel,
-    #secretOverlay .panel{
+    #aboutOverlay .panel{
       transform:translateY(16px) scale(0.985);
       opacity:0;
       filter:blur(8px);
@@ -384,8 +383,7 @@
     }
 
     #menuOverlay.active .panel,
-    #aboutOverlay.active .panel,
-    #secretOverlay.active .panel{
+    #aboutOverlay.active .panel{
       animation:overlayPanelReveal 0.9s ease forwards;
     }
 
@@ -496,36 +494,6 @@
       border-bottom-color:rgba(0,0,0,0.35);
     }
 
-    /* SECRET PANEL */
-    .secret-panel{
-      width:min(760px, 92vw);
-      background:rgba(255,255,255,0.96);
-      border:1px solid rgba(0,0,0,0.08);
-      box-shadow:0 30px 90px rgba(0,0,0,0.22);
-      border-radius:28px;
-      padding:24px 24px 28px;
-      text-align:center;
-    }
-
-    .secret-image{
-      width:100%;
-      max-width:620px;
-      aspect-ratio:4 / 5;
-      object-fit:cover;
-      border-radius:22px;
-      display:block;
-      margin:0 auto 20px;
-      background:rgba(0,0,0,0.04);
-    }
-
-    .secret-quote{
-      max-width:34ch;
-      margin:0 auto;
-      font-size:16px;
-      line-height:1.8;
-      color:rgba(0,0,0,0.82);
-    }
-
     @media (max-width:520px){
       body{
         overflow:auto;
@@ -548,8 +516,7 @@
         line-height:1.5;
       }
 
-      .panel,
-      .secret-panel{
+      .panel{
         padding:28px 18px 22px;
         border-radius:24px;
       }
@@ -576,10 +543,6 @@
 
       .project-card{
         width:100%;
-      }
-
-      .secret-quote{
-        font-size:14px;
       }
     }
   </style>
@@ -665,9 +628,9 @@
             <span class="project-chevron">⌄</span>
           </button>
 
-          <button class="secret-trigger" id="secretTrigger" type="button" aria-label="Open hidden alpine note">
+          <a class="secret-trigger" href="/alpine.html" aria-label="Open hidden alpine note">
             <span class="secret-trigger-label">Open hidden alpine note</span>
-          </button>
+          </a>
 
           <div class="project-panel">
             <div class="project-panel-inner">
@@ -722,25 +685,6 @@
     </div>
   </div>
 
-  <div class="overlay" id="secretOverlay" aria-hidden="true">
-    <div class="secret-panel" role="dialog" aria-modal="true" aria-label="Hidden alpine note">
-      <div class="panel-top">
-        <div class="kicker">Alpine Note</div>
-        <button class="close-btn" type="button" id="secretClose" aria-label="Close">×</button>
-      </div>
-
-      <img
-        class="secret-image"
-        src="YOUR_IMAGE_URL_HERE"
-        alt="Marc-André Leclerc"
-      />
-
-      <div class="secret-quote">
-        “YOUR_QUOTE_HERE”
-      </div>
-    </div>
-  </div>
-
   <script>
     const app = document.getElementById("app");
     const menuBtn = document.getElementById("menuBtn");
@@ -752,10 +696,6 @@
     const aboutClose = document.getElementById("aboutClose");
     const openAboutFromMenu = document.getElementById("openAboutFromMenu");
 
-    const secretOverlay = document.getElementById("secretOverlay");
-    const secretClose = document.getElementById("secretClose");
-    const secretTrigger = document.getElementById("secretTrigger");
-
     const projectCards = document.querySelectorAll(".project-card");
 
     function setBlur(on){
@@ -764,8 +704,7 @@
 
     function anyOverlayOpen(){
       return menuOverlay.classList.contains("active") ||
-             aboutOverlay.classList.contains("active") ||
-             secretOverlay.classList.contains("active");
+             aboutOverlay.classList.contains("active");
     }
 
     function syncBlur(){
@@ -773,7 +712,7 @@
     }
 
     function restartPanelAnimation(overlay){
-      const panel = overlay.querySelector(".panel, .secret-panel");
+      const panel = overlay.querySelector(".panel");
       if(!panel) return;
       panel.style.animation = "none";
       panel.offsetHeight;
@@ -785,7 +724,7 @@
       overlay.setAttribute("aria-hidden", "false");
       syncBlur();
 
-      if(overlay === menuOverlay || overlay === aboutOverlay || overlay === secretOverlay){
+      if(overlay === menuOverlay || overlay === aboutOverlay){
         restartPanelAnimation(overlay);
       }
     }
@@ -816,14 +755,6 @@
       closeOverlay(aboutOverlay);
     }
 
-    function openSecret(){
-      openOverlay(secretOverlay);
-    }
-
-    function closeSecret(){
-      closeOverlay(secretOverlay);
-    }
-
     menuBtn.addEventListener("click", () => {
       const isOpen = menuOverlay.classList.contains("active");
       if(isOpen) closeMenu();
@@ -832,12 +763,6 @@
 
     menuClose.addEventListener("click", closeMenu);
     aboutClose.addEventListener("click", closeAbout);
-    secretClose.addEventListener("click", closeSecret);
-
-    secretTrigger.addEventListener("click", (e) => {
-      e.stopPropagation();
-      openSecret();
-    });
 
     openAboutFromMenu.addEventListener("click", () => {
       closeMenu();
@@ -846,7 +771,7 @@
       }, 80);
     });
 
-    [menuOverlay, aboutOverlay, secretOverlay].forEach((overlay) => {
+    [menuOverlay, aboutOverlay].forEach((overlay) => {
       overlay.addEventListener("click", (e) => {
         if(e.target === overlay){
           closeOverlay(overlay);
@@ -862,7 +787,6 @@
       if(e.key === "Escape"){
         if(menuOverlay.classList.contains("active")) closeMenu();
         if(aboutOverlay.classList.contains("active")) closeAbout();
-        if(secretOverlay.classList.contains("active")) closeSecret();
 
         if(!anyOverlayOpen()){
           menuBtn.classList.remove("open");
