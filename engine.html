@@ -1,1493 +1,827 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>STORMIĒ — Engine</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STORM KOLMODIN</title>
 
-<style>
-:root{
-  --bg:#ffffff;
-  --text:#0f0f10;
-  --muted:rgba(0,0,0,0.58);
-  --muted2:rgba(0,0,0,0.40);
-  --line:rgba(0,0,0,0.08);
-  --line2:rgba(0,0,0,0.12);
-  --wash:rgba(0,0,0,0.02);
-  --glass:rgba(255,255,255,0.70);
-  --glass2:rgba(255,255,255,0.86);
-  --shadow: 0 30px 90px rgba(0,0,0,0.16);
-  --radius:18px;
-  --radius2:16px;
-  --pad:16px;
-  --pad2:14px;
-}
+  <style>
+    :root{
+      --text:#0f0f10;
+      --muted:rgba(0,0,0,0.56);
+      --muted2:rgba(0,0,0,0.40);
+      --line:rgba(0,0,0,0.10);
+      --glass:rgba(255,255,255,0.78);
+      --glass2:rgba(255,255,255,0.92);
+      --shadow:0 30px 90px rgba(0,0,0,0.18);
+      --radius:22px;
+    }
 
-*{ box-sizing:border-box; }
-html,body{ height:100%; }
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
-  display:flex;
-  justify-content:center;
-}
+    *{ margin:0; padding:0; box-sizing:border-box; }
+    html,body{ height:100%; }
 
-.container{
-  width:min(1020px, 92vw);
-  padding:56px 0 92px;
-}
+    body{
+      background:#fff;
+      color:var(--text);
+      font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      overflow:hidden;
+    }
 
-.topbar{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:18px;
-}
+    .app{
+      width:100%;
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition:filter .28s ease;
+    }
 
-.back{
-  display:inline-block;
-  font-size:12px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  text-decoration:none;
-  color:var(--muted);
-  border-bottom:1px solid rgba(0,0,0,0.16);
-  padding-bottom:3px;
-}
-.back:hover{ color:#000; border-bottom-color:rgba(0,0,0,0.32); }
+    .app.is-blurred{
+      filter:blur(18px);
+    }
 
-.brand{
-  text-align:right;
-  font-size:11px;
-  letter-spacing:0.28em;
-  text-transform:uppercase;
-  color:var(--muted2);
-}
+    .logo{
+      font-size:68px;
+      letter-spacing:10px;
+      font-weight:600;
+      opacity:0;
+      transform:translateY(12px);
+      animation:reveal 1.4s ease forwards;
+      user-select:none;
+      transition:opacity .25s ease;
+    }
 
-h1{
-  margin:0;
-  text-align:center;
-  font-size:28px;
-  font-weight:700;
-  letter-spacing:0.18em;
-}
+    .logo:hover{ opacity:0.92; }
 
-.headline{
-  text-align:center;
-  margin:12px auto 6px;
-  max-width: 64ch;
-  font-size:14px;
-  line-height:1.55;
-  color:rgba(0,0,0,0.74);
-}
+    .sub{
+      margin-top:14px;
+      font-size:13px;
+      letter-spacing:4px;
+      text-transform:uppercase;
+      opacity:0;
+      line-height:1.6;
+      animation:fadeIn 1s ease forwards;
+      animation-delay:1.2s;
+      color:rgba(0,0,0,0.62);
+      user-select:none;
+    }
 
-.micro{
-  text-align:center;
-  margin:0 auto 20px;
-  max-width: 74ch;
-  font-size:12px;
-  line-height:1.6;
-  letter-spacing:0.03em;
-  color:rgba(0,0,0,0.52);
-}
+    .tagline{
+      margin-top:16px;
+      font-size:12px;
+      letter-spacing:0.08em;
+      line-height:1.7;
+      color:rgba(0,0,0,0.52);
+      opacity:0;
+      animation:fadeIn 1s ease forwards;
+      animation-delay:1.55s;
+      user-select:none;
+      max-width:620px;
+      margin-left:auto;
+      margin-right:auto;
+      padding:0 18px;
+    }
 
-.tabs{
-  display:flex;
-  gap:10px;
-  justify-content:center;
-  margin:22px 0 18px;
-  flex-wrap:wrap;
-}
+    .projects{
+      margin-top:42px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:18px;
+      width:380px;
+      max-width:90vw;
+      margin-left:auto;
+      margin-right:auto;
+      opacity:0;
+      animation:fadeIn 1s ease forwards;
+      animation-delay:1.9s;
+    }
 
-.tab{
-  border:1px solid var(--line2);
-  background:rgba(255,255,255,0.70);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-radius:999px;
-  padding:10px 14px;
-  font-size:12px;
-  letter-spacing:0.18em;
-  text-transform:uppercase;
-  color:rgba(0,0,0,0.58);
-  cursor:pointer;
-  transition:transform .15s ease, background .15s ease, color .15s ease;
-}
-.tab:hover{ transform:translateY(-1px); background:rgba(255,255,255,0.92); color:#000; }
-.tab.active{
-  background:#111;
-  color:#fff;
-  border-color:#111;
-}
+    .project-card{
+      width:100%;
+      text-align:center;
+      margin-left:auto;
+      margin-right:auto;
+      position:relative;
+    }
 
-.grid{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap:14px;
-}
-@media (max-width: 900px){ .grid{ grid-template-columns:1fr; } }
+    .project-toggle{
+      width:100%;
+      appearance:none;
+      border:none;
+      background:transparent;
+      cursor:pointer;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:4px;
+      padding:0;
+      color:rgba(0,0,0,0.55);
+      transition:color .25s ease;
+    }
 
-.card{
-  border:1px solid var(--line);
-  background:var(--wash);
-  border-radius:var(--radius);
-  padding:18px 16px;
-  position:relative;
-  overflow:hidden;
-}
+    .project-toggle:hover{
+      color:rgba(0,0,0,0.90);
+    }
 
-.card.glass{
-  background:var(--glass);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border:1px solid rgba(0,0,0,0.08);
-  box-shadow: 0 24px 70px rgba(0,0,0,0.08);
-}
+    .project-title{
+      font-size:11px;
+      letter-spacing:0.32em;
+      text-transform:uppercase;
+      padding-bottom:4px;
+      border-bottom:1px solid rgba(0,0,0,0.18);
+      width:fit-content;
+      margin:0 auto;
+    }
 
-.card-title{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  margin-bottom:12px;
-}
+    .project-sub{
+      font-size:12px;
+      letter-spacing:0.18em;
+      text-transform:uppercase;
+      color:rgba(0,0,0,0.45);
+      margin-top:2px;
+    }
 
-.card-title .label{
-  font-size:11px;
-  letter-spacing:0.28em;
-  text-transform:uppercase;
-  color:var(--muted2);
-}
+    .project-chevron{
+      font-size:11px;
+      color:rgba(0,0,0,0.38);
+      transition:transform .22s ease;
+      margin-top:2px;
+    }
 
-.hr{
-  height:1px;
-  background:rgba(0,0,0,0.06);
-  margin:12px 0;
-}
+    .project-card.open .project-chevron{
+      transform:rotate(180deg);
+    }
 
-label{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  font-size:12px;
-  color:rgba(0,0,0,0.74);
-  margin:0 0 6px;
-}
-.field-note{
-  font-size:11px;
-  color:rgba(0,0,0,0.42);
-}
+    .project-panel{
+      max-height:0;
+      overflow:hidden;
+      opacity:0;
+      transform:translateY(-4px);
+      transition:max-height .28s ease, opacity .22s ease, transform .22s ease, margin-top .22s ease;
+      margin-top:0;
+    }
 
-input, select{
-  width:100%;
-  padding:10px 11px;
-  border:1px solid var(--line2);
-  border-radius:14px;
-  background:rgba(255,255,255,0.95);
-  outline:none;
-  font-size:14px;
-  color:#111;
-  transition:border-color .15s ease, background .15s ease;
-}
-input:focus, select:focus{ border-color:rgba(0,0,0,0.22); background:#fff; }
+    .project-card.open .project-panel{
+      max-height:320px;
+      opacity:1;
+      transform:translateY(0);
+      margin-top:10px;
+    }
 
-.row2{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap:10px;
-}
-@media (max-width: 520px){ .row2{ grid-template-columns:1fr; } }
+    .project-panel-inner{
+      background:rgba(255,255,255,0.72);
+      border:1px solid rgba(0,0,0,0.08);
+      border-radius:18px;
+      padding:16px 18px 14px;
+      box-shadow:0 18px 40px rgba(0,0,0,0.08);
+      text-align:center;
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+      margin:0 auto;
+    }
 
-.btnRow{
-  margin-top:14px;
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-}
-button{
-  appearance:none;
-  -webkit-appearance:none;
-  border:none;
-  cursor:pointer;
-  padding:14px 14px;
-  border-radius:16px;
-  font-size:12px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-}
-.primary{ background:#111; color:#fff; }
-.primary:hover{ opacity:0.90; }
-.secondary{
-  background:#fff; color:#111;
-  border:1px solid var(--line2);
-}
-.secondary:hover{ background:rgba(0,0,0,0.02); }
+    .project-panel-inner p{
+      font-size:14px;
+      line-height:1.7;
+      color:rgba(0,0,0,0.75);
+      margin:0 0 10px;
+    }
 
-.smallBtn{
-  padding:10px 12px;
-  border-radius:14px;
-  font-size:11px;
-  letter-spacing:0.18em;
-}
+    .project-meta{
+      font-size:12px;
+      line-height:1.6;
+      color:rgba(0,0,0,0.52);
+      margin-bottom:12px;
+    }
 
-.notice{
-  font-size:12px;
-  line-height:1.7;
-  color:rgba(0,0,0,0.56);
-}
+    .project-launch,
+    .overlay-link{
+      display:inline-block;
+      text-decoration:none;
+      color:#000;
+      border-bottom:1px solid rgba(0,0,0,0.22);
+      padding-bottom:2px;
+      font-size:12px;
+      letter-spacing:0.18em;
+      text-transform:uppercase;
+      opacity:0.85;
+      background:none;
+      border-top:none;
+      border-left:none;
+      border-right:none;
+      cursor:pointer;
+      font-family:inherit;
+    }
 
-.kpi{
-  display:flex;
-  align-items:baseline;
-  justify-content:space-between;
-  gap:10px;
-  flex-wrap:wrap;
-}
-.kpiMain{
-  font-size:16px;
-  font-weight:700;
-  letter-spacing:0.02em;
-}
-.kpiBadge{
-  font-size:11px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  color:rgba(0,0,0,0.50);
-}
+    .project-launch:hover,
+    .overlay-link:hover{
+      opacity:1;
+      border-bottom-color:rgba(0,0,0,0.35);
+    }
 
-.readout{
-  font-size:13px;
-  line-height:1.7;
-  color:rgba(0,0,0,0.80);
-  white-space:pre-line;
-}
-.mono{
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size:12px;
-  color:rgba(0,0,0,0.72);
-}
+    .secret-trigger{
+      width:10px;
+      height:10px;
+      border:none;
+      border-radius:999px;
+      background:rgba(0,0,0,0.18);
+      display:block;
+      margin:8px auto 12px;
+      cursor:pointer;
+      opacity:0.22;
+      transition:opacity .22s ease, transform .22s ease, background .22s ease;
+      text-decoration:none;
+      appearance:none;
+      -webkit-appearance:none;
+    }
 
-.sectionTitle{
-  margin:2px 0 10px;
-  font-size:11px;
-  letter-spacing:0.28em;
-  text-transform:uppercase;
-  color:rgba(0,0,0,0.45);
-}
+    .secret-trigger:hover{
+      opacity:0.42;
+      transform:scale(1.08);
+      background:rgba(0,0,0,0.28);
+    }
 
-.planGrid{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap:10px;
-}
-@media (max-width: 760px){ .planGrid{ grid-template-columns:1fr; } }
+    .secret-trigger:focus-visible{
+      outline:none;
+      opacity:0.42;
+      transform:scale(1.08);
+      background:rgba(0,0,0,0.28);
+    }
 
-.planCard{
-  border:1px solid var(--line);
-  background:rgba(255,255,255,0.70);
-  border-radius:18px;
-  padding:12px;
-}
+    .secret-trigger-label{
+      position:absolute;
+      width:1px;
+      height:1px;
+      padding:0;
+      margin:-1px;
+      overflow:hidden;
+      clip:rect(0,0,0,0);
+      white-space:nowrap;
+      border:0;
+    }
 
-.planTop{
-  display:flex;
-  justify-content:space-between;
-  align-items:baseline;
-  gap:10px;
-  margin-bottom:8px;
-}
-.planName{
-  font-size:11px;
-  letter-spacing:0.28em;
-  text-transform:uppercase;
-  color:rgba(0,0,0,0.55);
-}
-.planMeta{
-  font-size:11px;
-  letter-spacing:0.14em;
-  text-transform:uppercase;
-  color:rgba(0,0,0,0.40);
-}
+    .inline-link{
+      color:inherit;
+      text-decoration:none;
+      border-bottom:1px solid rgba(0,0,0,0.25);
+      padding-bottom:1px;
+      transition:opacity .2s ease, border-color .2s ease;
+    }
 
-.list{
-  margin:0;
-  padding:0 0 0 16px;
-  color:rgba(0,0,0,0.78);
-  line-height:1.6;
-  font-size:13px;
-}
-.list li{ margin:6px 0; }
+    .inline-link:hover{
+      opacity:1;
+      border-bottom-color:rgba(0,0,0,0.45);
+    }
 
-.pillRow{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:10px;
-}
-.pill{
-  font-size:11px;
-  letter-spacing:0.12em;
-  text-transform:uppercase;
-  color:rgba(0,0,0,0.55);
-  border:1px solid var(--line2);
-  background:rgba(255,255,255,0.75);
-  border-radius:999px;
-  padding:8px 10px;
-}
+    .inline-link:focus-visible{
+      outline:none;
+      border-bottom-color:rgba(0,0,0,0.45);
+    }
 
-.table{
-  width:100%;
-  border-collapse:separate;
-  border-spacing:0;
-  overflow:hidden;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,0.70);
-  border-radius:18px;
-}
-.table th, .table td{
-  padding:10px 10px;
-  border-bottom:1px solid rgba(0,0,0,0.06);
-  font-size:13px;
-  color:rgba(0,0,0,0.78);
-  text-align:left;
-}
-.table th{
-  font-size:11px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  color:rgba(0,0,0,0.48);
-}
-.table tr:last-child td{ border-bottom:none; }
+    @keyframes reveal{
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
 
-.footer{
-  margin-top:22px;
-  text-align:center;
-  font-size:11px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  color:rgba(0,0,0,0.35);
-}
+    @keyframes fadeIn{
+      to{ opacity:1; }
+    }
 
-/* Modal */
-.modal{
-  position:fixed;
-  inset:0;
-  z-index:999;
-  display:none;
-}
-.modal.active{ display:block; }
-.modalBack{
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,0.28);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-}
-.modalPanel{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  width:min(760px, 92vw);
-  max-height:min(620px, 84vh);
-  overflow:auto;
-  border-radius:18px;
-  border:1px solid rgba(255,255,255,0.45);
-  background:rgba(255,255,255,0.86);
-  box-shadow: var(--shadow);
-  padding:18px 18px 16px;
-}
-@media (max-width: 520px){
-  .modalPanel{
-    top:auto;
-    bottom:14px;
-    transform:translate(-50%,0);
-    width:min(760px, 94vw);
-    max-height:68vh;
-    border-radius:20px;
-  }
-}
-.modalTop{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:12px;
-  margin-bottom:10px;
-}
-.modalTitle{
-  font-size:11px;
-  letter-spacing:0.28em;
-  text-transform:uppercase;
-  color:rgba(0,0,0,0.55);
-}
-.modalClose{
-  width:34px;
-  height:34px;
-  border-radius:12px;
-  border:1px solid rgba(0,0,0,0.10);
-  background:rgba(255,255,255,0.7);
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:16px;
-  color:rgba(0,0,0,0.6);
-}
-.modalClose:hover{ color:#000; background:rgba(255,255,255,0.92); }
-.modalBody{
-  font-size:14px;
-  line-height:1.75;
-  color:rgba(0,0,0,0.78);
-}
-</style>
+    .menu-btn{
+      position:fixed;
+      top:18px;
+      left:18px;
+      width:44px;
+      height:44px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.75);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      border-radius:12px;
+      cursor:pointer;
+      z-index:50;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition:transform .2s ease, background .2s ease;
+    }
+
+    .menu-btn:hover{
+      transform:translateY(-1px);
+      background:rgba(255,255,255,0.92);
+    }
+
+    .icon{
+      width:18px;
+      height:12px;
+      position:relative;
+    }
+
+    .icon span{
+      position:absolute;
+      left:0;
+      right:0;
+      height:2px;
+      background:#000;
+      border-radius:2px;
+      transition:transform .25s ease, top .25s ease, opacity .2s ease;
+    }
+
+    .icon span:nth-child(1){ top:0; }
+    .icon span:nth-child(2){ top:5px; }
+    .icon span:nth-child(3){ top:10px; }
+
+    .menu-btn.open .icon span:nth-child(1){
+      top:5px;
+      transform:rotate(45deg);
+    }
+
+    .menu-btn.open .icon span:nth-child(2){
+      opacity:0;
+    }
+
+    .menu-btn.open .icon span:nth-child(3){
+      top:5px;
+      transform:rotate(-45deg);
+    }
+
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(10,10,10,0.30);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .28s ease;
+      z-index:60;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:28px;
+    }
+
+    .overlay.active{
+      opacity:1;
+      pointer-events:auto;
+    }
+
+    .panel{
+      width:min(760px, 92vw);
+      background:var(--glass2);
+      border:1px solid rgba(255,255,255,0.50);
+      box-shadow:var(--shadow);
+      border-radius:28px;
+      padding:34px 28px 28px;
+      transform:translateY(10px);
+      opacity:0;
+      transition:transform .28s ease, opacity .28s ease;
+      position:relative;
+    }
+
+    .overlay.active .panel{
+      transform:translateY(0);
+      opacity:1;
+    }
+
+    #menuOverlay .panel,
+    #aboutOverlay .panel{
+      transform:translateY(16px) scale(0.985);
+      opacity:0;
+      filter:blur(8px);
+      transition:none;
+    }
+
+    #menuOverlay.active .panel,
+    #aboutOverlay.active .panel{
+      animation:overlayPanelReveal 0.9s ease forwards;
+    }
+
+    @keyframes overlayPanelReveal{
+      from{
+        opacity:0;
+        transform:translateY(16px) scale(0.985);
+        filter:blur(8px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+        filter:blur(0);
+      }
+    }
+
+    .panel-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:14px;
+    }
+
+    .kicker{
+      font-size:12px;
+      letter-spacing:0.28em;
+      text-transform:uppercase;
+      color:rgba(0,0,0,0.55);
+    }
+
+    .close-btn{
+      width:40px;
+      height:40px;
+      border-radius:14px;
+      border:1px solid rgba(0,0,0,0.10);
+      background:rgba(255,255,255,0.70);
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:18px;
+      color:rgba(0,0,0,0.65);
+      transition:background .2s ease, color .2s ease, transform .2s ease;
+    }
+
+    .close-btn:hover{
+      background:rgba(255,255,255,0.95);
+      color:#000;
+      transform:translateY(-1px);
+    }
+
+    .panel h2{
+      font-size:34px;
+      letter-spacing:0.10em;
+      font-weight:650;
+      margin:6px 0 8px;
+    }
+
+    .panel .subhead{
+      font-size:12px;
+      letter-spacing:0.30em;
+      text-transform:uppercase;
+      color:rgba(0,0,0,0.45);
+      margin-bottom:18px;
+    }
+
+    .copy{
+      font-size:15px;
+      line-height:1.85;
+      color:rgba(0,0,0,0.78);
+      max-width:62ch;
+      margin:0 auto;
+    }
+
+    .copy p{ margin:0 0 12px; }
+
+    .menu-links{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      align-items:center;
+      justify-content:center;
+      margin-top:8px;
+    }
+
+    .menu-links a,
+    .menu-links button{
+      background:none;
+      border:none;
+      padding:0;
+      font:inherit;
+      cursor:pointer;
+      color:#000;
+      text-decoration:none;
+      border-bottom:1px solid rgba(0,0,0,0.22);
+      padding-bottom:2px;
+      font-size:12px;
+      letter-spacing:0.22em;
+      text-transform:uppercase;
+      opacity:0.85;
+      font-family:inherit;
+    }
+
+    .menu-links a:hover,
+    .menu-links button:hover{
+      opacity:1;
+      border-bottom-color:rgba(0,0,0,0.35);
+    }
+
+    @media (max-width:520px){
+      body{
+        overflow:auto;
+      }
+
+      .app{
+        align-items:flex-start;
+        min-height:100vh;
+        padding:120px 0 80px;
+      }
+
+      .logo{
+        font-size:56px;
+        letter-spacing:8px;
+      }
+
+      .sub{
+        font-size:11px;
+        letter-spacing:3px;
+        line-height:1.5;
+      }
+
+      .panel{
+        padding:28px 18px 22px;
+        border-radius:24px;
+      }
+
+      .panel h2{
+        font-size:30px;
+      }
+
+      .tagline{
+        font-size:11px;
+      }
+
+      .project-panel-inner p{
+        font-size:13px;
+      }
+
+      .project-meta{
+        font-size:11px;
+      }
+
+      .projects{
+        width:min(94vw, 380px);
+      }
+
+      .project-card{
+        width:100%;
+      }
+    }
+  </style>
 </head>
 
 <body>
-<div class="container">
 
-  <div class="topbar">
-    <a class="back" href="/">← Back</a>
-    <div class="brand">Engine v1 • local</div>
-  </div>
+  <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">
+    <div class="icon" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+  </button>
 
-  <h1>STORMIĒ</h1>
-  <div class="headline">Adaptive strength planning for athletes with real life schedules.</div>
-  <div class="micro">Set your week. Log your sets. The engine auto-adjusts the next week to drive glute growth without ruining climbing or Muay Thai.</div>
+  <div class="app" id="app">
+    <div>
+      <div class="logo" aria-label="STORM KOLMODIN">STORM KOLMODIN</div>
 
-  <div class="tabs">
-    <button class="tab active" id="tabPlan" type="button">Plan</button>
-    <button class="tab" id="tabLog" type="button">Log</button>
-    <button class="tab" id="tabHistory" type="button">History</button>
-  </div>
+      <div class="sub">
+        AI · AUTOMATION · DIGITAL PRODUCTS
+      </div>
 
-  <!-- PLAN -->
-  <div id="viewPlan">
-    <div class="grid">
-      <div class="card glass">
-        <div class="card-title">
-          <div class="label">This week</div>
-          <button class="secondary smallBtn" type="button" id="btnHelp">How it works</button>
-        </div>
+      <div class="tagline">
+        Building AI assistants, Automation Systems & Digital Products
+      </div>
 
-        <label>Goal <span class="field-note">v1</span></label>
-        <select id="goal">
-          <option value="glute_hypertrophy" selected>Build glutes (muscle growth)</option>
-        </select>
+      <div class="projects">
 
-        <div class="row2" style="margin-top:10px;">
-          <div>
-            <label>Bodyweight (kg) <span class="field-note">optional</span></label>
-            <input type="number" id="bw" min="30" max="200" step="0.1" placeholder="e.g. 65" />
-          </div>
-          <div>
-            <label>How tired are you now?</label>
-            <select id="fatigue">
-              <option value="low" selected>Fresh</option>
-              <option value="moderate">Somewhat tired</option>
-              <option value="high">Very tired</option>
-            </select>
+        <div class="project-card">
+          <button class="project-toggle" type="button">
+            <span class="project-title">Stormiē Assistants</span>
+            <span class="project-sub">Automation workflows</span>
+            <span class="project-chevron">⌄</span>
+          </button>
+          <div class="project-panel">
+            <div class="project-panel-inner">
+              <p>
+                Portfolio entry for AI assistants and workflow automations focused on customer support, inbox workflows, lead handling, and operational systems.
+              </p>
+              <div class="project-meta">AI workflows · Customer support · Operations</div>
+              <a class="project-launch" href="https://stormie.app" target="_blank" rel="noopener noreferrer">View Systems</a>
+            </div>
           </div>
         </div>
 
-        <div class="hr"></div>
-
-        <label>Muay Thai sessions this week</label>
-        <div class="row2">
-          <input type="number" id="thaiTotal" min="0" max="14" step="1" placeholder="total / week" />
-          <input type="number" id="thaiHard" min="0" max="14" step="1" placeholder="hard / week" />
+        <div class="project-card">
+          <button class="project-toggle" type="button">
+            <span class="project-title">Stormie Moves</span>
+            <span class="project-sub">Hybrid training app</span>
+            <span class="project-chevron">⌄</span>
+          </button>
+          <div class="project-panel">
+            <div class="project-panel-inner">
+              <p>
+                AI-powered training planner that generates personalized multi-sports workouts based on sport, experience level, training time, and goals.
+              </p>
+              <div class="project-meta">Product ·Hybrid training app</div>
+              <a class="project-launch" href="https://stormiemoves.com" target="_blank" rel="noopener noreferrer">Open Project</a>
+            </div>
+          </div>
         </div>
 
-        <label style="margin-top:12px;">Climbing sessions this week</label>
-        <div class="row2">
-          <input type="number" id="climbTotal" min="0" max="14" step="1" placeholder="total / week" />
-          <input type="number" id="climbHard" min="0" max="14" step="1" placeholder="hard / week" />
+        <div class="project-card">
+          <button class="project-toggle" type="button">
+            <span class="project-title">Clinch Athletics</span>
+            <span class="project-sub">Combat sports brand</span>
+            <span class="project-chevron">⌄</span>
+          </button>
+          <div class="project-panel">
+            <div class="project-panel-inner">
+              <p>
+                Combat sports brand and e-commerce platform for premium training gear, built around controlled releases and distinct product series.
+              </p>
+              <div class="project-meta">Brand · Commerce · Muay Thai</div>
+              <a class="project-launch" href="https://clinchathletics.com" target="_blank" rel="noopener noreferrer">Open Project</a>
+            </div>
+          </div>
         </div>
 
-        <label style="margin-top:12px;">Dance sessions this week</label>
-        <input type="number" id="danceTotal" min="0" max="14" step="1" placeholder="total / week" />
+        <div class="project-card" id="stormWylderCard">
+          <button class="project-toggle" type="button">
+            <span class="project-title">Storm Wylder</span>
+            <span class="project-sub">Mountain expedition game</span>
+            <span class="project-chevron">⌄</span>
+          </button>
 
-        <div class="btnRow">
-          <button class="primary" type="button" id="btnGenerate">Generate plan</button>
-          <button class="secondary" type="button" id="btnResetAll">Reset</button>
+          <div class="project-panel">
+            <div class="project-panel-inner">
+              <p>
+                Storm Wylder is a mountain expedition game where the player climbs, fights, and survives through a dangerous route with a companion.
+              </p>
+              <div class="project-meta">In development · Unity game prototype</div>
+
+              <a class="secret-trigger" href="/alpine.html" aria-label="Open hidden alpine note">
+                <span class="secret-trigger-label">Open hidden alpine note</span>
+              </a>
+            </div>
+          </div>
         </div>
 
-        <div class="hr"></div>
-        <div class="notice">
-          <span class="mono">Hard</span> means a session that is close to your limit (sparring / very hard pads, or max hangs / hard attempts).
-          Hard sessions are included inside total.
-        </div>
-      </div>
-
-      <div class="card glass">
-        <div class="card-title">
-          <div class="label">Output</div>
-          <button class="secondary smallBtn" type="button" id="btnExport">Export</button>
-        </div>
-
-        <div class="kpi">
-          <div class="kpiMain" id="outTitle">No plan yet</div>
-          <div class="kpiBadge" id="outBadge">—</div>
-        </div>
-        <div class="hr"></div>
-
-        <div class="readout" id="outSummary">Set your week and generate a plan.</div>
-
-        <div class="hr"></div>
-
-        <div class="sectionTitle">Gym sessions</div>
-        <div class="planGrid" id="planGrid"></div>
-
-        <div class="pillRow" id="pillRow" style="display:none;"></div>
-
-        <div class="btnRow" style="margin-top:14px;">
-          <button class="primary" type="button" id="btnGoLog" style="flex:1;">Log today</button>
-          <button class="secondary" type="button" id="btnClearWeek" style="flex:1;">Clear week log</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- LOG -->
-  <div id="viewLog" style="display:none;">
-    <div class="grid">
-      <div class="card glass">
-        <div class="card-title">
-          <div class="label">Log a strength session</div>
-          <button class="secondary smallBtn" type="button" id="btnPickSession">Pick session</button>
-        </div>
-
-        <div class="notice" id="logIntro">Generate a plan first.</div>
-
-        <div class="hr"></div>
-
-        <div class="sectionTitle">Session</div>
-        <div class="readout" id="logSessionName">—</div>
-
-        <div class="hr"></div>
-
-        <div id="exerciseBlocks"></div>
-
-        <div class="btnRow">
-          <button class="primary" type="button" id="btnSaveLog">Save log</button>
-          <button class="secondary" type="button" id="btnAddSet">Add set</button>
-        </div>
-
-        <div class="hr"></div>
-        <div class="notice">
-          <b>RIR</b> = “reps left in the tank”. Example: RIR 2 means you could have done 2 more reps.
-        </div>
-      </div>
-
-      <div class="card glass">
-        <div class="card-title">
-          <div class="label">Auto progression</div>
-          <button class="secondary smallBtn" type="button" id="btnRecalc">Recalculate</button>
-        </div>
-
-        <div class="readout" id="progReadout">Log a session to see next-week changes.</div>
-
-        <div class="hr"></div>
-
-        <div class="sectionTitle">Next time targets</div>
-        <table class="table" id="targetsTable">
-          <thead>
-            <tr><th>Exercise</th><th>Next target</th><th>Why</th></tr>
-          </thead>
-          <tbody></tbody>
-        </table>
       </div>
     </div>
   </div>
 
-  <!-- HISTORY -->
-  <div id="viewHistory" style="display:none;">
-    <div class="card glass">
-      <div class="card-title">
-        <div class="label">History</div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <button class="secondary smallBtn" type="button" id="btnImport">Import</button>
-          <button class="secondary smallBtn" type="button" id="btnExport2">Export</button>
-          <button class="secondary smallBtn" type="button" id="btnNuke">Delete all</button>
-        </div>
+  <div class="overlay" id="menuOverlay" aria-hidden="true">
+    <div class="panel" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="panel-top">
+        <div class="kicker">Menu</div>
+        <button class="close-btn" type="button" id="menuClose" aria-label="Close">×</button>
       </div>
 
-      <div class="notice">This engine stores your data in your browser (local). Export if you want backup.</div>
+      <h2>STORM KOLMODIN</h2>
+      <div class="subhead">About · Contact</div>
 
-      <div class="hr"></div>
-
-      <div class="sectionTitle">Last 30 days</div>
-      <table class="table" id="historyTable">
-        <thead>
-          <tr><th>Date</th><th>Session</th><th>Work done</th><th>Notes</th></tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+      <div class="menu-links">
+        <button type="button" id="openAboutFromMenu">About</button>
+        <a href="mailto:storm.kolmodin@gmail.com">Contact</a>
+      </div>
     </div>
   </div>
 
-  <div class="footer">Open Access Beta • No accounts • Local storage</div>
-</div>
+  <div class="overlay" id="aboutOverlay" aria-hidden="true">
+    <div class="panel" role="dialog" aria-modal="true" aria-label="About Me">
+      <div class="panel-top">
+        <div class="kicker">About</div>
+        <button class="close-btn" type="button" id="aboutClose" aria-label="Close">×</button>
+      </div>
 
-<!-- Modal -->
-<div class="modal" id="modal">
-  <div class="modalBack" id="modalBack"></div>
-  <div class="modalPanel">
-    <div class="modalTop">
-      <div class="modalTitle" id="modalTitle">INFO</div>
-      <button class="modalClose" id="modalClose" aria-label="Close">×</button>
+      <h2>Storm Kolmodin</h2>
+      <div class="subhead">AI Builder · Automation Systems · Digital Products</div>
+
+      <div class="copy">
+        <p>
+          Licensed Personal Trainer. Climber. Muay Thai Practitioner.
+        </p>
+        <p>
+          I build ventures around physical performance - creating the products, systems, and software behind them.
+        </p>
+      </div>
     </div>
-    <div class="modalBody" id="modalBody"></div>
   </div>
-</div>
 
-<script>
-/* ==========================
-   Storage model (local)
-   ========================== */
-const KEY = "stormie_engine_v1";
+  <script>
+    const app = document.getElementById("app");
+    const menuBtn = document.getElementById("menuBtn");
 
-const DEFAULT = {
-  version: 1,
-  week: {
-    goal: "glute_hypertrophy",
-    bw: null,
-    fatigue: "low",
-    thai: { total: 0, hard: 0 },
-    climb:{ total: 0, hard: 0 },
-    dance:{ total: 0 },
-    generatedAt: null
-  },
-  plan: null, // generated plan object
-  // per-exercise progression state
-  progression: {
-    // example:
-    // "Hip Thrust": { baseKg: 80, repRange:[8,12], rirTarget:[1,2], lastDecision:"", nextKg:82.5 }
-  },
-  logs: [] // {dateISO, sessionId, sessionName, entries:[{exercise, setIndex, kg, reps, rir}], notes:""}
-};
+    const menuOverlay = document.getElementById("menuOverlay");
+    const menuClose = document.getElementById("menuClose");
 
-function loadState(){
-  try{
-    const raw = localStorage.getItem(KEY);
-    if(!raw) return structuredClone(DEFAULT);
-    const parsed = JSON.parse(raw);
-    return Object.assign(structuredClone(DEFAULT), parsed);
-  }catch(e){
-    return structuredClone(DEFAULT);
-  }
-}
-function saveState(s){ localStorage.setItem(KEY, JSON.stringify(s)); }
+    const aboutOverlay = document.getElementById("aboutOverlay");
+    const aboutClose = document.getElementById("aboutClose");
+    const openAboutFromMenu = document.getElementById("openAboutFromMenu");
 
-let state = loadState();
+    const projectCards = document.querySelectorAll(".project-card");
 
-/* ==========================
-   UI helpers
-   ========================== */
-const $ = (id)=>document.getElementById(id);
-
-function openModal(title, html){
-  $("modalTitle").textContent = title || "INFO";
-  $("modalBody").innerHTML = html || "";
-  $("modal").classList.add("active");
-}
-function closeModal(){ $("modal").classList.remove("active"); }
-$("modalBack").addEventListener("click", closeModal);
-$("modalClose").addEventListener("click", closeModal);
-window.addEventListener("keydown", (e)=>{ if(e.key==="Escape") closeModal(); });
-
-/* ==========================
-   Tabs
-   ========================== */
-const views = {
-  plan: $("viewPlan"),
-  log: $("viewLog"),
-  history: $("viewHistory")
-};
-function setTab(which){
-  $("tabPlan").classList.toggle("active", which==="plan");
-  $("tabLog").classList.toggle("active", which==="log");
-  $("tabHistory").classList.toggle("active", which==="history");
-  views.plan.style.display = which==="plan" ? "block" : "none";
-  views.log.style.display = which==="log" ? "block" : "none";
-  views.history.style.display = which==="history" ? "block" : "none";
-  if(which==="history") renderHistory();
-  if(which==="log") renderLog();
-}
-$("tabPlan").addEventListener("click", ()=>setTab("plan"));
-$("tabLog").addEventListener("click", ()=>setTab("log"));
-$("tabHistory").addEventListener("click", ()=>setTab("history"));
-$("btnGoLog").addEventListener("click", ()=>setTab("log"));
-
-/* ==========================
-   Engine settings (v1)
-   ========================== */
-const EXERCISES = [
-  { name:"Back Squat", pattern:"lower", defaultKg: 0 },
-  { name:"Bulgarian Split Squat", pattern:"lower", defaultKg: 0 },
-  { name:"RDL", pattern:"hinge", defaultKg: 0 },
-  { name:"Hip Thrust", pattern:"glute", defaultKg: 0 }
-];
-
-// Hypertrophy defaults
-const HYP = {
-  repRange: [8,12],
-  rirTarget: [1,2],        // aim for RIR 1–2
-  maxRIR: 3,               // too easy
-  minRIR: 0,               // too hard
-  incKg: 2.5,              // step (you can change per lift later)
-  decPct: 0.05,            // 5% back-off when needed
-  baseWeeklySets: 14,      // glute-stimulating sets target (v1)
-  maxWeeklySets: 18
-};
-
-function clamp(n,min,max){ return Math.max(min, Math.min(max,n)); }
-function safeInt(x){ const v=parseInt(x,10); return Number.isFinite(v)?v:0; }
-function safeNum(x){ const v=parseFloat(x); return Number.isFinite(v)?v:null; }
-function todayISO(){ return new Date().toISOString().slice(0,10); }
-
-/* ==========================
-   Week → stress score
-   ========================== */
-function computeStress(week){
-  const thaiTotal = week.thai.total;
-  const thaiHard  = clamp(week.thai.hard, 0, thaiTotal);
-  const climbTotal= week.climb.total;
-  const climbHard = clamp(week.climb.hard, 0, climbTotal);
-  const danceTotal= week.dance.total;
-
-  // simple weighting (v1)
-  const base = (thaiTotal*2) + (climbTotal*2) + (danceTotal*1);
-  const hard = (thaiHard*2) + (climbHard*2); // extra penalty
-  let stress = base + hard;
-
-  const fat = week.fatigue;
-  if(fat==="moderate") stress *= 1.12;
-  if(fat==="high") stress *= 1.25;
-
-  // band
-  let band = "low";
-  if(stress >= 18) band = "high";
-  else if(stress >= 10) band = "moderate";
-
-  return { stress: Math.round(stress), band, thaiHard, climbHard };
-}
-
-/* ==========================
-   Plan generator (v1: 2 sessions for high/moderate)
-   ========================== */
-function generatePlan(week){
-  const { band } = computeStress(week);
-
-  // v1: keep it stable and realistic
-  const strengthSessions = (band==="low" ? 3 : 2);
-
-  // Volume scaling based on stress
-  let weeklySetsTarget = HYP.baseWeeklySets;
-  if(band==="high") weeklySetsTarget = 12;
-  if(band==="moderate") weeklySetsTarget = 14;
-  if(band==="low") weeklySetsTarget = 16;
-  weeklySetsTarget = clamp(weeklySetsTarget, 10, HYP.maxWeeklySets);
-
-  // split across sessions
-  const perSessionSets = Math.round(weeklySetsTarget / strengthSessions);
-
-  // Session templates (glute hypertrophy)
-  // Progression is per exercise via logged performance; here we propose set targets.
-  const sessions = [];
-  sessions.push({
-    id:"A",
-    name:"Glute Strength + Growth",
-    intent:"Heavy-ish hypertrophy. Stable technique. No failure.",
-    blocks:[
-      { ex:"Hip Thrust", sets: Math.max(3, Math.round(perSessionSets*0.35)), reps:"8–12", rir:"1–2" },
-      { ex:"Back Squat", sets: Math.max(2, Math.round(perSessionSets*0.25)), reps:"6–10", rir:"1–2" },
-      { ex:"Bulgarian Split Squat", sets: Math.max(2, Math.round(perSessionSets*0.25)), reps:"8–12", rir:"1–2" },
-      { ex:"RDL", sets: Math.max(1, Math.round(perSessionSets*0.15)), reps:"8–12", rir:"2" }
-    ],
-    rules:[
-      "Stop sets before form breaks.",
-      "No max reps. Keep 1–2 reps in reserve.",
-      "If sport week is hard, keep RDL conservative."
-    ]
-  });
-
-  sessions.push({
-    id:"B",
-    name:"Glute Volume + Pump",
-    intent:"More volume. Same quality. Short rests allowed on accessories.",
-    blocks:[
-      { ex:"Bulgarian Split Squat", sets: Math.max(3, Math.round(perSessionSets*0.35)), reps:"10–15", rir:"1–2" },
-      { ex:"Hip Thrust", sets: Math.max(3, Math.round(perSessionSets*0.35)), reps:"10–15", rir:"1–2" },
-      { ex:"Back Squat", sets: Math.max(1, Math.round(perSessionSets*0.15)), reps:"8–12", rir:"2" },
-      { ex:"RDL", sets: Math.max(1, Math.round(perSessionSets*0.15)), reps:"10–12", rir:"2–3" }
-    ],
-    rules:[
-      "Chase tension, not exhaustion.",
-      "Leave 1–2 reps in reserve on most sets.",
-      "If fatigue is high: remove 1 set from the last exercise."
-    ]
-  });
-
-  // If 3 sessions, add Micro-dose session (very easy)
-  if(strengthSessions === 3){
-    sessions.push({
-      id:"C",
-      name:"Micro-dose (Recovery Compatible)",
-      intent:"Keeps glute stimulus without stealing recovery.",
-      blocks:[
-        { ex:"Hip Thrust", sets: 2, reps:"10–12", rir:"2" },
-        { ex:"Bulgarian Split Squat", sets: 2, reps:"8–12", rir:"2" },
-        { ex:"RDL", sets: 1, reps:"8–10", rir:"3" }
-      ],
-      rules:[
-        "Short and clean. Leave reps in the tank.",
-        "If sport week changes: skip this session first."
-      ]
-    });
-  }
-
-  // Output meta
-  return {
-    weekId: todayISO(),
-    band,
-    strengthSessions,
-    weeklySetsTarget,
-    repRange: HYP.repRange,
-    rirTarget: HYP.rirTarget,
-    sessions
-  };
-}
-
-/* ==========================
-   Plan view rendering
-   ========================== */
-function syncWeekInputs(){
-  $("goal").value = state.week.goal;
-  $("bw").value = state.week.bw ?? "";
-  $("fatigue").value = state.week.fatigue;
-
-  $("thaiTotal").value = state.week.thai.total || "";
-  $("thaiHard").value  = state.week.thai.hard  || "";
-  $("climbTotal").value= state.week.climb.total || "";
-  $("climbHard").value = state.week.climb.hard  || "";
-  $("danceTotal").value= state.week.dance.total || "";
-}
-function readWeekInputs(){
-  state.week.goal = $("goal").value;
-  state.week.bw = safeNum($("bw").value);
-  state.week.fatigue = $("fatigue").value;
-
-  state.week.thai.total = safeInt($("thaiTotal").value);
-  state.week.thai.hard  = safeInt($("thaiHard").value);
-
-  state.week.climb.total = safeInt($("climbTotal").value);
-  state.week.climb.hard  = safeInt($("climbHard").value);
-
-  state.week.dance.total = safeInt($("danceTotal").value);
-}
-
-function renderPlan(){
-  const plan = state.plan;
-  const planGrid = $("planGrid");
-  const pillRow = $("pillRow");
-
-  planGrid.innerHTML = "";
-  pillRow.innerHTML = "";
-
-  if(!plan){
-    $("outTitle").textContent = "No plan yet";
-    $("outBadge").textContent = "—";
-    $("outSummary").textContent = "Set your week and generate a plan.";
-    pillRow.style.display = "none";
-    return;
-  }
-
-  const stress = computeStress(state.week);
-
-  $("outTitle").textContent = "Glute Growth Plan";
-  $("outBadge").textContent = `Stress: ${stress.band.toUpperCase()} • Strength: ${plan.strengthSessions}/week`;
-
-  $("outSummary").textContent =
-    `This week target: ${plan.weeklySetsTarget} glute-focused sets.\n` +
-    `Keep most sets at RIR ${plan.rirTarget[0]}–${plan.rirTarget[1]} (stop before failure).\n` +
-    `Hard sport sessions reduce gym intensity automatically.`;
-
-  // pills
-  const pills = [
-    `glute sets ${plan.weeklySetsTarget}/week`,
-    `RIR ${plan.rirTarget[0]}–${plan.rirTarget[1]}`,
-    `rep range ${plan.repRange[0]}–${plan.repRange[1]}`,
-    `sport hard ${(stress.thaiHard + stress.climbHard)}/week`
-  ];
-  pills.forEach(p=>{
-    const el = document.createElement("div");
-    el.className = "pill";
-    el.textContent = p;
-    pillRow.appendChild(el);
-  });
-  pillRow.style.display = "flex";
-
-  // sessions
-  plan.sessions.forEach(s=>{
-    const card = document.createElement("div");
-    card.className = "planCard";
-
-    const top = document.createElement("div");
-    top.className = "planTop";
-
-    const name = document.createElement("div");
-    name.className = "planName";
-    name.textContent = `Session ${s.id}`;
-
-    const meta = document.createElement("div");
-    meta.className = "planMeta";
-    meta.textContent = s.name;
-
-    top.appendChild(name);
-    top.appendChild(meta);
-
-    const ul = document.createElement("ul");
-    ul.className = "list";
-
-    s.blocks.forEach(b=>{
-      const li = document.createElement("li");
-      li.textContent = `${b.ex}: ${b.sets} sets • ${b.reps} • RIR ${b.rir}`;
-      ul.appendChild(li);
-    });
-
-    const rules = document.createElement("div");
-    rules.className = "notice";
-    rules.style.marginTop = "10px";
-    rules.innerHTML = `<span class="mono">${s.intent}</span>`;
-
-    card.appendChild(top);
-    card.appendChild(ul);
-    card.appendChild(rules);
-
-    planGrid.appendChild(card);
-  });
-
-  // prep default progression state if empty
-  ensureProgressionDefaults(plan);
-  saveState(state);
-}
-
-/* ==========================
-   Progression defaults
-   ========================== */
-function ensureProgressionDefaults(plan){
-  if(!state.progression) state.progression = {};
-
-  plan.sessions.forEach(s=>{
-    s.blocks.forEach(b=>{
-      const ex = b.ex;
-      if(!state.progression[ex]){
-        state.progression[ex] = {
-          repMin: 8,
-          repMax: 12,
-          rirMin: 1,
-          rirMax: 2,
-          incKg: HYP.incKg,
-          nextKg: null,
-          lastKg: null,
-          lastDecision: "No data yet"
-        };
-      }
-    });
-  });
-}
-
-/* ==========================
-   LOG: build session logger
-   ========================== */
-let activeSessionId = "A";
-
-function renderLog(){
-  const plan = state.plan;
-  if(!plan){
-    $("logIntro").textContent = "Generate a plan first (Plan tab).";
-    $("logSessionName").textContent = "—";
-    $("exerciseBlocks").innerHTML = "";
-    renderTargetsTable();
-    return;
-  }
-
-  const session = plan.sessions.find(s=>s.id===activeSessionId) || plan.sessions[0];
-  activeSessionId = session.id;
-
-  $("logIntro").innerHTML = `Logging for <span class="mono">this week</span>. Save after your workout.`;
-  $("logSessionName").textContent = `Session ${session.id} — ${session.name}`;
-
-  // build exercise blocks with per-set rows
-  const wrap = $("exerciseBlocks");
-  wrap.innerHTML = "";
-
-  session.blocks.forEach(block=>{
-    wrap.appendChild(buildExerciseBlock(block.ex, block.sets));
-    wrap.appendChild(document.createElement("div")).className="hr";
-  });
-
-  renderTargetsTable();
-}
-
-function buildExerciseBlock(exName, setCount){
-  const card = document.createElement("div");
-  card.className = "planCard";
-  card.style.marginBottom = "10px";
-
-  const top = document.createElement("div");
-  top.className = "planTop";
-
-  const name = document.createElement("div");
-  name.className = "planName";
-  name.textContent = exName.toUpperCase();
-
-  const meta = document.createElement("div");
-  meta.className = "planMeta";
-  const p = state.progression[exName] || {repMin:8, repMax:12, rirMin:1, rirMax:2};
-  meta.textContent = `Target: ${p.repMin}–${p.repMax} reps • RIR ${p.rirMin}–${p.rirMax}`;
-
-  top.appendChild(name);
-  top.appendChild(meta);
-
-  const table = document.createElement("table");
-  table.className = "table";
-  table.style.marginTop = "10px";
-
-  const thead = document.createElement("thead");
-  thead.innerHTML = `<tr><th>Set</th><th>kg</th><th>reps</th><th>RIR</th></tr>`;
-  table.appendChild(thead);
-
-  const tbody = document.createElement("tbody");
-  tbody.dataset.exercise = exName;
-
-  // seed rows
-  for(let i=1;i<=setCount;i++){
-    tbody.appendChild(buildSetRow(exName, i));
-  }
-
-  table.appendChild(tbody);
-
-  card.appendChild(top);
-  card.appendChild(table);
-
-  const note = document.createElement("div");
-  note.className="notice";
-  note.style.marginTop="8px";
-  note.textContent = "Tip: keep the first sets clean. The last set tells the engine how hard the session was.";
-  card.appendChild(note);
-
-  return card;
-}
-
-function buildSetRow(exName, setIndex){
-  const tr = document.createElement("tr");
-
-  const tdSet = document.createElement("td");
-  tdSet.textContent = setIndex;
-  tdSet.style.width = "48px";
-
-  const tdKg = document.createElement("td");
-  const kg = document.createElement("input");
-  kg.type="number"; kg.step="0.5"; kg.min="0"; kg.placeholder="kg";
-  kg.dataset.exercise = exName; kg.dataset.set=setIndex; kg.dataset.field="kg";
-  tdKg.appendChild(kg);
-
-  const tdReps = document.createElement("td");
-  const reps = document.createElement("input");
-  reps.type="number"; reps.step="1"; reps.min="0"; reps.placeholder="reps";
-  reps.dataset.exercise = exName; reps.dataset.set=setIndex; reps.dataset.field="reps";
-  tdReps.appendChild(reps);
-
-  const tdRir = document.createElement("td");
-  const rir = document.createElement("input");
-  rir.type="number"; rir.step="1"; rir.min="0"; rir.max="6"; rir.placeholder="RIR";
-  rir.dataset.exercise = exName; rir.dataset.set=setIndex; rir.dataset.field="rir";
-  tdRir.appendChild(rir);
-
-  tr.appendChild(tdSet);
-  tr.appendChild(tdKg);
-  tr.appendChild(tdReps);
-  tr.appendChild(tdRir);
-  return tr;
-}
-
-$("btnPickSession").addEventListener("click", ()=>{
-  if(!state.plan){ openModal("No plan", "Generate a plan first."); return; }
-  const options = state.plan.sessions.map(s=>`<button class="tab" style="margin:6px 6px 0 0;" onclick="window.__pick('${s.id}')">Session ${s.id}</button>`).join("");
-  openModal("Pick session", `<div class="notice">Choose which strength session you are logging.</div><div style="margin-top:10px; display:flex; flex-wrap:wrap; gap:8px;">${options}</div>`);
-});
-window.__pick = (id)=>{ activeSessionId=id; closeModal(); renderLog(); };
-
-$("btnAddSet").addEventListener("click", ()=>{
-  // Add one set to every exercise in the current logger (quick)
-  document.querySelectorAll("#exerciseBlocks tbody").forEach(tbody=>{
-    const ex = tbody.dataset.exercise;
-    const nextIndex = tbody.querySelectorAll("tr").length + 1;
-    tbody.appendChild(buildSetRow(ex, nextIndex));
-  });
-});
-
-/* ==========================
-   Save log + progression update
-   ========================== */
-function collectLogEntries(){
-  const plan = state.plan;
-  if(!plan) return null;
-  const session = plan.sessions.find(s=>s.id===activeSessionId);
-  if(!session) return null;
-
-  const entries = [];
-  // for each exercise table body
-  document.querySelectorAll("#exerciseBlocks tbody").forEach(tbody=>{
-    const ex = tbody.dataset.exercise;
-    tbody.querySelectorAll("tr").forEach(tr=>{
-      const inputs = tr.querySelectorAll("input");
-      const get = (field)=>{
-        const el = Array.from(inputs).find(i=>i.dataset.field===field);
-        return el ? el.value : "";
-      };
-      const kg = safeNum(get("kg"));
-      const reps = safeInt(get("reps"));
-      const rir = safeInt(get("rir"));
-
-      // skip empty rows
-      if(kg===null && reps===0 && rir===0) return;
-      if(kg===null || reps<=0) return; // require kg+reps
-
-      entries.push({
-        exercise: ex,
-        setIndex: parseInt(tr.children[0].textContent,10),
-        kg, reps, rir
-      });
-    });
-  });
-
-  return {
-    dateISO: new Date().toISOString(),
-    sessionId: session.id,
-    sessionName: `Session ${session.id} — ${session.name}`,
-    entries,
-    notes: ""
-  };
-}
-
-function updateProgressionFromLog(log){
-  // reps-first, then weight
-  const byEx = {};
-  log.entries.forEach(e=>{
-    if(!byEx[e.exercise]) byEx[e.exercise] = [];
-    byEx[e.exercise].push(e);
-  });
-
-  const stress = computeStress(state.week);
-  const band = stress.band;
-
-  const decisions = [];
-
-  Object.keys(byEx).forEach(ex=>{
-    const sets = byEx[ex];
-
-    // use the last working set as "performance signal"
-    sets.sort((a,b)=>a.setIndex - b.setIndex);
-    const last = sets[sets.length - 1];
-
-    const p = state.progression[ex] || {
-      repMin:8, repMax:12, rirMin:1, rirMax:2, incKg:HYP.incKg, nextKg:null, lastKg:null, lastDecision:""
-    };
-
-    // record last kg
-    p.lastKg = last.kg;
-
-    // decide
-    let decision = "";
-    let nextKg = (p.nextKg ?? last.kg); // if already set, keep as baseline
-
-    const repMin = p.repMin, repMax = p.repMax;
-    const rirMin = p.rirMin, rirMax = p.rirMax;
-
-    const withinReps = last.reps >= repMin && last.reps <= repMax;
-    const hitTop = last.reps >= repMax;
-    const tooEasy = last.rir >= (rirMax + 2);   // e.g. RIR 4+
-    const tooHard = last.rir <= 0;
-
-    // protection: if stress high, be conservative
-    const conservative = (band === "high" || state.week.fatigue === "high");
-
-    if(tooHard || last.reps < repMin){
-      // back off slightly
-      nextKg = roundTo(last.kg * (1 - HYP.decPct), 0.5);
-      decision = "Back off: too hard. Reduce weight ~5%.";
-    } else if(hitTop && last.rir >= rirMin){
-      if(conservative){
-        // reps-first: keep weight, keep at top reps, add quality
-        nextKg = last.kg;
-        decision = "Hold: high stress week. Keep weight, repeat top reps.";
-      } else {
-        nextKg = roundTo(last.kg + p.incKg, 0.5);
-        decision = "Progress: you hit top reps with reps in reserve. Add weight.";
-      }
-    } else if(withinReps && last.rir >= rirMin && last.rir <= (rirMax+1)){
-      // next time: add 1 rep before adding weight (reps-first)
-      nextKg = last.kg;
-      decision = "Progress (reps): keep weight and add 1 rep next time.";
-    } else if(tooEasy){
-      if(conservative){
-        nextKg = last.kg;
-        decision = "Hold: high stress week. Keep weight, clean reps.";
-      } else {
-        nextKg = roundTo(last.kg + p.incKg, 0.5);
-        decision = "Progress: set was too easy. Add weight.";
-      }
-    } else {
-      nextKg = last.kg;
-      decision = "Maintain: repeat and improve control.";
+    function setBlur(on){
+      app.classList.toggle("is-blurred", !!on);
     }
 
-    p.nextKg = nextKg;
-    p.lastDecision = decision;
-    state.progression[ex] = p;
+    function anyOverlayOpen(){
+      return menuOverlay.classList.contains("active") ||
+             aboutOverlay.classList.contains("active");
+    }
 
-    decisions.push({ exercise: ex, nextKg, decision, last });
-  });
+    function syncBlur(){
+      setBlur(anyOverlayOpen());
+    }
 
-  return decisions;
-}
+    function restartPanelAnimation(overlay){
+      const panel = overlay.querySelector(".panel");
+      if(!panel) return;
+      panel.style.animation = "none";
+      panel.offsetHeight;
+      panel.style.animation = "";
+    }
 
-function roundTo(n, step){
-  const inv = 1/step;
-  return Math.round(n*inv)/inv;
-}
+    function openOverlay(overlay){
+      overlay.classList.add("active");
+      overlay.setAttribute("aria-hidden", "false");
+      syncBlur();
 
-$("btnSaveLog").addEventListener("click", ()=>{
-  if(!state.plan){ openModal("No plan", "Generate a plan first."); return; }
-
-  const log = collectLogEntries();
-  if(!log || log.entries.length === 0){
-    openModal("Missing log", "Please enter at least one set (kg + reps).");
-    return;
-  }
-
-  state.logs.unshift(log);
-  // keep last 60 logs
-  state.logs = state.logs.slice(0, 60);
-
-  const decisions = updateProgressionFromLog(log);
-  saveState(state);
-
-  $("progReadout").textContent = "Saved. Next week targets updated.";
-  renderTargetsTable(decisions);
-
-  openModal("Saved", "Session saved. The engine updated next-week targets.");
-});
-
-$("btnRecalc").addEventListener("click", ()=>{
-  if(state.logs.length===0){
-    openModal("No logs", "Log at least one session first.");
-    return;
-  }
-  // recompute from most recent log
-  const decisions = updateProgressionFromLog(state.logs[0]);
-  saveState(state);
-  $("progReadout").textContent = "Recalculated based on your latest log.";
-  renderTargetsTable(decisions);
-});
-
-/* ==========================
-   Targets table
-   ========================== */
-function renderTargetsTable(decisions=null){
-  const tbody = $("targetsTable").querySelector("tbody");
-  tbody.innerHTML = "";
-
-  const prog = state.progression || {};
-  const keys = Object.keys(prog);
-
-  if(keys.length===0){
-    tbody.innerHTML = `<tr><td colspan="3">No targets yet.</td></tr>`;
-    return;
-  }
-
-  keys.forEach(ex=>{
-    const p = prog[ex];
-    const tr = document.createElement("tr");
-
-    const td1 = document.createElement("td");
-    td1.textContent = ex;
-
-    const td2 = document.createElement("td");
-    const next = (p.nextKg===null) ? "—" : `${p.nextKg} kg (aim ${p.repMin}–${p.repMax} reps, RIR ${p.rirMin}–${p.rirMax})`;
-    td2.textContent = next;
-
-    const td3 = document.createElement("td");
-    td3.textContent = p.lastDecision || "No data yet";
-
-    tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3);
-    tbody.appendChild(tr);
-  });
-}
-
-/* ==========================
-   Generate plan button
-   ========================== */
-$("btnGenerate").addEventListener("click", ()=>{
-  readWeekInputs();
-
-  // validate hard <= total
-  state.week.thai.hard  = clamp(state.week.thai.hard, 0, state.week.thai.total);
-  state.week.climb.hard = clamp(state.week.climb.hard,0, state.week.climb.total);
-
-  state.week.generatedAt = new Date().toISOString();
-  state.plan = generatePlan(state.week);
-
-  ensureProgressionDefaults(state.plan);
-  saveState(state);
-
-  renderPlan();
-  openModal("Plan generated", "Plan is ready. Next step: log your sets after a strength session.");
-});
-
-/* ==========================
-   Reset / Clear
-   ========================== */
-$("btnResetAll").addEventListener("click", ()=>{
-  if(!confirm("Reset week inputs (keep history)?")) return;
-  state.week = structuredClone(DEFAULT.week);
-  saveState(state);
-  syncWeekInputs();
-});
-
-$("btnClearWeek").addEventListener("click", ()=>{
-  if(!confirm("Clear all saved logs? (You can export first)")) return;
-  state.logs = [];
-  state.progression = {};
-  saveState(state);
-  renderTargetsTable();
-  renderHistory();
-});
-
-/* ==========================
-   Help
-   ========================== */
-$("btnHelp").addEventListener("click", ()=>{
-  openModal("How it works",
-    `
-    <div class="notice">
-      <b>What you do:</b><br>
-      1) Set how many sport sessions you plan this week (Thai / Climb / Dance).<br>
-      2) Generate plan.<br>
-      3) After gym: log each set (kg, reps, RIR).<br><br>
-
-      <b>What the engine does:</b><br>
-      • Chooses gym volume based on sport load + fatigue.<br>
-      • Targets glute growth using 8–12 reps and RIR 1–2.<br>
-      • Updates next-week targets automatically using your last set performance.<br><br>
-
-      <b>No jargon:</b><br>
-      RIR = how many reps you had left before failure.
-    </div>
-    `
-  );
-});
-
-/* ==========================
-   Export / Import / Delete
-   ========================== */
-function exportJSON(){
-  const blob = new Blob([JSON.stringify(state, null, 2)], {type:"application/json"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "stormie_engine_backup.json";
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-$("btnExport").addEventListener("click", exportJSON);
-$("btnExport2").addEventListener("click", exportJSON);
-
-$("btnImport").addEventListener("click", ()=>{
-  const input = document.createElement("input");
-  input.type="file";
-  input.accept="application/json";
-  input.onchange = (e)=>{
-    const file = e.target.files[0];
-    if(!file) return;
-    const reader = new FileReader();
-    reader.onload = ()=>{
-      try{
-        const parsed = JSON.parse(reader.result);
-        state = Object.assign(structuredClone(DEFAULT), parsed);
-        saveState(state);
-        syncWeekInputs();
-        renderPlan();
-        renderLog();
-        renderHistory();
-        openModal("Imported", "Backup loaded.");
-      }catch(err){
-        openModal("Import failed", "Could not read that file.");
+      if(overlay === menuOverlay || overlay === aboutOverlay){
+        restartPanelAnimation(overlay);
       }
-    };
-    reader.readAsText(file);
-  };
-  input.click();
-});
+    }
 
-$("btnNuke").addEventListener("click", ()=>{
-  if(!confirm("Delete everything (plan + history + progression)?")) return;
-  localStorage.removeItem(KEY);
-  state = loadState();
-  syncWeekInputs();
-  renderPlan();
-  renderLog();
-  renderHistory();
-});
+    function closeOverlay(overlay){
+      overlay.classList.remove("active");
+      overlay.setAttribute("aria-hidden", "true");
+      syncBlur();
+    }
 
-/* ==========================
-   History rendering
-   ========================== */
-function renderHistory(){
-  const tbody = $("historyTable").querySelector("tbody");
-  tbody.innerHTML = "";
+    function openMenu(){
+      openOverlay(menuOverlay);
+      menuBtn.classList.add("open");
+      menuBtn.setAttribute("aria-expanded", "true");
+    }
 
-  if(state.logs.length===0){
-    tbody.innerHTML = `<tr><td colspan="4">No logs yet.</td></tr>`;
-    return;
-  }
+    function closeMenu(){
+      closeOverlay(menuOverlay);
+      menuBtn.classList.remove("open");
+      menuBtn.setAttribute("aria-expanded", "false");
+    }
 
-  state.logs.slice(0, 30).forEach(log=>{
-    const tr = document.createElement("tr");
+    function openAbout(){
+      openOverlay(aboutOverlay);
+    }
 
-    const date = log.dateISO.slice(0,10);
-    const td1 = document.createElement("td"); td1.textContent = date;
+    function closeAbout(){
+      closeOverlay(aboutOverlay);
+    }
 
-    const td2 = document.createElement("td"); td2.textContent = log.sessionName;
+    menuBtn.addEventListener("click", () => {
+      const isOpen = menuOverlay.classList.contains("active");
+      if(isOpen) closeMenu();
+      else openMenu();
+    });
 
-    const td3 = document.createElement("td");
-    // summarize volume
-    const byEx = {};
-    log.entries.forEach(e=>{ byEx[e.exercise] = (byEx[e.exercise]||0) + 1; });
-    td3.textContent = Object.keys(byEx).map(k=>`${k}: ${byEx[k]} sets`).join(" • ");
+    menuClose.addEventListener("click", closeMenu);
+    aboutClose.addEventListener("click", closeAbout);
 
-    const td4 = document.createElement("td"); td4.textContent = log.notes || "—";
+    openAboutFromMenu.addEventListener("click", () => {
+      closeMenu();
+      setTimeout(() => {
+        openAbout();
+      }, 80);
+    });
 
-    tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3); tr.appendChild(td4);
-    tbody.appendChild(tr);
-  });
-}
+    [menuOverlay, aboutOverlay].forEach((overlay) => {
+      overlay.addEventListener("click", (e) => {
+        if(e.target === overlay){
+          closeOverlay(overlay);
+          if(!anyOverlayOpen()){
+            menuBtn.classList.remove("open");
+            menuBtn.setAttribute("aria-expanded", "false");
+          }
+        }
+      });
+    });
 
-/* ==========================
-   Init
-   ========================== */
-$("btnGoLog").disabled = false;
+    window.addEventListener("keydown", (e) => {
+      if(e.key === "Escape"){
+        if(menuOverlay.classList.contains("active")) closeMenu();
+        if(aboutOverlay.classList.contains("active")) closeAbout();
 
-syncWeekInputs();
-renderPlan();
-renderLog();
-renderHistory();
-</script>
+        if(!anyOverlayOpen()){
+          menuBtn.classList.remove("open");
+          menuBtn.setAttribute("aria-expanded", "false");
+        }
+      }
+    });
+
+    projectCards.forEach((card) => {
+      const toggle = card.querySelector(".project-toggle");
+      toggle.addEventListener("click", () => {
+        const isOpen = card.classList.contains("open");
+        projectCards.forEach(c => c.classList.remove("open"));
+        if(!isOpen){
+          card.classList.add("open");
+        }
+      });
+    });
+  </script>
 </body>
 </html>
