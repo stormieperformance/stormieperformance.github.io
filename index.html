@@ -7,6 +7,7 @@
 
   <style>
     :root{
+      --bg:#ffffff;
       --text:#0f0f10;
       --muted:rgba(0,0,0,0.56);
       --muted2:rgba(0,0,0,0.40);
@@ -15,13 +16,46 @@
       --glass2:rgba(255,255,255,0.92);
       --shadow:0 30px 90px rgba(0,0,0,0.18);
       --radius:22px;
+      --overlay:rgba(10,10,10,0.30);
+      --panel-border:rgba(255,255,255,0.50);
+      --panel-soft-border:rgba(0,0,0,0.06);
+      --panel-shadow:0 8px 24px rgba(0,0,0,0.06);
+      --button-bg:rgba(255,255,255,0.75);
+      --button-bg-hover:rgba(255,255,255,0.92);
+      --icon:#000;
+      --link:#000;
+      --close-border:rgba(0,0,0,0.10);
+      --close-bg:rgba(255,255,255,0.70);
+      --close-bg-hover:rgba(255,255,255,0.95);
+    }
+
+    body.dark{
+      --bg:#050506;
+      --text:#f5f5f7;
+      --muted:rgba(255,255,255,0.62);
+      --muted2:rgba(255,255,255,0.42);
+      --line:rgba(255,255,255,0.10);
+      --glass:rgba(20,20,22,0.72);
+      --glass2:rgba(14,14,16,0.86);
+      --shadow:0 30px 90px rgba(0,0,0,0.42);
+      --overlay:rgba(0,0,0,0.42);
+      --panel-border:rgba(255,255,255,0.08);
+      --panel-soft-border:rgba(255,255,255,0.08);
+      --panel-shadow:0 8px 24px rgba(0,0,0,0.28);
+      --button-bg:rgba(20,20,22,0.72);
+      --button-bg-hover:rgba(28,28,30,0.92);
+      --icon:#f5f5f7;
+      --link:#f5f5f7;
+      --close-border:rgba(255,255,255,0.10);
+      --close-bg:rgba(20,20,22,0.72);
+      --close-bg-hover:rgba(28,28,30,0.95);
     }
 
     *{ margin:0; padding:0; box-sizing:border-box; }
     html,body{ height:100%; }
 
     body{
-      background:#fff;
+      background:var(--bg);
       color:var(--text);
       font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
       display:flex;
@@ -29,6 +63,9 @@
       align-items:center;
       text-align:center;
       overflow:hidden;
+      transition:
+        background .4s ease,
+        color .4s ease;
     }
 
     .app{
@@ -66,7 +103,7 @@
       line-height:1.6;
       animation:fadeIn 1s ease forwards;
       animation-delay:1.2s;
-      color:rgba(0,0,0,0.62);
+      color:var(--muted);
       user-select:none;
     }
 
@@ -75,7 +112,7 @@
       font-size:12px;
       letter-spacing:0.08em;
       line-height:1.7;
-      color:rgba(0,0,0,0.52);
+      color:var(--muted2);
       opacity:0;
       animation:fadeIn 1s ease forwards;
       animation-delay:1.55s;
@@ -121,12 +158,12 @@
       justify-content:center;
       gap:4px;
       padding:0;
-      color:rgba(0,0,0,0.55);
+      color:var(--muted);
       transition:color .25s ease;
     }
 
     .project-toggle:hover{
-      color:rgba(0,0,0,0.90);
+      color:var(--text);
     }
 
     .project-title{
@@ -134,7 +171,7 @@
       letter-spacing:0.32em;
       text-transform:uppercase;
       padding-bottom:4px;
-      border-bottom:1px solid rgba(0,0,0,0.14);
+      border-bottom:1px solid var(--line);
       width:fit-content;
       margin:0 auto;
     }
@@ -143,13 +180,13 @@
       font-size:12px;
       letter-spacing:0.18em;
       text-transform:uppercase;
-      color:rgba(0,0,0,0.45);
+      color:var(--muted2);
       margin-top:2px;
     }
 
     .project-chevron{
       font-size:12px;
-      color:rgba(0,0,0,0.52);
+      color:var(--muted2);
       transition:transform .22s ease, opacity .22s ease;
       margin-top:3px;
     }
@@ -179,28 +216,32 @@
     }
 
     .project-panel-inner{
-      background:rgba(255,255,255,0.82);
-      border:1px solid rgba(0,0,0,0.06);
+      background:var(--glass);
+      border:1px solid var(--panel-soft-border);
       border-radius:16px;
       padding:18px 20px 16px;
-      box-shadow:0 8px 24px rgba(0,0,0,0.06);
+      box-shadow:var(--panel-shadow);
       text-align:center;
       backdrop-filter:blur(14px);
       -webkit-backdrop-filter:blur(14px);
       margin:0 auto;
+      transition:
+        background .4s ease,
+        border-color .4s ease,
+        box-shadow .4s ease;
     }
 
     .project-panel-inner p{
       font-size:14px;
       line-height:1.7;
-      color:rgba(0,0,0,0.75);
+      color:color-mix(in srgb, var(--text) 75%, transparent);
       margin:0 0 10px;
     }
 
     .project-meta{
       font-size:12px;
       line-height:1.6;
-      color:rgba(0,0,0,0.52);
+      color:var(--muted2);
       margin-bottom:12px;
     }
 
@@ -208,8 +249,8 @@
     .overlay-link{
       display:inline-block;
       text-decoration:none;
-      color:#000;
-      border-bottom:1px solid rgba(0,0,0,0.22);
+      color:var(--link);
+      border-bottom:1px solid color-mix(in srgb, var(--text) 22%, transparent);
       padding-bottom:2px;
       font-size:12px;
       letter-spacing:0.18em;
@@ -226,7 +267,7 @@
     .project-launch:hover,
     .overlay-link:hover{
       opacity:1;
-      border-bottom-color:rgba(0,0,0,0.35);
+      border-bottom-color:color-mix(in srgb, var(--text) 35%, transparent);
     }
 
     .secret-trigger{
@@ -234,7 +275,7 @@
       height:10px;
       border:none;
       border-radius:999px;
-      background:rgba(0,0,0,0.18);
+      background:color-mix(in srgb, var(--text) 18%, transparent);
       display:block;
       margin:8px auto 12px;
       cursor:pointer;
@@ -248,14 +289,14 @@
     .secret-trigger:hover{
       opacity:0.42;
       transform:scale(1.08);
-      background:rgba(0,0,0,0.28);
+      background:color-mix(in srgb, var(--text) 28%, transparent);
     }
 
     .secret-trigger:focus-visible{
       outline:none;
       opacity:0.42;
       transform:scale(1.08);
-      background:rgba(0,0,0,0.28);
+      background:color-mix(in srgb, var(--text) 28%, transparent);
     }
 
     .secret-trigger-label{
@@ -273,19 +314,19 @@
     .inline-link{
       color:inherit;
       text-decoration:none;
-      border-bottom:1px solid rgba(0,0,0,0.25);
+      border-bottom:1px solid color-mix(in srgb, var(--text) 25%, transparent);
       padding-bottom:1px;
       transition:opacity .2s ease, border-color .2s ease;
     }
 
     .inline-link:hover{
       opacity:1;
-      border-bottom-color:rgba(0,0,0,0.45);
+      border-bottom-color:color-mix(in srgb, var(--text) 45%, transparent);
     }
 
     .inline-link:focus-visible{
       outline:none;
-      border-bottom-color:rgba(0,0,0,0.45);
+      border-bottom-color:color-mix(in srgb, var(--text) 45%, transparent);
     }
 
     @keyframes reveal{
@@ -299,14 +340,14 @@
       to{ opacity:1; }
     }
 
-    .menu-btn{
+    .menu-btn,
+    .theme-btn{
       position:fixed;
       top:18px;
-      left:18px;
       width:44px;
       height:44px;
       border:1px solid var(--line);
-      background:rgba(255,255,255,0.75);
+      background:var(--button-bg);
       backdrop-filter:blur(12px);
       -webkit-backdrop-filter:blur(12px);
       border-radius:12px;
@@ -315,12 +356,24 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      transition:transform .2s ease, background .2s ease;
+      transition:
+        transform .2s ease,
+        background .2s ease,
+        border-color .3s ease;
     }
 
-    .menu-btn:hover{
+    .menu-btn{
+      left:18px;
+    }
+
+    .theme-btn{
+      right:18px;
+    }
+
+    .menu-btn:hover,
+    .theme-btn:hover{
       transform:translateY(-1px);
-      background:rgba(255,255,255,0.92);
+      background:var(--button-bg-hover);
     }
 
     .icon{
@@ -334,9 +387,9 @@
       left:0;
       right:0;
       height:2px;
-      background:#000;
+      background:var(--icon);
       border-radius:2px;
-      transition:transform .25s ease, top .25s ease, opacity .2s ease;
+      transition:transform .25s ease, top .25s ease, opacity .2s ease, background .3s ease;
     }
 
     .icon span:nth-child(1){ top:0; }
@@ -357,15 +410,45 @@
       transform:rotate(-45deg);
     }
 
+    .theme-icon{
+      width:18px;
+      height:18px;
+      border-radius:999px;
+      border:1.5px solid var(--icon);
+      position:relative;
+      transition:border-color .3s ease, transform .25s ease;
+    }
+
+    .theme-icon::after{
+      content:"";
+      position:absolute;
+      top:2px;
+      right:2px;
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:var(--icon);
+      opacity:.92;
+      transition:background .3s ease, opacity .25s ease, transform .25s ease;
+    }
+
+    body.dark .theme-icon{
+      transform:rotate(-18deg);
+    }
+
+    body.dark .theme-icon::after{
+      transform:translate(-1px,1px);
+    }
+
     .overlay{
       position:fixed;
       inset:0;
-      background:rgba(10,10,10,0.30);
+      background:var(--overlay);
       backdrop-filter:blur(18px);
       -webkit-backdrop-filter:blur(18px);
       opacity:0;
       pointer-events:none;
-      transition:opacity .28s ease;
+      transition:opacity .28s ease, background .4s ease;
       z-index:60;
       display:flex;
       justify-content:center;
@@ -381,13 +464,18 @@
     .panel{
       width:min(760px, 92vw);
       background:var(--glass2);
-      border:1px solid rgba(255,255,255,0.50);
+      border:1px solid var(--panel-border);
       box-shadow:var(--shadow);
       border-radius:28px;
       padding:34px 28px 28px;
       transform:translateY(10px);
       opacity:0;
-      transition:transform .28s ease, opacity .28s ease;
+      transition:
+        transform .28s ease,
+        opacity .28s ease,
+        background .4s ease,
+        border-color .4s ease,
+        box-shadow .4s ease;
       position:relative;
     }
 
@@ -434,27 +522,27 @@
       font-size:12px;
       letter-spacing:0.28em;
       text-transform:uppercase;
-      color:rgba(0,0,0,0.55);
+      color:var(--muted);
     }
 
     .close-btn{
       width:40px;
       height:40px;
       border-radius:14px;
-      border:1px solid rgba(0,0,0,0.10);
-      background:rgba(255,255,255,0.70);
+      border:1px solid var(--close-border);
+      background:var(--close-bg);
       cursor:pointer;
       display:flex;
       align-items:center;
       justify-content:center;
       font-size:18px;
-      color:rgba(0,0,0,0.65);
-      transition:background .2s ease, color .2s ease, transform .2s ease;
+      color:var(--muted);
+      transition:background .2s ease, color .2s ease, transform .2s ease, border-color .3s ease;
     }
 
     .close-btn:hover{
-      background:rgba(255,255,255,0.95);
-      color:#000;
+      background:var(--close-bg-hover);
+      color:var(--text);
       transform:translateY(-1px);
     }
 
@@ -469,14 +557,14 @@
       font-size:12px;
       letter-spacing:0.32em;
       text-transform:uppercase;
-      color:rgba(0,0,0,0.38);
+      color:var(--muted2);
       margin-bottom:22px;
     }
 
     .copy{
       font-size:16px;
       line-height:1.95;
-      color:rgba(0,0,0,0.72);
+      color:color-mix(in srgb, var(--text) 72%, transparent);
       max-width:520px;
       margin:0 auto;
       letter-spacing:0.01em;
@@ -502,9 +590,9 @@
       padding:0;
       font:inherit;
       cursor:pointer;
-      color:#000;
+      color:var(--link);
       text-decoration:none;
-      border-bottom:1px solid rgba(0,0,0,0.22);
+      border-bottom:1px solid color-mix(in srgb, var(--text) 22%, transparent);
       padding-bottom:2px;
       font-size:12px;
       letter-spacing:0.22em;
@@ -516,7 +604,7 @@
     .menu-links a:hover,
     .menu-links button:hover{
       opacity:1;
-      border-bottom-color:rgba(0,0,0,0.35);
+      border-bottom-color:color-mix(in srgb, var(--text) 35%, transparent);
     }
 
     @media (max-width:520px){
@@ -581,6 +669,10 @@
     </div>
   </button>
 
+  <button class="theme-btn" id="themeBtn" aria-label="Toggle appearance" aria-pressed="false">
+    <span class="theme-icon" aria-hidden="true"></span>
+  </button>
+
   <div class="app" id="app">
     <div>
       <div class="logo" aria-label="STORM KOLMODIN">STORM KOLMODIN</div>
@@ -601,9 +693,7 @@
             <div class="project-panel-inner">
               <p>
                 Combat sports brand. Limited release. Waitlist open.
-
               </p>
-              
               <a class="project-launch" href="https://clinchathletics.com" target="_blank" rel="noopener noreferrer">Open</a>
             </div>
           </div>
@@ -618,10 +708,9 @@
           <div class="project-panel">
             <div class="project-panel-inner">
               <p>
-                Adaptive training system. Open Beta.  <p>Temporarily unavailable while updates are being made.</p>
+                Adaptive training system.
               </p>
-              
-              <a class="project-launch" href="https://stormiemoves.com" target="_blank" rel="noopener noreferrer"></a>
+              <p>Temporarily unavailable while updates are being made.</p>
             </div>
           </div>
         </div>
@@ -637,7 +726,6 @@
               <p>
                 Workflow systems originally built for Clinch Athletics.
               </p>
-              
               <a class="project-launch" href="https://stormie.app" target="_blank" rel="noopener noreferrer">Open</a>
             </div>
           </div>
@@ -704,7 +792,7 @@
             class="inline-link"
           >
             Licensed Personal Trainer
-          </a>. Climber. Muay Thai Practitioner. Background in Tech, Systems & Agile Project Management.
+          </a>. Climber. Muay Thai Practitioner. Background in Tech, Systems &amp; Agile Project Management.
         </p>
         <p>
           Building products and systems around physical performance.
@@ -714,8 +802,10 @@
   </div>
 
   <script>
+    const body = document.body;
     const app = document.getElementById("app");
     const menuBtn = document.getElementById("menuBtn");
+    const themeBtn = document.getElementById("themeBtn");
 
     const menuOverlay = document.getElementById("menuOverlay");
     const menuClose = document.getElementById("menuClose");
@@ -725,6 +815,23 @@
     const openAboutFromMenu = document.getElementById("openAboutFromMenu");
 
     const projectCards = document.querySelectorAll(".project-card");
+
+    function applyTheme(theme){
+      const isDark = theme === "dark";
+      body.classList.toggle("dark", isDark);
+      themeBtn.setAttribute("aria-pressed", String(isDark));
+      localStorage.setItem("storm-theme", theme);
+    }
+
+    const savedTheme = localStorage.getItem("storm-theme");
+    if(savedTheme === "dark" || savedTheme === "light"){
+      applyTheme(savedTheme);
+    }
+
+    themeBtn.addEventListener("click", () => {
+      const nextTheme = body.classList.contains("dark") ? "light" : "dark";
+      applyTheme(nextTheme);
+    });
 
     function setBlur(on){
       app.classList.toggle("is-blurred", !!on);
