@@ -504,7 +504,8 @@
     }
 
     #menuOverlay .panel,
-    #aboutOverlay .panel{
+    #aboutOverlay .panel,
+    #creativeLabOverlay .panel{
       transform:translateY(16px) scale(0.985);
       opacity:0;
       filter:blur(8px);
@@ -512,7 +513,8 @@
     }
 
     #menuOverlay.active .panel,
-    #aboutOverlay.active .panel{
+    #aboutOverlay.active .panel,
+    #creativeLabOverlay.active .panel{
       animation:overlayPanelReveal 0.9s ease forwards;
     }
 
@@ -626,6 +628,60 @@
       border-bottom-color:color-mix(in srgb, var(--text) 35%, transparent);
     }
 
+    .lab-card{
+      max-width:420px;
+      margin:0 auto;
+      text-align:center;
+    }
+
+    .lab-title{
+      font-size:11px;
+      letter-spacing:0.32em;
+      text-transform:uppercase;
+      padding-bottom:4px;
+      border-bottom:1px solid var(--line);
+      width:fit-content;
+      margin:0 auto 10px;
+      color:var(--text);
+    }
+
+    .lab-sub{
+      font-size:12px;
+      letter-spacing:0.18em;
+      text-transform:uppercase;
+      color:var(--muted2);
+      margin-bottom:20px;
+    }
+
+    .lab-panel{
+      background:var(--glass);
+      border:1px solid var(--panel-soft-border);
+      border-radius:16px;
+      padding:18px 20px 16px;
+      box-shadow:var(--panel-shadow);
+      text-align:center;
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      transition:
+        background .4s ease,
+        border-color .4s ease,
+        box-shadow .4s ease;
+    }
+
+    .lab-panel p{
+      font-size:14px;
+      line-height:1.7;
+      color:color-mix(in srgb, var(--text) 75%, transparent);
+      margin:0 0 10px;
+    }
+
+    .lab-meta{
+      font-size:12px;
+      line-height:1.6;
+      color:var(--muted2);
+      margin-bottom:12px;
+    }
+
     @media (max-width:520px){
       body{
         overflow:auto;
@@ -667,11 +723,13 @@
         font-size:11px;
       }
 
-      .project-panel-inner p{
+      .project-panel-inner p,
+      .lab-panel p{
         font-size:13px;
       }
 
-      .project-meta{
+      .project-meta,
+      .lab-meta{
         font-size:11px;
       }
 
@@ -733,7 +791,7 @@
         <div class="project-card">
           <button class="project-toggle" type="button">
             <span class="project-title">Custom Training Apps</span>
-            <span class="project-sub"> Customizable  training apps for PTs, gyms and sports clubs </span>
+            <span class="project-sub">Customizable training apps for PTs, gyms and sports clubs</span>
             <span class="project-chevron">⌄</span>
           </button>
           <div class="project-panel">
@@ -757,28 +815,7 @@
               <p>
                 AI assistants and automated workflows for coaches and businesses. Email responses, client management, content — running on autopilot.
               </p>
-              <a class="project-launch" href="https://stormie.app" target="_blank" rel="noopener noreferrer">View Demo </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-card" id="stormWylderCard">
-          <button class="project-toggle" type="button">
-            <span class="project-title">Storm Wylder</span>
-            <span class="project-sub">Mountain expedition game</span>
-            <span class="project-chevron">⌄</span>
-          </button>
-
-          <div class="project-panel">
-            <div class="project-panel-inner">
-              <p>
-                A dangerous alpine expedition. Trust your tools.
-              </p>
-              <div class="project-meta">In development · Unity game prototype</div>
-
-              <a class="secret-trigger" href="/alpine.html" aria-label="Open hidden alpine note">
-                <span class="secret-trigger-label">Open hidden alpine note</span>
-              </a>
+              <a class="project-launch" href="https://stormie.app" target="_blank" rel="noopener noreferrer">View Demo</a>
             </div>
           </div>
         </div>
@@ -795,10 +832,11 @@
       </div>
 
       <h2>Stormieperformance</h2>
-      <div class="subhead">About · Contact</div>
+      <div class="subhead">About · Creative Lab · Contact</div>
 
       <div class="menu-links">
         <button type="button" id="openAboutFromMenu">About</button>
+        <button type="button" id="openCreativeLabFromMenu">Creative Lab</button>
         <a href="mailto:storm.kolmodin@gmail.com">Contact</a>
       </div>
     </div>
@@ -832,6 +870,31 @@
     </div>
   </div>
 
+  <div class="overlay" id="creativeLabOverlay" aria-hidden="true">
+    <div class="panel" role="dialog" aria-modal="true" aria-label="Creative Lab">
+      <div class="panel-top">
+        <div class="kicker">Creative Lab</div>
+        <button class="close-btn" type="button" id="creativeLabClose" aria-label="Close">×</button>
+      </div>
+
+      <h2>Storm Wylder</h2>
+      <div class="subhead">Mountain Expedition Game</div>
+
+      <div class="lab-card">
+        <div class="lab-panel">
+          <p>
+            A dangerous alpine expedition. Trust your tools.
+          </p>
+          <div class="lab-meta">In development · Unity game prototype</div>
+
+          <a class="secret-trigger" href="/alpine.html" aria-label="Open hidden alpine note">
+            <span class="secret-trigger-label">Open hidden alpine note</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     const body = document.body;
     const app = document.getElementById("app");
@@ -844,6 +907,10 @@
     const aboutOverlay = document.getElementById("aboutOverlay");
     const aboutClose = document.getElementById("aboutClose");
     const openAboutFromMenu = document.getElementById("openAboutFromMenu");
+
+    const creativeLabOverlay = document.getElementById("creativeLabOverlay");
+    const creativeLabClose = document.getElementById("creativeLabClose");
+    const openCreativeLabFromMenu = document.getElementById("openCreativeLabFromMenu");
 
     const projectCards = document.querySelectorAll(".project-card");
 
@@ -870,7 +937,8 @@
 
     function anyOverlayOpen(){
       return menuOverlay.classList.contains("active") ||
-             aboutOverlay.classList.contains("active");
+             aboutOverlay.classList.contains("active") ||
+             creativeLabOverlay.classList.contains("active");
     }
 
     function syncBlur(){
@@ -890,7 +958,11 @@
       overlay.setAttribute("aria-hidden", "false");
       syncBlur();
 
-      if(overlay === menuOverlay || overlay === aboutOverlay){
+      if(
+        overlay === menuOverlay ||
+        overlay === aboutOverlay ||
+        overlay === creativeLabOverlay
+      ){
         restartPanelAnimation(overlay);
       }
     }
@@ -921,6 +993,14 @@
       closeOverlay(aboutOverlay);
     }
 
+    function openCreativeLab(){
+      openOverlay(creativeLabOverlay);
+    }
+
+    function closeCreativeLab(){
+      closeOverlay(creativeLabOverlay);
+    }
+
     menuBtn.addEventListener("click", () => {
       const isOpen = menuOverlay.classList.contains("active");
       if(isOpen) closeMenu();
@@ -929,6 +1009,7 @@
 
     menuClose.addEventListener("click", closeMenu);
     aboutClose.addEventListener("click", closeAbout);
+    creativeLabClose.addEventListener("click", closeCreativeLab);
 
     openAboutFromMenu.addEventListener("click", () => {
       closeMenu();
@@ -937,7 +1018,14 @@
       }, 80);
     });
 
-    [menuOverlay, aboutOverlay].forEach((overlay) => {
+    openCreativeLabFromMenu.addEventListener("click", () => {
+      closeMenu();
+      setTimeout(() => {
+        openCreativeLab();
+      }, 80);
+    });
+
+    [menuOverlay, aboutOverlay, creativeLabOverlay].forEach((overlay) => {
       overlay.addEventListener("click", (e) => {
         if(e.target === overlay){
           closeOverlay(overlay);
@@ -953,6 +1041,7 @@
       if(e.key === "Escape"){
         if(menuOverlay.classList.contains("active")) closeMenu();
         if(aboutOverlay.classList.contains("active")) closeAbout();
+        if(creativeLabOverlay.classList.contains("active")) closeCreativeLab();
 
         if(!anyOverlayOpen()){
           menuBtn.classList.remove("open");
