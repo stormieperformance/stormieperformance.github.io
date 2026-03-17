@@ -102,17 +102,17 @@
     .logo:hover{ opacity:0.92; }
 
     .sub{
-      margin-top:34px;
-      font-size:13px;
-      letter-spacing:4px;
-      text-transform:uppercase;
+      margin-top:28px;
+      font-size:11px;
+      letter-spacing:3px;
+      text-transform:none;
       opacity:0;
-      line-height:1.6;
+      line-height:1.45;
       animation:fadeIn 1s ease forwards;
       animation-delay:1.2s;
       color:var(--muted);
       user-select:none;
-      max-width:900px;
+      max-width:760px;
       margin-left:auto;
       margin-right:auto;
       padding:0 18px;
@@ -123,13 +123,13 @@
     }
 
     .sub-line + .sub-line{
-      margin-top:2px;
+      margin-top:3px;
     }
 
     .byline{
-      margin-top:14px;
-      font-size:12px;
-      letter-spacing:0.18em;
+      margin-top:18px;
+      font-size:10px;
+      letter-spacing:0.16em;
       text-transform:none;
       color:var(--text);
       opacity:0;
@@ -155,11 +155,11 @@
     }
 
     .projects{
-      margin-top:42px;
+      margin-top:34px;
       display:flex;
       flex-direction:column;
       align-items:center;
-      gap:18px;
+      gap:14px;
       width:380px;
       max-width:90vw;
       margin-left:auto;
@@ -187,7 +187,7 @@
       flex-direction:column;
       align-items:center;
       justify-content:center;
-      gap:4px;
+      gap:3px;
       padding:0;
       color:var(--muted);
       transition:color .25s ease;
@@ -198,8 +198,8 @@
     }
 
     .project-title{
-      font-size:11px;
-      letter-spacing:0.32em;
+      font-size:10px;
+      letter-spacing:0.26em;
       text-transform:uppercase;
       padding-bottom:4px;
       border-bottom:1px solid var(--line);
@@ -209,18 +209,20 @@
     }
 
     .project-sub{
-      font-size:12px;
-      letter-spacing:0.18em;
-      text-transform:uppercase;
+      font-size:11px;
+      letter-spacing:0.01em;
+      text-transform:none;
       color:var(--muted2);
-      margin-top:2px;
+      margin-top:3px;
+      line-height:1.45;
+      max-width:340px;
     }
 
     .project-chevron{
       font-size:12px;
       color:var(--muted2);
       transition:transform .22s ease, opacity .22s ease;
-      margin-top:3px;
+      margin-top:2px;
     }
 
     .project-toggle:hover .project-chevron{
@@ -244,14 +246,14 @@
       max-height:320px;
       opacity:1;
       transform:translateY(0);
-      margin-top:10px;
+      margin-top:8px;
     }
 
     .project-panel-inner{
       background:var(--glass);
       border:1px solid var(--panel-soft-border);
       border-radius:16px;
-      padding:18px 20px 16px;
+      padding:16px 18px 14px;
       box-shadow:var(--panel-shadow);
       text-align:center;
       backdrop-filter:blur(14px);
@@ -265,7 +267,7 @@
 
     .project-panel-inner p{
       font-size:14px;
-      line-height:1.7;
+      line-height:1.65;
       color:color-mix(in srgb, var(--text) 75%, transparent);
       margin:0 0 10px;
     }
@@ -284,7 +286,7 @@
       color:var(--link);
       border-bottom:1px solid color-mix(in srgb, var(--text) 22%, transparent);
       padding-bottom:2px;
-      font-size:12px;
+      font-size:11px;
       letter-spacing:0.18em;
       text-transform:uppercase;
       opacity:0.85;
@@ -496,10 +498,10 @@
     .panel{
       width:min(760px, 92vw);
       background:var(--glass2);
-      border:1px solid var(--panel-border);
-      box-shadow:var(--shadow);
-      border-radius:28px;
-      padding:34px 28px 28px;
+      border:1px solid color-mix(in srgb, var(--text) 8%, transparent);
+      box-shadow:0 30px 80px rgba(0,0,0,0.10);
+      border-radius:30px;
+      padding:34px 34px 30px;
       transform:translateY(10px);
       opacity:0;
       transition:
@@ -553,7 +555,7 @@
     }
 
     .kicker{
-      font-size:12px;
+      font-size:11px;
       letter-spacing:0.28em;
       text-transform:uppercase;
       color:var(--muted);
@@ -581,18 +583,18 @@
     }
 
     .panel h2{
-      font-size:34px;
-      letter-spacing:0.10em;
-      font-weight:650;
-      margin:6px 0 8px;
+      font-size:32px;
+      letter-spacing:0.06em;
+      font-weight:600;
+      margin:10px 0 8px;
     }
 
     .panel .subhead{
-      font-size:12px;
-      letter-spacing:0.32em;
+      font-size:11px;
+      letter-spacing:0.24em;
       text-transform:uppercase;
       color:var(--muted2);
-      margin-bottom:22px;
+      margin-bottom:20px;
     }
 
     .copy{
@@ -642,57 +644,35 @@
     }
 
     .lab-card{
-      max-width:420px;
+      max-width:520px;
       margin:0 auto;
       text-align:center;
     }
 
-    .lab-title{
-      font-size:11px;
-      letter-spacing:0.32em;
-      text-transform:uppercase;
-      padding-bottom:4px;
-      border-bottom:1px solid var(--line);
-      width:fit-content;
-      margin:0 auto 10px;
-      color:var(--text);
-    }
-
-    .lab-sub{
-      font-size:12px;
-      letter-spacing:0.18em;
-      text-transform:uppercase;
-      color:var(--muted2);
-      margin-bottom:20px;
-    }
-
     .lab-panel{
-      background:var(--glass);
-      border:1px solid var(--panel-soft-border);
-      border-radius:16px;
-      padding:18px 20px 16px;
-      box-shadow:var(--panel-shadow);
+      background:transparent;
+      border:none;
+      border-radius:0;
+      padding:0;
+      box-shadow:none;
       text-align:center;
-      backdrop-filter:blur(14px);
-      -webkit-backdrop-filter:blur(14px);
-      transition:
-        background .4s ease,
-        border-color .4s ease,
-        box-shadow .4s ease;
+      backdrop-filter:none;
+      -webkit-backdrop-filter:none;
+      transition:none;
     }
 
     .lab-panel p{
-      font-size:14px;
-      line-height:1.7;
-      color:color-mix(in srgb, var(--text) 75%, transparent);
-      margin:0 0 10px;
+      font-size:16px;
+      line-height:1.8;
+      color:color-mix(in srgb, var(--text) 78%, transparent);
+      margin:0 0 12px;
     }
 
     .lab-meta{
       font-size:12px;
       line-height:1.6;
       color:var(--muted2);
-      margin-bottom:12px;
+      margin-bottom:14px;
     }
 
     @media (max-width:520px){
@@ -713,27 +693,38 @@
       }
 
       .sub{
-        font-size:11px;
-        letter-spacing:3px;
-        line-height:1.5;
+        margin-top:24px;
+        font-size:10px;
+        letter-spacing:2.4px;
+        line-height:1.45;
       }
 
       .byline{
-        font-size:11px;
-        letter-spacing:0.14em;
+        font-size:10px;
+        letter-spacing:0.13em;
       }
 
       .panel{
-        padding:28px 18px 22px;
+        padding:28px 20px 24px;
         border-radius:24px;
       }
 
       .panel h2{
-        font-size:30px;
+        font-size:28px;
       }
 
       .tagline{
         font-size:11px;
+      }
+
+      .project-title{
+        font-size:10px;
+        letter-spacing:0.22em;
+      }
+
+      .project-sub{
+        font-size:10px;
+        letter-spacing:0.01em;
       }
 
       .project-panel-inner p,
@@ -748,6 +739,7 @@
 
       .projects{
         width:min(94vw, 380px);
+        gap:13px;
       }
 
       .project-card{
@@ -805,7 +797,7 @@
         <div class="project-card">
           <button class="project-toggle" type="button">
             <span class="project-title">Custom Training Apps</span>
-            <span class="project-sub">Customizable training apps for PTs, gyms and sports clubs</span>
+            <span class="project-sub">Custom training apps for coaches, gyms and sports clubs.</span>
             <span class="project-chevron">⌄</span>
           </button>
           <div class="project-panel">
@@ -821,7 +813,7 @@
         <div class="project-card">
           <button class="project-toggle" type="button">
             <span class="project-title">Workflow Assistants</span>
-            <span class="project-sub">Automation systems that handle emails, clients and operations automatically</span>
+            <span class="project-sub">Automation systems that handle emails, clients and operations automatically.</span>
             <span class="project-chevron">⌄</span>
           </button>
           <div class="project-panel">
@@ -896,9 +888,7 @@
 
       <div class="lab-card">
         <div class="lab-panel">
-          <p>
-            A dangerous alpine expedition. Trust your tools.
-          </p>
+          <p>A dangerous alpine expedition. Trust your tools.</p>
           <div class="lab-meta">In development · Unity game prototype</div>
 
           <a class="secret-trigger" href="/alpine.html" aria-label="Open hidden alpine note">
