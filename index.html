@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>STORM KOLMODIN</title>
+  <title>stormieperformance</title>
 
   <style>
     :root{
@@ -90,6 +90,7 @@
       animation:reveal 1.4s ease forwards;
       user-select:none;
       transition:opacity .25s ease;
+      text-transform:uppercase;
     }
 
     .logo:hover{ opacity:0.92; }
@@ -104,6 +105,18 @@
       animation:fadeIn 1s ease forwards;
       animation-delay:1.2s;
       color:var(--muted);
+      user-select:none;
+    }
+
+    .byline{
+      margin-top:14px;
+      font-size:12px;
+      letter-spacing:0.18em;
+      text-transform:none;
+      color:var(--muted2);
+      opacity:0;
+      animation:fadeIn 1s ease forwards;
+      animation-delay:1.45s;
       user-select:none;
     }
 
@@ -629,6 +642,11 @@
         line-height:1.5;
       }
 
+      .byline{
+        font-size:11px;
+        letter-spacing:0.14em;
+      }
+
       .panel{
         padding:28px 18px 22px;
         border-radius:24px;
@@ -675,10 +693,14 @@
 
   <div class="app" id="app">
     <div>
-      <div class="logo" aria-label="STORM KOLMODIN">STORM KOLMODIN</div>
+      <div class="logo" aria-label="stormieperformance">stormieperformance</div>
 
       <div class="sub">
         Systems &amp; Products
+      </div>
+
+      <div class="byline">
+        By Storm Kolmodin
       </div>
 
       <div class="projects">
@@ -763,7 +785,7 @@
         <button class="close-btn" type="button" id="menuClose" aria-label="Close">×</button>
       </div>
 
-      <h2>STORM KOLMODIN</h2>
+      <h2>Stormieperformance</h2>
       <div class="subhead">About · Contact</div>
 
       <div class="menu-links">
