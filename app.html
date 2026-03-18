@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Custom Training Apps — Stormie Performance</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0e0e0e;
+      --white: #f5f4f0;
+      --gray: #888;
+      --border: rgba(0,0,0,0.1);
+      --mono: 'DM Mono', monospace;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--white);
+      color: var(--black);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 32px;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 24px; list-style: none; }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--black); }
+
+    section {
+      padding: 80px 32px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 20px;
+    }
+
+    #hero {
+      padding-top: 140px;
+      padding-bottom: 80px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    #hero h1 {
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 300;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+
+    #hero h1 em { font-style: italic; font-weight: 300; }
+
+    #hero p {
+      font-size: 15px;
+      color: var(--gray);
+      max-width: 480px;
+      margin-bottom: 36px;
+      line-height: 1.7;
+    }
+
+    .btn-group { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .btn {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      padding: 12px 22px;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .btn-primary { background: var(--black); color: var(--white); border: 1px solid var(--black); }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-secondary { background: transparent; color: var(--black); border: 1px solid var(--border); }
+    .btn-secondary:hover { border-color: var(--black); }
+
+    #how { border-bottom: 1px solid var(--border); }
+
+    .steps { display: flex; flex-direction: column; gap: 0; }
+
+    .step {
+      display: grid;
+      grid-template-columns: 32px 1fr auto;
+      gap: 16px;
+      align-items: start;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .step:last-child { border-bottom: none; }
+
+    .step-num { font-family: var(--mono); font-size: 11px; color: var(--gray); padding-top: 2px; }
+    .step-title { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+    .step-desc { font-size: 13px; color: var(--gray); line-height: 1.55; }
+    .step-tag { font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; color: var(--gray); white-space: nowrap; padding-top: 3px; }
+
+    #demo { border-bottom: 1px solid var(--border); }
+
+    .demo-card-single {
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 20px;
+      background: #fff;
+      margin-bottom: 24px;
+    }
+
+    .demo-card-single h3 { font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+    .demo-card-single p { font-size: 12px; color: var(--gray); margin-bottom: 16px; line-height: 1.5; }
+
+    .demo-card-single a {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+      transition: border-color 0.2s;
+    }
+
+    .demo-card-single a:hover { border-color: var(--black); }
+
+    .demo-open {
+      display: block;
+      width: 100%;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      padding: 20px;
+      border: 1px dashed var(--border);
+      border-radius: 2px;
+      color: var(--gray);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+      background: #fafaf8;
+    }
+
+    .demo-open:hover { border-color: var(--black); color: var(--black); }
+
+    #what { border-bottom: 1px solid var(--border); }
+
+    .what-list { display: flex; flex-direction: column; gap: 0; }
+
+    .what-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .what-item:last-child { border-bottom: none; }
+
+    .what-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--black);
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .what-label { font-family: var(--mono); font-size: 11px; color: var(--gray); letter-spacing: 0.06em; margin-bottom: 4px; }
+    .what-desc { font-size: 13px; color: var(--black); }
+
+    #pricing { border-bottom: 1px solid var(--border); }
+
+    .pricing-card {
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 28px;
+      background: #fff;
+    }
+
+    .price { font-size: 32px; font-weight: 300; letter-spacing: -0.02em; margin-bottom: 4px; }
+
+    .price-sub {
+      font-size: 12px;
+      color: var(--gray);
+      margin-bottom: 24px;
+      font-family: var(--mono);
+      letter-spacing: 0.06em;
+    }
+
+    .feature-list { list-style: none; margin-bottom: 28px; display: flex; flex-direction: column; gap: 8px; }
+    .feature-list li { font-size: 13px; color: var(--gray); display: flex; gap: 10px; }
+    .feature-list li::before { content: '—'; color: #ccc; flex-shrink: 0; }
+
+    .btn-cta {
+      display: block;
+      width: 100%;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      padding: 14px;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .btn-cta:hover { opacity: 0.82; }
+
+    footer { text-align: center; padding: 32px; border-top: 1px solid var(--border); }
+
+    footer a {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 0.08em;
+      text-decoration: none;
+    }
+
+    footer a:hover { color: var(--black); }
+
+    @media (max-width: 540px) {
+      nav { padding: 16px 20px; }
+      .nav-links { gap: 16px; }
+      section { padding: 60px 20px; }
+      #hero { padding-top: 110px; }
+      .demo-embed { height: 420px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-brand" href="https://stormieperformance.com">Stormie Performance</a>
+    <ul class="nav-links">
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#demo">Demo</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="/cdn-cgi/l/email-protection#1063647f627d3e7b7f7c7d7f74797e50777d71797c3e737f7d">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section id="hero">
+    <p class="label">Custom Training Apps</p>
+    <h1>Your brand.<br><em>Your athletes' app.</em></h1>
+    <p>Custom training apps for coaches, gyms and sports clubs. Built to your sport, your coaching style, your clients — not a generic template.</p>
+    <div class="btn-group">
+      <a class="btn btn-primary" href="#demo">See the demo</a>
+      <a class="btn btn-secondary" href="#how">How it works</a>
+    </div>
+  </section>
+
+  <section id="how">
+    <p class="label">How it works</p>
+    <div class="steps">
+
+      <div class="step">
+        <span class="step-num">01</span>
+        <div>
+          <p class="step-title">You describe your system</p>
+          <p class="step-desc">Your sport, your coaching method, what your clients need. We scope it together.</p>
+        </div>
+        <span class="step-tag">Brief</span>
+      </div>
+
+      <div class="step">
+        <span class="step-num">02</span>
+        <div>
+          <p class="step-title">We build the app</p>
+          <p class="step-desc">Training plans, session delivery, check-ins, progress tracking — all branded to you.</p>
+        </div>
+        <span class="step-tag">Build</span>
+      </div>
+
+      <div class="step">
+        <span class="step-num">03</span>
+        <div>
+          <p class="step-title">You test with real clients</p>
+          <p class="step-desc">Pilot with a small group. We iterate fast based on real feedback.</p>
+        </div>
+        <span class="step-tag">Pilot</span>
+      </div>
+
+      <div class="step">
+        <span class="step-num">04</span>
+        <div>
+          <p class="step-title">Launch and hand over</p>
+          <p class="step-desc">App is live. You own it. We stay available for updates and support.</p>
+        </div>
+        <span class="step-tag">Launch</span>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="demo">
+    <p class="label">Live demo</p>
+
+    <div class="demo-card-single">
+      <h3>Stormie Moves</h3>
+      <p>A training app built for movement coaches — workouts, progressions, and client tracking in one place.</p>
+      <a href="https://stormiemoves.com" target="_blank" rel="noopener noreferrer">Open app →</a>
+    </div>
+
+    <a class="demo-open" href="https://stormiemoves.com" target="_blank" rel="noopener noreferrer">
+      Open Stormie Moves app →
+    </a>
+  </section>
+
+  <section id="what">
+    <p class="label">What's included</p>
+    <div class="what-list">
+
+      <div class="what-item">
+        <div class="what-dot"></div>
+        <div>
+          <p class="what-label">Training delivery</p>
+          <p class="what-desc">Workout plans built and delivered inside the app — your structure, your progressions</p>
+        </div>
+      </div>
+
+      <div class="what-item">
+        <div class="what-dot"></div>
+        <div>
+          <p class="what-label">Client check-ins</p>
+          <p class="what-desc">Clients log sessions and progress. You see it all without asking.</p>
+        </div>
+      </div>
+
+      <div class="what-item">
+        <div class="what-dot"></div>
+        <div>
+          <p class="what-label">Your brand</p>
+          <p class="what-desc">Logo, colours, name. Looks like your product, not someone else's platform.</p>
+        </div>
+      </div>
+
+      <div class="what-item">
+        <div class="what-dot"></div>
+        <div>
+          <p class="what-label">Full handover</p>
+          <p class="what-desc">You get full access and ownership. Add clients, update content, no dependency on us.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="pricing">
+    <p class="label">Get started</p>
+    <div class="pricing-card">
+      <p class="price">From 7 990 kr</p>
+      <p class="price-sub">One-time · Delivered in 2 weeks · Full handover</p>
+      <ul class="feature-list">
+        <li>Custom branded training app</li>
+        <li>Training plan delivery system</li>
+        <li>Client check-in and progress tracking</li>
+        <li>Pilot with up to 10 clients</li>
+        <li>Stormie Performance support</li>
+      </ul>
+      <a class="btn-cta" href="/cdn-cgi/l/email-protection#b9cacdd6cbd497d2d6d5d4d6ddd0d7f9ded4d8d0d597dad6d4" target="_blank">Get in touch</a>
+    </div>
+  </section>
+
+  <footer>
+    <a href
