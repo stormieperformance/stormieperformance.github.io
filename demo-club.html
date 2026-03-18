@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Northbound Club — Climbing & Outdoors</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f2efe8;
+      --dark: #1c1c18;
+      --green: #3d5a3e;
+      --green-light: #5a7a5b;
+      --stone: #8c8678;
+      --border: rgba(28,28,24,0.1);
+      --card: #eae7df;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--dark);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 44px;
+      background: rgba(242,239,232,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--dark);
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+
+    .nav-links a {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--stone);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--dark); }
+
+    .nav-join {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--green);
+      color: var(--bg);
+      padding: 10px 20px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .nav-join:hover { background: var(--green-light); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 120px 44px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-pattern {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 80% 20%, rgba(61,90,62,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 80%, rgba(61,90,62,0.06) 0%, transparent 50%);
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 800px; }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--green);
+      border: 1px solid rgba(61,90,62,0.3);
+      padding: 6px 14px;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(52px, 8vw, 112px);
+      font-weight: 400;
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.12s forwards;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--green);
+    }
+
+    .hero-bottom {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 40px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.24s forwards;
+    }
+
+    .hero-sub {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--stone);
+      line-height: 1.7;
+      max-width: 380px;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      background: var(--green);
+      color: var(--bg);
+      padding: 16px 32px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .hero-cta:hover { background: var(--green-light); }
+
+    /* DISCIPLINES */
+    #disciplines {
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .discipline {
+      padding: 48px 32px;
+      border-right: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+
+    .discipline:last-child { border-right: none; }
+    .discipline:hover { background: var(--card); }
+
+    .disc-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+      line-height: 1;
+    }
+
+    .disc-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+
+    .disc-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--stone);
+      line-height: 1.6;
+    }
+
+    /* MEMBERSHIP */
+    #membership {
+      padding: 100px 44px;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 12px;
+    }
+
+    .section-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: 56px;
+      max-width: 500px;
+    }
+
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .plan {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 36px 28px;
+    }
+
+    .plan.featured {
+      background: var(--green);
+      border-color: var(--green);
+      color: var(--bg);
+    }
+
+    .plan-type {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--stone);
+      margin-bottom: 16px;
+    }
+
+    .plan.featured .plan-type { color: rgba(242,239,232,0.6); }
+
+    .plan-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+
+    .plan-price {
+      font-size: 40px;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .plan-period {
+      font-size: 12px;
+      color: var(--stone);
+      margin-bottom: 28px;
+    }
+
+    .plan.featured .plan-period { color: rgba(242,239,232,0.6); }
+
+    .plan-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 28px;
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+    }
+
+    .plan.featured .plan-features { border-color: rgba(242,239,232,0.15); }
+
+    .plan-features li {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--stone);
+      display: flex;
+      gap: 8px;
+    }
+
+    .plan.featured .plan-features li { color: rgba(242,239,232,0.8); }
+
+    .plan-features li::before { content: '→'; flex-shrink: 0; }
+
+    .plan-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 13px;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .plan-btn-outline {
+      background: transparent;
+      color: var(--dark);
+      border: 1px solid var(--border);
+    }
+
+    .plan-btn-outline:hover { border-color: var(--dark); }
+
+    .plan-btn-light {
+      background: var(--bg);
+      color: var(--green);
+    }
+
+    .plan-btn-light:hover { opacity: 0.9; }
+
+    /* EVENTS */
+    #events {
+      padding: 100px 44px;
+      border-top: 1px solid var(--border);
+    }
+
+    .events-list { display: flex; flex-direction: column; gap: 0; margin-top: 48px; }
+
+    .event-row {
+      display: grid;
+      grid-template-columns: 100px 1fr auto;
+      gap: 32px;
+      align-items: center;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+
+    .event-row:hover { padding-left: 8px; }
+
+    .event-date {
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      color: var(--stone);
+    }
+
+    .event-name {
+      font-size: 16px;
+      font-weight: 400;
+      margin-bottom: 4px;
+    }
+
+    .event-meta {
+      font-size: 12px;
+      color: var(--stone);
+      font-weight: 300;
+    }
+
+    .event-tag {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green);
+      border: 1px solid rgba(61,90,62,0.25);
+      padding: 5px 12px;
+      white-space: nowrap;
+    }
+
+    /* CONTACT */
+    #contact {
+      padding: 100px 44px;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .contact-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(40px, 5vw, 68px);
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .contact-title em { font-style: italic; color: var(--green); }
+
+    .contact-sub {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--stone);
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    .contact-form { display: flex; flex-direction: column; gap: 12px; }
+
+    .form-input {
+      width: 100%;
+      padding: 14px 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--dark);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus { border-color: var(--green); }
+
+    .form-input::placeholder { color: var(--stone); }
+
+    .form-submit {
+      background: var(--green);
+      color: var(--bg);
+      border: none;
+      padding: 14px;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .form-submit:hover { background: var(--green-light); }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 44px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      color: var(--stone);
+    }
+
+    .footer-credit { font-size: 11px; color: rgba(140,134,120,0.6); }
+    .footer-credit a { color: var(--stone); text-decoration: none; }
+    .footer-credit a:hover { color: var(--dark); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 900px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      #hero { padding: 110px 20px 60px; }
+      .hero-bottom { flex-direction: column; align-items: flex-start; }
+      #disciplines { grid-template-columns: repeat(2, 1fr); }
+      #membership { padding: 80px 20px; }
+      .plans { grid-template-columns: 1fr; }
+      #events { padding: 80px 20px; }
+      .event-row { grid-template-columns: 80px 1fr; }
+      .event-tag { display: none; }
+      #contact { grid-template-columns: 1fr; padding: 80px 20px; gap: 40px; }
+      footer { padding: 20px; flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="#">Northbound Club</a>
+    <ul class="nav-links">
+      <li><a href="#disciplines">Disciplines</a></li>
+      <li><a href="#membership">Membership</a></li>
+      <li><a href="#events">Events</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="nav-join" href="#membership">Join the club</a>
+  </nav>
+
+  <section id="hero">
+    <div class="hero-pattern"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <span class="hero-tag">Stockholm · Est. 2021</span>
+      <h1 class="hero-title">Move<br>with the<br><em>mountain.</em></h1>
+      <div class="hero-bottom">
+        <p class="hero-sub">A community for climbers, trail runners, and outdoor athletes. Train hard. Go far. Come back.</p>
+        <a class="hero-cta" href="#membership">Explore membership</a>
+      </div>
+    </div>
+  </section>
+
+  <div id="disciplines">
+    <div class="discipline">
+      <div class="disc-icon">▲</div>
+      <h3 class="disc-name">Climbing</h3>
+      <p class="disc-desc">Indoor bouldering and lead climbing. Coaching available for all levels.</p>
+    </div>
+    <div class="discipline">
+      <div class="disc-icon">◎</div>
+      <h3 class="disc-name">Trail Running</h3>
+      <p class="disc-desc">Group runs through Nacka Reserve and Tyresta. Weekly distances 10–30km.</p>
+    </div>
+    <div class="discipline">
+      <div class="disc-icon">◈</div>
+      <h3 class="disc-name">Strength</h3>
+      <p class="disc-desc">Functional strength training for outdoor athletes. No machines, no mirrors.</p>
+    </div>
+    <div class="discipline">
+      <div class="disc-icon">◇</div>
+      <h3 class="disc-name">Expeditions</h3>
+      <p class="disc-desc">Guided weekend and multi-day trips. Kebnekaise, Sarek, Kullaberg.</p>
+    </div>
+  </div>
+
+  <section id="membership">
+    <p class="section-eyebrow">Membership</p>
+    <h2 class="section-heading">Find your level.</h2>
+    <div class="plans">
+
+      <div class="plan">
+        <p class="plan-type">Explorer</p>
+        <p class="plan-name">Base</p>
+        <p class="plan-price">299 kr</p>
+        <p class="plan-period">/ month</p>
+        <ul class="plan-features">
+          <li>Gym & wall access</li>
+          <li>Weekly group runs</li>
+          <li>Online training log</li>
+        </ul>
+        <a class="plan-btn plan-btn-outline" href="#contact">Get started</a>
+      </div>
+
+      <div class="plan featured">
+        <p class="plan-type">Most popular</p>
+        <p class="plan-name">Summit</p>
+        <p class="plan-price">549 kr</p>
+        <p class="plan-period">/ month</p>
+        <ul class="plan-features">
+          <li>Everything in Base</li>
+          <li>Unlimited coaching sessions</li>
+          <li>Priority expedition spots</li>
+          <li>Gear discount 15%</li>
+        </ul>
+        <a class="plan-btn plan-btn-light" href="#contact">Get started</a>
+      </div>
+
+      <div class="plan">
+        <p class="plan-type">All access</p>
+        <p class="plan-name">Alpine</p>
+        <p class="plan-price">899 kr</p>
+        <p class="plan-period">/ month</p>
+        <ul class="plan-features">
+          <li>Everything in Summit</li>
+          <li>1 free expedition / quarter</li>
+          <li>Personal program design</li>
+          <li>Guest passes (2/month)</li>
+          <li>Gear discount 25%</li>
+        </ul>
+        <a class="plan-btn plan-btn-outline" href="#contact">Get started</a>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="events">
+    <p class="section-eyebrow">Upcoming</p>
+    <h2 class="section-heading">What's on.</h2>
+    <div class="events-list">
+
+      <div class="event-row">
+        <span class="event-date">22 Mar</span>
+        <div>
+          <p class="event-name">Nacka Trail Run</p>
+          <p class="event-meta">18km · Meet at Sickla station · All levels</p>
+        </div>
+        <span class="event-tag">Trail</span>
+      </div>
+
+      <div class="event-row">
+        <span class="event-date">29 Mar</span>
+        <div>
+          <p class="event-name">Bouldering Competition</p>
+          <p class="event-meta">Indoor · Klättercentret Solna · Open category</p>
+        </div>
+        <span class="event-tag">Climbing</span>
+      </div>
+
+      <div class="event-row">
+        <span class="event-date">5 Apr</span>
+        <div>
+          <p class="event-name">Kullaberg Weekend</p>
+          <p class="event-meta">2 days · Sea-cliff climbing · 12 spots only</p>
+        </div>
+        <span class="event-tag">Expedition</span>
+      </div>
+
+      <div class="event-row">
+        <span class="event-date">19 Apr</span>
+        <div>
+          <p class="event-name">Strength for Climbers</p>
+          <p class="event-meta">Workshop · 3h · Max 10 participants</p>
+        </div>
+        <span class="event-tag">Workshop</span>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="contact">
+    <div>
+      <p class="section-eyebrow">Get in touch</p>
+      <h2 class="contact-title">Ready to<br><em>explore?</em></h2>
+      <p class="contact-sub">Questions about membership, events, or just want to come by and see the space? Drop us a message.</p>
+      <p style="font-size:13px; color:var(--stone); font-weight:300;">Northbound Club · Frösundaleden 2, Solna<br>info@northboundclub.se</p>
+    </div>
+    <div class="contact-form">
+      <input class="form-input" type="text" placeholder="Your name" />
+      <input class="form-input" type="email" placeholder="Email address" />
+      <select class="form-input" style="appearance:none; cursor:pointer;">
+        <option value="" disabled selected>I'm interested in...</option>
+        <option>Membership</option>
+        <option>Expeditions</option>
+        <option>Coaching</option>
+        <option>Events</option>
+      </select>
+      <textarea class="form-input" rows="4" placeholder="Your message" style="resize:none;"></textarea>
+      <button class="form-submit">Send message</button>
+    </div>
+  </section>
+
+  <footer>
+    <span class="footer-logo">Northbound Club</span>
+    <span class="footer-credit">Built by <a href="https://stormieperformance.com">Stormie Performance</a></span>
+  </footer>
+
+</body>
+</html>
