@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PT Coaching System — Stormie Performance</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0e0e0e;
+      --white: #f5f4f0;
+      --gray: #888;
+      --border: rgba(0,0,0,0.1);
+      --mono: 'DM Mono', monospace;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--white);
+      color: var(--black);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 32px;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--black); }
+
+    /* SECTIONS */
+    section {
+      padding: 80px 32px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 20px;
+    }
+
+    /* HERO */
+    #hero {
+      padding-top: 140px;
+      padding-bottom: 80px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    #hero h1 {
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 300;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+
+    #hero h1 em {
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    #hero p {
+      font-size: 15px;
+      color: var(--gray);
+      max-width: 480px;
+      margin-bottom: 36px;
+      line-height: 1.7;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      padding: 12px 22px;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: var(--black);
+      color: var(--white);
+      border: 1px solid var(--black);
+    }
+
+    .btn-primary:hover { opacity: 0.85; }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--black);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover { border-color: var(--black); }
+
+    /* HOW IT WORKS */
+    #how {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 32px 1fr auto;
+      gap: 16px;
+      align-items: start;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .step:last-child { border-bottom: none; }
+
+    .step-num {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--gray);
+      padding-top: 2px;
+    }
+
+    .step-title {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .step-desc {
+      font-size: 13px;
+      color: var(--gray);
+      line-height: 1.55;
+    }
+
+    .step-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      color: var(--gray);
+      white-space: nowrap;
+      padding-top: 3px;
+    }
+
+    /* DEMO */
+    #demo {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 540px) {
+      .demo-grid { grid-template-columns: 1fr; }
+    }
+
+    .demo-card {
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 20px;
+      background: #fff;
+    }
+
+    .demo-card h3 {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .demo-card p {
+      font-size: 12px;
+      color: var(--gray);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .demo-card a {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+      transition: border-color 0.2s;
+    }
+
+    .demo-card a:hover { border-color: var(--black); }
+
+    /* PLACEHOLDER IFRAME */
+    .iframe-placeholder {
+      width: 100%;
+      height: 480px;
+      border: 1px dashed var(--border);
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #fafaf8;
+      margin-top: 24px;
+    }
+
+    .iframe-placeholder span {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 0.06em;
+    }
+
+    .iframe-placeholder small {
+      font-size: 11px;
+      color: #bbb;
+    }
+
+    /* Replace this div with your actual iframe once Lovable is live:
+       <iframe src="YOUR_LOVABLE_URL" width="100%" height="480"
+               frameborder="0" style="border-radius:2px;border:1px solid var(--border);">
+       </iframe>
+    */
+
+    /* AUTOMATION */
+    #automation {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .flow-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .flow-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .flow-item:last-child { border-bottom: none; }
+
+    .flow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--black);
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .flow-trigger {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+
+    .flow-action {
+      font-size: 13px;
+      color: var(--black);
+    }
+
+    /* PRICING */
+    #pricing {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pricing-card {
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 28px;
+      background: #fff;
+    }
+
+    .price {
+      font-size: 32px;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .price-sub {
+      font-size: 12px;
+      color: var(--gray);
+      margin-bottom: 24px;
+      font-family: var(--mono);
+      letter-spacing: 0.06em;
+    }
+
+    .feature-list {
+      list-style: none;
+      margin-bottom: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .feature-list li {
+      font-size: 13px;
+      color: var(--gray);
+      display: flex;
+      gap: 10px;
+    }
+
+    .feature-list li::before {
+      content: '—';
+      color: #ccc;
+      flex-shrink: 0;
+    }
+
+    /* SHOPIFY CTA — replace href with your actual Shopify product URL */
+    .btn-cta {
+      display: block;
+      width: 100%;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      padding: 14px;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .btn-cta:hover { opacity: 0.82; }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 32px;
+      border-top: 1px solid var(--border);
+    }
+
+    footer a {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 0.08em;
+      text-decoration: none;
+    }
+
+    footer a:hover { color: var(--black); }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-brand" href="https://stormieperformance.com">Stormie Performance</a>
+    <ul class="nav-links">
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#demo">Demo</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="mailto:storm.kolmodin@gmail.com">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <p class="label">PT Coaching System</p>
+    <h1>Your clients don't quit.<br><em>Your admin runs itself.</em></h1>
+    <p>A complete system for personal trainers — client onboarding, training delivery, and automatic retention. Built by Stormie Performance.</p>
+    <div class="btn-group">
+      <a class="btn btn-primary" href="#demo">See the demo</a>
+      <a class="btn btn-secondary" href="#how">How it works</a>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how">
+    <p class="label">How it works</p>
+    <div class="steps">
+
+      <div class="step">
+        <span class="step-num">01</span>
+        <div>
+          <p class="step-title">Client signs up</p>
+          <p class="step-desc">Clean booking page. They fill in goals, experience and injuries. No back-and-forth emails.</p>
+        </div>
+        <span class="step-tag">Sign-up</span>
+      </div>
+
+      <div class="step">
+        <span class="step-num">02</span>
+        <div>
+          <p class="step-title">You get notified instantly</p>
+          <p class="step-desc">New client appears in your dashboard. Program is ready to send in one click.</p>
+        </div>
+        <span class="step-tag">Dashboard</span>
+      </div>
+
+      <div class="step">
+        <span class="step-num">03</span>
+        <div>
+          <p class="step-title">Client trains — system tracks</p>
+          <p class="step-desc">Client checks in after each session. You see their progress without asking.</p>
+        </div>
+        <span class="step-tag">App</span>
+      </div>
+
+      <div class="step">
+        <span class="step-num">04</span>
+        <div>
+          <p class="step-title">System follows up automatically</p>
+          <p class="step-desc">3 days no activity → client gets a nudge. You get a heads-up. No manual chasing.</p>
+        </div>
+        <span class="step-tag">Automation</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- DEMO -->
+  <section id="demo">
+    <p class="label">Live demo</p>
+
+    <div class="demo-grid">
+      <div class="demo-card">
+        <h3>PT Dashboard</h3>
+        <p>Your clients, their status and progress — live.</p>
+        <!-- Replace # with your Lovable PT dashboard URL -->
+        <a href="#" target="_blank">Open dashboard →</a>
+      </div>
+      <div class="demo-card">
+        <h3>Client portal</h3>
+        <p>What your client sees — training plan, check-in, history.</p>
+        <!-- Replace # with your Lovable client portal URL -->
+        <a href="#" target="_blank">Open client view →</a>
+      </div>
+    </div>
+
+    <!-- IFRAME PLACEHOLDER — replace with actual Lovable embed once ready -->
+    <div class="iframe-placeholder">
+      <span>PT Dashboard — coming soon</span>
+      <small>iframe embed goes here</small>
+    </div>
+
+    <!--
+    WHEN LOVABLE IS READY, REPLACE THE DIV ABOVE WITH:
+    <iframe
+      src="YOUR_LOVABLE_APP_URL"
+      width="100%"
+      height="480"
+      frameborder="0"
+      style="border-radius:2px; border:1px solid rgba(0,0,0,0.1);"
+    ></iframe>
+    -->
+  </section>
+
+  <!-- AUTOMATION -->
+  <section id="automation">
+    <p class="label">What happens automatically</p>
+    <div class="flow-list">
+
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div>
+          <p class="flow-trigger">Trigger · New client</p>
+          <p class="flow-action">Welcome email sent → client added to dashboard → training plan assigned</p>
+        </div>
+      </div>
+
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div>
+          <p class="flow-trigger">Trigger · No activity for 3 days</p>
+          <p class="flow-action">Re-engagement email sent to client → notification sent to PT</p>
+        </div>
+      </div>
+
+      <div class="flow-item">
+        <div class="flow-dot"></div>
+        <div>
+          <p class="flow-trigger">Trigger · Every Monday</p>
+          <p class="flow-action">Weekly summary sent to PT — sessions completed, clients at risk</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <p class="label">Get started</p>
+    <div class="pricing-card">
+      <p class="price">997 kr / month</p>
+      <p class="price-sub">Per PT · Unlimited clients · Cancel anytime</p>
+      <ul class="feature-list">
+        <li>PT dashboard + client portal</li>
+        <li>Automatic onboarding flow</li>
+        <li>Retention automations</li>
+        <li>Weekly progress reports</li>
+        <li>Stormie Performance support</li>
+      </ul>
+      <!-- Replace # with your Shopify product/checkout URL -->
+      <a class="btn-cta" href="#" target="_blank">Start today</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="https://stormieperformance.com">← stormieperformance.com</a>
+  </footer>
+
+</body>
+</html>
