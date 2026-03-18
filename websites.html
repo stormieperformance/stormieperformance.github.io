@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Branded Websites — Stormie Performance</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0e0e0e;
+      --white: #f5f4f0;
+      --gray: #888;
+      --border: rgba(0,0,0,0.1);
+      --mono: 'DM Mono', monospace;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--white);
+      color: var(--black);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 32px;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 24px; list-style: none; }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--black); }
+
+    section {
+      padding: 80px 32px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 20px;
+    }
+
+    #hero {
+      padding-top: 140px;
+      padding-bottom: 80px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    #hero h1 {
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 300;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+
+    #hero h1 em { font-style: italic; font-weight: 300; }
+
+    #hero p {
+      font-size: 15px;
+      color: var(--gray);
+      max-width: 480px;
+      margin-bottom: 36px;
+      line-height: 1.7;
+    }
+
+    .btn-group { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .btn {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      padding: 12px 22px;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .btn-primary { background: var(--black); color: var(--white); border: 1px solid var(--black); }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-secondary { background: transparent; color: var(--black); border: 1px solid var(--border); }
+    .btn-secondary:hover { border-color: var(--black); }
+
+    /* DEMOS */
+    #demos { border-bottom: 1px solid var(--border); }
+
+    .demo-list { display: flex; flex-direction: column; gap: 0; }
+
+    .demo-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      transition: padding-left 0.2s;
+    }
+
+    .demo-item:last-child { border-bottom: none; }
+    .demo-item:hover { padding-left: 6px; }
+
+    .demo-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 6px;
+    }
+
+    .demo-name {
+      font-size: 20px;
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+
+    .demo-desc {
+      font-size: 13px;
+      color: var(--gray);
+      font-weight: 300;
+    }
+
+    .demo-arrow {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+
+    .demo-item:hover .demo-arrow { color: var(--black); }
+
+    /* WHAT'S INCLUDED */
+    #what { border-bottom: 1px solid var(--border); }
+
+    .what-list { display: flex; flex-direction: column; gap: 0; }
+
+    .what-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .what-item:last-child { border-bottom: none; }
+
+    .what-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--black);
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .what-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+
+    .what-desc { font-size: 13px; color: var(--black); }
+
+    /* PRICING */
+    #pricing { border-bottom: 1px solid var(--border); }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 540px) {
+      .pricing-grid { grid-template-columns: 1fr; }
+    }
+
+    .pricing-card {
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 28px;
+      background: #fff;
+    }
+
+    .pricing-tier {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 12px;
+    }
+
+    .price {
+      font-size: 28px;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .price-sub {
+      font-size: 12px;
+      color: var(--gray);
+      margin-bottom: 20px;
+      font-family: var(--mono);
+      letter-spacing: 0.06em;
+    }
+
+    .feature-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .feature-list li { font-size: 13px; color: var(--gray); display: flex; gap: 10px; }
+    .feature-list li::before { content: '—'; color: #ccc; flex-shrink: 0; }
+
+    .btn-cta {
+      display: block;
+      width: 100%;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      padding: 14px;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      margin-top: 20px;
+    }
+
+    .btn-cta:hover { opacity: 0.82; }
+
+    footer { text-align: center; padding: 32px; border-top: 1px solid var(--border); }
+
+    footer a {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 0.08em;
+      text-decoration: none;
+    }
+
+    footer a:hover { color: var(--black); }
+
+    @media (max-width: 540px) {
+      nav { padding: 16px 20px; }
+      section { padding: 60px 20px; }
+      #hero { padding-top: 110px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-brand" href="https://stormieperformance.com">Stormie Performance</a>
+    <ul class="nav-links">
+      <li><a href="#demos">Demos</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="mailto:storm.kolmodin@gmail.com">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section id="hero">
+    <p class="label">Branded Websites</p>
+    <h1>Your brand online.<br><em>Done properly.</em></h1>
+    <p>Custom websites for sports and fitness brands. Built to your identity — not a template, not a theme. A site that looks and feels like you.</p>
+    <div class="btn-group">
+      <a class="btn btn-primary" href="#demos">See the demos</a>
+      <a class="btn btn-secondary" href="#pricing">View pricing</a>
+    </div>
+  </section>
+
+  <section id="demos">
+    <p class="label">Live demos</p>
+    <div class="demo-list">
+
+      <a class="demo-item" href="/demo-gym.html" target="_blank" rel="noopener noreferrer">
+        <div>
+          <p class="demo-tag">Gym · Dark · Brutal</p>
+          <p class="demo-name">Iron House Gym</p>
+          <p class="demo-desc">A raw strength gym in Stockholm. Membership tiers, class schedule, bold typography.</p>
+        </div>
+        <span class="demo-arrow">View →</span>
+      </a>
+
+      <a class="demo-item" href="/demo-pt.html" target="_blank" rel="noopener noreferrer">
+        <div>
+          <p class="demo-tag">PT · Premium · Minimal</p>
+          <p class="demo-name">Apex Athletics</p>
+          <p class="demo-desc">A premium personal trainer site. Services, process, booking — clean and refined.</p>
+        </div>
+        <span class="demo-arrow">View →</span>
+      </a>
+
+      <a class="demo-item" href="/demo-club.html" target="_blank" rel="noopener noreferrer">
+        <div>
+          <p class="demo-tag">Club · Outdoors · Earthy</p>
+          <p class="demo-name">Northbound Club</p>
+          <p class="demo-desc">A climbing and outdoors club. Events, expeditions, membership, contact form.</p>
+        </div>
+        <span class="demo-arrow">View →</span>
+      </a>
+
+    </div>
+  </section>
+
+  <section id="what">
+    <p class="label">What's included</p>
+    <div class="what-list">
+
+      <div class="what-item">
+        <div class="what-dot"></div>
+        <div>
+          <p class="what-label">Custom design</p>
+          <p class="what-desc">Built to your brand — colours, fonts, tone. No templates, no themes.</p>
+        </div>
+      </div>
+
+      <div class="what-item">
+        <div class="what-dot"></div>
+        <div>
+          <p class="what-label">All pages included</p>
+          <p class="what-desc">Homepage, about, services, contact — whatever your business needs.</p>
+        </div>
+      </div>
+
+      <div class="what-item">
+        <div class="what-dot"></div>
+        <div>
+          <p class="what-label">Mobile responsive</p>
+          <p class="what-desc">Looks perfect on phone, tablet and desktop. No exceptions.</p>
+        </div>
+      </div>
+
+      <div class="what-item">
+        <div class="what-dot"></div>
+        <div>
+          <p class="what-label">Domain & launch</p>
+          <p class="what-desc">Connected to your domain and live. Full handover — you own everything.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="pricing">
+    <p class="label">Pricing</p>
+    <div class="pricing-grid">
+
+      <div class="pricing-card">
+        <p class="pricing-tier">Presentation site</p>
+        <p class="price">From 3 990 kr</p>
+        <p class="price-sub">One-time · Ready in 5 days</p>
+        <ul class="feature-list">
+          <li>Up to 4 pages</li>
+          <li>Custom design</li>
+          <li>Mobile responsive</li>
+          <li>Domain connected</li>
+          <li>30 days support</li>
+        </ul>
+        <a class="btn-cta" href="mailto:storm.kolmodin@gmail.com">Get in touch</a>
+      </div>
+
+      <div class="pricing-card">
+        <p class="pricing-tier">Full site</p>
+        <p class="price">From 6 990 kr</p>
+        <p class="price-sub">One-time · Ready in 10 days</p>
+        <ul class="feature-list">
+          <li>Unlimited pages</li>
+          <li>Custom design</li>
+          <li>Mobile responsive</li>
+          <li>Contact forms</li>
+          <li>Domain connected</li>
+          <li>60 days support</li>
+        </ul>
+        <a class="btn-cta" href="mailto:storm.kolmodin@gmail.com">Get in touch</a>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <a href="https://stormieperformance.com">← stormieperformance.com</a>
+  </footer>
+
+</body>
+</html>
