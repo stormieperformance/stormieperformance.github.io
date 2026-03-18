@@ -6,49 +6,51 @@
   <title>stormieperformance</title>
 
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
     :root{
-      --bg:#ffffff;
-      --text:#0f0f10;
-      --muted:rgba(0,0,0,0.56);
-      --muted2:rgba(0,0,0,0.40);
-      --line:rgba(0,0,0,0.10);
-      --glass:rgba(255,255,255,0.78);
-      --glass2:rgba(255,255,255,0.92);
-      --shadow:0 30px 90px rgba(0,0,0,0.18);
+      --bg:#f5f5f7;
+      --text:#1d1d1f;
+      --muted:rgba(0,0,0,0.50);
+      --muted2:rgba(0,0,0,0.36);
+      --line:rgba(0,0,0,0.08);
+      --glass:rgba(255,255,255,0.72);
+      --glass2:rgba(255,255,255,0.90);
+      --shadow:0 30px 90px rgba(0,0,0,0.14);
       --radius:22px;
-      --overlay:rgba(10,10,10,0.30);
+      --overlay:rgba(10,10,10,0.28);
       --panel-border:rgba(255,255,255,0.50);
       --panel-soft-border:rgba(0,0,0,0.06);
-      --panel-shadow:0 8px 24px rgba(0,0,0,0.06);
-      --button-bg:rgba(255,255,255,0.75);
+      --panel-shadow:0 8px 32px rgba(0,0,0,0.08);
+      --button-bg:rgba(255,255,255,0.72);
       --button-bg-hover:rgba(255,255,255,0.92);
-      --icon:#000;
-      --link:#000;
-      --close-border:rgba(0,0,0,0.10);
+      --icon:#1d1d1f;
+      --link:#1d1d1f;
+      --close-border:rgba(0,0,0,0.08);
       --close-bg:rgba(255,255,255,0.70);
       --close-bg-hover:rgba(255,255,255,0.95);
     }
 
     body.dark{
-      --bg:#050506;
+      --bg:#000000;
       --text:#f5f5f7;
-      --muted:rgba(255,255,255,0.62);
-      --muted2:rgba(255,255,255,0.42);
+      --muted:rgba(255,255,255,0.56);
+      --muted2:rgba(255,255,255,0.38);
       --line:rgba(255,255,255,0.10);
-      --glass:rgba(20,20,22,0.72);
-      --glass2:rgba(14,14,16,0.86);
-      --shadow:0 30px 90px rgba(0,0,0,0.42);
-      --overlay:rgba(0,0,0,0.42);
+      --glass:rgba(28,28,30,0.72);
+      --glass2:rgba(18,18,20,0.88);
+      --shadow:0 30px 90px rgba(0,0,0,0.48);
+      --overlay:rgba(0,0,0,0.46);
       --panel-border:rgba(255,255,255,0.08);
       --panel-soft-border:rgba(255,255,255,0.08);
-      --panel-shadow:0 8px 24px rgba(0,0,0,0.28);
-      --button-bg:rgba(20,20,22,0.72);
-      --button-bg-hover:rgba(28,28,30,0.92);
+      --panel-shadow:0 8px 24px rgba(0,0,0,0.32);
+      --button-bg:rgba(28,28,30,0.72);
+      --button-bg-hover:rgba(38,38,40,0.92);
       --icon:#f5f5f7;
       --link:#f5f5f7;
       --close-border:rgba(255,255,255,0.10);
-      --close-bg:rgba(20,20,22,0.72);
-      --close-bg-hover:rgba(28,28,30,0.95);
+      --close-bg:rgba(28,28,30,0.72);
+      --close-bg-hover:rgba(38,38,40,0.95);
     }
 
     *{ margin:0; padding:0; box-sizing:border-box; }
@@ -57,11 +59,12 @@
     body{
       background:var(--bg);
       color:var(--text);
-      font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+      font-family:'DM Sans',-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
       text-align:center;
       overflow-x:hidden;
       overflow-y:auto;
-      transition: background .4s ease, color .4s ease;
+      transition:background .4s ease, color .4s ease;
+      -webkit-font-smoothing:antialiased;
     }
 
     .app{
@@ -74,9 +77,7 @@
       transition:filter .28s ease;
     }
 
-    .app.is-blurred{
-      filter:blur(18px);
-    }
+    .app.is-blurred{ filter:blur(18px); }
 
     .site-wrap{
       width:min(980px, 92vw);
@@ -84,60 +85,51 @@
     }
 
     .logo{
-      font-size:clamp(36px, 7vw, 84px);
-      letter-spacing:0.04em;
-      font-weight:600;
+      font-size:clamp(36px, 7vw, 80px);
+      letter-spacing:-0.02em;
+      font-weight:300;
       opacity:0;
-      transform:translateY(12px);
+      transform:translateY(14px);
       animation:reveal 1.4s ease forwards;
       user-select:none;
       transition:opacity .25s ease;
-      text-transform:uppercase;
       max-width:92vw;
       margin:0 auto;
       text-align:center;
-      line-height:1.02;
-      word-break:normal;
-      white-space:normal;
+      line-height:1.04;
+      color:var(--text);
     }
 
-    .logo:hover{ opacity:0.92; }
+    .logo:hover{ opacity:0.88; }
+
+    .logo-thin{ font-weight:300; }
+    .logo-medium{ font-weight:500; }
 
     .sub{
-      margin-top:28px;
-      font-size:18px;
-      letter-spacing:0.03em;
-      text-transform:none;
+      margin-top:24px;
+      font-size:17px;
+      letter-spacing:0;
+      font-weight:300;
       opacity:0;
-      line-height:1.45;
+      line-height:1.5;
       animation:fadeIn 1s ease forwards;
       animation-delay:1.2s;
-      color:rgba(0,0,0,0.62);
+      color:var(--muted);
       user-select:none;
-      max-width:760px;
+      max-width:560px;
       margin-left:auto;
       margin-right:auto;
       padding:0 24px;
     }
 
-    body.dark .sub{
-      color:rgba(255,255,255,0.62);
-    }
-
-    .sub-line{
-      display:block;
-    }
-
-    .sub-line + .sub-line{
-      margin-top:8px;
-    }
+    .sub-line{ display:block; }
+    .sub-line + .sub-line{ margin-top:4px; }
 
     .byline{
-      margin-top:24px;
-      font-size:13px;
-      letter-spacing:0.12em;
-      text-transform:none;
-      color:var(--text);
+      margin-top:20px;
+      font-size:12px;
+      letter-spacing:0.08em;
+      color:var(--muted2);
       opacity:0;
       animation:fadeIn 1s ease forwards;
       animation-delay:1.45s;
@@ -145,11 +137,11 @@
     }
 
     .projects{
-      margin-top:48px;
+      margin-top:52px;
       display:flex;
       flex-direction:column;
       align-items:center;
-      gap:28px;
+      gap:0;
       width:560px;
       max-width:92vw;
       margin-left:auto;
@@ -158,12 +150,14 @@
       animation:fadeIn 1s ease forwards;
       animation-delay:1.9s;
       padding-bottom:60px;
+      border-top:1px solid var(--line);
     }
 
     .project-card{
       width:100%;
       text-align:center;
       position:relative;
+      border-bottom:1px solid var(--line);
     }
 
     .project-toggle{
@@ -176,182 +170,135 @@
       flex-direction:column;
       align-items:center;
       justify-content:center;
-      gap:3px;
-      padding:0;
+      gap:0;
+      padding:22px 0 18px;
       color:var(--muted);
       transition:color .25s ease;
     }
 
-    .project-toggle:hover{
-      color:var(--text);
-    }
+    .project-toggle:hover{ color:var(--text); }
 
     .project-title{
-      font-size:12px;
-      letter-spacing:0.22em;
+      font-size:11px;
+      letter-spacing:0.14em;
       text-transform:uppercase;
-      padding-bottom:5px;
-      border-bottom:1px solid var(--line);
-      width:fit-content;
-      margin:0 auto;
-      color:var(--text);
+      font-weight:400;
+      color:var(--muted2);
+      margin-bottom:6px;
     }
 
     .project-sub{
-      font-size:17px;
-      letter-spacing:0;
-      text-transform:none;
-      color:rgba(0,0,0,0.42);
-      margin-top:12px;
-      line-height:1.45;
-      max-width:500px;
-    }
-
-    body.dark .project-sub{
-      color:rgba(255,255,255,0.46);
+      font-size:19px;
+      font-weight:300;
+      letter-spacing:-0.01em;
+      color:var(--text);
+      line-height:1.35;
+      max-width:460px;
     }
 
     .project-chevron{
-      font-size:14px;
+      font-size:13px;
       color:var(--muted2);
       transition:transform .22s ease, opacity .22s ease;
-      margin-top:8px;
+      margin-top:10px;
     }
 
-    .project-toggle:hover .project-chevron{
-      opacity:1;
-    }
-
-    .project-card.open .project-chevron{
-      transform:rotate(180deg);
-    }
+    .project-card.open .project-chevron{ transform:rotate(180deg); }
 
     .project-panel{
       max-height:0;
       overflow:hidden;
       opacity:0;
       transform:translateY(-4px);
-      transition:max-height .28s ease, opacity .22s ease, transform .22s ease, margin-top .22s ease;
-      margin-top:0;
+      transition:max-height .28s ease, opacity .22s ease, transform .22s ease;
     }
 
     .project-card.open .project-panel{
       max-height:420px;
       opacity:1;
       transform:translateY(0);
-      margin-top:12px;
     }
 
     .project-panel-inner{
       background:var(--glass);
       border:1px solid var(--panel-soft-border);
-      border-radius:18px;
-      padding:18px 20px 16px;
+      border-radius:16px;
+      padding:16px 20px 18px;
       box-shadow:var(--panel-shadow);
       text-align:center;
-      backdrop-filter:blur(14px);
-      -webkit-backdrop-filter:blur(14px);
-      margin:0 auto;
-      transition: background .4s ease, border-color .4s ease, box-shadow .4s ease;
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+      margin:0 0 16px;
+      transition:background .4s ease;
     }
 
     .project-panel-inner p{
-      font-size:15px;
-      line-height:1.7;
-      color:color-mix(in srgb, var(--text) 75%, transparent);
-      margin:0 0 12px;
+      font-size:14px;
+      line-height:1.75;
+      color:var(--muted);
+      margin:0 0 14px;
       white-space:pre-line;
+      font-weight:300;
     }
 
-    .project-launch,
-    .overlay-link{
+    .project-launch{
       display:inline-block;
       text-decoration:none;
       color:var(--link);
-      border-bottom:1px solid color-mix(in srgb, var(--text) 22%, transparent);
-      padding-bottom:2px;
       font-size:11px;
-      letter-spacing:0.18em;
+      letter-spacing:0.12em;
       text-transform:uppercase;
-      opacity:0.85;
-      background:none;
-      border-top:none;
-      border-left:none;
-      border-right:none;
-      cursor:pointer;
-      font-family:inherit;
+      font-weight:400;
+      opacity:0.7;
+      border-bottom:1px solid var(--line);
+      padding-bottom:2px;
+      transition:opacity .2s ease;
     }
 
-    .project-launch:hover,
-    .overlay-link:hover{
-      opacity:1;
-      border-bottom-color:color-mix(in srgb, var(--text) 35%, transparent);
+    .project-launch:hover{ opacity:1; }
+
+    .inline-link{
+      color:inherit;
+      text-decoration:none;
+      border-bottom:1px solid color-mix(in srgb, var(--text) 22%, transparent);
+      padding-bottom:1px;
+      transition:opacity .2s ease;
     }
+
+    .inline-link:hover{ opacity:0.7; }
 
     .secret-trigger{
-      width:10px;
-      height:10px;
+      width:8px;
+      height:8px;
       border:none;
       border-radius:999px;
-      background:color-mix(in srgb, var(--text) 18%, transparent);
+      background:var(--muted2);
       display:block;
       margin:8px auto 12px;
       cursor:pointer;
-      opacity:0.22;
-      transition:opacity .22s ease, transform .22s ease, background .22s ease;
+      opacity:0.18;
+      transition:opacity .22s ease, transform .22s ease;
       text-decoration:none;
       appearance:none;
-      -webkit-appearance:none;
     }
 
     .secret-trigger:hover{
-      opacity:0.42;
-      transform:scale(1.08);
-      background:color-mix(in srgb, var(--text) 28%, transparent);
-    }
-
-    .secret-trigger:focus-visible{
-      outline:none;
-      opacity:0.42;
-      transform:scale(1.08);
-      background:color-mix(in srgb, var(--text) 28%, transparent);
+      opacity:0.36;
+      transform:scale(1.1);
     }
 
     .secret-trigger-label{
       position:absolute;
-      width:1px;
-      height:1px;
-      padding:0;
-      margin:-1px;
+      width:1px; height:1px;
+      padding:0; margin:-1px;
       overflow:hidden;
       clip:rect(0,0,0,0);
       white-space:nowrap;
       border:0;
     }
 
-    .inline-link{
-      color:inherit;
-      text-decoration:none;
-      border-bottom:1px solid color-mix(in srgb, var(--text) 25%, transparent);
-      padding-bottom:1px;
-      transition:opacity .2s ease, border-color .2s ease;
-    }
-
-    .inline-link:hover{
-      opacity:1;
-      border-bottom-color:color-mix(in srgb, var(--text) 45%, transparent);
-    }
-
-    .inline-link:focus-visible{
-      outline:none;
-      border-bottom-color:color-mix(in srgb, var(--text) 45%, transparent);
-    }
-
     @keyframes reveal{
-      to{
-        opacity:1;
-        transform:translateY(0);
-      }
+      to{ opacity:1; transform:translateY(0); }
     }
 
     @keyframes fadeIn{
@@ -366,15 +313,15 @@
       height:44px;
       border:1px solid var(--line);
       background:var(--button-bg);
-      backdrop-filter:blur(12px);
-      -webkit-backdrop-filter:blur(12px);
-      border-radius:12px;
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+      border-radius:14px;
       cursor:pointer;
       z-index:50;
       display:flex;
       align-items:center;
       justify-content:center;
-      transition: transform .2s ease, background .2s ease, border-color .3s ease;
+      transition:transform .2s ease, background .2s ease, border-color .3s ease;
     }
 
     .menu-btn{ left:18px; }
@@ -386,43 +333,27 @@
       background:var(--button-bg-hover);
     }
 
-    .icon{
-      width:18px;
-      height:12px;
-      position:relative;
-    }
+    .icon{ width:18px; height:12px; position:relative; }
 
     .icon span{
       position:absolute;
-      left:0;
-      right:0;
-      height:2px;
+      left:0; right:0;
+      height:1.5px;
       background:var(--icon);
       border-radius:2px;
-      transition:transform .25s ease, top .25s ease, opacity .2s ease, background .3s ease;
+      transition:transform .25s ease, top .25s ease, opacity .2s ease;
     }
 
     .icon span:nth-child(1){ top:0; }
     .icon span:nth-child(2){ top:5px; }
     .icon span:nth-child(3){ top:10px; }
 
-    .menu-btn.open .icon span:nth-child(1){
-      top:5px;
-      transform:rotate(45deg);
-    }
-
-    .menu-btn.open .icon span:nth-child(2){
-      opacity:0;
-    }
-
-    .menu-btn.open .icon span:nth-child(3){
-      top:5px;
-      transform:rotate(-45deg);
-    }
+    .menu-btn.open .icon span:nth-child(1){ top:5px; transform:rotate(45deg); }
+    .menu-btn.open .icon span:nth-child(2){ opacity:0; }
+    .menu-btn.open .icon span:nth-child(3){ top:5px; transform:rotate(-45deg); }
 
     .theme-icon{
-      width:18px;
-      height:18px;
+      width:18px; height:18px;
       border-radius:999px;
       border:1.5px solid var(--icon);
       position:relative;
@@ -432,33 +363,26 @@
     .theme-icon::after{
       content:"";
       position:absolute;
-      top:2px;
-      right:2px;
-      width:8px;
-      height:8px;
+      top:2px; right:2px;
+      width:8px; height:8px;
       border-radius:999px;
       background:var(--icon);
-      opacity:.92;
-      transition:background .3s ease, opacity .25s ease, transform .25s ease;
+      opacity:.9;
+      transition:background .3s ease, transform .25s ease;
     }
 
-    body.dark .theme-icon{
-      transform:rotate(-18deg);
-    }
-
-    body.dark .theme-icon::after{
-      transform:translate(-1px,1px);
-    }
+    body.dark .theme-icon{ transform:rotate(-18deg); }
+    body.dark .theme-icon::after{ transform:translate(-1px,1px); }
 
     .overlay{
       position:fixed;
       inset:0;
       background:var(--overlay);
-      backdrop-filter:blur(18px);
-      -webkit-backdrop-filter:blur(18px);
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
       opacity:0;
       pointer-events:none;
-      transition:opacity .28s ease, background .4s ease;
+      transition:opacity .28s ease;
       z-index:60;
       display:flex;
       justify-content:center;
@@ -466,30 +390,24 @@
       padding:28px;
     }
 
-    .overlay.active{
-      opacity:1;
-      pointer-events:auto;
-    }
+    .overlay.active{ opacity:1; pointer-events:auto; }
 
     .panel{
-      width:min(760px, 92vw);
+      width:min(680px, 92vw);
       background:var(--glass2);
       border:1px solid color-mix(in srgb, var(--text) 8%, transparent);
-      box-shadow:0 30px 80px rgba(0,0,0,0.10);
-      border-radius:30px;
-      padding:34px 34px 30px;
+      box-shadow:0 30px 80px rgba(0,0,0,0.12);
+      border-radius:28px;
+      padding:32px 32px 28px;
       transform:translateY(10px);
       opacity:0;
-      transition: transform .28s ease, opacity .28s ease, background .4s ease, border-color .4s ease, box-shadow .4s ease;
+      transition:transform .28s ease, opacity .28s ease;
       position:relative;
       max-height:90vh;
       overflow-y:auto;
     }
 
-    .overlay.active .panel{
-      transform:translateY(0);
-      opacity:1;
-    }
+    .overlay.active .panel{ transform:translateY(0); opacity:1; }
 
     #menuOverlay .panel,
     #aboutOverlay .panel,
@@ -507,16 +425,8 @@
     }
 
     @keyframes overlayPanelReveal{
-      from{
-        opacity:0;
-        transform:translateY(16px) scale(0.985);
-        filter:blur(8px);
-      }
-      to{
-        opacity:1;
-        transform:translateY(0) scale(1);
-        filter:blur(0);
-      }
+      from{ opacity:0; transform:translateY(16px) scale(0.985); filter:blur(8px); }
+      to{ opacity:1; transform:translateY(0) scale(1); filter:blur(0); }
     }
 
     .panel-top{
@@ -529,65 +439,60 @@
 
     .kicker{
       font-size:11px;
-      letter-spacing:0.28em;
+      letter-spacing:0.18em;
       text-transform:uppercase;
-      color:var(--muted);
+      color:var(--muted2);
+      font-weight:400;
     }
 
     .close-btn{
-      width:40px;
-      height:40px;
-      border-radius:14px;
+      width:36px; height:36px;
+      border-radius:50%;
       border:1px solid var(--close-border);
       background:var(--close-bg);
       cursor:pointer;
       display:flex;
       align-items:center;
       justify-content:center;
-      font-size:18px;
+      font-size:17px;
       color:var(--muted);
-      transition:background .2s ease, color .2s ease, transform .2s ease, border-color .3s ease;
+      transition:background .2s ease, color .2s ease;
       flex-shrink:0;
     }
 
-    .close-btn:hover{
-      background:var(--close-bg-hover);
-      color:var(--text);
-      transform:translateY(-1px);
-    }
+    .close-btn:hover{ background:var(--close-bg-hover); color:var(--text); }
 
     .panel h2{
-      font-size:32px;
-      letter-spacing:0.06em;
-      font-weight:600;
-      margin:10px 0 8px;
+      font-size:28px;
+      letter-spacing:-0.02em;
+      font-weight:300;
+      margin:10px 0 6px;
     }
 
     .panel .subhead{
       font-size:11px;
-      letter-spacing:0.24em;
+      letter-spacing:0.14em;
       text-transform:uppercase;
       color:var(--muted2);
-      margin-bottom:20px;
+      margin-bottom:22px;
+      font-weight:400;
     }
 
     .copy{
-      font-size:16px;
-      line-height:1.95;
-      color:color-mix(in srgb, var(--text) 72%, transparent);
-      max-width:520px;
+      font-size:15px;
+      line-height:1.85;
+      color:var(--muted);
+      max-width:480px;
       margin:0 auto;
-      letter-spacing:0.01em;
+      font-weight:300;
     }
 
-    .copy p{
-      margin:0 0 18px;
-    }
+    .copy p{ margin:0 0 16px; }
 
     .menu-links{
       display:flex;
       flex-direction:column;
-      gap:14px;
+      gap:16px;
       align-items:center;
       justify-content:center;
       margin-top:8px;
@@ -600,28 +505,19 @@
       padding:0;
       font:inherit;
       cursor:pointer;
-      color:var(--link);
+      color:var(--text);
       text-decoration:none;
-      border-bottom:1px solid color-mix(in srgb, var(--text) 22%, transparent);
-      padding-bottom:2px;
-      font-size:12px;
-      letter-spacing:0.22em;
-      text-transform:uppercase;
-      opacity:0.85;
-      font-family:inherit;
+      font-size:15px;
+      font-weight:300;
+      letter-spacing:0;
+      opacity:0.72;
+      transition:opacity .2s ease;
     }
 
     .menu-links a:hover,
-    .menu-links button:hover{
-      opacity:1;
-      border-bottom-color:color-mix(in srgb, var(--text) 35%, transparent);
-    }
+    .menu-links button:hover{ opacity:1; }
 
-    .lab-card{
-      max-width:520px;
-      margin:0 auto;
-      text-align:center;
-    }
+    .lab-card{ max-width:480px; margin:0 auto; text-align:center; }
 
     .lab-panel{
       background:transparent;
@@ -630,100 +526,30 @@
       padding:0;
       box-shadow:none;
       text-align:center;
-      backdrop-filter:none;
-      -webkit-backdrop-filter:none;
-      transition:none;
     }
 
     .lab-panel p{
-      font-size:16px;
+      font-size:15px;
       line-height:1.8;
-      color:color-mix(in srgb, var(--text) 78%, transparent);
-      margin:0 0 12px;
+      color:var(--muted);
+      margin:0 0 10px;
+      font-weight:300;
     }
 
     .lab-meta{
       font-size:12px;
-      line-height:1.6;
       color:var(--muted2);
       margin-bottom:14px;
+      letter-spacing:0.04em;
     }
 
     @media (max-width:520px){
-      .app{
-        padding:120px 0 100px;
-      }
-
-      .site-wrap{
-        width:100%;
-      }
-
-      .logo{
-        font-size:42px;
-        letter-spacing:0.03em;
-        line-height:1.02;
-      }
-
-      .sub{
-        margin-top:24px;
-        font-size:12px;
-        letter-spacing:0.06em;
-        line-height:1.5;
-        max-width:92vw;
-        padding:0 24px;
-      }
-
-      .sub-line + .sub-line{
-        margin-top:6px;
-      }
-
-      .byline{
-        font-size:11px;
-        letter-spacing:0.12em;
-        margin-top:20px;
-      }
-
-      .projects{
-        width:min(94vw, 420px);
-        gap:22px;
-        margin-top:36px;
-      }
-
-      .project-title{
-        font-size:10px;
-        letter-spacing:0.22em;
-      }
-
-      .project-sub{
-        font-size:13px;
-        letter-spacing:0;
-        line-height:1.45;
-        max-width:300px;
-        margin-top:10px;
-      }
-
-      .project-chevron{
-        margin-top:6px;
-        font-size:12px;
-      }
-
-      .panel{
-        padding:28px 20px 24px;
-        border-radius:24px;
-      }
-
-      .panel h2{
-        font-size:28px;
-      }
-
-      .project-panel-inner p,
-      .lab-panel p{
-        font-size:13px;
-      }
-
-      .lab-meta{
-        font-size:11px;
-      }
+      .app{ padding:110px 0 100px; }
+      .logo{ font-size:40px; }
+      .sub{ font-size:15px; margin-top:20px; }
+      .project-sub{ font-size:17px; }
+      .panel{ padding:24px 20px 22px; border-radius:22px; }
+      .panel h2{ font-size:24px; }
     }
   </style>
 </head>
@@ -742,8 +568,10 @@
 
   <div class="app" id="app">
     <div class="site-wrap">
-      <div class="logo" aria-label="stormieperformance">
-        stormie<br>performance
+
+      <div class="logo" aria-label="stormie performance">
+        <span class="logo-thin">stormie</span><br>
+        <span class="logo-medium">performance</span>
       </div>
 
       <div class="sub">
@@ -751,9 +579,7 @@
         <span class="sub-line">Built for sports &amp; fitness brands</span>
       </div>
 
-      <div class="byline">
-        By Storm Kolmodin
-      </div>
+      <div class="byline">By Storm Kolmodin</div>
 
       <div class="projects">
 
@@ -802,7 +628,7 @@ Session delivery
 Follow-ups and retention
 
 Built to reduce admin and increase revenue.</p>
-              <a class="project-launch" href="https://stormie.app" target="_blank" rel="noopener noreferrer">View</a>
+              <a class="project-launch" href="/pt.html" target="_blank" rel="noopener noreferrer">View</a>
             </div>
           </div>
         </div>
@@ -811,16 +637,15 @@ Built to reduce admin and increase revenue.</p>
     </div>
   </div>
 
+  <!-- MENU OVERLAY -->
   <div class="overlay" id="menuOverlay" aria-hidden="true">
     <div class="panel" role="dialog" aria-modal="true" aria-label="Menu">
       <div class="panel-top">
         <div class="kicker">Menu</div>
         <button class="close-btn" type="button" id="menuClose" aria-label="Close">×</button>
       </div>
-
       <h2>Stormieperformance</h2>
       <div class="subhead">About · Creative Lab · Contact</div>
-
       <div class="menu-links">
         <button type="button" id="openAboutFromMenu">About</button>
         <button type="button" id="openCreativeLabFromMenu">Creative Lab</button>
@@ -829,49 +654,37 @@ Built to reduce admin and increase revenue.</p>
     </div>
   </div>
 
+  <!-- ABOUT OVERLAY -->
   <div class="overlay" id="aboutOverlay" aria-hidden="true">
     <div class="panel" role="dialog" aria-modal="true" aria-label="About Me">
       <div class="panel-top">
         <div class="kicker">About</div>
         <button class="close-btn" type="button" id="aboutClose" aria-label="Close">×</button>
       </div>
-
       <h2>Storm Kolmodin</h2>
       <div class="subhead">Builder · Automation Systems · Digital Products</div>
-
       <div class="copy">
         <p>
-          <a
-            href="https://ptlicens.trueoriginal.com/licensierad-personlig-tranare-denise-kolmodin-138305lEsdYeph88/?lang=en/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-link"
-          >
-            Licensed Personal Trainer
-          </a>. Climber. Muay Thai Practitioner. Background in Tech, Systems &amp; Agile Project Management.
+          <a href="https://ptlicens.trueoriginal.com/licensierad-personlig-tranare-denise-kolmodin-138305lEsdYeph88/?lang=en/" target="_blank" rel="noopener noreferrer" class="inline-link">Licensed Personal Trainer</a>. Climber. Muay Thai Practitioner. Background in Tech, Systems &amp; Agile Project Management.
         </p>
-        <p>
-          I build custom training apps, online stores, and AI automation systems for coaches, gyms and sports brands.
-        </p>
+        <p>I build custom training apps, online stores, and AI automation systems for coaches, gyms and sports brands.</p>
       </div>
     </div>
   </div>
 
+  <!-- CREATIVE LAB OVERLAY -->
   <div class="overlay" id="creativeLabOverlay" aria-hidden="true">
     <div class="panel" role="dialog" aria-modal="true" aria-label="Creative Lab">
       <div class="panel-top">
         <div class="kicker">Creative Lab</div>
         <button class="close-btn" type="button" id="creativeLabClose" aria-label="Close">×</button>
       </div>
-
       <h2>Storm Wylder</h2>
       <div class="subhead">Mountain Expedition Game</div>
-
       <div class="lab-card">
         <div class="lab-panel">
           <p>A dangerous alpine expedition. Trust your tools.</p>
           <div class="lab-meta">In development · Unity game prototype</div>
-
           <a class="secret-trigger" href="/alpine.html" aria-label="Open hidden alpine note">
             <span class="secret-trigger-label">Open hidden alpine note</span>
           </a>
@@ -885,18 +698,14 @@ Built to reduce admin and increase revenue.</p>
     const app = document.getElementById("app");
     const menuBtn = document.getElementById("menuBtn");
     const themeBtn = document.getElementById("themeBtn");
-
     const menuOverlay = document.getElementById("menuOverlay");
     const menuClose = document.getElementById("menuClose");
-
     const aboutOverlay = document.getElementById("aboutOverlay");
     const aboutClose = document.getElementById("aboutClose");
     const openAboutFromMenu = document.getElementById("openAboutFromMenu");
-
     const creativeLabOverlay = document.getElementById("creativeLabOverlay");
     const creativeLabClose = document.getElementById("creativeLabClose");
     const openCreativeLabFromMenu = document.getElementById("openCreativeLabFromMenu");
-
     const projectCards = document.querySelectorAll(".project-card");
 
     function applyTheme(theme){
@@ -907,18 +716,13 @@ Built to reduce admin and increase revenue.</p>
     }
 
     const savedTheme = localStorage.getItem("storm-theme");
-    if(savedTheme === "dark" || savedTheme === "light"){
-      applyTheme(savedTheme);
-    }
+    if(savedTheme === "dark" || savedTheme === "light") applyTheme(savedTheme);
 
     themeBtn.addEventListener("click", () => {
-      const nextTheme = body.classList.contains("dark") ? "light" : "dark";
-      applyTheme(nextTheme);
+      applyTheme(body.classList.contains("dark") ? "light" : "dark");
     });
 
-    function setBlur(on){
-      app.classList.toggle("is-blurred", !!on);
-    }
+    function setBlur(on){ app.classList.toggle("is-blurred", !!on); }
 
     function anyOverlayOpen(){
       return menuOverlay.classList.contains("active") ||
@@ -926,9 +730,7 @@ Built to reduce admin and increase revenue.</p>
              creativeLabOverlay.classList.contains("active");
     }
 
-    function syncBlur(){
-      setBlur(anyOverlayOpen());
-    }
+    function syncBlur(){ setBlur(anyOverlayOpen()); }
 
     function restartPanelAnimation(overlay){
       const panel = overlay.querySelector(".panel");
@@ -942,14 +744,7 @@ Built to reduce admin and increase revenue.</p>
       overlay.classList.add("active");
       overlay.setAttribute("aria-hidden", "false");
       syncBlur();
-
-      if(
-        overlay === menuOverlay ||
-        overlay === aboutOverlay ||
-        overlay === creativeLabOverlay
-      ){
-        restartPanelAnimation(overlay);
-      }
+      restartPanelAnimation(overlay);
     }
 
     function closeOverlay(overlay){
@@ -958,91 +753,44 @@ Built to reduce admin and increase revenue.</p>
       syncBlur();
     }
 
-    function openMenu(){
-      openOverlay(menuOverlay);
-      menuBtn.classList.add("open");
-      menuBtn.setAttribute("aria-expanded", "true");
-    }
+    function openMenu(){ openOverlay(menuOverlay); menuBtn.classList.add("open"); menuBtn.setAttribute("aria-expanded","true"); }
+    function closeMenu(){ closeOverlay(menuOverlay); menuBtn.classList.remove("open"); menuBtn.setAttribute("aria-expanded","false"); }
+    function openAbout(){ openOverlay(aboutOverlay); }
+    function closeAbout(){ closeOverlay(aboutOverlay); }
+    function openCreativeLab(){ openOverlay(creativeLabOverlay); }
+    function closeCreativeLab(){ closeOverlay(creativeLabOverlay); }
 
-    function closeMenu(){
-      closeOverlay(menuOverlay);
-      menuBtn.classList.remove("open");
-      menuBtn.setAttribute("aria-expanded", "false");
-    }
-
-    function openAbout(){
-      openOverlay(aboutOverlay);
-    }
-
-    function closeAbout(){
-      closeOverlay(aboutOverlay);
-    }
-
-    function openCreativeLab(){
-      openOverlay(creativeLabOverlay);
-    }
-
-    function closeCreativeLab(){
-      closeOverlay(creativeLabOverlay);
-    }
-
-    menuBtn.addEventListener("click", () => {
-      const isOpen = menuOverlay.classList.contains("active");
-      if(isOpen) closeMenu();
-      else openMenu();
-    });
-
+    menuBtn.addEventListener("click", () => { menuOverlay.classList.contains("active") ? closeMenu() : openMenu(); });
     menuClose.addEventListener("click", closeMenu);
     aboutClose.addEventListener("click", closeAbout);
     creativeLabClose.addEventListener("click", closeCreativeLab);
 
-    openAboutFromMenu.addEventListener("click", () => {
-      closeMenu();
-      setTimeout(() => {
-        openAbout();
-      }, 80);
-    });
+    openAboutFromMenu.addEventListener("click", () => { closeMenu(); setTimeout(openAbout, 80); });
+    openCreativeLabFromMenu.addEventListener("click", () => { closeMenu(); setTimeout(openCreativeLab, 80); });
 
-    openCreativeLabFromMenu.addEventListener("click", () => {
-      closeMenu();
-      setTimeout(() => {
-        openCreativeLab();
-      }, 80);
-    });
-
-    [menuOverlay, aboutOverlay, creativeLabOverlay].forEach((overlay) => {
-      overlay.addEventListener("click", (e) => {
+    [menuOverlay, aboutOverlay, creativeLabOverlay].forEach(overlay => {
+      overlay.addEventListener("click", e => {
         if(e.target === overlay){
           closeOverlay(overlay);
-          if(!anyOverlayOpen()){
-            menuBtn.classList.remove("open");
-            menuBtn.setAttribute("aria-expanded", "false");
-          }
+          if(!anyOverlayOpen()){ menuBtn.classList.remove("open"); menuBtn.setAttribute("aria-expanded","false"); }
         }
       });
     });
 
-    window.addEventListener("keydown", (e) => {
+    window.addEventListener("keydown", e => {
       if(e.key === "Escape"){
         if(menuOverlay.classList.contains("active")) closeMenu();
         if(aboutOverlay.classList.contains("active")) closeAbout();
         if(creativeLabOverlay.classList.contains("active")) closeCreativeLab();
-
-        if(!anyOverlayOpen()){
-          menuBtn.classList.remove("open");
-          menuBtn.setAttribute("aria-expanded", "false");
-        }
+        if(!anyOverlayOpen()){ menuBtn.classList.remove("open"); menuBtn.setAttribute("aria-expanded","false"); }
       }
     });
 
-    projectCards.forEach((card) => {
-      const toggle = card.querySelector(".project-toggle");
-      toggle.addEventListener("click", () => {
+    projectCards.forEach(card => {
+      card.querySelector(".project-toggle").addEventListener("click", () => {
         const isOpen = card.classList.contains("open");
         projectCards.forEach(c => c.classList.remove("open"));
-        if(!isOpen){
-          card.classList.add("open");
-        }
+        if(!isOpen) card.classList.add("open");
       });
     });
   </script>
