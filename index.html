@@ -101,7 +101,6 @@
     }
 
     .logo:hover{ opacity:0.88; }
-
     .logo-thin{ font-weight:300; }
     .logo-medium{ font-weight:500; }
 
@@ -282,10 +281,7 @@
       appearance:none;
     }
 
-    .secret-trigger:hover{
-      opacity:0.36;
-      transform:scale(1.1);
-    }
+    .secret-trigger:hover{ opacity:0.36; transform:scale(1.1); }
 
     .secret-trigger-label{
       position:absolute;
@@ -649,7 +645,7 @@ Built to reduce admin and increase revenue.</p>
       <div class="menu-links">
         <button type="button" id="openAboutFromMenu">About</button>
         <button type="button" id="openCreativeLabFromMenu">Creative Lab</button>
-        <a href="/cdn-cgi/l/email-protection#9ae9eef5e8f7b4f1f5f6f7f5fef3f4dafdf7fbf3f6b4f9f5f7">Contact</a>
+        <a href="mailto:storm.kolmodin@gmail.com">Contact</a>
       </div>
     </div>
   </div>
@@ -693,7 +689,7 @@ Built to reduce admin and increase revenue.</p>
     </div>
   </div>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
     const body = document.body;
     const app = document.getElementById("app");
     const menuBtn = document.getElementById("menuBtn");
@@ -789,4 +785,11 @@ Built to reduce admin and increase revenue.</p>
     projectCards.forEach(card => {
       card.querySelector(".project-toggle").addEventListener("click", () => {
         const isOpen = card.classList.contains("open");
+        projectCards.forEach(c => c.classList.remove("open"));
+        if(!isOpen) card.classList.add("open");
+      });
+    });
+  </script>
 
+</body>
+</html>
