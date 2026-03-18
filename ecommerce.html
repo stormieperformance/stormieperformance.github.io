@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-Commerce — Stormie Performance</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0e0e0e;
+      --white: #f5f4f0;
+      --gray: #888;
+      --border: rgba(0,0,0,0.1);
+      --mono: 'DM Mono', monospace;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--white);
+      color: var(--black);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 32px;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 24px; list-style: none; }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--black); }
+
+    section {
+      padding: 80px 32px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 20px;
+    }
+
+    #hero {
+      padding-top: 140px;
+      padding-bottom: 80px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    #hero h1 {
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 300;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+
+    #hero h1 em { font-style: italic; font-weight: 300; }
+
+    #hero p {
+      font-size: 15px;
+      color: var(--gray);
+      max-width: 480px;
+      margin-bottom: 36px;
+      line-height: 1.7;
+    }
+
+    .btn-group { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .btn {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      padding: 12px 22px;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .btn-primary { background: var(--black); color: var(--white); border: 1px solid var(--black); }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-secondary { background: transparent; color: var(--black); border: 1px solid var(--border); }
+    .btn-secondary:hover { border-color: var(--black); }
+
+    #how { border-bottom: 1px solid var(--border); }
+
+    .steps { display: flex; flex-direction: column; gap: 0; }
+
+    .step {
+      display: grid;
+      grid-template-columns: 32px 1fr auto;
+      gap: 16px;
+      align-items: start;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .step:last-child { border-bottom: none; }
+
+    .step-num { font-family: var(--mono); font-size: 11px; color: var(--gray); padding-top: 2px; }
+    .step-title { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+    .step-desc { font-size: 13px; color: var(--gray); line-height: 1.55; }
+    .step-tag { font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; color: var(--gray); white-space: nowrap; padding-top: 3px; }
+
+    #demo { border-bottom: 1px solid var(--border); }
+
+    .demo-card-single {
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 20px;
+      background: #fff;
+      margin-bottom: 24px;
+    }
+
+    .demo-card-single h3 { font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+
+    .demo-card-single p { font-size: 12px; color: var(--gray); margin-bottom: 16px; line-height: 1.5; }
+
+    .demo-card-single a {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+      transition: border-color 0.2s;
+    }
+
+    .demo-card-single a:hover { border-color: var(--black); }
+
+    .demo-open {
+      display: block;
+      width: 100%;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      padding: 20px;
+      border: 1px dashed var(--border);
+      border-radius: 2px;
+      color: var(--gray);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+      background: #fafaf8;
+    }
+
+    .demo-open:hover { border-color: var(--black); color: var(--black); }
+
+    #what { border-bottom: 1px solid var(--border); }
+
+    .what-list { display: flex; flex-direction: column; gap: 0; }
+
+    .what-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .what-item:last-child { border-bottom: none; }
+
+    .what-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--black);
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .what-label { font-family: var(--mono); font-size: 11px; color: var(--gray); letter-spacing: 0.06em; margin-bottom: 4px; }
+    .what-desc { font-size: 13px; color: var(--black); }
+
+    #pricing { border-bottom: 1px solid var(--border); }
+
+    .pricing-card {
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 28px;
+      background: #fff;
+    }
+
+    .price { font-size: 32px; font-weight: 300; letter-spacing: -0.02em; margin-bottom: 4px; }
+
+    .price-sub {
+      font-size: 12px;
+      color: var(--gray);
+      margin-bottom: 24px;
+      font-family: var(--mono);
+      letter-spacing: 0.06em;
+    }
+
+    .feature-list { list-style: none; margin-bottom: 28px; display: flex; flex-direction: column; gap: 8px; }
+
+    .feature-list li { font-size: 13px; color: var(--gray); display: flex; gap: 10px; }
+    .feature-list li::before { content: '—'; color: #ccc; flex-shrink: 0; }
+
+    .btn-cta {
+      display: block;
+      width: 100%;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      padding: 14px;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .btn-cta:hover { opacity: 0.82; }
+
+    footer { text-align: center; padding: 32px; border-top: 1px solid var(--border); }
+
+    footer a {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 0.08em;
+      text-decoration: none;
+    }
+
+    footer a:hover { color: var(--black); }
+
+    @media (max-width: 540px) {
+      nav { padding: 16px 20px; }
+      .nav-links { gap: 16px; }
+      section { padding: 60px 20px; }
+      #hero { padding-top: 110px; }
+      .demo-embed { height: 420px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-brand" href="https://stormieperformance.com">Stormie Performance</a>
+    <ul class="nav-links">
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#demo">Demo</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="/cdn-cgi/l/email-protection#8ffcfbe0fde2a1e4e0e3e2e0ebe6e1cfe8e2eee6e3a1ece0e2">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section id="hero">
+    <p class="label">E-Commerce</p>
+    <h1>Your store, live.<br><em>Selling from day one.</em></h1>
+    <p>Professional online stores built for sports and fitness brands. Your products, your brand — fully set up and ready to sell without the technical headache.</p>
+    <div class="btn-group">
+      <a class="btn btn-primary" href="#demo">See the demo</a>
+      <a class="btn btn-secondary" href="#how">How it works</a>
+    </div>
+  </section>
+
+  <section id="how">
+    <p class="label">How it works</p>
+    <div class="steps">
+
+      <div class="step">
+        <span class="step-num">01</span>
+        <div>
+          <p class="step-title">You share your brand</p>
+          <p class="step-desc">Logo, colours, products, prices. That's all we need to get started.</p>
+        </div>
+        <span class="step-tag">Setup</span>
+      </div>
+
+      <div class="step">
+        <span class="step-num">02</span>
+        <div>
+          <p class="step-title">We build your store</p>
+          <p class="step-desc">Shopify store configured to your brand — product pages, checkout, payments, shipping.</p>
+        </div>
+        <span class="step-tag">Build</span>
+      </div>
+
+      <div class="step">
+        <span class="step-num">03</span>
+        <div>
+          <p class="step-title">You review and approve</p>
+          <p class="step-desc">One round of revisions. You say go, we launch. No back-and-forth forever.</p>
+        </div>
+        <span class="step-tag">Review</span>
+      </div>
+
+      <div class="step">
+        <span class="step-num">04</span>
+        <div>
+          <p class="step-title">Live and selling</p>
+          <p class="step-desc">Your store is live on your domain. Orders come in, Shopify handles the rest.</p>
+        </div>
+        <span class="step-tag">Launch</span>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="demo">
+    <p class="label">Live demo</p>
+
+    <div class="demo-card-single">
+      <h3>Clinch Athletics</h3>
+      <p>A Shopify store built for a combat sports brand — products, collections, and checkout, fully branded.</p>
+      <a href="https://clinchathletics.com" target="_blank" rel="noopener noreferrer">Open store →</a>
+    </div>
+
+    <a class="demo-open" href="https://clinchathletics.com" target="_blank" rel="noopener noreferrer">
+      Open Clinch Athletics store →
+    </a>
+  </section>
+
+  <section id="what">
+    <p class="label">What's included</p>
+    <div class="what-list">
+
+      <div class="what-item">
+        <div class="what-dot"></div>
+        <div>
+          <p class="what-label">Store setup</p>
+          <p class="what-desc">Shopify configured with your brand — colours, fonts, logo, favicon</p>
+        </div>
+      </div>
+
+      <div class="what-item">
+        <div class="what-dot"></div>
+        <div>
+          <p class="what-label">Product pages</p>
+          <p class="what-desc">Up to 20 products uploaded with descriptions, images and variants</p>
+        </div>
+      </div>
+
+      <div class="what-item">
+        <div class="what-dot"></div>
+        <div>
+          <p class="what-label">Payments & shipping</p>
+          <p class="what-desc">Stripe or Shopify Payments connected. Shipping zones configured.</p>
+        </div>
+      </div>
+
+      <div class="what-item">
+        <div class="what-dot"></div>
+        <div>
+          <p class="what-label">Domain & launch</p>
+          <p class="what-desc">Connected to your domain and live. Handover with full access.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="pricing">
+    <p class="label">Get started</p>
+    <div class="pricing-card">
+      <p class="price">From 4 990 kr</p>
+      <p class="price-sub">One-time · Ready in 5 days · Full handover</p>
+      <ul class="feature-list">
+        <li>Branded Shopify store</li>
+        <li>Up to 20 products uploaded</li>
+        <li>Payments & shipping configured</li>
+        <li>Domain connected & launched</li>
+        <li>Stormie Performance support</li>
+      </ul>
+      <a class="btn-cta" href="/cdn-cgi/l/email-protection#a4d7d0cbd6c98acfcbc8c9cbc0cdcae4c3c9c5cdc88ac7cbc9" target="_blank">Get in touch</a>
+    </div>
+  </section>
+
+  <footer>
+    <a href
