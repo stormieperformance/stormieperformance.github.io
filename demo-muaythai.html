@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Voss Fight — Muay Thai</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080807;
+      --text: #e8e4dc;
+      --muted: rgba(232,228,220,0.40);
+      --muted2: rgba(232,228,220,0.20);
+      --line: rgba(232,228,220,0.07);
+      --red: #c0291a;
+      --red-dim: rgba(192,41,26,0.12);
+      --sans: 'DM Sans', sans-serif;
+      --serif: 'Cormorant Garamond', serif;
+      --display: 'Bebas Neue', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.06;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--line);
+      opacity: 0;
+      animation: fadeIn 0.6s ease 0.1s forwards;
+    }
+
+    .nav-logo {
+      font-family: var(--display);
+      font-size: 22px;
+      letter-spacing: 0.14em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--red); }
+
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+
+    .nav-links a {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--red);
+      border-bottom: 1px solid rgba(192,41,26,0.4);
+      padding-bottom: 1px;
+      text-decoration: none;
+      transition: border-color 0.2s;
+    }
+
+    .nav-cta:hover { border-color: var(--red); }
+
+    /* HERO */
+    .hero {
+      padding: 100px 0 80px;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: end;
+    }
+
+    .hero-left {
+      opacity: 0;
+      animation: fadeUp 1s ease 0.3s forwards;
+    }
+
+    .hero-eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 28px;
+    }
+
+    .hero-title {
+      font-family: var(--display);
+      font-size: clamp(72px, 10vw, 140px);
+      line-height: 0.9;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      margin-bottom: 32px;
+    }
+
+    .hero-title span { color: var(--red); }
+
+    .hero-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.85;
+      max-width: 380px;
+      margin-bottom: 36px;
+    }
+
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .btn {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 12px 24px;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-block;
+      font-family: var(--sans);
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary { background: var(--red); color: var(--text); }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
+    .btn-ghost:hover { border-color: var(--muted2); }
+
+    .hero-right {
+      opacity: 0;
+      animation: fadeIn 1s ease 0.6s forwards;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .stat {
+      background: var(--bg);
+      padding: 28px 24px;
+      transition: background 0.2s;
+    }
+
+    .stat:hover { background: #0f0f0e; }
+
+    .stat-num {
+      font-family: var(--display);
+      font-size: 48px;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-num span { color: var(--red); }
+
+    .stat-label {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted2);
+    }
+
+    /* TITLES */
+    .titles {
+      padding: 56px 0;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.8s forwards;
+    }
+
+    .title-item {
+      flex: 1;
+      padding: 0 32px 0 0;
+      border-right: 1px solid var(--line);
+      margin-right: 32px;
+      min-width: 180px;
+    }
+
+    .title-item:last-child { border-right: none; margin-right: 0; }
+
+    .title-org {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 8px;
+    }
+
+    .title-name {
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    /* SECTION SHARED */
+    section { padding: 88px 0; border-bottom: 1px solid var(--line); }
+
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-family: var(--display);
+      font-size: clamp(40px, 5vw, 72px);
+      letter-spacing: 0.04em;
+      line-height: 1;
+      margin-bottom: 48px;
+    }
+
+    /* COACHING */
+    .coaching-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .coaching-card {
+      background: var(--bg);
+      padding: 36px 28px;
+      transition: background 0.2s;
+    }
+
+    .coaching-card:hover { background: #0f0f0e; }
+
+    .coaching-num {
+      font-family: var(--display);
+      font-size: 36px;
+      color: var(--red);
+      opacity: 0.3;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .coaching-name {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 300;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    .coaching-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+
+    .coaching-price {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted2);
+      border-top: 1px solid var(--line);
+      padding-top: 16px;
+    }
+
+    /* SEMINARS */
+    .seminars-list { display: flex; flex-direction: column; }
+
+    .seminar-row {
+      display: grid;
+      grid-template-columns: 120px 1fr auto;
+      gap: 32px;
+      align-items: center;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--line);
+      position: relative;
+      transition: padding-left 0.25s;
+    }
+
+    .seminar-row::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -1px;
+      width: 0; height: 1px;
+      background: var(--red);
+      transition: width 0.4s ease;
+    }
+
+    .seminar-row:hover::after { width: 100%; }
+    .seminar-row:hover { padding-left: 8px; }
+
+    .seminar-date {
+      font-family: var(--serif);
+      font-size: 13px;
+      font-style: italic;
+      color: var(--muted2);
+    }
+
+    .seminar-name {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 300;
+      margin-bottom: 4px;
+    }
+
+    .seminar-location {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted2);
+    }
+
+    .seminar-tag {
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--red);
+      border: 1px solid rgba(192,41,26,0.3);
+      padding: 5px 12px;
+      white-space: nowrap;
+    }
+
+    /* ONLINE */
+    .online-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .online-card {
+      background: var(--bg);
+      padding: 40px 32px;
+    }
+
+    .online-tier {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 20px;
+    }
+
+    .online-name {
+      font-family: var(--display);
+      font-size: 32px;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .online-price {
+      font-family: var(--serif);
+      font-size: 44px;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .online-period {
+      font-size: 11px;
+      color: var(--muted2);
+      letter-spacing: 0.08em;
+      margin-bottom: 28px;
+    }
+
+    .online-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 32px;
+      border-top: 1px solid var(--line);
+      padding-top: 20px;
+    }
+
+    .online-features li {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--muted);
+      display: flex;
+      gap: 12px;
+    }
+
+    .online-features li::before { content: '—'; color: var(--red); opacity: 0.5; flex-shrink: 0; }
+
+    .btn-red {
+      display: block;
+      width: 100%;
+      text-align: center;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 14px;
+      background: var(--red);
+      color: var(--text);
+      text-decoration: none;
+      font-family: var(--sans);
+      transition: opacity 0.2s;
+    }
+
+    .btn-red:hover { opacity: 0.85; }
+
+    .btn-outline-red {
+      display: block;
+      width: 100%;
+      text-align: center;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 14px;
+      background: transparent;
+      color: var(--text);
+      text-decoration: none;
+      font-family: var(--sans);
+      border: 1px solid var(--line);
+      transition: border-color 0.2s;
+    }
+
+    .btn-outline-red:hover { border-color: var(--red); }
+
+    /* STORY */
+    .story {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .story-title {
+      font-family: var(--display);
+      font-size: clamp(48px, 6vw, 88px);
+      letter-spacing: 0.04em;
+      line-height: 0.92;
+      color: var(--text);
+    }
+
+    .story-title span { color: var(--red); }
+
+    .story-right { padding-top: 8px; }
+
+    .story-text {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.9;
+      margin-bottom: 20px;
+    }
+
+    .story-quote {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.6;
+      border-left: 2px solid var(--red);
+      padding-left: 20px;
+      margin-top: 28px;
+    }
+
+    /* CONTACT */
+    .contact-section {
+      text-align: center;
+      padding: 100px 0 80px;
+    }
+
+    .contact-pre {
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 24px;
+    }
+
+    .contact-title {
+      font-family: var(--display);
+      font-size: clamp(56px, 9vw, 120px);
+      letter-spacing: 0.04em;
+      line-height: 0.92;
+      margin-bottom: 40px;
+    }
+
+    .contact-link {
+      display: inline-block;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(192,41,26,0.4);
+      padding-bottom: 4px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .contact-link:hover { color: var(--red); border-color: var(--red); }
+
+    /* FOOTER */
+    footer {
+      padding: 24px 0;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-left {
+      font-family: var(--display);
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      color: var(--muted2);
+    }
+
+    .footer-right {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted2);
+    }
+
+    .footer-right a { color: var(--muted2); text-decoration: none; transition: color 0.2s; }
+    .footer-right a:hover { color: var(--text); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @media (max-width: 860px) {
+      .page { padding: 0 24px; }
+      .hero { grid-template-columns: 1fr; gap: 48px; padding: 80px 0 60px; }
+      .coaching-grid { grid-template-columns: 1fr; }
+      .online-grid { grid-template-columns: 1fr; }
+      .story { grid-template-columns: 1fr; gap: 36px; }
+      .seminar-row { grid-template-columns: 80px 1fr; }
+      .seminar-tag { display: none; }
+      nav ul { display: none; }
+      footer { flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <nav>
+    <a class="nav-logo" href="#">VOSS <span>FIGHT</span></a>
+    <ul class="nav-links">
+      <li><a href="#coaching">Coaching</a></li>
+      <li><a href="#seminars">Seminars</a></li>
+      <li><a href="#online">Online</a></li>
+      <li><a href="#story">Story</a></li>
+    </ul>
+    <a class="nav-cta" href="#contact">Book now</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Thailand Trained · Stockholm Based</p>
+      <h1 class="hero-title">VOSS<br><span>FIGHT</span></h1>
+      <p class="hero-desc">3x World Champion. Omnoi Stadium Champion. One of the few Western fighters to have won on Thailand's most prestigious stages. Now teaching.</p>
+      <div class="hero-btns">
+        <a class="btn btn-primary" href="#coaching">Book a session</a>
+        <a class="btn btn-ghost" href="#online">Online courses</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num">3<span>x</span></div>
+          <div class="stat-label">World titles</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">20<span>+</span></div>
+          <div class="stat-label">Years experience</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">60<span>+</span></div>
+          <div class="stat-label">Pro fights</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">6</div>
+          <div class="stat-label">Years in Bangkok</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TITLES -->
+  <div class="titles">
+    <div class="title-item">
+      <p class="title-org">WBC</p>
+      <p class="title-name">World Lightweight Champion</p>
+    </div>
+    <div class="title-item">
+      <p class="title-org">WAKO</p>
+      <p class="title-name">European Champion</p>
+    </div>
+    <div class="title-item">
+      <p class="title-org">Rajadamnern Stadium</p>
+      <p class="title-name">Stadium Champion · Bangkok</p>
+    </div>
+    <div class="title-item">
+      <p class="title-org">ONE Championship</p>
+      <p class="title-name">Veteran · Super Series</p>
+    </div>
+  </div>
+
+  <!-- COACHING -->
+  <section id="coaching">
+    <p class="section-label">Personal coaching</p>
+    <h2 class="section-title">WORK WITH<br>KAI VOSS</h2>
+    <div class="coaching-grid">
+
+      <div class="coaching-card">
+        <div class="coaching-num">01</div>
+        <h3 class="coaching-name">1-on-1 Training</h3>
+        <p class="coaching-desc">Private sessions with Kai. Technique, strategy, conditioning — built around your level and goals. Available in Stockholm and on location.</p>
+        <p class="coaching-price">From 1 200 kr / session</p>
+      </div>
+
+      <div class="coaching-card">
+        <div class="coaching-num">02</div>
+        <h3 class="coaching-name">Fighter Prep</h3>
+        <p class="coaching-desc">Full fight camp coaching for competitive fighters. 8–12 week programs including strategy, sparring and weight management.</p>
+        <p class="coaching-price">From 12 000 kr / camp</p>
+      </div>
+
+      <div class="coaching-card">
+        <div class="coaching-num">03</div>
+        <h3 class="coaching-name">Online Coaching</h3>
+        <p class="coaching-desc">Remote coaching with weekly programs, video analysis, check-ins and direct access to Kai. Train anywhere in the world.</p>
+        <p class="coaching-price">From 3 500 kr / month</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SEMINARS -->
+  <section id="seminars">
+    <p class="section-label">Seminars</p>
+    <h2 class="section-title">UPCOMING<br>SEMINARS</h2>
+    <div class="seminars-list">
+
+      <div class="seminar-row">
+        <span class="seminar-date">12 Apr 2026</span>
+        <div>
+          <p class="seminar-name">Timing & Feinting</p>
+          <p class="seminar-location">Stockholm · Svartensgatan 4</p>
+        </div>
+        <span class="seminar-tag">Spots available</span>
+      </div>
+
+      <div class="seminar-row">
+        <span class="seminar-date">3 May 2026</span>
+        <div>
+          <p class="seminar-name">The Art of the Clinch</p>
+          <p class="seminar-location">Gothenburg · Fight Academy</p>
+        </div>
+        <span class="seminar-tag">Spots available</span>
+      </div>
+
+      <div class="seminar-row">
+        <span class="seminar-date">21 Jun 2026</span>
+        <div>
+          <p class="seminar-name">Fighter IQ Masterclass</p>
+          <p class="seminar-location">Copenhagen · Denmark</p>
+        </div>
+        <span class="seminar-tag">Limited spots</span>
+      </div>
+
+      <div class="seminar-row">
+        <span class="seminar-date">Aug 2026</span>
+        <div>
+          <p class="seminar-name">Bangkok Intensive</p>
+          <p class="seminar-location">Bangkok · P.K Saenchai Gym</p>
+        </div>
+        <span class="seminar-tag">Waitlist</span>
+      </div>
+
+    </div>
+    <div style="margin-top: 28px;">
+      <a class="btn btn-ghost" href="/cdn-cgi/l/email-protection#d4bfb5bd94a2bba7a7b2bdb3bca0fab7bbb9">Book a seminar →</a>
+    </div>
+  </section>
+
+  <!-- ONLINE COURSES -->
+  <section id="online">
+    <p class="section-label">Online training</p>
+    <h2 class="section-title">TRAIN FROM<br>ANYWHERE</h2>
+    <div class="online-grid">
+
+      <div class="online-card">
+        <p class="online-tier">Pro membership</p>
+        <p class="online-name">VOSS PRO</p>
+        <p class="online-price">490 kr</p>
+        <p class="online-period">/ month · Cancel anytime</p>
+        <ul class="online-features">
+          <li>Full course library access</li>
+          <li>New techniques weekly</li>
+          <li>Judging & strategy courses</li>
+          <li>Pad work & coaching guides</li>
+        </ul>
+        <a class="btn-outline-red" href="#">Start free trial</a>
+      </div>
+
+      <div class="online-card">
+        <p class="online-tier">VIP membership</p>
+        <p class="online-name">VOSS VIP</p>
+        <p class="online-price">890 kr</p>
+        <p class="online-period">/ month · Cancel anytime</p>
+        <ul class="online-features">
+          <li>Everything in Pro</li>
+          <li>Monthly video analysis</li>
+          <li>Direct messaging with Kai</li>
+          <li>Priority seminar booking</li>
+          <li>Exclusive fighter content</li>
+        </ul>
+        <a class="btn-red" href="#">Join VIP</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section id="story">
+    <div class="story">
+      <div>
+        <p class="section-label">The story</p>
+        <h2 class="story-title">EUROPEAN<br>BORN.<br><span>THAILAND</span><br>BRED.</h2>
+      </div>
+      <div class="story-right">
+        <p class="story-text">Kai Voss began training Muay Thai at 18. Within a decade he was competing at the highest level — fighting at Lumpini, Rajadamnern, and eventually winning the Omnoi Stadium title, one of only a handful of Western fighters to do so.</p>
+        <p class="story-text">After 6 years living and training in Bangkok at one of Thailand's top 10 ranked gyms, Kai returned to Europe with a singular focus: teaching authentic Muay Thai the way it's done in Thailand — not watered down, not adapted. Real technique, real strategy, real results.</p>
+        <div class="story-quote">
+          "I don't teach Muay Thai for fitness. I teach it because it's the most intelligent striking art in the world."
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <div class="contact-section" id="contact">
+    <p class="contact-pre">Ready to train</p>
+    <h2 class="contact-title">LET'S<br>FIGHT.</h2>
+    <a class="contact-link" href="/cdn-cgi/l/email-protection#cba0aaa28bbda4b8b8ada2aca3bfe5a8a4a6"><span class="__cf_email__" data-cfemail="87ece6eec7f1e8f4f4e1eee0eff3a9e4e8ea">[email&#160;protected]</span></a>
+  </div>
+
+  <footer>
+    <span class="footer-l
