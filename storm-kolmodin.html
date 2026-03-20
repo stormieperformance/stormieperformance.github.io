@@ -5,28 +5,362 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Storm Kolmodin — Stormie Performance</title>
   <meta name="description" content="Building digital infrastructure for sports brands. Websites, training apps, e-commerce and client systems — built to your brand, your sport, your clients." />
+  <meta name="author" content="Storm Kolmodin" />
+  <meta property="og:title" content="Storm Kolmodin — Stormie Performance" />
+  <meta property="og:description" content="Building digital infrastructure for sports brands. Websites, training apps, e-commerce and client systems — built to your brand, your sport, your clients." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="canonical" href="https://stormieperformance.com/storm-kolmodin.html" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0c0c0b;
+      --bg2: #111110;
+      --text: #e8e4dc;
+      --muted: rgba(232,228,220,0.42);
+      --muted2: rgba(232,228,220,0.22);
+      --line: rgba(232,228,220,0.08);
+      --gold: #c9a96e;
+      --gold-dim: rgba(201,169,110,0.18);
+      --sans: 'DM Sans', sans-serif;
+      --serif: 'Cormorant Garamond', serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.055;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--line);
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.1s forwards;
+    }
+
+    .topbar-left {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted2);
+      text-decoration: none;
+    }
+
+    .topbar-left:hover { color: var(--text); }
+
+    .topbar-right { display: flex; gap: 32px; align-items: center; }
+
+    .topbar-right a {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .topbar-right a:hover { color: var(--text); }
+
+    .topbar-right a.contact-btn {
+      color: var(--gold);
+      border-bottom: 1px solid rgba(201,169,110,0.3);
+      padding-bottom: 1px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .topbar-right a.contact-btn:hover { border-color: var(--gold); }
+
+    .hero {
+      padding: 130px 0 110px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-label {
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.3s forwards;
+    }
+
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(68px, 10vw, 148px);
+      font-weight: 300;
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      opacity: 0;
+      animation: fadeUp 1.2s ease 0.45s forwards;
+    }
+
+    .hero-title .thin { font-weight: 300; color: var(--text); }
+    .hero-title .italic { font-style: italic; font-weight: 300; color: var(--muted); }
+
+    .hero-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 32px;
+      margin-top: 64px;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.75s forwards;
+    }
+
+    .hero-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.85;
+      max-width: 420px;
+    }
+
+    .hero-meta { text-align: right; }
+
+    .hero-meta-name {
+      font-family: var(--serif);
+      font-size: 17px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--muted);
+    }
+
+    .hero-meta-sub {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted2);
+      margin-top: 5px;
+    }
+
+    .about {
+      padding: 88px 0;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      opacity: 0;
+      animation: fadeIn 1s ease 1s forwards;
+    }
+
+    .about-title {
+      font-family: var(--serif);
+      font-size: clamp(40px, 4.5vw, 62px);
+      font-weight: 300;
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+
+    .about-title em { font-style: italic; color: var(--gold); }
+
+    .about-right {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      padding-top: 8px;
+    }
+
+    .about-text {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.85;
+    }
+
+    .contact {
+      padding: 110px 0 90px;
+      text-align: center;
+      border-bottom: 1px solid var(--line);
+      opacity: 0;
+      animation: fadeIn 1s ease 1.15s forwards;
+    }
+
+    .contact-pre {
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 28px;
+    }
+
+    .contact-title {
+      font-family: var(--serif);
+      font-size: clamp(52px, 8vw, 108px);
+      font-weight: 300;
+      line-height: 0.96;
+      letter-spacing: -0.02em;
+      margin-bottom: 44px;
+      color: var(--text);
+    }
+
+    .contact-title em { font-style: italic; color: var(--muted); }
+
+    .contact-link,
+    .back-link {
+      display: inline-block;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(201,169,110,0.4);
+      padding-bottom: 4px;
+      transition: border-color 0.2s, color 0.2s, letter-spacing 0.3s;
+    }
+
+    .contact-link:hover,
+    .back-link:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+      letter-spacing: 0.18em;
+    }
+
+    footer {
+      padding: 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      opacity: 0;
+      animation: fadeIn 0.6s ease 1.3s forwards;
+    }
+
+    .footer-left {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted2);
+    }
+
+    .footer-right {
+      font-family: var(--serif);
+      font-size: 13px;
+      font-style: italic;
+      color: var(--muted2);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      .page { padding: 0 24px; }
+      .hero { padding: 90px 0 70px; }
+      .hero-bottom { flex-direction: column; align-items: flex-start; }
+      .hero-meta { text-align: left; }
+      .about { grid-template-columns: 1fr; gap: 36px; }
+      .contact { padding: 80px 0 64px; }
+      footer { flex-direction: column; gap: 8px; text-align: center; }
+      .hide-mobile { display: none; }
+    }
+  </style>
 </head>
 <body>
-  <h1>Storm Kolmodin</h1>
 
-  <p>Building digital infrastructure for sports brands.</p>
+  <div class="page">
 
-  <p>
-    Websites, training apps, e-commerce and client systems — built to your brand, your sport, your clients.
-  </p>
+    <div class="topbar">
+      <a href="index.html" class="topbar-left">Stormie Performance</a>
+      <div class="topbar-right">
+        <a href="index.html#work" class="hide-mobile">Work</a>
+        <a href="index.html#about" class="hide-mobile">About</a>
+        <a href="#" onclick="window.location='mai'+'lto:storm.kolmo'+'din@gmail.com'; return false;" class="contact-btn">Contact</a>
+      </div>
+    </div>
 
-  <p>Storm Kolmodin</p>
+    <section class="hero">
+      <p class="hero-label">Stockholm · Stormie Performance</p>
 
-  <p>Builder · PT · Stockholm</p>
+      <h1 class="hero-title">
+        <span class="thin">Storm</span><br>
+        <span class="italic">Kolmodin</span>
+      </h1>
 
-  <p>Athlete. Certified PT. Builder.</p>
+      <div class="hero-bottom">
+        <p class="hero-desc">
+          Building digital infrastructure for sports brands. Websites, training apps, e-commerce and client systems — built to your brand, your sport, your clients.
+        </p>
 
-  <p>
-    Licensed personal trainer, climber and Muay Thai practitioner. Background in tech, systems and agile project management.
-  </p>
+        <div class="hero-meta">
+          <p class="hero-meta-name">Storm Kolmodin</p>
+          <p class="hero-meta-sub">Builder · PT · Stockholm</p>
+        </div>
+      </div>
+    </section>
 
-  <p>
-    I build for the sports and fitness world because I live in it. Every system is designed with the coach, the athlete, and the client in mind.
-  </p>
+    <section class="about" id="about">
+      <div>
+        <h2 class="about-title">Athlete.<br>Certified PT.<br><em>Builder.</em></h2>
+      </div>
+
+      <div class="about-right">
+        <p class="about-text">
+          Licensed personal trainer, climber and Muay Thai practitioner. Background in tech, systems and agile project management.
+        </p>
+
+        <p class="about-text">
+          I build for the sports and fitness world because I live in it. Every system is designed with the coach, the athlete, and the client in mind.
+        </p>
+
+        <p class="about-text">
+          Storm Kolmodin is the founder of Stormie Performance.
+        </p>
+      </div>
+    </section>
+
+    <section class="contact">
+      <p class="contact-pre">Back to site</p>
+      <h2 class="contact-title">Stormie<br><em>Performance.</em></h2>
+      <a class="back-link" href="index.html">Return to homepage</a>
+    </section>
+
+    <footer>
+      <div class="footer-left">Stormie Performance</div>
+      <div class="footer-right">Storm Kolmodin</div>
+    </footer>
+
+  </div>
+
 </body>
 </html>
