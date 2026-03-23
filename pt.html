@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Online Coaching System — Stormie Performance</title>
+  <title>Systems for Online Coaches — Stormie Performance</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -124,7 +124,7 @@
       font-size:14px;
       font-weight:300;
       color:var(--muted);
-      max-width:460px;
+      max-width:520px;
       margin-bottom:36px;
       line-height:1.8;
     }
@@ -227,14 +227,13 @@
 
     .demo-grid {
       display:grid;
-      grid-template-columns:1fr 1fr;
+      grid-template-columns:1fr;
       gap:16px;
-      margin-bottom:20px;
     }
 
     .demo-card {
       border:1px solid var(--line);
-      padding:24px;
+      padding:28px;
       background:rgba(232,228,220,0.03);
       transition:border-color 0.2s;
     }
@@ -245,17 +244,35 @@
 
     .demo-card h3 {
       font-family:var(--serif);
-      font-size:18px;
+      font-size:24px;
       font-weight:300;
-      margin-bottom:6px;
+      margin-bottom:10px;
     }
 
     .demo-card p {
-      font-size:12px;
+      font-size:13px;
       font-weight:300;
       color:var(--muted);
-      margin-bottom:16px;
-      line-height:1.6;
+      margin-bottom:18px;
+      line-height:1.75;
+      max-width:620px;
+    }
+
+    .demo-meta {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:18px;
+    }
+
+    .demo-meta span {
+      font-size:9px;
+      letter-spacing:0.14em;
+      text-transform:uppercase;
+      color:var(--gold);
+      border:1px solid rgba(201,169,110,0.18);
+      padding:7px 10px;
+      opacity:0.9;
     }
 
     .demo-card a {
@@ -418,18 +435,12 @@
       text-transform:uppercase;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity:0.8; }
-      50% { opacity:0.3; }
-    }
-
     @media (max-width:600px) {
       .page { padding:0 24px; }
       #hero { padding-top:80px; }
       .nav-links { display:none; }
       .step { grid-template-columns:28px 1fr; }
       .step-tag { display:none; }
-      .demo-grid { grid-template-columns:1fr; }
     }
   </style>
 </head>
@@ -439,35 +450,34 @@
       <a class="nav-brand" href="index.html">Stormie Performance</a>
       <ul class="nav-links">
         <li><a href="#how">How it works</a></li>
-        <li><a href="#demo">Demo</a></li>
-        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#demo">Selected work</a></li>
+        <li><a href="#pricing">Offer</a></li>
         <li><a href="mailto:storm.kolmodin@gmail.com" class="gold">Contact</a></li>
       </ul>
     </nav>
 
     <section id="hero">
-      <p class="label">Online Coaching System</p>
+      <p class="label">System for online coaches</p>
 
       <div style="display:inline-flex; align-items:center; gap:8px; border:1px solid rgba(201,169,110,0.3); padding:6px 14px; margin-bottom:24px;">
-        <span style="width:6px; height:6px; border-radius:50%; background:var(--gold); opacity:0.8; animation:pulse 2s infinite;"></span>
-        <span style="font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); opacity:0.8;">In development — coming soon</span>
+        <span style="width:6px; height:6px; border-radius:50%; background:var(--gold); opacity:0.8;"></span>
+        <span style="font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); opacity:0.8;">Custom build — not off-the-shelf</span>
       </div>
 
       <h1>Keep your clients consistent.<br><em>Without adding more work.</em></h1>
 
       <p>
         You already have the tools. I connect them, remove manual work, and build a system around how you coach today.
-        
       </p>
 
       <div class="btn-group">
-        <a class="btn btn-primary" href="#demo">See the demo</a>
-        <a class="btn btn-ghost" href="#how">How it works</a>
+        <a class="btn btn-primary" href="#demo">View selected work</a>
+        <a class="btn btn-ghost" href="mailto:storm.kolmodin@gmail.com">Start a project</a>
       </div>
     </section>
 
     <section id="who">
-      <p class="label">Who it's for</p>
+      <p class="label">Who it’s for</p>
 
       <div class="steps">
         <div class="step">
@@ -489,7 +499,7 @@
               Follow-ups, check-ins, reminders — done manually, every week.
             </p>
           </div>
-          <span class="step-tag">Model</span>
+          <span class="step-tag">Admin</span>
         </div>
 
         <div class="step">
@@ -500,7 +510,7 @@
               They stop training, go inactive, and you notice too late.
             </p>
           </div>
-          <span class="step-tag">Problem</span>
+          <span class="step-tag">Retention</span>
         </div>
 
         <div class="step">
@@ -511,7 +521,7 @@
               Retention matters more than new signups — but you have no system for it.
             </p>
           </div>
-          <span class="step-tag">Time drain</span>
+          <span class="step-tag">Growth</span>
         </div>
       </div>
     </section>
@@ -524,120 +534,156 @@
           <span class="step-num">01</span>
           <div>
             <p class="step-title">We map how you work today</p>
-            <p class="step-desc">Your tools, your clients, your workflow — nothing gets replaced - just optimized.</p>
+            <p class="step-desc">Your tools, your clients, your workflow — nothing gets replaced.</p>
           </div>
-          <span class="step-tag">Sign-up</span>
+          <span class="step-tag">Audit</span>
         </div>
 
         <div class="step">
           <span class="step-num">02</span>
           <div>
             <p class="step-title">We connect your systems</p>
-            <p class="step-desc">Trainer app, WhatsApp, email — everything starts working together.</p>
+            <p class="step-desc">Trainer app, WhatsApp, email, forms — everything starts working together.</p>
           </div>
-          <span class="step-tag">Dashboard</span>
+          <span class="step-tag">Setup</span>
         </div>
 
         <div class="step">
           <span class="step-num">03</span>
           <div>
             <p class="step-title">We automate what you do manually</p>
-            <p class="step-desc">Check-ins, reminders, follow-ups — handled automatically.</p>
+            <p class="step-desc">Check-ins, reminders, follow-ups and client movement — handled with less admin.</p>
           </div>
-          <span class="step-tag">App</span>
+          <span class="step-tag">Automation</span>
         </div>
 
         <div class="step">
           <span class="step-num">04</span>
           <div>
             <p class="step-title">You coach — system handles the rest</p>
-            <p class="step-desc">You get notified when something matters. No chasing.</p>
+            <p class="step-desc">You get notified when something matters. No chasing. No guessing.</p>
           </div>
-          <span class="step-tag">Auto</span>
+          <span class="step-tag">Outcome</span>
         </div>
       </div>
     </section>
 
     <section id="demo">
-      <p class="label">Live demo</p>
+      <p class="label">Real client systems</p>
 
       <div class="demo-grid">
         <div class="demo-card">
-          <h3>PT Dashboard</h3>
-          <p>Your clients, their status and progress — live.</p>
-          <a href="https://ptdashboard.lovable.app" target="_blank">Open dashboard →</a>
+          <div class="demo-meta">
+            <span>WhatsApp</span>
+            <span>PDFs</span>
+            <span>Weekly check-ins</span>
+          </div>
+          <h3>Coach using WhatsApp + PDFs</h3>
+          <p>
+            Clients trained, but everything was manual. Check-ins lived in DMs, there was no overview,
+            and people slipped without notice.
+            <br><br>
+            → Weekly check-ins automated<br>
+            → Responses tracked in one place<br>
+            → Inactive clients flagged automatically<br>
+            → Follow-up no longer depended on memory
+          </p>
+          <a href="https://ptdashboard.lovable.app" target="_blank">View system concept →</a>
         </div>
 
         <div class="demo-card">
-          <h3>Client portal</h3>
-          <p>What your client sees — training plan, check-in, history.</p>
-          <a href="https://ptdashboard.lovable.app" target="_blank">Open client view →</a>
+          <div class="demo-meta">
+            <span>Trainerize</span>
+            <span>Retention layer</span>
+            <span>Email + WhatsApp</span>
+          </div>
+          <h3>Coach using Trainerize</h3>
+          <p>
+            Workouts were already handled — but follow-up was scattered. Training lived in one tool,
+            communication in another, and nobody knew who was quietly disengaging.
+            <br><br>
+            → Existing tools connected<br>
+            → Weekly follow-up automated outside the app<br>
+            → Quiet clients surfaced faster<br>
+            → Coach only steps in when needed
+          </p>
+          <a href="mailto:storm.kolmodin@gmail.com?subject=Trainerize%20system%20example">Ask for this setup →</a>
+        </div>
+
+        <div class="demo-card">
+          <div class="demo-meta">
+            <span>High-ticket</span>
+            <span>Low volume</span>
+            <span>High touch</span>
+          </div>
+          <h3>High-ticket online coach</h3>
+          <p>
+            Fewer clients, more premium service — but still too much follow-up happening manually.
+            Great coaching, messy backend.
+            <br><br>
+            → Personalised check-ins<br>
+            → Smart reminders based on behaviour<br>
+            → Cleaner client overview<br>
+            → Better support without more workload
+          </p>
+          <a href="mailto:storm.kolmodin@gmail.com?subject=High-ticket%20coach%20system">Ask for this setup →</a>
         </div>
       </div>
-
-      <iframe
-        src="https://ptdashboard.lovable.app"
-        width="100%"
-        height="520"
-        frameborder="0"
-        style="border:1px solid rgba(232,228,220,0.08); margin-top:20px; display:block;"
-        title="PT Dashboard live demo"
-      ></iframe>
     </section>
 
     <section id="automation">
-      <p class="label">What happens automatically</p>
+      <p class="label">What gets removed</p>
 
       <div class="flow-list">
         <div class="flow-item">
           <div class="flow-dot"></div>
           <div>
-            <p class="flow-trigger">Trigger · New client</p>
-            <p class="flow-action">Welcome email sent → client added to dashboard → training plan assigned</p>
+            <p class="flow-trigger">Manual follow-up</p>
+            <p class="flow-action">No more remembering who to message, when to check in, or which client has gone quiet.</p>
           </div>
         </div>
 
         <div class="flow-item">
           <div class="flow-dot"></div>
           <div>
-            <p class="flow-trigger">Trigger · No activity for 3 days</p>
-            <p class="flow-action">Re-engagement email sent to client → notification sent to PT</p>
+            <p class="flow-trigger">Disconnected tools</p>
+            <p class="flow-action">Forms, email, WhatsApp and trainer apps stop living in separate silos.</p>
           </div>
         </div>
 
         <div class="flow-item">
           <div class="flow-dot"></div>
           <div>
-            <p class="flow-trigger">Trigger · Every Monday</p>
-            <p class="flow-action">Weekly summary sent to PT — sessions completed, clients at risk</p>
+            <p class="flow-trigger">Guessing who needs attention</p>
+            <p class="flow-action">You get a clearer signal on who is active, who is quiet, and where friction is building.</p>
           </div>
         </div>
       </div>
     </section>
 
     <section id="pricing">
-      <p class="label">Get started</p>
+      <p class="label">Offer</p>
 
       <div class="pricing-card">
-        <p class="pricing-tier">PT Coaching System</p>
-        <p class="price">997 kr / month</p>
-        <p class="price-sub">Per PT · Unlimited clients · Cancel anytime</p>
+        <p class="pricing-tier">Custom coaching system</p>
+        <p class="price">Built around your setup</p>
+        <p class="price-sub">Project-based · Custom scope · Ongoing support optional</p>
 
         <ul class="feature-list">
-          <li>PT dashboard + client portal</li>
-          <li>Automatic onboarding flow</li>
-          <li>Retention automations</li>
-          <li>Weekly progress reports</li>
-          <li>Stormie Performance support</li>
+          <li>System audit of your current workflow</li>
+          <li>Custom automation setup</li>
+          <li>Client follow-up and retention flows</li>
+          <li>Website, onboarding or booking flows if needed</li>
+          <li>Built around the tools you already use</li>
         </ul>
 
-        <a class="btn-cta" href="mailto:storm.kolmodin@gmail.com">Get in touch</a>
+        <a class="btn-cta" href="mailto:storm.kolmodin@gmail.com?subject=Custom%20coaching%20system">Start a project</a>
       </div>
     </section>
 
     <footer>
       <a href="index.html">← stormieperformance.com</a>
-      <span class="footer-note">Online coaching system</span>
+      <span class="footer-note">Systems for online coaches</span>
     </footer>
   </div>
 </body>
