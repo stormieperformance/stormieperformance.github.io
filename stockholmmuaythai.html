@@ -1,192 +1,999 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Stockholm Muay Thai — Stormie Performance</title>
-  <meta name="description" content="Concept ecosystem for a Muay Thai gym. Website, membership and merch — built as one system." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stockholm Muay Thai</title>
+  <meta
+    name="description"
+    content="Träna Muay Thai i Stockholm. Nybörjarpass, medlemskap, schema och officiell klubbmerch."
+  />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --bg: #050505;
+      --bg-soft: #0d0d0d;
+      --bg-panel: #111111;
+      --line: rgba(255,255,255,0.10);
+      --line-soft: rgba(255,255,255,0.06);
+      --text: #f5f5f5;
+      --muted: rgba(255,255,255,0.72);
+      --muted-2: rgba(255,255,255,0.50);
+      --white: #ffffff;
+      --max: 1240px;
+      --radius: 22px;
+      --shadow: 0 24px 60px rgba(0,0,0,0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      background: #0a0a0a;
-      color: #f5f2ec;
-      font-family: 'DM Sans', sans-serif;
-      line-height: 1.6;
+      background:
+        radial-gradient(circle at top center, rgba(255,255,255,0.03), transparent 28%),
+        linear-gradient(180deg, #030303 0%, #080808 100%);
+      color: var(--text);
+      font-family: "Inter", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
     .container {
-      width: min(1100px, 90%);
+      width: min(calc(100% - 32px), var(--max));
       margin: 0 auto;
     }
 
-    h1, h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 500;
-      letter-spacing: -0.02em;
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(5, 5, 5, 0.78);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
-    h1 {
-      font-size: 64px;
-      margin: 80px 0 20px;
+    .header-inner {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
     }
 
-    h2 {
-      font-size: 32px;
-      margin-bottom: 10px;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
     }
 
-    p {
-      color: rgba(255,255,255,0.7);
-    }
-
-    .section {
-      margin: 80px 0;
-    }
-
-    .meta {
-      color: rgba(255,255,255,0.5);
-      text-transform: uppercase;
-      font-size: 12px;
-      letter-spacing: 0.12em;
-    }
-
-    .grid {
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.92);
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 40px;
-      margin-top: 40px;
-    }
-
-    .card {
-      border-top: 1px solid rgba(255,255,255,0.1);
-      padding-top: 20px;
-    }
-
-    .label {
-      font-size: 12px;
+      place-items: center;
+      color: var(--white);
+      font-family: "Oswald", sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
-      letter-spacing: 0.1em;
+      line-height: 1;
+    }
+
+    .brand-text {
+      line-height: 1.05;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-family: "Oswald", sans-serif;
+      font-size: 1.12rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .brand-text span {
+      display: block;
+      color: var(--muted-2);
+      font-size: 0.74rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+    }
+
+    .nav a {
+      color: var(--muted);
+      font-size: 0.94rem;
+      transition: color 0.22s ease;
+    }
+
+    .nav a:hover {
+      color: var(--white);
+    }
+
+    .header-cta {
+      min-height: 46px;
+      padding: 0 18px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: var(--white);
+      color: #0b0b0b;
+      font-size: 0.92rem;
+      font-weight: 600;
+      transition: transform 0.22s ease, opacity 0.22s ease;
+    }
+
+    .header-cta:hover {
+      transform: translateY(-1px);
+      opacity: 0.92;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 48px 0 34px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .hero-copy {
+      padding: 18px 0 12px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      color: var(--muted-2);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .hero-copy h1 {
+      margin: 0 0 16px;
+      font-family: "Oswald", sans-serif;
+      font-size: clamp(3.4rem, 8.2vw, 6.8rem);
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      font-weight: 700;
+      max-width: 760px;
+    }
+
+    .hero-copy p {
+      margin: 0 0 26px;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.8;
+      max-width: 640px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 26px;
+    }
+
+    .btn {
+      min-height: 54px;
+      padding: 0 22px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: transform 0.22s ease, background 0.22s ease, border-color 0.22s ease;
+    }
+
+    .btn-primary {
+      background: var(--white);
+      color: #0a0a0a;
+      border: 1px solid var(--white);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      opacity: 0.93;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.16);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.24);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .hero-meta span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 640px;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.86)),
+        radial-gradient(circle at 70% 18%, rgba(255,255,255,0.08), transparent 24%),
+        linear-gradient(135deg, #161616 0%, #0a0a0a 100%);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.38) 48%, rgba(0,0,0,0.84) 100%),
+        repeating-linear-gradient(
+          90deg,
+          rgba(255,255,255,0.00) 0px,
+          rgba(255,255,255,0.00) 78px,
+          rgba(255,255,255,0.02) 79px,
+          rgba(255,255,255,0.00) 80px
+        );
+      pointer-events: none;
+    }
+
+    .hero-rings {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 26% 68%, rgba(255,255,255,0.10), transparent 18%),
+        radial-gradient(circle at 75% 30%, rgba(255,255,255,0.05), transparent 22%);
+      pointer-events: none;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      bottom: 24px;
+      z-index: 2;
+      display: grid;
+      gap: 12px;
+    }
+
+    .hero-info {
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(8,8,8,0.72);
+      backdrop-filter: blur(18px);
+      border-radius: 20px;
+      padding: 18px 18px 16px;
+    }
+
+    .hero-info .label {
+      color: var(--muted-2);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 8px;
+    }
+
+    .hero-info strong {
+      display: block;
+      font-size: 1rem;
       margin-bottom: 6px;
     }
 
-    .value {
-      font-size: 18px;
+    .hero-info p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 0.92rem;
     }
 
-    @media (max-width: 800px) {
-      h1 { font-size: 40px; }
-      .grid { grid-template-columns: 1fr; }
+    .section {
+      padding: 88px 0;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .section-head {
+      max-width: 760px;
+      margin-bottom: 34px;
+    }
+
+    .section-head .label {
+      color: var(--muted-2);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .section-head h2 {
+      margin: 0 0 12px;
+      font-family: "Oswald", sans-serif;
+      font-size: clamp(2rem, 4vw, 4rem);
+      line-height: 0.94;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .info-card,
+    .membership-card,
+    .shop-card,
+    .coach-card,
+    .cta-panel {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+      border-radius: 22px;
+      padding: 24px;
+    }
+
+    .info-card .topline,
+    .membership-card .topline,
+    .shop-card .topline,
+    .coach-card .topline {
+      color: var(--muted-2);
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .info-card h3,
+    .membership-card h3,
+    .shop-card h3,
+    .coach-card h3,
+    .cta-panel h3 {
+      margin: 0 0 10px;
+      font-family: "Oswald", sans-serif;
+      font-size: 1.6rem;
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      font-weight: 600;
+    }
+
+    .info-card p,
+    .membership-card p,
+    .shop-card p,
+    .coach-card p,
+    .cta-panel p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .schedule-layout {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 26px;
+      align-items: start;
+    }
+
+    .schedule-table {
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.02);
+    }
+
+    .schedule-row {
+      display: grid;
+      grid-template-columns: 132px 1fr;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .schedule-row:last-child {
+      border-bottom: none;
+    }
+
+    .schedule-row .day,
+    .schedule-row .class {
+      padding: 17px 18px;
+    }
+
+    .schedule-row .day {
+      color: var(--muted-2);
+      border-right: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+      font-size: 0.92rem;
+    }
+
+    .schedule-row .class {
+      color: var(--white);
+      font-weight: 600;
+      font-size: 0.96rem;
+    }
+
+    .stack-note {
+      display: grid;
+      gap: 12px;
+    }
+
+    .stack-note .note {
+      border-top: 1px solid rgba(255,255,255,0.10);
+      padding-top: 16px;
+    }
+
+    .stack-note .note strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .stack-note .note p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .membership-grid,
+    .shop-grid,
+    .coach-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .price {
+      display: inline-block;
+      margin: 8px 0 10px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .submeta {
+      color: var(--muted-2);
+      font-size: 0.86rem;
+      line-height: 1.55;
+      margin-bottom: 14px;
+    }
+
+    .ghost-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--white);
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: rgba(255,255,255,0.02);
+      transition: background 0.22s ease, transform 0.22s ease, border-color 0.22s ease;
+    }
+
+    .ghost-btn:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.22);
+    }
+
+    .cta-panel {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015)),
+        radial-gradient(circle at right center, rgba(255,255,255,0.06), transparent 24%);
+    }
+
+    .footer {
+      padding: 28px 0 42px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      color: var(--muted-2);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid,
+      .schedule-layout,
+      .cta-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .info-grid,
+      .membership-grid,
+      .shop-grid,
+      .coach-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .nav {
+        display: none;
+      }
+
+      .container {
+        width: min(calc(100% - 22px), var(--max));
+      }
+
+      .hero {
+        padding-top: 34px;
+      }
+
+      .hero-visual {
+        min-height: 480px;
+      }
+
+      .info-grid,
+      .membership-grid,
+      .shop-grid,
+      .coach-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .schedule-row {
+        grid-template-columns: 92px 1fr;
+      }
+
+      .schedule-row .day,
+      .schedule-row .class {
+        padding: 15px 14px;
+      }
     }
   </style>
 </head>
-
 <body>
-  <div class="container">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="brand" aria-label="Stockholm Muay Thai home">
+        <div class="brand-mark">SMT</div>
+        <div class="brand-text">
+          <strong>Stockholm Muay Thai</strong>
+          <span>#TEAMSMT</span>
+        </div>
+      </a>
 
-    <!-- HERO -->
-    <section class="section">
-      <div class="meta">Concept · Full Ecosystem · Membership & Merch</div>
-      <h1>Stockholm Muay Thai</h1>
-      <p>
-        A conceptual digital ecosystem for a Muay Thai gym in Stockholm.
-        Website, membership and merch — built as one connected club experience.
-      </p>
-    </section>
+      <nav class="nav">
+        <a href="#schedule">Schema</a>
+        <a href="#beginners">Nybörjare</a>
+        <a href="#membership">Medlemskap</a>
+        <a href="#shop">Merch</a>
+        <a href="#contact">Kontakt</a>
+      </nav>
 
-    <!-- CLIENT -->
-    <section class="section">
-      <div class="meta">Client type</div>
-      <p>Muay Thai gym · Stockholm</p>
-    </section>
+      <a class="header-cta" href="#membership">Börja träna</a>
+    </div>
+  </header>
 
-    <!-- PRODUCTS -->
-    <section class="section">
-      <div class="meta">What was built · 04 products</div>
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">Scheelegatan 1 · Stockholm</div>
+          <h1>Train Muay Thai in Stockholm</h1>
+          <p>
+            Stockholm Muay Thai är en klubb för dig som vill börja träna,
+            komma i bättre form eller utvecklas seriöst inom thaiboxning.
+            Nybörjarpass, kvällspass, medlemskap och officiell klubbmerch —
+            samlat i en och samma upplevelse.
+          </p>
 
-      <div class="grid">
-        <div class="card">
-          <div class="label">01</div>
-          <div class="value">Stockholm Muay Thai Website</div>
-          <p>Branded website</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#membership">Starta medlemskap</a>
+            <a class="btn btn-secondary" href="#schedule">Se schema</a>
+          </div>
+
+          <div class="hero-meta">
+            <span>Gratis prova på</span>
+            <span>Mån–Fre 11:45–13:00 / 16:30–21:00</span>
+            <span>Lördag 10:30–14:30</span>
+          </div>
         </div>
 
-        <div class="card">
-          <div class="label">02</div>
-          <div class="value">Membership System</div>
-          <p>Wondr frontend / membership</p>
-        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-rings"></div>
+          <div class="hero-overlay">
+            <div class="hero-info">
+              <div class="label">Nybörjare</div>
+              <strong>Ny till Muay Thai? Starta här.</strong>
+              <p>
+                Få en enkel väg in i klubben: prova på, välj rätt medlemskap
+                och kom till ditt första pass med rätt information direkt.
+              </p>
+            </div>
 
-        <div class="card">
-          <div class="label">03</div>
-          <div class="value">Club Merch</div>
-          <p>Kappa Teamsales frontend / e-commerce</p>
-        </div>
-
-        <div class="card">
-          <div class="label">04</div>
-          <div class="value">Beginner Onboarding</div>
-          <p>Intro flow / new members</p>
+            <div class="hero-info">
+              <div class="label">Klubb</div>
+              <strong>Träning, medlemskap och klubbmerch i samma site.</strong>
+              <p>
+                Istället för att skicka besökaren mellan olika system ligger
+                schema, join flow och gear samlat under Stockholm Muay Thai.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- CORE IDEA -->
-    <section class="section">
-      <h2>One gym. One system.</h2>
-      <p>
-        Stockholm Muay Thai has strong identity, culture and credibility.
-        The digital experience is fragmented across external systems.
-      </p>
-      <p>
-        This concept brings everything into one branded flow —
-        from first visit to membership to merch.
-      </p>
-    </section>
-
-    <!-- ECOSYSTEM -->
-    <section class="section">
-      <div class="meta">Ecosystem</div>
-
-      <div class="grid">
-        <div class="card">
-          <h2>Branded Website</h2>
+    <section class="section" id="beginners">
+      <div class="container">
+        <div class="section-head">
+          <div class="label">Start here</div>
+          <h2>Ny på klubben?</h2>
           <p>
-            The club home. Schedule, coaches, culture and entry point into the gym.
+            Första intrycket ska vara enkelt. Här ska det vara tydligt hur du börjar,
+            vad du behöver ta med dig och vilket alternativ som passar dig bäst.
           </p>
         </div>
 
-        <div class="card">
-          <h2>Membership System</h2>
-          <p>
-            Cleaner member-facing flow for plans and onboarding.
-            Backend systems can remain, but the experience is controlled.
-          </p>
-        </div>
+        <div class="info-grid">
+          <article class="info-card">
+            <div class="topline">01</div>
+            <h3>Gratis prova på</h3>
+            <p>
+              Testa ett pass och känn på miljön innan du bestämmer dig.
+            </p>
+          </article>
 
-        <div class="card">
-          <h2>Club Merch</h2>
-          <p>
-            Profile products and apparel presented under the club identity,
-            instead of a generic external store.
-          </p>
-        </div>
+          <article class="info-card">
+            <div class="topline">02</div>
+            <h3>Engångspass</h3>
+            <p>
+              Perfekt för dig som vill träna direkt utan att binda upp dig.
+            </p>
+          </article>
 
-        <div class="card">
-          <h2>Beginner Onboarding</h2>
-          <p>
-            A clear starting point for new members.
-            From curiosity to first session to full membership.
-          </p>
+          <article class="info-card">
+            <div class="topline">03</div>
+            <h3>Månadskort</h3>
+            <p>
+              För dig som vill träna kontinuerligt och bli en del av klubben.
+            </p>
+          </article>
         </div>
       </div>
     </section>
 
-  </div>
+    <section class="section" id="schedule">
+      <div class="container schedule-layout">
+        <div>
+          <div class="section-head">
+            <div class="label">Schema</div>
+            <h2>Träna med tydlighet</h2>
+            <p>
+              Schema ska ligga öppet på sajten, direkt där besökaren behöver det.
+            </p>
+          </div>
+
+          <div class="schedule-table">
+            <div class="schedule-row">
+              <div class="day">Måndag</div>
+              <div class="class">Lunchpass · 12:00 / Kvällspass · 17:30–20:00</div>
+            </div>
+            <div class="schedule-row">
+              <div class="day">Tisdag</div>
+              <div class="class">Morgonpass · 07:00 / Lunchpass · 12:00 / Kvällspass · 17:30–20:00</div>
+            </div>
+            <div class="schedule-row">
+              <div class="day">Onsdag</div>
+              <div class="class">Lunchpass · 12:00 / Kvällspass · 17:30–20:00</div>
+            </div>
+            <div class="schedule-row">
+              <div class="day">Torsdag</div>
+              <div class="class">Morgonpass · 07:00 / Lunchpass · 12:00 / Kvällspass · 17:30–20:00</div>
+            </div>
+            <div class="schedule-row">
+              <div class="day">Fredag</div>
+              <div class="class">Lunchpass · 12:00 / Öppet kvällspass · 17:30–20:00</div>
+            </div>
+            <div class="schedule-row">
+              <div class="day">Lördag</div>
+              <div class="class">Klubbträning / Öppet pass · 10:30–14:30</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stack-note">
+          <div class="section-head">
+            <div class="label">Klubbinformation</div>
+            <h2>Öppet. Rakt. Funktionellt.</h2>
+            <p>
+              Den här delen ska göra jobbet snabbt: adress, öppettider, hur man börjar och var man går vidare.
+            </p>
+          </div>
+
+          <div class="note">
+            <strong>Adress</strong>
+            <p>Scheelegatan 1, Stockholm</p>
+          </div>
+
+          <div class="note">
+            <strong>Öppettider</strong>
+            <p>Mån–Fre 11:45–13:00, 16:30–21:00 · Lördag 10:30–14:30</p>
+          </div>
+
+          <div class="note">
+            <strong>Första passet</strong>
+            <p>Kom i träningskläder, ta med vattenflaska och var på plats i god tid.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="membership">
+      <div class="container">
+        <div class="section-head">
+          <div class="label">Medlemskap</div>
+          <h2>Välj hur du vill börja</h2>
+          <p>
+            Join-flödet ska kännas som en del av klubben, inte som ett avhopp till ett externt system.
+          </p>
+        </div>
+
+        <div class="membership-grid">
+          <article class="membership-card">
+            <div class="topline">Support</div>
+            <h3>Stödmedlemskap</h3>
+            <div class="price">50 kr / mån</div>
+            <div class="submeta">Ingen bindningstid</div>
+            <p>För dig som vill stötta klubbens verksamhet.</p>
+            <br>
+            <a href="#" class="ghost-btn">Välj medlemskap</a>
+          </article>
+
+          <article class="membership-card">
+            <div class="topline">Flexibelt</div>
+            <h3>Engångspass</h3>
+            <div class="price">150 kr</div>
+            <div class="submeta">Ingen bindningstid · giltig i 7 dagar</div>
+            <p>Perfekt för prova på, tillfällig träning eller första besöket.</p>
+            <br>
+            <a href="#" class="ghost-btn">Köp pass</a>
+          </article>
+
+          <article class="membership-card">
+            <div class="topline">Vuxen</div>
+            <h3>Månadskort</h3>
+            <div class="price">599 kr / mån</div>
+            <div class="submeta">6 månaders bindningstid · årsavgift 349 kr</div>
+            <p>För dig som vill träna regelbundet och vara en del av klubben.</p>
+            <br>
+            <a href="#" class="ghost-btn">Starta medlemskap</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div class="label">Fler alternativ</div>
+          <h2>Ungdom & barn</h2>
+          <p>
+            Medlemskap för yngre utövare ska också vara tydliga direkt på sajten.
+          </p>
+        </div>
+
+        <div class="membership-grid">
+          <article class="membership-card">
+            <div class="topline">Ungdom 10–14 år</div>
+            <h3>Månadskort ungdom</h3>
+            <div class="price">349 kr / mån</div>
+            <div class="submeta">6 månaders bindningstid · årsavgift 349 kr</div>
+            <p>För ungdomar som vill träna kontinuerligt i klubben.</p>
+          </article>
+
+          <article class="membership-card">
+            <div class="topline">Barn 5–9 år</div>
+            <h3>Månadskort barn</h3>
+            <div class="price">249 kr / mån</div>
+            <div class="submeta">6 månaders bindningstid · årsavgift 349 kr</div>
+            <p>Ett tydligt alternativ för barnträning med enkel start.</p>
+          </article>
+
+          <article class="membership-card">
+            <div class="topline">Onboarding</div>
+            <h3>Behöver du hjälp?</h3>
+            <div class="price">Starta här</div>
+            <div class="submeta">Första steg för nya medlemmar</div>
+            <p>Frågor om nivå, ålder eller vilket kort som passar bäst? Kontakta klubben direkt.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="shop">
+      <div class="container">
+        <div class="section-head">
+          <div class="label">Official club gear</div>
+          <h2>Klubbmerch</h2>
+          <p>
+            Merchdelen ska kännas som Stockholm Muay Thai, även om Kappa Team Sales fortsätter ligga bakom delar av produkterna.
+          </p>
+        </div>
+
+        <div class="shop-grid">
+          <article class="shop-card">
+            <div class="topline">Klubbprodukt</div>
+            <h3>Kampsportslinne</h3>
+            <div class="price">349 kr</div>
+            <p>En ren, tydlig produktsida för klubbens träningsplagg.</p>
+            <br>
+            <a href="#" class="ghost-btn">Visa produkt</a>
+          </article>
+
+          <article class="shop-card">
+            <div class="topline">Klubbprodukt</div>
+            <h3>Sanremo</h3>
+            <div class="price">279 kr</div>
+            <p>Enklare merch och klubbartiklar presenteras bättre i en egen shopmiljö.</p>
+            <br>
+            <a href="#" class="ghost-btn">Visa produkt</a>
+          </article>
+
+          <article class="shop-card">
+            <div class="topline">Paket</div>
+            <h3>Stora träningspaketet</h3>
+            <div class="price">995 kr</div>
+            <p>Ett tydligt val för nya medlemmar som vill komma igång direkt med rätt gear.</p>
+            <br>
+            <a href="#" class="ghost-btn">Visa produkt</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div class="label">More gear</div>
+          <h2>Fler produkter</h2>
+          <p>
+            En större shopvy kan lyfta hela klubbens profilprodukter bättre än dagens externa flöde.
+          </p>
+        </div>
+
+        <div class="shop-grid">
+          <article class="shop-card">
+            <div class="topline">Lifestyle</div>
+            <h3>Klinto Flip Flop</h3>
+            <div class="price">245 kr</div>
+            <p>Småprodukter får mer värde när de ramas in under klubbens egen identitet.</p>
+          </article>
+
+          <article class="shop-card">
+            <div class="topline">Outerwear</div>
+            <h3>Vianetto Herr</h3>
+            <div class="price">945 kr</div>
+            <p>Merch ska kännas som teamwear och klubbtillhörighet, inte bara produktlista.</p>
+          </article>
+
+          <article class="shop-card">
+            <div class="topline">Fight / Teamwear</div>
+            <h3>Vurbat Kombat</h3>
+            <div class="price">495 kr</div>
+            <p>Fight-gym-produkter hör hemma i en mer rå och sportig shopdesign.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div class="label">Klubben</div>
+          <h2>Träning. Gemenskap. Nivåer för alla.</h2>
+          <p>
+            Sajten ska visa att klubben både är öppen för nya medlemmar och relevant för de som vill träna seriöst.
+          </p>
+        </div>
+
+        <div class="coach-grid">
+          <article class="coach-card">
+            <div class="topline">Nybörjare</div>
+            <h3>Starta tryggt</h3>
+            <p>Förstagångsbesökare ska direkt förstå hur de börjar och vad som väntar.</p>
+          </article>
+
+          <article class="coach-card">
+            <div class="topline">Träning</div>
+            <h3>Bygg rutin</h3>
+            <p>Schema, medlemskap och klubbstruktur ska göra det enkelt att komma tillbaka vecka efter vecka.</p>
+          </article>
+
+          <article class="coach-card">
+            <div class="topline">Klubbkänsla</div>
+            <h3>#TEAMSMT</h3>
+            <p>Merch, bilder, språk och onboarding ska tillsammans förstärka känslan av klubb — inte externa system.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="cta-panel">
+          <div>
+            <h3>Redo att börja träna?</h3>
+            <p>
+              Välj ett pass, starta ditt medlemskap eller kontakta klubben för att hitta rätt väg in.
+            </p>
+          </div>
+
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <a class="btn btn-primary" href="#membership">Bli medlem</a>
+            <a class="btn btn-secondary" href="#">Kontakta klubben</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      Stockholm Muay Thai · Scheelegatan 1 · Stockholm
+    </div>
+  </footer>
 </body>
 </html>
