@@ -614,6 +614,152 @@ footer {
 @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
+/* ---------- showcase carousel ---------- */
+.showcase { padding: 88px 0; border-bottom: 1px solid var(--line); }
+.showcase-title {
+  font-family: var(--serif);
+  font-size: clamp(34px, 4vw, 52px);
+  font-weight: 300;
+  line-height: 1.1;
+  margin: 18px 0 10px;
+}
+.showcase-title em { font-style: italic; color: var(--muted); }
+.sc-stage {
+  position: relative;
+  height: 540px;
+  margin-top: 26px;
+  perspective: 1400px;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.sc-track { position: absolute; inset: 0; transform-style: preserve-3d; }
+.sc-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 252px;
+  height: 496px;
+  margin: -248px 0 0 -126px;
+  border: 1px solid var(--line);
+  background: var(--bg2);
+  overflow: hidden;
+  cursor: pointer;
+  will-change: transform, opacity;
+  transition: border-color .3s ease, box-shadow .3s ease;
+}
+.sc-card.is-active {
+  border-color: var(--gold-line);
+  box-shadow: 0 0 0 1px var(--gold-line), 0 30px 70px rgba(0,0,0,0.55);
+  cursor: grab;
+}
+.sc-stage.is-dragging .sc-card { cursor: grabbing; }
+.sc-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 1.2;
+  color: var(--muted);
+  background: radial-gradient(130% 80% at 50% 0%, rgba(201,169,110,0.10), transparent 60%), var(--bg2);
+}
+.sc-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  pointer-events: none;
+}
+.sc-card::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 38%;
+  background: linear-gradient(180deg, transparent, rgba(7,7,6,0.92));
+  pointer-events: none;
+}
+.sc-caption {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 18px 18px 16px;
+  z-index: 2;
+  pointer-events: none;
+}
+.sc-caption .sc-card-name {
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1.1;
+}
+.sc-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 30;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  background: rgba(12,12,11,0.7);
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: color .2s, border-color .2s;
+}
+.sc-arrow:hover { color: var(--gold); border-color: var(--gold-line); }
+.sc-arrow--prev { left: 0; }
+.sc-arrow--next { right: 0; }
+.sc-detail {
+  max-width: 560px;
+  margin: 30px auto 0;
+  text-align: center;
+  transition: opacity .25s ease, transform .25s ease;
+}
+.sc-detail.is-switching { opacity: 0; transform: translateY(8px); }
+.sc-cat {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.sc-detail h3 {
+  font-family: var(--serif);
+  font-size: clamp(30px, 4vw, 46px);
+  font-weight: 300;
+  line-height: 1.05;
+  margin: 12px 0;
+}
+.sc-desc {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+.sc-hint {
+  margin-top: 28px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted2);
+}
+@media (max-width: 768px) {
+  .sc-stage { height: 460px; }
+  .sc-card { width: 212px; height: 416px; margin: -208px 0 0 -106px; }
+  .sc-arrow--prev { left: -8px; }
+  .sc-arrow--next { right: -8px; }
+}
+
 @media (max-width: 768px) {
   .page { padding: 0 24px; }
   .hero { padding: 80px 0 64px; }
@@ -659,6 +805,26 @@ footer {
       </div>
     </div>
     <p class="trust-strip" data-i18n="trust">Stockholm &nbsp;·&nbsp; Built for real clubs &nbsp;·&nbsp; You own your domain and your content</p>
+  </section>
+
+  <!-- ============ SHOWCASE CAROUSEL ============ -->
+  <section class="showcase" id="showcase">
+    <span class="section-label" data-i18n="sc_label">Showcase</span>
+    <h2 class="showcase-title" data-i18n="sc_title">The work, <em>live.</em></h2>
+
+    <div class="sc-stage" id="scStage" aria-roledescription="carousel" aria-label="Case showcase">
+      <button class="sc-arrow sc-arrow--prev" id="scPrev" type="button" aria-label="Previous case">&#8249;</button>
+      <div class="sc-track" id="scTrack"></div>
+      <button class="sc-arrow sc-arrow--next" id="scNext" type="button" aria-label="Next case">&#8250;</button>
+    </div>
+
+    <div class="sc-detail" id="scDetail" aria-live="polite">
+      <p class="sc-cat" id="scCat"></p>
+      <h3 id="scName"></h3>
+      <p class="sc-desc" id="scDesc"></p>
+      <a class="btn-ghost" id="scLink" href="#"></a>
+      <p class="sc-hint" data-i18n="sc_hint">Drag to spin &mdash; or use the arrows</p>
+    </div>
   </section>
 
   <!-- ============ SEGMENTS ============ -->
@@ -832,7 +998,7 @@ const I18N = {
     nav_work: "Work",
     nav_how: "How it works",
     nav_cta: "Request a consultation",
-    hero_eyebrow: "Stockholm · Digital studio for the fitness industry",
+    hero_eyebrow: "Stockholm · Digital studio for sport & fitness brands",
     hero_title: 'Your website should <span class="gold-shimmer">sell</span> memberships.',
     hero_desc: "Custom websites for gyms, martial arts clubs and coaches. Built to convert, and effortless for you to run.",
     hero_cta1: "Request a consultation",
@@ -855,6 +1021,9 @@ const I18N = {
     con1_cat: "Concept · PT &amp; coach · Website, booking &amp; shop",
     con2_cat: "Concept · Martial arts club · Website, memberships &amp; CMS",
     con_view: "View →", con_view2: "View →",
+    sc_label: "Showcase",
+    sc_title: 'The work, <em>live.</em>',
+    sc_hint: "Drag to spin — or use the arrows",
     pro_label: "How it works",
     pro_title: "Three steps. No surprises.",
     pro1_h: "We talk",
@@ -867,7 +1036,7 @@ const I18N = {
     care_p1: "Your domain is yours. Your content is yours. Updating it is something you do yourself, in a regular spreadsheet. Change the schedule, post news, adjust prices in the time it takes to make a coffee. No CMS logins. No thick manuals.",
     care_p2: "Everything you don't want to think about, like hosting, security, backups and updates, I take care of for a flat monthly fee. Lower than what a template platform charges.",
     about_title: 'Built from <span class="gold-shimmer">the gym floor.</span>',
-    about_p1: "I'm Storm Kolmodin: licensed personal trainer, agile project manager and developer. I build for the fitness and martial arts world because I live in it. I know what makes someone dare to book their first session, and I know club owners have better things to do than fight with their website.",
+    about_p1: "I'm Storm Kolmodin: licensed personal trainer, agile project manager and developer, in that order. I build for the fitness and martial arts world because I live in it. I know what makes someone dare to book their first session, and I know club owners have better things to do than fight with their website.",
     about_p2: "Stormie Performance is my studio. Small on purpose: you always talk directly to the person who builds your site.",
     ct_label: "Request a consultation",
     ct_title: 'Ready for a site that works <span class="gold-shimmer">as hard as you do?</span>',
@@ -882,7 +1051,7 @@ const I18N = {
     nav_work: "Case",
     nav_how: "Så funkar det",
     nav_cta: "Boka ett kostnadsfritt samtal",
-    hero_eyebrow: "Stockholm · Digital studio för träningsbranschen",
+    hero_eyebrow: "Stockholm · Digital studio för sport- & träningsvarumärken",
     hero_title: 'Din hemsida ska <span class="gold-shimmer">sälja</span> medlemskap.',
     hero_desc: "Skräddarsydda webbplatser för gym, kampsportsklubbar och coacher. Byggda för att konvertera, och enkla för dig att sköta.",
     hero_cta1: "Boka ett kostnadsfritt samtal",
@@ -905,6 +1074,9 @@ const I18N = {
     con1_cat: "Koncept · PT &amp; coach · Webbplats, bokning &amp; shop",
     con2_cat: "Koncept · Kampsportsklubb · Webbplats, medlemskap &amp; CMS",
     con_view: "Visa →", con_view2: "Visa →",
+    sc_label: "Showcase",
+    sc_title: 'Arbetet, <em>live.</em>',
+    sc_hint: "Dra för att snurra — eller använd pilarna",
     pro_label: "Så funkar det",
     pro_title: "Tre steg. Inga överraskningar.",
     pro1_h: "Vi pratar",
@@ -959,6 +1131,195 @@ function setLang(lang) {
   } else {
     document.querySelectorAll('section').forEach(s => s.classList.add('inview'));
   }
+})();
+
+// ============ SHOWCASE CAROUSEL ============
+(function () {
+  var ITEMS = [
+    {
+      name: 'Stormie Muay Thai',
+      href: 'stormiemuaythai.html',
+      img: 'images/showcase-smt.jpg',
+      en: { cat: 'Martial arts club · Website, memberships & CMS',
+            desc: 'A full club system — branded site, 3D news carousel, memberships, shop and auto-updating content.',
+            link: 'View case →' },
+      sv: { cat: 'Kampsportsklubb · Webbplats, medlemskap & CMS',
+            desc: 'Ett helt klubbsystem — varumärkt sajt, 3D-nyhetskarusell, medlemskap, shop och självuppdaterande innehåll.',
+            link: 'Visa case →' }
+    },
+    {
+      name: 'Erik Strand',
+      href: 'erikstrand.html',
+      img: 'images/showcase-erikstrand.jpg',
+      en: { cat: 'PT & coach · Website, booking & shop',
+            desc: 'A personal coaching site built to turn followers into clients — booking, packages and payments in one flow.',
+            link: 'View case →' },
+      sv: { cat: 'PT & coach · Webbplats, bokning & shop',
+            desc: 'En personlig coachsajt byggd för att göra följare till klienter — bokning, paket och betalning i ett flöde.',
+            link: 'Visa case →' }
+    },
+    {
+      name: 'Gym Concept',
+      href: 'demo-gym.html',
+      img: 'images/showcase-gym.jpg',
+      en: { cat: 'Gyms & clubs · Trial passes & memberships',
+            desc: 'A concept for gyms and clubs — clear paths to trial sessions, memberships and corporate training.',
+            link: 'View case →' },
+      sv: { cat: 'Gym & klubbar · Provpass & medlemskap',
+            desc: 'Ett koncept för gym och klubbar — tydliga vägar till provpass, medlemskap och företagsträning.',
+            link: 'Visa case →' }
+    },
+    {
+      name: 'Voss Fight',
+      href: 'vossfight.html',
+      img: 'images/showcase-voss.jpg',
+      en: { cat: 'Shop & brand · Integrated store',
+            desc: 'Merch and gear sold straight to the community — a store built into the site, not next to it.',
+            link: 'View case →' },
+      sv: { cat: 'Shop & varumärke · Integrerad butik',
+            desc: 'Merch och utrustning direkt till din community — en butik byggd in i sajten, inte bredvid den.',
+            link: 'Visa case →' }
+    }
+  ];
+
+  var N = ITEMS.length;
+  var stage  = document.getElementById('scStage');
+  var track  = document.getElementById('scTrack');
+  var detail = document.getElementById('scDetail');
+  var catEl  = document.getElementById('scCat');
+  var nameEl = document.getElementById('scName');
+  var descEl = document.getElementById('scDesc');
+  var linkEl = document.getElementById('scLink');
+  if (!stage || !track) return;
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function curLang() { return document.documentElement.lang === 'sv' ? 'sv' : 'en'; }
+
+  var cards = ITEMS.map(function (item, i) {
+    var el = document.createElement('div');
+    el.className = 'sc-card';
+    el.setAttribute('role', 'button');
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('aria-label', item.name);
+    el.innerHTML =
+      '<div class="sc-fallback">' + item.name + '</div>' +
+      '<img src="' + item.img + '" alt="" onerror="this.style.display=\'none\'">' +
+      '<div class="sc-caption"><span class="sc-card-name">' + item.name + '</span></div>';
+    el.addEventListener('click', function () {
+      if (dragMoved) return;
+      var active = nearestIndex();
+      if (i === active) { window.location.href = item.href; return; }
+      goTo(i);
+    });
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goTo(i); }
+    });
+    track.appendChild(el);
+    return el;
+  });
+
+  var pos = 0, target = 0, shownIndex = -1, rafId = null;
+
+  function spacing() { return window.innerWidth <= 768 ? 150 : 290; }
+  function mod(n, m) { return ((n % m) + m) % m; }
+  function nearestIndex() { return mod(Math.round(pos), N); }
+
+  function render() {
+    var sp = spacing();
+    var active = nearestIndex();
+    cards.forEach(function (card, i) {
+      var off = mod(i - pos, N);
+      if (off > N / 2) off -= N;
+      var abs = Math.abs(off);
+      var visible = abs <= 1.8;
+      card.style.opacity = visible ? String(Math.max(0, 1 - abs * 0.36)) : '0';
+      card.style.pointerEvents = visible ? 'auto' : 'none';
+      card.style.zIndex = String(100 - Math.round(abs * 10));
+      card.style.transform =
+        'translateX(' + (off * sp).toFixed(1) + 'px) ' +
+        'translateZ(' + (-abs * 160).toFixed(1) + 'px) ' +
+        'rotateY(' + (-off * 16).toFixed(2) + 'deg)';
+      card.classList.toggle('is-active', i === active && Math.abs(pos - target) < 0.01);
+    });
+    if (active !== shownIndex && Math.abs(pos - Math.round(pos)) < 0.5) {
+      updateDetail(active, false);
+    }
+  }
+
+  function updateDetail(i, instant) {
+    shownIndex = i;
+    var apply = function () {
+      var item = ITEMS[i];
+      var t = item[curLang()];
+      catEl.textContent = t.cat;
+      nameEl.textContent = item.name;
+      descEl.textContent = t.desc;
+      linkEl.textContent = t.link;
+      linkEl.setAttribute('href', item.href);
+      detail.classList.remove('is-switching');
+    };
+    if (reduceMotion || instant) { apply(); return; }
+    detail.classList.add('is-switching');
+    setTimeout(apply, 180);
+  }
+
+  function tick() {
+    var diff = target - pos;
+    if (Math.abs(diff) < 0.001) { pos = target; render(); rafId = null; return; }
+    pos += diff * (reduceMotion ? 1 : 0.14);
+    render();
+    rafId = requestAnimationFrame(tick);
+  }
+  function startTween() { if (rafId === null) rafId = requestAnimationFrame(tick); }
+  function goTo(i) {
+    var diff = mod(i - target, N);
+    if (diff > N / 2) diff -= N;
+    target += diff;
+    startTween();
+  }
+  function step(dir) { target += dir; startTween(); }
+
+  document.getElementById('scPrev').addEventListener('click', function () { step(-1); });
+  document.getElementById('scNext').addEventListener('click', function () { step(1); });
+  stage.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+  });
+
+  var dragging = false, dragStartX = 0, dragStartPos = 0, dragMoved = false;
+  stage.addEventListener('pointerdown', function (e) {
+    if (e.target.closest('.sc-arrow')) return;
+    dragging = true; dragMoved = false;
+    dragStartX = e.clientX; dragStartPos = pos;
+    stage.classList.add('is-dragging');
+    if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+    stage.setPointerCapture(e.pointerId);
+  });
+  stage.addEventListener('pointermove', function (e) {
+    if (!dragging) return;
+    var dx = e.clientX - dragStartX;
+    if (Math.abs(dx) > 6) dragMoved = true;
+    pos = dragStartPos - dx / spacing();
+    render();
+  });
+  function endDrag() {
+    if (!dragging) return;
+    dragging = false;
+    stage.classList.remove('is-dragging');
+    target = Math.round(pos);
+    startTween();
+    setTimeout(function () { dragMoved = false; }, 0);
+  }
+  stage.addEventListener('pointerup', endDrag);
+  stage.addEventListener('pointercancel', endDrag);
+  window.addEventListener('resize', render);
+
+  // re-render detail text when the EN/SV toggle changes the page language
+  new MutationObserver(function () { updateDetail(shownIndex, true); })
+    .observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+
+  render();
+  updateDetail(0, true);
 })();
 </script>
 </body>
