@@ -669,13 +669,19 @@ footer {
   color: var(--muted);
   background: radial-gradient(130% 80% at 50% 0%, rgba(201,169,110,0.10), transparent 60%), var(--bg2);
 }
-.sc-card img {
+.sc-frame {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--bg2);
+}
+.sc-frame iframe {
+  width: 390px;
+  height: 880px;
+  border: 0;
+  transform: scale(0.6462);   /* 252 / 390 */
+  transform-origin: top left;
   pointer-events: none;
 }
 .sc-card::after {
@@ -756,6 +762,7 @@ footer {
 @media (max-width: 768px) {
   .sc-stage { height: 460px; }
   .sc-card { width: 212px; height: 416px; margin: -208px 0 0 -106px; }
+  .sc-frame iframe { transform: scale(0.5436); }  /* 212 / 390 */
   .sc-arrow--prev { left: -8px; }
   .sc-arrow--next { right: -8px; }
 }
@@ -1139,7 +1146,7 @@ function setLang(lang) {
     {
       name: 'Stormie Muay Thai',
       href: 'stormiemuaythai.html',
-      img: 'images/showcase-smt.jpg',
+      frame: 'https://stormieperformance.com/smt-demo/',
       en: { cat: 'Martial arts club · Website, memberships & CMS',
             desc: 'A full club system — branded site, 3D news carousel, memberships, shop and auto-updating content.',
             link: 'View case →' },
@@ -1150,7 +1157,7 @@ function setLang(lang) {
     {
       name: 'Erik Strand',
       href: 'erikstrand.html',
-      img: 'images/showcase-erikstrand.jpg',
+      frame: 'erikstrand.html',
       en: { cat: 'PT & coach · Website, booking & shop',
             desc: 'A personal coaching site built to turn followers into clients — booking, packages and payments in one flow.',
             link: 'View case →' },
@@ -1161,7 +1168,7 @@ function setLang(lang) {
     {
       name: 'Gym Concept',
       href: 'demo-gym.html',
-      img: 'images/showcase-gym.jpg',
+      frame: 'demo-gym.html',
       en: { cat: 'Gyms & clubs · Trial passes & memberships',
             desc: 'A concept for gyms and clubs — clear paths to trial sessions, memberships and corporate training.',
             link: 'View case →' },
@@ -1172,7 +1179,7 @@ function setLang(lang) {
     {
       name: 'Voss Fight',
       href: 'vossfight.html',
-      img: 'images/showcase-voss.jpg',
+      frame: 'vossfight.html',
       en: { cat: 'Shop & brand · Integrated store',
             desc: 'Merch and gear sold straight to the community — a store built into the site, not next to it.',
             link: 'View case →' },
@@ -1203,7 +1210,7 @@ function setLang(lang) {
     el.setAttribute('aria-label', item.name);
     el.innerHTML =
       '<div class="sc-fallback">' + item.name + '</div>' +
-      '<img src="' + item.img + '" alt="" onerror="this.style.display=\'none\'">' +
+      '<div class="sc-frame"><iframe src="' + item.frame + '" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title=""></iframe></div>' +
       '<div class="sc-caption"><span class="sc-card-name">' + item.name + '</span></div>';
     el.addEventListener('click', function () {
       if (dragMoved) return;
