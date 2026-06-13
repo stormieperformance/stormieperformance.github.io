@@ -44,9 +44,7 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  cursor: none;
 }
-@media (hover: none) { body { cursor: auto; } }
 
 /* ── noise grain ── */
 body::before {
@@ -56,31 +54,6 @@ body::before {
   background-size: 180px 180px;
 }
 
-/* ── custom cursor ── */
-#cursor {
-  position: fixed; top: 0; left: 0; z-index: 9999;
-  width: 10px; height: 10px;
-  background: var(--gold);
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  transition: width 0.3s ease, height 0.3s ease, background 0.3s ease, opacity 0.3s ease;
-  mix-blend-mode: normal;
-}
-#cursor-ring {
-  position: fixed; top: 0; left: 0; z-index: 9998;
-  width: 36px; height: 36px;
-  border: 1px solid var(--gold-line);
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  transition: width 0.5s cubic-bezier(0.16,1,0.3,1), height 0.5s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease, opacity 0.4s;
-}
-body.cursor-hover #cursor { width: 6px; height: 6px; background: var(--gold-bright); }
-body.cursor-hover #cursor-ring { width: 52px; height: 52px; border-color: var(--gold); }
-body.cursor-drag #cursor { width: 14px; height: 14px; }
-body.cursor-drag #cursor-ring { width: 60px; height: 60px; border-style: dashed; }
-@media (hover: none) { #cursor, #cursor-ring { display: none; } }
 
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
   outline: 1px solid var(--gold); outline-offset: 3px;
@@ -188,9 +161,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 /* word-by-word reveal */
 .intro-headline {
   font-family: var(--serif);
-  font-size: clamp(36px, 4vw, 60px);
-  font-weight: 300; line-height: 1.04;
-  margin-bottom: 20px;
+  font-size: clamp(44px, 5.5vw, 76px);
+  font-weight: 300; line-height: 1.0;
+  margin-bottom: 24px;
   overflow: hidden;
 }
 .intro-headline .word {
@@ -238,7 +211,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   border: 1px solid var(--line);
   background: var(--bg2);
   overflow: hidden;
-  cursor: none;
   will-change: transform, opacity;
   transition: border-color 0.3s, box-shadow 0.4s;
   /* tilt origin */
@@ -383,7 +355,7 @@ footer { padding: 24px 0; display: flex; justify-content: space-between; align-i
   .page { padding: 0 24px; }
   .intro { grid-template-columns: 1fr; gap: 0; padding-top: 48px; }
   .intro-left { position: static; padding-bottom: 36px; }
-  .intro-headline { font-size: clamp(30px, 8vw, 44px); }
+  .intro-headline { font-size: clamp(38px, 10vw, 56px); }
   .intro-sub { margin-bottom: 28px; }
   .intro-right { padding-bottom: 56px; }
   .sc-stage { height: 440px; }
@@ -403,9 +375,6 @@ footer { padding: 24px 0; display: flex; justify-content: space-between; align-i
 </head>
 <body>
 
-<!-- custom cursor -->
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
 
 <div class="page">
 
@@ -428,8 +397,8 @@ footer { padding: 24px 0; display: flex; justify-content: space-between; align-i
   <section class="intro inview" id="showcase">
     <div class="intro-left">
       <span class="intro-eyebrow" data-i18n="hero_eyebrow">Stockholm · Digital studio for sport & fitness brands</span>
-      <h1 class="intro-headline" id="introHeadline">Custom websites for gyms, martial arts clubs and coaches.</h1>
-      <p class="intro-sub" data-i18n="hero_sub">Built to convert, and effortless for you to run.</p>
+      <h1 class="intro-headline" id="introHeadline">Digital solutions<br>for sports brands.</h1>
+      <p class="intro-sub" data-i18n="hero_sub">Custom websites for gyms, martial arts clubs and coaches. Built to convert, and effortless for you to run.</p>
       <a class="btn-gold intro-cta" href="#contact" data-i18n="nav_cta">Request a consultation</a>
     </div>
 
@@ -444,7 +413,7 @@ footer { padding: 24px 0; display: flex; justify-content: space-between; align-i
         <h3 id="scName"></h3>
         <p class="sc-desc" id="scDesc"></p>
         <a class="btn-ghost sc-detail-link" id="scLink" href="#" data-i18n-link="true"></a>
-        <p class="sc-hint" data-i18n="sc_hint">Drag to spin — or use the arrows</p>
+        <p class="sc-hint" data-i18n="sc_hint">Drag to spin, or use the arrows</p>
       </div>
     </div>
   </section>
@@ -553,7 +522,7 @@ footer { padding: 24px 0; display: flex; justify-content: space-between; align-i
       <button class="btn-gold form-submit" type="submit" id="formSubmitBtn" data-i18n="f_send">Send →</button>
       <p class="form-error-msg" id="formError" data-i18n="f_error">Something went wrong. Please try again or email me directly.</p>
     </form>
-    <p class="form-success" id="formSuccess" data-i18n="f_success">Message received — I'll be in touch within 24 hours.</p>
+    <p class="form-success" id="formSuccess" data-i18n="f_success">Message received. I'll be in touch within 24 hours.</p>
   </section>
 
   <!-- EASTER EGG -->
@@ -584,8 +553,8 @@ const I18N = {
   en: {
     nav_work:"Work", nav_how:"How it works", nav_cta:"Request a consultation",
     hero_eyebrow:"Stockholm · Digital studio for sport & fitness brands",
-    hero_sub:"Built to convert, and effortless for you to run.",
-    sc_hint:"Drag to spin — or use the arrows",
+    hero_sub:"Custom websites for gyms, martial arts clubs and coaches. Built to convert, and effortless for you to run.",
+    sc_hint:"Drag to spin, or use the arrows",
     sc_cta:"Request a consultation",
     case_label:"First client cases", case_title:"Launching soon.",
     case_text:"A Stockholm martial arts club and a Stockholm-based personal trainer are both getting brand new sites. The full case studies land here the day they go live.",
@@ -614,15 +583,15 @@ const I18N = {
     f_name:"Name", f_email:"Email", f_type:"What do you run?",
     f_type1:"Gym / club", f_type2:"PT / coach", f_type3:"Other",
     f_msg:"Tell me briefly", f_send:"Send →",
-    f_success:"Message received — I'll be in touch within 24 hours.",
+    f_success:"Message received. I'll be in touch within 24 hours.",
     f_error:"Something went wrong. Please try again or email me directly.",
     ft_left:"Stormie Performance · Stockholm", ft_right:"Digital studio for the fitness industry"
   },
   sv: {
     nav_work:"Case", nav_how:"Så funkar det", nav_cta:"Boka ett kostnadsfritt samtal",
     hero_eyebrow:"Stockholm · Digital studio för sport- & träningsvarumärken",
-    hero_sub:"Byggda för att konvertera, och enkla för dig att sköta.",
-    sc_hint:"Dra för att snurra — eller använd pilarna",
+    hero_sub:"Skräddarsydda webbplatser för gym, kampsportsklubbar och coacher. Byggda för att konvertera, och enkla för dig att sköta.",
+    sc_hint:"Dra för att snurra eller använd pilarna",
     sc_cta:"Boka ett kostnadsfritt samtal",
     case_label:"Första kundcasen", case_title:"Lanseras snart.",
     case_text:"En kampsportsklubb i Stockholm och en Stockholmsbaserad personlig tränare får varsitt helt nytt site. Hela casen publiceras här samma dag som de går live.",
@@ -651,7 +620,7 @@ const I18N = {
     f_name:"Namn", f_email:"Mail", f_type:"Vad driver du?",
     f_type1:"Gym / klubb", f_type2:"PT / coach", f_type3:"Annat",
     f_msg:"Berätta kort", f_send:"Skicka →",
-    f_success:"Meddelande mottaget — jag återkommer inom 24 timmar.",
+    f_success:"Meddelande mottaget. Jag återkommer inom 24 timmar.",
     f_error:"Något gick fel. Försök igen eller maila mig direkt.",
     ft_left:"Stormie Performance · Stockholm", ft_right:"Digital studio för träningsbranschen"
   }
@@ -666,8 +635,8 @@ function setLang(lang) {
   });
   // Update headline word spans
   buildHeadline(lang === 'sv'
-    ? 'Skräddarsydda webbplatser för gym, kampsportsklubbar och coacher.'
-    : 'Custom websites for gyms, martial arts clubs and coaches.');
+    ? 'Digitala lösningar\nför sportvarumärken.'
+    : 'Digital solutions\nfor sports brands.');
   document.documentElement.lang = lang;
   document.getElementById('lang-en').classList.toggle('active', lang==='en');
   document.getElementById('lang-sv').classList.toggle('active', lang==='sv');
@@ -680,10 +649,17 @@ function setLang(lang) {
 function buildHeadline(text) {
   const el = document.getElementById('introHeadline');
   if (!el) return;
-  const words = text.split(' ');
-  el.innerHTML = words.map((w, i) =>
-    `<span class="word" style="animation-delay:${0.45 + i * 0.07}s">${w}&nbsp;</span>`
-  ).join('');
+  const parts = text.split('\n');
+  let wi = 0;
+  el.innerHTML = parts.map((line, li) => {
+    const words = line.trim().split(' ');
+    const html = words.map(w => {
+      const s = `<span class="word" style="animation-delay:${0.45 + wi * 0.08}s">${w} </span>`;
+      wi++;
+      return s;
+    }).join('');
+    return li < parts.length - 1 ? html + '<br>' : html;
+  }).join('');
 }
 
 // ── init ───────────────────────────────────────────────────────────────────
@@ -691,8 +667,8 @@ function buildHeadline(text) {
   let lang = 'en';
   try { lang = localStorage.getItem('sp-lang') || 'en'; } catch(e) {}
   buildHeadline(lang === 'sv'
-    ? 'Skräddarsydda webbplatser för gym, kampsportsklubbar och coacher.'
-    : 'Custom websites for gyms, martial arts clubs and coaches.');
+    ? 'Digitala lösningar\nför sportvarumärken.'
+    : 'Digital solutions\nfor sports brands.');
   if (lang !== 'en') setLang(lang);
 
   if ('IntersectionObserver' in window) {
@@ -705,41 +681,6 @@ function buildHeadline(text) {
   }
 })();
 
-// ══════════════════════════════════════════════
-// MAGNETIC CUSTOM CURSOR
-// ══════════════════════════════════════════════
-(function() {
-  if (window.matchMedia('(hover: none)').matches) return;
-  const dot  = document.getElementById('cursor');
-  const ring = document.getElementById('cursor-ring');
-  let mx = -100, my = -100;
-  let rx = -100, ry = -100;
-  let raf;
-
-  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-
-  function loop() {
-    // dot follows instantly
-    dot.style.left  = mx + 'px';
-    dot.style.top   = my + 'px';
-    // ring lags with lerp
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) * 0.12;
-    ring.style.left = rx + 'px';
-    ring.style.top  = ry + 'px';
-    raf = requestAnimationFrame(loop);
-  }
-  loop();
-
-  // hover state
-  const hoverEls = 'a, button, .sc-card, .segment-card, input, select, textarea, .wylder-trigger';
-  document.addEventListener('mouseover', e => {
-    if (e.target.closest(hoverEls)) document.body.classList.add('cursor-hover');
-  });
-  document.addEventListener('mouseout', e => {
-    if (e.target.closest(hoverEls)) document.body.classList.remove('cursor-hover');
-  });
-})();
 
 // ══════════════════════════════════════════════
 // CONTACT FORM
@@ -781,23 +722,23 @@ function buildHeadline(text) {
   const ITEMS = [
     {
       name: 'Stormie Muay Thai', href: 'stormiemuaythai.html', frame: 'https://stormieperformance.com/smt-demo/',
-      en: { cat:'Martial arts club · Website, memberships & CMS', desc:'A full club system — branded site, 3D news carousel, memberships, shop and auto-updating content.', link:'View case →' },
-      sv: { cat:'Kampsportsklubb · Webbplats, medlemskap & CMS', desc:'Ett helt klubbsystem — varumärkt sajt, 3D-nyhetskarusell, medlemskap, shop och självuppdaterande innehåll.', link:'Visa case →' }
+      en: { cat:'Martial arts club · Website, memberships & CMS', desc:'A full club system: branded site, 3D news carousel, memberships, shop and auto-updating content.', link:'View case →' },
+      sv: { cat:'Kampsportsklubb · Webbplats, medlemskap & CMS', desc:'Ett helt klubbsystem: varumärkt sajt, 3D-nyhetskarusell, medlemskap, shop och självuppdaterande innehåll.', link:'Visa case →' }
     },
     {
       name: 'Erik Strand', href: 'erikstrand.html', frame: 'erikstrand.html',
-      en: { cat:'PT & coach · Website, booking & shop', desc:'A personal coaching site built to turn followers into clients — booking, packages and payments in one flow.', link:'View case →' },
-      sv: { cat:'PT & coach · Webbplats, bokning & shop', desc:'En personlig coachsajt byggd för att göra följare till klienter — bokning, paket och betalning i ett flöde.', link:'Visa case →' }
+      en: { cat:'PT & coach · Website, booking & shop', desc:'A personal coaching site built to turn followers into clients. Booking, packages and payments in one flow.', link:'View case →' },
+      sv: { cat:'PT & coach · Webbplats, bokning & shop', desc:'En personlig coachsajt byggd för att göra följare till klienter. Bokning, paket och betalning i ett flöde.', link:'Visa case →' }
     },
     {
       name: 'Gym Concept', href: 'demo-gym.html', frame: 'demo-gym.html',
-      en: { cat:'Gyms & clubs · Trial passes & memberships', desc:'A concept for gyms and clubs — clear paths to trial sessions, memberships and corporate training.', link:'View case →' },
-      sv: { cat:'Gym & klubbar · Provpass & medlemskap', desc:'Ett koncept för gym och klubbar — tydliga vägar till provpass, medlemskap och företagsträning.', link:'Visa case →' }
+      en: { cat:'Gyms & clubs · Trial passes & memberships', desc:'A concept for gyms and clubs. Clear paths to trial sessions, memberships and corporate training.', link:'View case →' },
+      sv: { cat:'Gym & klubbar · Provpass & medlemskap', desc:'Ett koncept för gym och klubbar. Tydliga vägar till provpass, medlemskap och företagsträning.', link:'Visa case →' }
     },
     {
       name: 'Voss Fight', href: 'vossfight.html', frame: 'vossfight.html',
-      en: { cat:'Shop & brand · Integrated store', desc:'Merch and gear sold straight to the community — a store built into the site, not next to it.', link:'View case →' },
-      sv: { cat:'Shop & varumärke · Integrerad butik', desc:'Merch och utrustning direkt till din community — en butik byggd in i sajten, inte bredvid den.', link:'Visa case →' }
+      en: { cat:'Shop & brand · Integrated store', desc:'Merch and gear sold straight to the community. A store built into the site, not next to it.', link:'View case →' },
+      sv: { cat:'Shop & varumärke · Integrerad butik', desc:'Merch och utrustning direkt till din community. En butik byggd in i sajten, inte bredvid den.', link:'Visa case →' }
     }
   ];
 
@@ -835,7 +776,7 @@ function buildHeadline(text) {
   });
 
   // ── physics state ──────────────────────────────────────────────────────
-  let pos = 0, vel = 0, target = 0;
+  let pos = 0, target = 0;
   let shownIndex = -1;
   let rafId = null;
 
@@ -864,16 +805,14 @@ function buildHeadline(text) {
     }
   }
 
-  // Physics tick with momentum + spring snap
+  // Smooth lerp snap — no bounce
   function tick() {
     const snap = Math.round(pos);
-    const spring = (snap - pos) * 0.06;
-    vel = vel * 0.88 + spring;
-    pos += vel;
-    if (Math.abs(vel) < 0.0005 && Math.abs(pos - snap) < 0.001) {
-      pos = snap; vel = 0; target = snap;
-      render(); rafId = null; return;
+    const diff = snap - pos;
+    if (Math.abs(diff) < 0.001) {
+      pos = snap; render(); rafId = null; return;
     }
+    pos += diff * (reduceMotion ? 1 : 0.11);
     render();
     rafId = requestAnimationFrame(tick);
   }
@@ -881,11 +820,14 @@ function buildHeadline(text) {
 
   function goTo(i) {
     const diff = (() => { let d = mod(i - Math.round(pos), N); if (d > N/2) d -= N; return d; })();
-    target = Math.round(pos) + diff;
-    vel += diff * 0.18;
+    pos = pos - (pos - Math.round(pos)); // snap current to nearest first
+    pos += diff;
     startPhysics();
   }
-  function step(dir) { vel += dir * 0.4; startPhysics(); }
+  function step(dir) {
+    pos = Math.round(pos) + dir;
+    startPhysics();
+  }
 
   // ── drag / swipe ───────────────────────────────────────────────────────
   let dragging = false, dragStartX = 0, dragLastX = 0, dragStartPos = 0, dragMoved = false;
@@ -898,7 +840,6 @@ function buildHeadline(text) {
     dragStartPos = pos;
     lastVel = 0; lastTime = Date.now();
     stage.classList.add('is-dragging');
-    document.body.classList.add('cursor-drag');
     if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
     stage.setPointerCapture(e.pointerId);
   });
@@ -916,8 +857,11 @@ function buildHeadline(text) {
     if (!dragging) return;
     dragging = false;
     stage.classList.remove('is-dragging');
-    document.body.classList.remove('cursor-drag');
-    vel = -lastVel / spacing() * 0.6;
+    // small fling: if swipe was fast enough, advance one step in that direction
+    const fling = -lastVel / spacing();
+    if (Math.abs(fling) > 0.28) {
+      pos = Math.round(pos) + Math.sign(fling);
+    }
     startPhysics();
     setTimeout(() => { dragMoved = false; }, 0);
   }
