@@ -236,44 +236,44 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .lang-toggle button:hover { color: var(--text); }
 .lang-toggle button.active { color: var(--gold); }
 
-/* ---------- hero (compact — no big title) ---------- */
-.hero {
-  padding: 72px 0 64px;
+/* ---------- intro (hero + carousel merged) ---------- */
+.intro {
+  padding: 64px 0 0;
   border-bottom: 1px solid var(--line);
 }
-.hero .eyebrow { margin-bottom: 28px; opacity: 0; animation: fadeUp 1s ease 0.3s forwards; }
-.hero-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 40px;
+.intro-top {
   opacity: 0;
-  animation: fadeUp 1s ease 0.5s forwards;
+  animation: fadeUp 1s ease 0.3s forwards;
+  margin-bottom: 32px;
 }
-.hero-desc {
+.intro-eyebrow { margin-bottom: 24px; }
+.intro-headline-main {
   font-family: var(--serif);
-  font-size: clamp(28px, 4vw, 48px);
+  font-size: clamp(38px, 6vw, 80px);
   font-weight: 300;
   color: var(--text);
-  line-height: 1.15;
-  max-width: 700px;
+  line-height: 1.0;
+  max-width: 720px;
+  margin-bottom: 14px;
 }
-.hero-ctas { display: flex; gap: 28px; align-items: center; white-space: nowrap; }
-
-/* ---------- showcase carousel ---------- */
-.showcase { padding: 88px 0; border-bottom: 1px solid var(--line); }
-.showcase-title {
-  font-family: var(--serif);
-  font-size: clamp(34px, 4vw, 52px);
+.intro-headline-sub {
+  font-size: 13px;
   font-weight: 300;
-  line-height: 1.1;
-  margin: 18px 0 10px;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 480px;
 }
-.showcase-title em { font-style: italic; color: var(--muted); }
+
+/* ---------- showcase carousel (inside intro) ---------- */
+.intro-sc {
+  opacity: 0;
+  animation: fadeUp 1s ease 0.55s forwards;
+  padding-bottom: 72px;
+}
 .sc-stage {
   position: relative;
-  height: 540px;
-  margin-top: 26px;
+  height: 520px;
+  margin-top: 20px;
   perspective: 1400px;
   touch-action: pan-y;
   user-select: none;
@@ -372,37 +372,59 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .sc-arrow--prev { left: 0; }
 .sc-arrow--next { right: 0; }
 .sc-detail {
-  max-width: 560px;
-  margin: 30px auto 0;
-  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto auto auto;
+  column-gap: 48px;
+  align-items: start;
+  margin: 32px 0 0;
+  padding: 28px 0 48px;
+  border-top: 1px solid var(--line);
   transition: opacity .25s ease, transform .25s ease;
 }
 .sc-detail.is-switching { opacity: 0; transform: translateY(8px); }
 .sc-cat {
+  grid-column: 1;
+  grid-row: 1;
   font-size: 10px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--gold);
+  margin-bottom: 10px;
 }
 .sc-detail h3 {
+  grid-column: 1;
+  grid-row: 2;
   font-family: var(--serif);
-  font-size: clamp(30px, 4vw, 46px);
+  font-size: clamp(28px, 3.5vw, 42px);
   font-weight: 300;
   line-height: 1.05;
-  margin: 12px 0;
+  margin-bottom: 12px;
 }
 .sc-desc {
+  grid-column: 1;
+  grid-row: 3;
   font-size: 13px;
   font-weight: 300;
   color: var(--muted);
   line-height: 1.8;
-  margin-bottom: 24px;
+}
+.sc-detail .btn-ghost {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: start;
+  white-space: nowrap;
 }
 .sc-cta {
+  grid-column: 2;
+  grid-row: 2;
   display: inline-block;
-  margin-top: 20px;
+  margin-top: 14px;
+  white-space: nowrap;
 }
 .sc-hint {
+  grid-column: 1 / -1;
+  grid-row: 4;
   margin-top: 20px;
   font-size: 10px;
   letter-spacing: 0.2em;
@@ -710,18 +732,30 @@ footer {
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 @media (max-width: 768px) {
-  .sc-stage { height: 460px; }
+  .sc-stage { height: 430px; }
   .sc-card { width: 212px; height: 416px; margin: -208px 0 0 -106px; }
   .sc-frame iframe { transform: scale(0.5436); }
   .sc-arrow--prev { left: -8px; }
   .sc-arrow--next { right: -8px; }
+  .sc-detail {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    padding: 20px 0 36px;
+  }
+  .sc-cat { grid-row: auto; }
+  .sc-detail h3 { grid-row: auto; }
+  .sc-desc { grid-row: auto; margin-bottom: 16px; }
+  .sc-detail .btn-ghost { grid-column: 1; grid-row: auto; margin-top: 16px; }
+  .sc-cta { grid-column: 1; grid-row: auto; margin-top: 12px; }
+  .sc-hint { grid-row: auto; }
+
 }
 
 @media (max-width: 768px) {
   .page { padding: 0 24px; }
-  .hero { padding: 56px 0 48px; }
-  .hero-bottom { flex-direction: column; align-items: flex-start; gap: 28px; }
-  .hero-ctas { white-space: normal; flex-wrap: wrap; gap: 20px; }
+  .intro { padding: 48px 0 0; }
+  .intro-headline-main { font-size: clamp(32px, 8vw, 48px); margin-bottom: 10px; }
+  .intro-top { margin-bottom: 24px; }
   .segment-grid { grid-template-columns: 1fr; }
   .segment-card.wide { flex-direction: column; gap: 14px; }
   .process-grid { grid-template-columns: 1fr; gap: 36px; }
@@ -750,32 +784,29 @@ footer {
     </nav>
   </header>
 
-  <!-- ============ HERO ============ -->
-  <section class="hero inview">
-    <p class="eyebrow" data-i18n="hero_eyebrow">Stockholm · Digital studio for sport & fitness brands</p>
-    <div class="hero-bottom">
-      <p class="hero-desc" data-i18n="hero_desc">Custom websites for gyms, martial arts clubs and coaches. Built to convert, and effortless for you to run.</p>
-    </div>
-  </section>
-
-  <!-- ============ SHOWCASE CAROUSEL ============ -->
-  <section class="showcase" id="showcase">
-    <span class="section-label" data-i18n="sc_label">Showcase</span>
-    <h2 class="showcase-title" data-i18n="sc_title">The work, <em>live.</em></h2>
-
-    <div class="sc-stage" id="scStage" aria-roledescription="carousel" aria-label="Case showcase">
-      <button class="sc-arrow sc-arrow--prev" id="scPrev" type="button" aria-label="Previous case">&#8249;</button>
-      <div class="sc-track" id="scTrack"></div>
-      <button class="sc-arrow sc-arrow--next" id="scNext" type="button" aria-label="Next case">&#8250;</button>
+  <!-- ============ INTRO: headline + carousel ============ -->
+  <section class="intro inview" id="showcase">
+    <div class="intro-top">
+      <p class="eyebrow intro-eyebrow" data-i18n="hero_eyebrow">Stockholm · Digital studio for sport & fitness brands</p>
+      <h1 class="intro-headline-main" data-i18n="hero_title">Custom websites for gyms, martial arts clubs and coaches.</h1>
+      <p class="intro-headline-sub" data-i18n="hero_sub">Built to convert, and effortless for you to run.</p>
     </div>
 
-    <div class="sc-detail" id="scDetail" aria-live="polite">
-      <p class="sc-cat" id="scCat"></p>
-      <h3 id="scName"></h3>
-      <p class="sc-desc" id="scDesc"></p>
-      <a class="btn-ghost" id="scLink" href="#"></a>
-      <a class="btn-gold sc-cta" href="#contact" data-i18n="sc_cta">Request a consultation</a>
-      <p class="sc-hint" data-i18n="sc_hint">Drag to spin &mdash; or use the arrows</p>
+    <div class="intro-sc">
+      <div class="sc-stage" id="scStage" aria-roledescription="carousel" aria-label="Case showcase">
+        <button class="sc-arrow sc-arrow--prev" id="scPrev" type="button" aria-label="Previous case">&#8249;</button>
+        <div class="sc-track" id="scTrack"></div>
+        <button class="sc-arrow sc-arrow--next" id="scNext" type="button" aria-label="Next case">&#8250;</button>
+      </div>
+
+      <div class="sc-detail" id="scDetail" aria-live="polite">
+        <p class="sc-cat" id="scCat"></p>
+        <h3 id="scName"></h3>
+        <p class="sc-desc" id="scDesc"></p>
+        <a class="btn-ghost" id="scLink" href="#"></a>
+        <a class="btn-gold sc-cta" href="#contact" data-i18n="sc_cta">Request a consultation</a>
+        <p class="sc-hint" data-i18n="sc_hint">Drag to spin &mdash; or use the arrows</p>
+      </div>
     </div>
   </section>
 
@@ -931,8 +962,11 @@ const I18N = {
     nav_how: "How it works",
     nav_cta: "Request a consultation",
     hero_eyebrow: "Stockholm · Digital studio for sport & fitness brands",
+    hero_title: "Custom websites for gyms, martial arts clubs and coaches.",
+    hero_sub: "Built to convert, and effortless for you to run.",
     hero_desc: "Custom websites for gyms, martial arts clubs and coaches. Built to convert, and effortless for you to run.",
     hero_cta1: "Request a consultation",
+    hero_see: "See the work ↓",
     sc_label: "Showcase",
     sc_title: 'The work, <em>live.</em>',
     sc_hint: "Drag to spin — or use the arrows",
@@ -979,8 +1013,11 @@ const I18N = {
     nav_how: "Så funkar det",
     nav_cta: "Boka ett kostnadsfritt samtal",
     hero_eyebrow: "Stockholm · Digital studio för sport- & träningsvarumärken",
+    hero_title: "Skräddarsydda webbplatser för gym, kampsportsklubbar och coacher.",
+    hero_sub: "Byggda för att konvertera, och enkla för dig att sköta.",
     hero_desc: "Skräddarsydda webbplatser för gym, kampsportsklubbar och coacher. Byggda för att konvertera, och enkla för dig att sköta.",
     hero_cta1: "Boka ett kostnadsfritt samtal",
+    hero_see: "Se arbetet ↓",
     sc_label: "Showcase",
     sc_title: 'Arbetet, <em>live.</em>',
     sc_hint: "Dra för att snurra — eller använd pilarna",
