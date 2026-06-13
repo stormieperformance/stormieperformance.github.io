@@ -249,41 +249,66 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 
 /* ---------- intro (hero + carousel merged) ---------- */
 .intro {
-  padding: 64px 0 0;
+  padding: 72px 0 0;
   border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 64px;
+  align-items: start;
 }
 .intro-top {
   opacity: 0;
   animation: fadeUp 1s ease 0.3s forwards;
-  margin-bottom: 40px;
+  padding-bottom: 72px;
+  position: sticky;
+  top: 40px;
+}
+.intro-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+  display: block;
+}
+.intro-eyebrow::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  margin-top: 12px;
 }
 .intro-headline-main {
   font-family: var(--serif);
-  font-size: clamp(38px, 6vw, 80px);
+  font-size: clamp(34px, 3.8vw, 58px);
   font-weight: 300;
   color: var(--text);
-  line-height: 1.0;
-  max-width: 720px;
-  margin-bottom: 14px;
+  line-height: 1.05;
+  margin-bottom: 18px;
 }
 .intro-headline-sub {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 300;
   color: var(--muted);
-  line-height: 1.7;
-  max-width: 480px;
+  line-height: 1.8;
+  margin-bottom: 40px;
+}
+.intro-cta {
+  display: inline-block;
 }
 
 /* ---------- showcase carousel (inside intro) ---------- */
 .intro-sc {
   opacity: 0;
-  animation: fadeUp 1s ease 0.55s forwards;
+  animation: fadeUp 1s ease 0.5s forwards;
   padding-bottom: 72px;
+  min-width: 0;
 }
 .sc-stage {
   position: relative;
-  height: 520px;
-  margin-top: 20px;
+  height: 500px;
+  margin-top: 0;
   perspective: 1400px;
   touch-action: pan-y;
   user-select: none;
@@ -382,10 +407,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .sc-arrow--prev { left: 0; }
 .sc-arrow--next { right: 0; }
 .sc-detail {
-  text-align: center;
-  margin: 28px auto 0;
-  max-width: 560px;
-  padding: 0 0 56px;
+  margin: 24px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
   transition: opacity .25s ease, transform .25s ease;
 }
 .sc-detail.is-switching { opacity: 0; transform: translateY(8px); }
@@ -394,31 +418,30 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--gold);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 .sc-detail h3 {
   font-family: var(--serif);
-  font-size: clamp(28px, 3.5vw, 42px);
+  font-size: clamp(22px, 2.4vw, 32px);
   font-weight: 300;
   line-height: 1.05;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 .sc-desc {
   font-size: 13px;
   font-weight: 300;
   color: var(--muted);
-  line-height: 1.8;
-  margin-bottom: 28px;
+  line-height: 1.75;
+  margin-bottom: 18px;
+  max-width: 400px;
 }
 .sc-buttons {
   display: flex;
   gap: 20px;
-  justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
 }
 .sc-hint {
-  margin-top: 24px;
+  margin-top: 16px;
   font-size: 10px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -746,9 +769,18 @@ footer {
 
 @media (max-width: 768px) {
   .page { padding: 0 24px; }
-  .intro { padding: 48px 0 0; }
-  .intro-headline-main { font-size: clamp(32px, 8vw, 48px); margin-bottom: 10px; }
-  .intro-top { margin-bottom: 24px; }
+  .intro {
+    padding: 48px 0 0;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .intro-top {
+    position: static;
+    padding-bottom: 40px;
+  }
+  .intro-headline-main { font-size: clamp(30px, 8vw, 44px); }
+  .intro-headline-sub { margin-bottom: 28px; }
+  .sc-desc { max-width: 100%; }
   .segment-grid { grid-template-columns: 1fr; }
   .segment-card.wide { flex-direction: column; gap: 14px; }
   .process-grid { grid-template-columns: 1fr; gap: 36px; }
@@ -765,7 +797,6 @@ footer {
   <!-- ============ TOPBAR ============ -->
   <header class="topbar">
     <span class="topbar-left">Stormie Performance</span>
-    <span class="topbar-center hide-mobile" data-i18n="hero_eyebrow">Stockholm · Digital studio for sport & fitness brands</span>
     <nav class="topbar-right">
       <a href="#work" class="hide-mobile" data-i18n="nav_work">Work</a>
       <a href="#process" class="hide-mobile" data-i18n="nav_how">How it works</a>
@@ -774,14 +805,17 @@ footer {
         <span>/</span>
         <button type="button" id="lang-sv" onclick="setLang('sv')">SV</button>
       </div>
+      <a href="#contact" class="cta-link hide-mobile" data-i18n="nav_cta">Request a consultation</a>
     </nav>
   </header>
 
   <!-- ============ INTRO: headline + carousel ============ -->
   <section class="intro inview" id="showcase">
     <div class="intro-top">
+      <span class="intro-eyebrow" data-i18n="hero_eyebrow">Stockholm · Digital studio for sport & fitness brands</span>
       <h1 class="intro-headline-main" data-i18n="hero_title">Custom websites for gyms, martial arts clubs and coaches.</h1>
       <p class="intro-headline-sub" data-i18n="hero_sub">Built to convert, and effortless for you to run.</p>
+      <a class="btn-gold intro-cta" href="#contact" data-i18n="nav_cta">Request a consultation</a>
     </div>
 
     <div class="intro-sc">
@@ -797,7 +831,6 @@ footer {
         <p class="sc-desc" id="scDesc"></p>
         <div class="sc-buttons">
           <a class="btn-ghost" id="scLink" href="#"></a>
-          <a class="btn-gold" href="#contact" data-i18n="sc_cta">Request a consultation</a>
         </div>
         <p class="sc-hint" data-i18n="sc_hint">Drag to spin &mdash; or use the arrows</p>
       </div>
