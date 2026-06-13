@@ -251,11 +251,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   animation: fadeUp 1s ease 0.5s forwards;
 }
 .hero-desc {
-  font-size: 14px;
+  font-family: var(--serif);
+  font-size: clamp(28px, 4vw, 48px);
   font-weight: 300;
-  color: var(--muted);
-  line-height: 1.85;
-  max-width: 400px;
+  color: var(--text);
+  line-height: 1.15;
+  max-width: 700px;
 }
 .hero-ctas { display: flex; gap: 28px; align-items: center; white-space: nowrap; }
 
@@ -397,8 +398,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   line-height: 1.8;
   margin-bottom: 24px;
 }
+.sc-cta {
+  display: inline-block;
+  margin-top: 20px;
+}
 .sc-hint {
-  margin-top: 28px;
+  margin-top: 20px;
   font-size: 10px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -745,14 +750,11 @@ footer {
     </nav>
   </header>
 
-  <!-- ============ HERO (compact — no big title) ============ -->
+  <!-- ============ HERO ============ -->
   <section class="hero inview">
     <p class="eyebrow" data-i18n="hero_eyebrow">Stockholm · Digital studio for sport & fitness brands</p>
     <div class="hero-bottom">
       <p class="hero-desc" data-i18n="hero_desc">Custom websites for gyms, martial arts clubs and coaches. Built to convert, and effortless for you to run.</p>
-      <div class="hero-ctas">
-        <a class="btn-gold" href="#contact" data-i18n="hero_cta1">Request a Consultation</a>
-      </div>
     </div>
   </section>
 
@@ -772,6 +774,7 @@ footer {
       <h3 id="scName"></h3>
       <p class="sc-desc" id="scDesc"></p>
       <a class="btn-ghost" id="scLink" href="#"></a>
+      <a class="btn-gold sc-cta" href="#contact" data-i18n="sc_cta">Request a consultation</a>
       <p class="sc-hint" data-i18n="sc_hint">Drag to spin &mdash; or use the arrows</p>
     </div>
   </section>
@@ -861,10 +864,16 @@ footer {
     <p class="contact-sub" data-i18n="ct_sub">Tell me briefly about your club or business and I'll get back to you within 24 hours.</p>
 
     <!--
-      FORM: uses fetch() to POST JSON to Formspree.
-      Replace YOUR_FORM_ID with your actual Formspree form ID.
-      The JS below handles submission without a page redirect,
-      shows a success message on the page, and catches errors.
+      =======================================================
+      FORM SETUP — REQUIRED BEFORE DEPLOYING
+      =======================================================
+      1. Go to https://formspree.io and sign in / create a free account
+      2. Click "New Form", give it a name, set your notification email
+      3. Copy the endpoint URL — looks like: https://formspree.io/f/abcdwxyz
+      4. Replace the placeholder below (the FORMSPREE_ENDPOINT constant in the
+         <script> at the bottom of this file) with your real URL
+      That is the ONLY change needed. The form will then work on GitHub Pages.
+      =======================================================
     -->
     <form class="contact-form" id="contactForm" novalidate>
       <p class="hp-field" aria-hidden="true"><label>Skip this field: <input name="_gotcha" tabindex="-1" autocomplete="off" /></label></p>
@@ -927,6 +936,7 @@ const I18N = {
     sc_label: "Showcase",
     sc_title: 'The work, <em>live.</em>',
     sc_hint: "Drag to spin — or use the arrows",
+    sc_cta: "Request a consultation",
     case_label: "First client cases",
     case_title: "Launching soon.",
     case_text: "A Stockholm martial arts club and a Stockholm-based personal trainer are both getting brand new sites. The full case studies land here the day they go live.",
@@ -974,6 +984,7 @@ const I18N = {
     sc_label: "Showcase",
     sc_title: 'Arbetet, <em>live.</em>',
     sc_hint: "Dra för att snurra — eller använd pilarna",
+    sc_cta: "Boka ett kostnadsfritt samtal",
     case_label: "Första kundcasen",
     case_title: "Lanseras snart.",
     case_text: "En kampsportsklubb i Stockholm och en Stockholmsbaserad personlig tränare får varsitt helt nytt site. Hela casen publiceras här samma dag som de går live.",
@@ -1051,6 +1062,10 @@ function setLang(lang) {
   var errorEl   = document.getElementById('formError');
 
   // ↓ Replace with your actual Formspree endpoint, e.g. https://formspree.io/f/abcdwxyz
+  // =====================================================================
+  // IMPORTANT: Replace the URL below with your real Formspree endpoint.
+  // Get it from https://formspree.io — looks like: https://formspree.io/f/abcdwxyz
+  // =====================================================================
   var ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
 
   if (!form) return;
