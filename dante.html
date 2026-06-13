@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Real Performance by Dante — Personlig tränare Stockholm</title>
+<meta name="description" content="Personlig tränare i Stockholm. Individanpassad träning, kostrådgivning och coaching. Tidigare elitskidåkare. Jobbat med Hammarby fotboll."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a09;--bg2:#111110;--bg3:#191918;
+  --text:#e8e4dc;--muted:rgba(232,228,220,0.45);--muted2:rgba(232,228,220,0.22);
+  --line:rgba(232,228,220,0.08);
+  --gold:#c9a96e;--gold-b:#ecd9ae;--gold-d:rgba(201,169,110,0.12);--gold-l:rgba(201,169,110,0.38);
+  --serif:'Cormorant Garamond',serif;--sans:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.04;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:180px 180px}
+a{text-decoration:none;color:inherit}
+img{display:block;max-width:100%}
+button{font-family:var(--sans);cursor:pointer}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:1px solid var(--gold);outline-offset:3px}
+
+/* PAGE */
+.page{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 48px}
+
+/* ANIMATIONS */
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
+@keyframes heroSlide{from{opacity:0;transform:translateY(44px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shimmer{0%,100%{background-position:115% 0}50%{background-position:-15% 0}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(201,169,110,.45)}50%{box-shadow:0 0 0 8px rgba(201,169,110,0)}}
+@keyframes btnSheen{0%,60%{left:-100%}100%{left:150%}}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+.reveal-left{opacity:0;transform:translateX(-32px);transition:opacity .7s ease,transform .7s ease}
+.reveal-left.visible{opacity:1;transform:none}
+.reveal-right{opacity:0;transform:translateX(32px);transition:opacity .7s ease,transform .7s ease}
+.reveal-right.visible{opacity:1;transform:none}
+.stagger>*{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
+.stagger.visible>*:nth-child(1){opacity:1;transform:none;transition-delay:.04s}
+.stagger.visible>*:nth-child(2){opacity:1;transform:none;transition-delay:.12s}
+.stagger.visible>*:nth-child(3){opacity:1;transform:none;transition-delay:.20s}
+.stagger.visible>*:nth-child(4){opacity:1;transform:none;transition-delay:.28s}
+.stagger.visible>*:nth-child(5){opacity:1;transform:none;transition-delay:.36s}
+.stagger.visible>*:nth-child(6){opacity:1;transform:none;transition-delay:.44s}
+
+/* GOLD SHIMMER */
+.gold-shimmer{font-style:italic;background:linear-gradient(110deg,var(--gold) 30%,var(--gold-b) 50%,var(--gold) 70%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 7s ease-in-out infinite}
+
+/* BUTTONS */
+.btn-primary{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;padding:15px 32px;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;background:var(--gold);color:#0a0a09;border:none;cursor:pointer;font-family:var(--sans);transition:background .25s,transform .2s,box-shadow .25s;animation:pulse 3s ease-in-out infinite}
+.btn-primary::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);transform:skewX(-20deg);animation:btnSheen 4s ease-in-out infinite}
+.btn-primary:hover{background:#b8924a;transform:translateY(-2px);box-shadow:0 8px 32px rgba(201,169,110,.35)}
+.btn-ghost{display:inline-flex;align-items:center;justify-content:center;padding:15px 32px;font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;background:transparent;color:var(--text);border:1px solid rgba(232,228,220,.22);cursor:pointer;font-family:var(--sans);transition:border-color .25s,background .25s,transform .2s}
+.btn-ghost:hover{border-color:rgba(232,228,220,.6);background:rgba(232,228,220,.05);transform:translateY(-2px)}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s ease}
+.modal-overlay.active{opacity:1;pointer-events:all}
+.modal-box{background:var(--bg2);border:1px solid var(--line);width:100%;max-width:480px;padding:44px;position:relative;transform:translateY(20px);transition:transform .25s ease}
+.modal-overlay.active .modal-box{transform:translateY(0)}
+.modal-close{position:absolute;top:16px;right:20px;background:none;border:none;color:var(--muted);font-size:28px;line-height:1;cursor:pointer;transition:color .2s}
+.modal-close:hover{color:var(--text)}
+.modal-box h3{font-family:var(--serif);font-size:36px;font-weight:300;letter-spacing:.04em;margin-bottom:6px;color:var(--gold)}
+.modal-sub{font-size:13px;color:var(--muted);margin-bottom:28px;line-height:1.6}
+.modal-form{display:flex;flex-direction:column;gap:12px}
+.modal-form input,.modal-form select,.modal-form textarea{background:var(--bg3);border:1px solid var(--line);color:var(--text);font-family:var(--sans);font-size:14px;padding:13px 16px;width:100%;outline:none;transition:border-color .2s;border-radius:0}
+.modal-form input::placeholder{color:var(--muted2)}
+.modal-form input:focus,.modal-form select:focus,.modal-form textarea:focus{border-color:var(--gold)}
+.modal-form select{appearance:none;color:var(--muted)}
+.modal-form select option{background:var(--bg3)}
+.modal-form textarea{resize:vertical;min-height:80px}
+.modal-submit{background:var(--gold);color:#0a0a09;border:none;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:16px 24px;width:100%;margin-top:4px;cursor:pointer;font-family:var(--sans);transition:background .2s}
+.modal-submit:hover{background:#b8924a}
+.modal-note{font-size:11px;color:var(--muted2);text-align:center;margin-top:6px}
+.modal-success{display:none;text-align:center;padding:24px 0;font-family:var(--serif);font-size:22px;font-weight:300;color:var(--gold)}
+.modal-error{display:none;font-size:12px;color:#e07070;text-align:center;margin-top:8px}
+
+/* NAVBAR */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:100;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:linear-gradient(180deg,rgba(10,10,9,.9) 0%,transparent 100%);transition:background .3s,border-bottom .3s}
+.navbar.scrolled{background:rgba(10,10,9,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-logo{font-family:var(--serif);font-size:18px;font-weight:300;letter-spacing:.06em;color:var(--text)}
+.nav-logo span{color:var(--gold);font-style:italic}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted2);transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;background:var(--gold);color:#0a0a09;border:none;padding:11px 22px;cursor:pointer;font-family:var(--sans);transition:background .2s}
+.nav-cta:hover{background:#b8924a}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px;cursor:pointer}
+.hamburger span{display:block;width:24px;height:1.5px;background:var(--text);transition:all .3s ease;transform-origin:center}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+/* MOBILE MENU */
+.mobile-menu{display:none;position:fixed;inset:0;background:var(--bg);z-index:150;flex-direction:column;align-items:center;justify-content:center;gap:8px;opacity:0;pointer-events:none;transition:opacity .3s}
+.mobile-menu.active{opacity:1;pointer-events:all}
+.mobile-menu-close{position:absolute;top:28px;right:28px;background:none;border:none;color:var(--muted);font-size:48px;font-weight:300;line-height:1;cursor:pointer}
+.mobile-menu a{font-family:var(--serif);font-size:36px;font-weight:300;letter-spacing:.06em;color:var(--muted);transition:color .2s;padding:4px 0}
+.mobile-menu a:hover{color:var(--gold)}
+.mobile-menu .mobile-cta{margin-top:20px;background:var(--gold);color:#0a0a09;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:16px 40px;border:none;cursor:pointer;font-family:var(--sans)}
+
+/* HERO */
+.hero{position:relative;height:100vh;min-height:640px;overflow:hidden;display:flex;align-items:flex-end}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 25%;filter:brightness(.52) grayscale(10%)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,9,.96) 0%,rgba(10,10,9,.45) 50%,rgba(10,10,9,.12) 100%);z-index:1}
+.hero-content{position:relative;z-index:2;padding:0 48px 88px;max-width:1100px;width:100%;margin:0 auto;animation:heroSlide .9s cubic-bezier(.22,.61,.36,1) .2s both}
+.hero-eyebrow{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.hero-eyebrow::before{content:'';display:block;width:32px;height:1px;background:var(--gold)}
+.hero h1{font-family:var(--serif);font-size:clamp(56px,9vw,130px);font-weight:300;line-height:.9;letter-spacing:-.02em;margin-bottom:28px}
+.hero-desc{font-size:16px;font-weight:300;color:var(--muted);line-height:1.8;margin-bottom:40px;max-width:480px}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.hero-scroll{position:absolute;bottom:32px;right:48px;z-index:2;display:flex;align-items:center;gap:10px;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted2);animation:heroSlide .9s cubic-bezier(.22,.61,.36,1) .5s both}
+.hero-scroll-line{width:40px;height:1px;background:var(--muted2)}
+
+/* BUSINESS CARD */
+.business-card{position:absolute;bottom:88px;right:48px;z-index:3;background:rgba(10,10,9,.82);border:1px solid var(--line);backdrop-filter:blur(16px);padding:18px 20px;display:flex;align-items:center;gap:14px;animation:fadeIn 1s ease 1.2s both;max-width:260px}
+.business-card-img{width:48px;height:48px;border-radius:50%;object-fit:cover;object-position:center top;border:1px solid var(--gold-l);flex-shrink:0}
+.business-card-info{display:flex;flex-direction:column;gap:3px}
+.business-card-name{font-family:var(--serif);font-size:15px;font-weight:300;color:var(--text);line-height:1}
+.business-card-title{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.business-card-contacts{display:flex;flex-direction:column;gap:3px}
+.business-card-contacts a{font-size:10px;color:var(--muted2);transition:color .2s;letter-spacing:.02em}
+.business-card-contacts a:hover{color:var(--text)}
+
+/* MARQUEE */
+.marquee{overflow:hidden;padding:13px 0;white-space:nowrap;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.marquee-track{display:inline-flex;animation:marquee 26s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.marquee-track span{font-size:10px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--muted2);padding:0 48px}
+.marquee-track span em{color:var(--gold);font-style:normal}
+
+/* SECTION SHARED */
+.section{padding:100px 0;border-bottom:1px solid var(--line)}
+.section-label{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.section-label::before{content:'';display:block;width:0;height:1px;background:var(--gold);transition:width 1s ease}
+.visible .section-label::before{width:40px}
+.section-title{font-family:var(--serif);font-size:clamp(38px,5vw,64px);font-weight:300;line-height:1.05;letter-spacing:-.01em;margin-bottom:52px}
+
+/* ABOUT */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.about-media{position:relative}
+.about-media img{width:100%;height:580px;object-fit:cover;filter:grayscale(15%)}
+.about-bar{position:absolute;bottom:0;left:0;right:0;background:var(--gold);padding:18px 24px;display:flex;align-items:center;justify-content:space-between}
+.about-bar span{font-family:var(--serif);font-size:15px;letter-spacing:.08em;color:#0a0a09;font-weight:400}
+.about-content p{font-size:15px;font-weight:300;color:var(--muted);line-height:1.9;margin-bottom:18px}
+.about-quote{font-family:var(--serif);font-size:20px;font-style:italic;color:var(--muted);border-left:3px solid var(--gold);padding-left:22px;margin:28px 0;line-height:1.5}
+.about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:36px}
+.about-stat{background:var(--bg);padding:18px 16px}
+.about-stat-num{font-family:var(--serif);font-size:36px;letter-spacing:.02em;color:var(--gold);line-height:1;margin-bottom:4px}
+.about-stat-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted2)}
+
+/* CREDENTIALS */
+.credentials-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+.cred-card{background:var(--bg);padding:32px 28px;position:relative;transition:background .25s}
+.cred-card::before{content:'';position:absolute;top:0;left:0;width:0;height:1px;background:var(--gold);transition:width .5s ease}
+.cred-card:hover{background:var(--bg2)}
+.cred-card:hover::before{width:100%}
+.cred-num{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--gold);margin-bottom:12px}
+.cred-title{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--text);line-height:1.1;margin-bottom:8px}
+.cred-body{font-size:13px;font-weight:300;color:var(--muted);line-height:1.8}
+
+/* SERVICES */
+.services-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--line);border:1px solid var(--line)}
+.service-card{background:var(--bg);padding:40px 36px;display:flex;flex-direction:column;gap:16px;position:relative;overflow:hidden;transition:background .25s}
+.service-card::before{content:'';position:absolute;top:0;left:0;width:0;height:1px;background:var(--gold);transition:width .5s ease}
+.service-card:hover{background:var(--bg2)}
+.service-card:hover::before{width:100%}
+.service-tag{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.service-name{font-family:var(--serif);font-size:clamp(28px,3.5vw,40px);font-weight:300;line-height:1.05}
+.service-desc{font-size:13px;font-weight:300;color:var(--muted);line-height:1.85;flex:1}
+.service-price{font-family:var(--serif);font-size:15px;font-style:italic;color:var(--muted2);margin-top:4px}
+.service-cta{align-self:flex-start;margin-top:8px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);position:relative;padding-bottom:3px;transition:color .2s}
+.service-cta::after{content:'';position:absolute;left:0;bottom:0;width:100%;height:1px;background:var(--gold-l)}
+.service-cta::before{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--gold);transition:width .4s ease;z-index:1}
+.service-card:hover .service-cta::before{width:100%}
+
+/* BOOKING */
+.booking-section{padding:100px 0;border-bottom:1px solid var(--line);text-align:center}
+.booking-title{font-family:var(--serif);font-size:clamp(40px,6vw,80px);font-weight:300;line-height:1;letter-spacing:-.02em;margin-bottom:18px}
+.booking-sub{font-size:14px;font-weight:300;color:var(--muted);line-height:1.8;max-width:440px;margin:0 auto 40px}
+.booking-options{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--line);border:1px solid var(--line);max-width:700px;margin:0 auto 44px}
+.booking-opt{background:var(--bg);padding:24px 28px;text-align:left;transition:background .25s;position:relative}
+.booking-opt::before{content:'';position:absolute;top:0;left:0;width:0;height:1px;background:var(--gold);transition:width .5s}
+.booking-opt:hover{background:var(--bg2)}
+.booking-opt:hover::before{width:100%}
+.booking-opt-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.booking-opt-name{font-family:var(--serif);font-size:22px;font-weight:300;margin-bottom:6px}
+.booking-opt-desc{font-size:12px;font-weight:300;color:var(--muted);line-height:1.7}
+.booking-ctas{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.calendly-note{font-size:11px;color:var(--muted2);letter-spacing:.08em;margin-top:16px}
+
+/* TESTIMONIAL */
+.testimonial-section{padding:100px 0;border-bottom:1px solid var(--line);background:var(--bg2)}
+.testimonial-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px}
+.testimonial-item{display:flex;flex-direction:column;gap:16px}
+.testimonial-quote{font-family:var(--serif);font-size:clamp(20px,2.5vw,28px);font-weight:300;line-height:1.3;color:var(--text)}
+.testimonial-author{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted2)}
+
+/* RESULTS */
+.results-section{padding:100px 0;border-bottom:1px solid var(--line)}
+.results-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--line);border:1px solid var(--line)}
+.result-card{background:var(--bg);overflow:hidden;position:relative}
+.result-card img{width:100%;aspect-ratio:3/4;object-fit:cover;filter:grayscale(20%);transition:transform .5s,filter .3s}
+.result-card:hover img{transform:scale(1.04);filter:grayscale(0%)}
+
+/* CONTACT */
+.contact-section{padding:100px 0}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.contact-title{font-family:var(--serif);font-size:clamp(38px,5vw,64px);font-weight:300;line-height:1;margin-bottom:16px}
+.contact-sub{font-size:14px;font-weight:300;color:var(--muted);line-height:1.85;margin-bottom:36px}
+.contact-details{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line)}
+.contact-row{display:flex;flex-direction:column;gap:4px;padding:16px 0;border-bottom:1px solid var(--line)}
+.contact-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.contact-row a,.contact-row p{font-size:14px;font-weight:300;color:var(--muted);transition:color .2s}
+.contact-row a:hover{color:var(--text)}
+.contact-form{display:flex;flex-direction:column;gap:22px}
+.field label{display:block;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted2);margin-bottom:9px}
+.field input,.field select,.field textarea{width:100%;background:transparent;border:none;border-bottom:1px solid var(--line);color:var(--text);font-family:var(--sans);font-size:14px;font-weight:300;padding:9px 2px 11px;transition:border-color .3s;border-radius:0;appearance:none}
+.field select option{background:var(--bg2)}
+.field textarea{resize:vertical;min-height:90px}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);outline:none}
+.form-submit{align-self:flex-start;margin-top:8px}
+.hp-field{position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden}
+.form-success{display:none;font-family:var(--serif);font-size:22px;font-weight:300;color:var(--gold);padding:24px 0}
+.form-error-msg{display:none;font-size:12px;color:#e07070;margin-top:12px;letter-spacing:.04em}
+
+/* FOOTER */
+footer{padding:32px 0;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line)}
+.footer-left{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted2)}
+.footer-right{font-family:var(--serif);font-size:13px;font-style:italic;color:var(--muted2)}
+.footer-right a{color:var(--muted2);transition:color .2s}
+.footer-right a:hover{color:var(--text)}
+
+/* MOBILE */
+@media(max-width:768px){
+  .page{padding:0 24px}
+  .navbar{padding:0 24px}
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:flex}
+  .mobile-menu{display:flex}
+  .hero-content{padding:0 24px 72px}
+  .hero h1{font-size:clamp(52px,16vw,80px)}
+  .business-card{display:none}
+  .hero-scroll{display:none}
+  .about{grid-template-columns:1fr;gap:40px}
+  .about-media img{height:360px}
+  .credentials-grid{grid-template-columns:1fr}
+  .services-grid{grid-template-columns:1fr}
+  .booking-options{grid-template-columns:1fr;max-width:100%}
+  .testimonial-grid{grid-template-columns:1fr;gap:40px}
+  .results-grid{grid-template-columns:1fr 1fr}
+  .contact-grid{grid-template-columns:1fr;gap:48px}
+  .section{padding:72px 0}
+  footer{flex-direction:column;gap:8px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-box">
+    <button class="modal-close" id="modal-close">&times;</button>
+    <h3>Boka en session</h3>
+    <p class="modal-sub">Berätta lite om dig och ditt mål, så återkommer Dante inom 24 timmar.</p>
+    <form class="modal-form" id="modal-form" novalidate>
+      <p class="hp-field" aria-hidden="true"><label>Lämna blank: <input name="_gotcha" tabindex="-1" autocomplete="off"/></label></p>
+      <input type="text" name="name" placeholder="Ditt namn" required autocomplete="name"/>
+      <input type="email" name="email" placeholder="E-postadress" required autocomplete="email"/>
+      <input type="tel" name="phone" placeholder="Telefonnummer (valfritt)" autocomplete="tel"/>
+      <select name="service">
+        <option value="" disabled selected>Vilken tjänst intresserar dig?</option>
+        <option value="pt-11">PT 1:1</option>
+        <option value="online">Online coaching</option>
+        <option value="kost">Kostoptimering</option>
+        <option value="small-group">Small group</option>
+        <option value="other">Vet inte än</option>
+      </select>
+      <textarea name="message" placeholder="Berätta kort om ditt mål..." rows="3"></textarea>
+      <button type="submit" class="modal-submit" id="modal-submit">Skicka →</button>
+      <p class="modal-note">Ingen bindning. Första kontakten är kostnadsfri.</p>
+    </form>
+    <p class="modal-success" id="modal-success">Tack! Dante återkommer inom 24 timmar.</p>
+    <p class="modal-error" id="modal-error">Något gick fel. Försök igen eller ring direkt.</p>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="#" class="nav-logo">Real Performance <span>by Dante</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">Om Dante</a></li>
+    <li><a href="#services">Tjänster</a></li>
+    <li><a href="#booking">Boka</a></li>
+    <li><a href="#contact">Kontakt</a></li>
+  </ul>
+  <button class="nav-cta open-modal">Boka session</button>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <button class="mobile-menu-close" id="mobile-close">&times;</button>
+  <a href="#about">Om Dante</a>
+  <a href="#services">Tjänster</a>
+  <a href="#booking">Boka</a>
+  <a href="#contact">Kontakt</a>
+  <button class="mobile-cta open-modal">Boka session</button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <img src="https://primary.jwwb.nl/public/m/v/r/temp-yvbmxifgyytawwuucdje/20260124_173856-high.jpg?enable-io=true&enable=upscale&fit=bounds&width=1400" alt="Dante PT Real Performance"/>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Stockholm · Personlig tränare</p>
+    <h1>Vi når dina<br>mål. <span class="gold-shimmer">Tillsammans.</span></h1>
+    <p class="hero-desc">Individanpassad träning, kostrådgivning och coaching. Baserat på decennier av erfarenhet som elitidrottare och coach.</p>
+    <div class="hero-btns">
+      <button class="btn-primary open-modal">Boka session</button>
+      <a href="#services" class="btn-ghost">Se tjänster</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="hero-scroll-line"></div>Scroll</div>
+
+  <!-- BUSINESS CARD -->
+  <div class="business-card">
+    <img class="business-card-img" src="https://primary.jwwb.nl/public/m/v/r/temp-yvbmxifgyytawwuucdje/20260122_093040-standard.jpg" alt="Dante"/>
+    <div class="business-card-info">
+      <span class="business-card-name">Dante</span>
+      <span class="business-card-title">Cert. personlig tränare</span>
+      <div class="business-card-contacts">
+        <a href="tel:+46728593066">+46 72 859 30 66</a>
+        <a href="mailto:dante@realperformancebydante.com">dante@realperformance...</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>TRÄNING <em>·</em> KOST <em>·</em> COACHING <em>·</em> REAL PERFORMANCE <em>·</em> STOCKHOLM <em>·</em> 1:1 <em>·</em> ONLINE <em>·</em> SMALL GROUP <em>·</em></span>
+    <span>TRÄNING <em>·</em> KOST <em>·</em> COACHING <em>·</em> REAL PERFORMANCE <em>·</em> STOCKHOLM <em>·</em> 1:1 <em>·</em> ONLINE <em>·</em> SMALL GROUP <em>·</em></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="page">
+    <div class="about">
+      <div class="about-media reveal-left">
+        <img src="https://primary.jwwb.nl/public/m/v/r/temp-yvbmxifgyytawwuucdje/20260122_093040-standard.jpg" alt="Dante PT"/>
+        <div class="about-bar">
+          <span>Real Performance by Dante</span>
+          <span>Stockholm</span>
+        </div>
+      </div>
+      <div class="about-content reveal-right">
+        <p class="section-label">Om Dante</p>
+        <h2 class="section-title" style="margin-bottom:28px">Från elitidrott<br>till <span class="gold-shimmer">coaching.</span></h2>
+        <p>Min resa började som alpin skidåkare på elitnivå. Under många år byggde jag upp den disciplin, målmedvetenhet och prestationsförståelse som fortfarande präglar mitt arbete som coach idag.</p>
+        <p>Med över 30 års erfarenhet av kampsport, inklusive Muay Thai-träning i Thailand, och ett arbete som kostcoach för Hammarby fotbolls A-lag på både dam och herrsidan har jag en bred och gedigen bakgrund.</p>
+        <p>Mitt fokus är alltid på långsiktiga resultat, individanpassade upplägg och en helhetssyn där träning, kost och mental hälsa hänger ihop.</p>
+        <blockquote class="about-quote">"Träning ska vara jobbig, belönande och kombineras med bra kost för optimal återhämtning."</blockquote>
+        <div class="about-stats">
+          <div class="about-stat"><div class="about-stat-num">30+</div><div class="about-stat-label">Års erfarenhet</div></div>
+          <div class="about-stat"><div class="about-stat-num">Elit</div><div class="about-stat-label">Skidåkare</div></div>
+          <div class="about-stat"><div class="about-stat-num">HIF</div><div class="about-stat-label">Hammarby fotboll</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREDENTIALS -->
+<section class="section" style="border-bottom:1px solid var(--line)">
+  <div class="page">
+    <p class="section-label reveal">Varför Dante</p>
+    <h2 class="section-title reveal">Erfarenhet som<br><span class="gold-shimmer">gör skillnad.</span></h2>
+    <div class="credentials-grid stagger">
+      <div class="cred-card">
+        <span class="cred-num">I.</span>
+        <h3 class="cred-title">Elitidrottsbakgrund</h3>
+        <p class="cred-body">Som tidigare alpin skidåkare på elitnivå förstår Dante vad det innebär att träna med syfte och precision. Den disciplinen tar han med in i varje klientrelation.</p>
+      </div>
+      <div class="cred-card">
+        <span class="cred-num">II.</span>
+        <h3 class="cred-title">Kampsportserfarenhet</h3>
+        <p class="cred-body">Över 30 år av kampsport, inklusive Muay Thai-träning i Thailand, ger djup kunskap inom funktionell styrka, explosivitet, rörlighet och mental uthållighet.</p>
+      </div>
+      <div class="cred-card">
+        <span class="cred-num">III.</span>
+        <h3 class="cred-title">Kostcoach för Hammarby</h3>
+        <p class="cred-body">Dante har jobbat med Hammarby fotbolls A-lag på både dam och herrsidan med kostrådgivning. Erfarenhet från elitnivå som nu är tillgänglig för dig.</p>
+      </div>
+      <div class="cred-card">
+        <span class="cred-num">IV.</span>
+        <h3 class="cred-title">Helhetssyn</h3>
+        <p class="cred-body">Träning, kost och mental hälsa hänger ihop. Dante arbetar med hela bilden för att ge dig hållbara resultat, inte snabba quick fixes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <div class="page">
+    <p class="section-label reveal">Tjänster</p>
+    <h2 class="section-title reveal">Träning på dina<br><span class="gold-shimmer">villkor.</span></h2>
+    <div class="services-grid stagger">
+      <div class="service-card">
+        <span class="service-tag">Mest populärt</span>
+        <h3 class="service-name">PT 1:1</h3>
+        <p class="service-desc">Individanpassad träning med Dante direkt. Fokus på teknik, progression och resultat. Vi tränar 1 till 3 gånger i veckan beroende på ditt mål och din vardag.</p>
+        <span class="service-price">Pris på förfrågan</span>
+        <button class="service-cta open-modal">Boka →</button>
+      </div>
+      <div class="service-card">
+        <span class="service-tag">Flexibelt</span>
+        <h3 class="service-name">Online coaching</h3>
+        <p class="service-desc">Träningsprogram, kostplan och kontinuerlig uppföljning online. Passar dig som vill ha struktur och stöd men tränar på egen hand eller bor utanför Stockholm.</p>
+        <span class="service-price">Pris på förfrågan</span>
+        <button class="service-cta open-modal">Boka →</button>
+      </div>
+      <div class="service-card">
+        <span class="service-tag">Elitnivå</span>
+        <h3 class="service-name">Kostoptimering</h3>
+        <p class="service-desc">Individanpassad kostrådgivning baserad på erfarenhet från elitfotboll. Lär dig äta för att prestera och återhämta dig, med praktiska och hållbara strategier.</p>
+        <span class="service-price">Pris på förfrågan</span>
+        <button class="service-cta open-modal">Boka →</button>
+      </div>
+      <div class="service-card">
+        <span class="service-tag">Social träning</span>
+        <h3 class="service-name">Small group</h3>
+        <p class="service-desc">Träna i liten grupp med personlig uppmärksamhet och gruppets energi. Perfekt för dig som vill ha sällskap men ändå individanpassad träning.</p>
+        <span class="service-price">Pris på förfrågan</span>
+        <button class="service-cta open-modal">Boka →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking-section" id="booking">
+  <div class="page">
+    <p class="section-label reveal" style="justify-content:center">Boka</p>
+    <h2 class="booking-title reveal">Redo att sätta<br><span class="gold-shimmer">igång?</span></h2>
+    <p class="booking-sub reveal">Välj hur du vill komma igång. Första kontakten är alltid kostnadsfri.</p>
+    <div class="booking-options reveal">
+      <div class="booking-opt">
+        <p class="booking-opt-label">Snabbast</p>
+        <p class="booking-opt-name">Ring direkt</p>
+        <p class="booking-opt-desc">Dante svarar eller återkommer samma dag.</p>
+        <a href="tel:+46728593066" style="display:inline-block;margin-top:14px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)">+46 72 859 30 66 →</a>
+      </div>
+      <div class="booking-opt">
+        <p class="booking-opt-label">Enkelt</p>
+        <p class="booking-opt-name">Fyll i formuläret</p>
+        <p class="booking-opt-desc">Berätta om ditt mål så återkommer Dante inom 24 timmar.</p>
+        <button class="open-modal" style="display:inline-block;margin-top:14px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);background:none;border:none;cursor:pointer;padding:0">Öppna formulär →</button>
+      </div>
+    </div>
+    <div class="booking-ctas reveal">
+      <button class="btn-primary open-modal">Boka session</button>
+      <a href="https://wa.me/46728593066" target="_blank" rel="noopener noreferrer" class="btn-ghost">WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial-section">
+  <div class="page">
+    <p class="section-label reveal">Vad klienter säger</p>
+    <div class="testimonial-grid stagger">
+      <div class="testimonial-item">
+        <p class="testimonial-quote">"Dante har verkligen förändrat mitt sätt att se på träning och kost. Med hans hjälp har jag nått resultat jag aldrig trodde var möjliga."</p>
+        <span class="testimonial-author">Klient</span>
+      </div>
+      <div class="testimonial-item">
+        <p class="testimonial-quote">"Träning ska vara jobbig, belönande och kombineras med bra kost för optimal återhämtning. Det är precis det Dante levererar."</p>
+        <span class="testimonial-author">Klient</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="results-section">
+  <div class="page">
+    <p class="section-label reveal">Resultat</p>
+    <h2 class="section-title reveal">Klienternas<br><span class="gold-shimmer">framsteg.</span></h2>
+    <div class="results-grid stagger">
+      <div class="result-card"><img src="https://primary.jwwb.nl/public/m/v/r/temp-yvbmxifgyytawwuucdje/20260502_135553-standard.jpg" alt="Träningsresultat" loading="lazy"/></div>
+      <div class="result-card"><img src="https://primary.jwwb.nl/public/m/v/r/temp-yvbmxifgyytawwuucdje/20260122_100640-high.jpg" alt="Träning" loading="lazy"/></div>
+      <div class="result-card"><img src="https://primary.jwwb.nl/public/m/v/r/temp-yvbmxifgyytawwuucdje/20260112_104351-high.jpg" alt="Träning" loading="lazy"/></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="page">
+    <div class="contact-grid">
+      <div class="reveal-left">
+        <h2 class="contact-title">Kom igång<br><span class="gold-shimmer">idag.</span></h2>
+        <p class="contact-sub">Inga frågor är för stora eller för små. Hör av dig så pratar vi om vad som passar dig.</p>
+        <div class="contact-details">
+          <div class="contact-row"><span class="contact-label">Telefon</span><a href="tel:+46728593066">+46 72 859 30 66</a></div>
+          <div class="contact-row"><span class="contact-label">Mail</span><a href="mailto:dante@realperformancebydante.com">dante@realperformancebydante.com</a></div>
+          <div class="contact-row"><span class="contact-label">WhatsApp</span><a href="https://wa.me/46728593066" target="_blank" rel="noopener noreferrer">Skriv direkt →</a></div>
+          <div class="contact-row"><span class="contact-label">Instagram</span><a href="https://instagram.com/realperformancebydante" target="_blank" rel="noopener noreferrer">@realperformancebydante</a></div>
+          <div class="contact-row"><span class="contact-label">Stad</span><p>Stockholm</p></div>
+        </div>
+      </div>
+      <div class="reveal-right">
+        <form class="contact-form" id="contactForm" novalidate>
+          <p class="hp-field" aria-hidden="true"><label>Skip: <input name="_gotcha" tabindex="-1" autocomplete="off"/></label></p>
+          <div class="field"><label for="f-name">Namn</label><input id="f-name" type="text" name="name" required autocomplete="name"/></div>
+          <div class="field"><label for="f-email">Mail</label><input id="f-email" type="email" name="email" required autocomplete="email"/></div>
+          <div class="field">
+            <label for="f-service">Tjänst</label>
+            <select id="f-service" name="service">
+              <option value="pt">PT 1:1</option>
+              <option value="online">Online coaching</option>
+              <option value="kost">Kostoptimering</option>
+              <option value="group">Small group</option>
+              <option value="other">Vet inte än</option>
+            </select>
+          </div>
+          <div class="field"><label for="f-msg">Berätta kort om ditt mål</label><textarea id="f-msg" name="message" rows="4"></textarea></div>
+          <button class="btn-primary form-submit" type="submit" id="formSubmitBtn">Skicka →</button>
+          <p class="form-error-msg" id="formError">Något gick fel. Försök igen eller ring direkt.</p>
+        </form>
+        <p class="form-success" id="formSuccess">Tack! Dante återkommer inom 24 timmar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="page">
+  <footer>
+    <span class="footer-left">© Real Performance by Dante · Stockholm 2026</span>
+    <span class="footer-right"><a href="https://stormieperformance.com" target="_blank" rel="noopener noreferrer">Built by Stormie Performance</a></span>
+  </footer>
+</div>
+
+<script>
+// NAVBAR
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 60));
+
+// HAMBURGER
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+function closeMobile(){hamburger.classList.remove('open');mobileMenu.classList.remove('active');document.body.style.overflow='';}
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('active');
+  document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+});
+document.getElementById('mobile-close').addEventListener('click', closeMobile);
+document.querySelectorAll('.mobile-menu a').forEach(l => l.addEventListener('click', closeMobile));
+
+// MODAL
+const modal = document.getElementById('modal');
+function openModal(){modal.classList.add('active');document.body.style.overflow='hidden';}
+function closeModal(){modal.classList.remove('active');document.body.style.overflow='';}
+document.querySelectorAll('.open-modal').forEach(b => b.addEventListener('click', openModal));
+document.getElementById('modal-close').addEventListener('click', closeModal);
+modal.addEventListener('click', e => { if(e.target === modal) closeModal(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+
+// MODAL FORM
+document.getElementById('modal-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('modal-submit');
+  const ok = document.getElementById('modal-success');
+  const err = document.getElementById('modal-error');
+  const hp = this.querySelector('input[name="_gotcha"]');
+  if (hp && hp.value) return;
+  btn.disabled = true; btn.style.opacity = '.5';
+  fetch('https://formspree.io/f/mvznvwpk', {
+    method: 'POST',
+    headers: {'Accept':'application/json','Content-Type':'application/json'},
+    body: JSON.stringify({
+      name: this.querySelector('[name=name]').value,
+      email: this.querySelector('[name=email]').value,
+      phone: this.querySelector('[name=phone]').value,
+      service: this.querySelector('[name=service]').value,
+      message: this.querySelector('[name=message]').value,
+      _subject: 'Ny bokningsförfrågan via realperformancebydante.com'
+    })
+  })
+  .then(r => { if(r.ok){this.style.display='none';ok.style.display='block';}else throw 0; })
+  .catch(() => { btn.disabled=false;btn.style.opacity='1';err.style.display='block'; });
+});
+
+// CONTACT FORM
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('formSubmitBtn');
+  const ok = document.getElementById('formSuccess');
+  const err = document.getElementById('formError');
+  const hp = this.querySelector('input[name="_gotcha"]');
+  if (hp && hp.value) return;
+  const name = this.querySelector('#f-name').value.trim();
+  const email = this.querySelector('#f-email').value.trim();
+  if (!name || !email) return;
+  btn.disabled = true; btn.style.opacity = '.5'; err.style.display = 'none';
+  fetch('https://formspree.io/f/mvznvwpk', {
+    method: 'POST',
+    headers: {'Accept':'application/json','Content-Type':'application/json'},
+    body: JSON.stringify({
+      name, email,
+      service: this.querySelector('#f-service').value,
+      message: this.querySelector('#f-msg').value.trim(),
+      _subject: 'Ny förfrågan via realperformancebydante.com'
+    })
+  })
+  .then(r => { if(r.ok){this.style.display='none';ok.style.display='block';}else throw 0; })
+  .catch(() => { btn.disabled=false;btn.style.opacity='1';err.style.display='block'; });
+});
+
+// SCROLL REVEAL
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .stagger, .section-label').forEach(el => {
+  revealObserver.observe(el);
+});
+</script>
+</body>
+</html>
