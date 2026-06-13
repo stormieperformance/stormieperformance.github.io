@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Stormie Muay Thai — Built by Stormie Performance</title>
+<title>Stormie Muay Thai Built by Stormie Performance</title>
 <meta name="description" content="A full Muay Thai gym website with hero video, live schedule, memberships, shop, news carousel and Instagram integration. Built by Stormie Performance." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
@@ -142,61 +142,20 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--gold); outline-
 .preview-screen {
   width: 820px;
   height: 520px;
-  border-radius: 10px;
-  border: 1px solid rgba(201,169,110,0.35);
+  border-radius: 2px;
+  border: 1px solid rgba(201,169,110,0.4);
   overflow: hidden;
   position: relative;
   background: #080808;
   box-shadow:
-    0 0 0 1px rgba(201,169,110,0.15),
-    0 40px 120px rgba(0,0,0,0.9),
-    0 80px 200px rgba(0,0,0,0.6),
-    inset 0 1px 0 rgba(255,255,255,0.06);
-}
-.preview-screen::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 32px;
-  background: #0a0a09;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  z-index: 3;
-  display: flex;
-  align-items: center;
-}
-.preview-dots {
-  position: absolute;
-  top: 10px;
-  left: 14px;
-  display: flex;
-  gap: 6px;
-  z-index: 4;
-}
-.preview-dot {
-  width: 10px; height: 10px; border-radius: 50%;
-}
-.preview-dot:nth-child(1) { background: #ff5f57; }
-.preview-dot:nth-child(2) { background: #febc2e; }
-.preview-dot:nth-child(3) { background: #28c840; }
-.preview-url {
-  position: absolute;
-  top: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 4px;
-  padding: 3px 16px;
-  font-size: 9px;
-  letter-spacing: 0.08em;
-  color: rgba(232,228,220,0.4);
-  font-family: var(--sans);
-  z-index: 4;
-  white-space: nowrap;
+    0 0 0 1px rgba(201,169,110,0.08),
+    0 2px 0 0 rgba(201,169,110,0.6),
+    0 40px 120px rgba(0,0,0,0.95),
+    0 80px 200px rgba(0,0,0,0.7);
 }
 .preview-iframe-wrap {
   position: absolute;
-  top: 32px; left: 0; right: 0; bottom: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
   overflow: hidden;
 }
 .preview-iframe-wrap iframe {
@@ -392,7 +351,7 @@ footer { padding:24px 0;display:flex;justify-content:space-between;align-items:c
     <p class="eyebrow" data-i18n="hero_eyebrow">Concept project · Martial arts club</p>
     <h1 class="hero-title" data-i18n="hero_title">Stormie <span class="gold-shimmer">Muay Thai.</span></h1>
     <div class="hero-bottom">
-      <p class="hero-desc" data-i18n="hero_desc">A complete Muay Thai gym website — hero video, live schedule, membership plans, branded shop, news carousel and Instagram integration. One cohesive system, built to convert visitors into members.</p>
+      <p class="hero-desc" data-i18n="hero_desc">A complete Muay Thai gym website hero video, live schedule, membership plans, branded shop, news carousel and Instagram integration. One cohesive system built to convert visitors into members.</p>
       <div class="hero-meta">
         <p class="hero-meta-label" data-i18n="hero_meta_label">Client type</p>
         <p class="hero-meta-value" data-i18n="hero_meta_value">Martial arts club · Membership-based business</p>
@@ -404,12 +363,6 @@ footer { padding:24px 0;display:flex;justify-content:space-between;align-items:c
   <div class="preview-stage">
     <div class="preview-device" id="previewDevice">
       <div class="preview-screen">
-        <div class="preview-dots">
-          <div class="preview-dot"></div>
-          <div class="preview-dot"></div>
-          <div class="preview-dot"></div>
-        </div>
-        <div class="preview-url">stormieperformance.com/smt-demo</div>
         <div class="preview-iframe-wrap">
           <iframe
             src="https://stormieperformance.com/smt-demo/"
@@ -518,10 +471,10 @@ footer { padding:24px 0;display:flex;justify-content:space-between;align-items:c
 <section class="about">
   <h2 class="about-title" data-i18n="about_title">One gym.<br><span class="gold-shimmer">One system.</span></h2>
   <div class="about-right">
-    <p data-i18n="about_p1">Most Muay Thai gyms run on scattered tools — a basic website, a separate booking platform, memberships managed through email, and a shop that lives somewhere else entirely. None of it feels connected.</p>
+    <p data-i18n="about_p1">Most Muay Thai gyms run on scattered tools a basic website, a separate booking platform, memberships managed through email, and a shop that lives somewhere else entirely. Nothing feels connected.</p>
     <p data-i18n="about_p2">This concept brings it together. One site with a hero video that sets the tone, a schedule members can actually use, membership plans with clear paths to conversion, a branded shop and a news section that keeps the club feeling alive.</p>
-    <p data-i18n="about_p3">The Instagram feed updates automatically through Behold.so — so as long as the gym posts on Instagram, the website stays fresh without anyone touching the backend.</p>
-    <p class="about-note" data-i18n="about_note">Concept project — all parts built and live at smt-demo.</p>
+    <p data-i18n="about_p3">The Instagram feed updates automatically through Behold.so so as long as the gym posts on Instagram, the website stays fresh without anyone touching the backend.</p>
+    <p class="about-note" data-i18n="about_note">Concept project all parts built and live at smt-demo.</p>
     <div class="about-tags">
       <span class="tag" data-i18n="tag1">Hero video</span>
       <span class="tag" data-i18n="tag2">Memberships</span>
@@ -543,42 +496,42 @@ footer { padding:24px 0;display:flex;justify-content:space-between;align-items:c
       <p class="system-num">01</p>
       <p class="system-type" data-i18n="s1_type">Brand layer</p>
       <h3 class="system-name" data-i18n="s1_name">Website</h3>
-      <p class="system-desc" data-i18n="s1_desc">Hero video that sets the tone before a word is read. Clean navigation, about section, coaches and contact — all in one scroll.</p>
+      <p class="system-desc" data-i18n="s1_desc">Hero video that sets the tone before a word is read. Clean navigation, about section, coaches and contact all in one scroll.</p>
     </div>
 
     <div class="system-card">
       <p class="system-num">02</p>
       <p class="system-type" data-i18n="s2_type">Class access</p>
       <h3 class="system-name" data-i18n="s2_name">Schedule</h3>
-      <p class="system-desc" data-i18n="s2_desc">Today and tomorrow tabs. Each class card shows time, name and level — with a direct booking entry point. No external link, no friction.</p>
+      <p class="system-desc" data-i18n="s2_desc">Today and tomorrow tabs. Each class card shows time, name and level with a direct booking entry point. No external link, no friction.</p>
     </div>
 
     <div class="system-card">
       <p class="system-num">03</p>
       <p class="system-type" data-i18n="s3_type">Member flow</p>
       <h3 class="system-name" data-i18n="s3_name">Memberships</h3>
-      <p class="system-desc" data-i18n="s3_desc">Six plans covering every type of member — drop-in, unlimited, beginner, student, youth and pack. Clear pricing, clear path to start.</p>
+      <p class="system-desc" data-i18n="s3_desc">Six plans covering every type of member drop-in, unlimited, beginner, student, youth and pack. Clear pricing, clear path to start.</p>
     </div>
 
     <div class="system-card">
       <p class="system-num">04</p>
       <p class="system-type" data-i18n="s4_type">Commerce layer</p>
       <h3 class="system-name" data-i18n="s4_name">Shop</h3>
-      <p class="system-desc" data-i18n="s4_desc">Club gear — hoodies, tees, caps, wraps and shorts — with colour toggles built in. Premium feel, part of the same brand experience.</p>
+      <p class="system-desc" data-i18n="s4_desc">Club gear hoodies, tees, caps, wraps and shorts with colour toggles built in. Premium feel, part of the same brand experience.</p>
     </div>
 
     <div class="system-card">
       <p class="system-num">05</p>
       <p class="system-type" data-i18n="s5_type">Content system</p>
       <h3 class="system-name" data-i18n="s5_name">News</h3>
-      <p class="system-desc" data-i18n="s5_desc">A 3D drag carousel for fight results, class updates and announcements. The same carousel format as the Stormie Performance portfolio — built from scratch.</p>
+      <p class="system-desc" data-i18n="s5_desc">A 3D drag carousel for fight results, class updates and announcements. The same carousel format as the Stormie Performance portfolio built from scratch.</p>
     </div>
 
     <div class="system-card">
       <p class="system-num">06</p>
       <p class="system-type" data-i18n="s6_type">Social layer</p>
       <h3 class="system-name" data-i18n="s6_name">Auto content</h3>
-      <p class="system-desc" data-i18n="s6_desc">Behold.so pulls the gym's Instagram feed live. Post on Instagram — the website updates automatically. No backend, no manual work.</p>
+      <p class="system-desc" data-i18n="s6_desc">Behold.so pulls the gym's Instagram feed live. Post on Instagram the website updates automatically. No backend, no manual work.</p>
     </div>
 
   </div>
@@ -588,7 +541,7 @@ footer { padding:24px 0;display:flex;justify-content:space-between;align-items:c
 <section class="cta-section inview">
   <p class="eyebrow" data-i18n="cta_label">Want something similar?</p>
   <h2 class="cta-title" data-i18n="cta_title">Let's build <span class="gold-shimmer">yours.</span></h2>
-  <p class="cta-desc" data-i18n="cta_desc">Website, schedule, memberships, shop or a full connected system — built for your club, your brand and your members.</p>
+  <p class="cta-desc" data-i18n="cta_desc">Website, schedule, memberships, shop or a full connected system built for your club, your brand and your members.</p>
   <div class="cta-actions">
     <a class="btn-gold" href="index.html#contact" data-i18n="cta_btn">Request a consultation</a>
     <a class="btn-ghost" href="#" onclick="window.location='mai'+'lto:storm.kolmo'+'din@gmail.com'; return false;">storm&#46;kolmodin&#64;gmail&#46;com</a>
@@ -608,7 +561,7 @@ const I18N = {
     nav_live:"Live site", nav_cta:"Work with us",
     hero_eyebrow:"Concept project · Martial arts club",
     hero_title:'Stormie <span class="gold-shimmer">Muay Thai.</span>',
-    hero_desc:"A complete Muay Thai gym website — hero video, live schedule, membership plans, branded shop, news carousel and Instagram integration. One cohesive system, built to convert visitors into members.",
+    hero_desc:"A complete Muay Thai gym website hero video, live schedule, membership plans, branded shop, news carousel and Instagram integration. One cohesive system built to convert visitors into members.",
     hero_meta_label:"Client type", hero_meta_value:"Martial arts club · Membership-based business",
     built_label:"What was built", built_count:"06 parts · All live",
     b1_name:"Website & Brand", b1_cat:"Hero video · Navigation · About · Coaches · Instagram feed",
@@ -619,28 +572,28 @@ const I18N = {
     b6_name:"Instagram & Coaches", b6_cat:"Behold.so live feed · Auto-updating · Coach profiles",
     b_view:"View →",
     about_title:'One gym.<br><span class="gold-shimmer">One system.</span>',
-    about_p1:"Most Muay Thai gyms run on scattered tools — a basic website, a separate booking platform, memberships managed through email, and a shop that lives somewhere else entirely. None of it feels connected.",
+    about_p1:"Most Muay Thai gyms run on scattered tools a basic website, a separate booking platform, memberships managed through email, and a shop that lives somewhere else entirely. Nothing feels connected.",
     about_p2:"This concept brings it together. One site with a hero video that sets the tone, a schedule members can actually use, membership plans with clear paths to conversion, a branded shop and a news section that keeps the club feeling alive.",
-    about_p3:"The Instagram feed updates automatically through Behold.so — so as long as the gym posts on Instagram, the website stays fresh without anyone touching the backend.",
-    about_note:"Concept project — all parts built and live at smt-demo.",
+    about_p3:"The Instagram feed updates automatically through Behold.so so as long as the gym posts on Instagram, the website stays fresh without anyone touching the backend.",
+    about_note:"Concept project all parts built and live at smt-demo.",
     tag1:"Hero video", tag2:"Memberships", tag3:"Schedule", tag4:"Branded shop", tag5:"Auto Instagram", tag6:"News carousel",
     sys_label:"How it works", sys_title:'Six parts. <em>One experience.</em>',
-    s1_type:"Brand layer", s1_name:"Website", s1_desc:"Hero video that sets the tone before a word is read. Clean navigation, about section, coaches and contact — all in one scroll.",
-    s2_type:"Class access", s2_name:"Schedule", s2_desc:"Today and tomorrow tabs. Each class card shows time, name and level — with a direct booking entry point. No external link, no friction.",
-    s3_type:"Member flow", s3_name:"Memberships", s3_desc:"Six plans covering every type of member — drop-in, unlimited, beginner, student, youth and pack. Clear pricing, clear path to start.",
-    s4_type:"Commerce layer", s4_name:"Shop", s4_desc:"Club gear — hoodies, tees, caps, wraps and shorts — with colour toggles built in. Premium feel, part of the same brand experience.",
-    s5_type:"Content system", s5_name:"News", s5_desc:"A 3D drag carousel for fight results, class updates and announcements. The same carousel format as the Stormie Performance portfolio — built from scratch.",
-    s6_type:"Social layer", s6_name:"Auto content", s6_desc:"Behold.so pulls the gym's Instagram feed live. Post on Instagram — the website updates automatically. No backend, no manual work.",
+    s1_type:"Brand layer", s1_name:"Website", s1_desc:"Hero video that sets the tone before a word is read. Clean navigation, about section, coaches and contact all in one scroll.",
+    s2_type:"Class access", s2_name:"Schedule", s2_desc:"Today and tomorrow tabs. Each class card shows time, name and level with a direct booking entry point. No external link, no friction.",
+    s3_type:"Member flow", s3_name:"Memberships", s3_desc:"Six plans covering every type of member drop-in, unlimited, beginner, student, youth and pack. Clear pricing, clear path to start.",
+    s4_type:"Commerce layer", s4_name:"Shop", s4_desc:"Club gear hoodies, tees, caps, wraps and shorts with colour toggles built in. Premium feel, part of the same brand experience.",
+    s5_type:"Content system", s5_name:"News", s5_desc:"A 3D drag carousel for fight results, class updates and announcements. The same carousel format as the Stormie Performance portfolio built from scratch.",
+    s6_type:"Social layer", s6_name:"Auto content", s6_desc:"Behold.so pulls the gym's Instagram feed live. Post on Instagram the website updates automatically. No backend, no manual work.",
     cta_label:"Want something similar?",
     cta_title:'Let\'s build <span class="gold-shimmer">yours.</span>',
-    cta_desc:"Website, schedule, memberships, shop or a full connected system — built for your club, your brand and your members.",
+    cta_desc:"Website, schedule, memberships, shop or a full connected system built for your club, your brand and your members.",
     cta_btn:"Request a consultation", ft_back:"Back to index"
   },
   sv: {
     nav_live:"Live-sajt", nav_cta:"Jobba med oss",
     hero_eyebrow:"Konceptprojekt · Kampsportsklubb",
     hero_title:'Stormie <span class="gold-shimmer">Muay Thai.</span>',
-    hero_desc:"En komplett thaiboxningssajt — herolvideo, live-schema, medlemskapsplaner, varumärkt shop, nyhetskarusell och Instagram-integration. Ett sammanhållet system byggt för att omvandla besökare till medlemmar.",
+    hero_desc:"En komplett thaiboxningssajt herolvideo, live-schema, medlemskapsplaner, varumärkt shop, nyhetskarusell och Instagram-integration. Ett sammanhållet system byggt för att omvandla besökare till medlemmar.",
     hero_meta_label:"Kundtyp", hero_meta_value:"Kampsportsklubb · Medlemskapsbaserad verksamhet",
     built_label:"Vad som byggdes", built_count:"06 delar · Alla live",
     b1_name:"Sajt & varumärke", b1_cat:"Herolvideo · Navigation · Om oss · Coacher · Instagram-flöde",
@@ -651,21 +604,21 @@ const I18N = {
     b6_name:"Instagram & coacher", b6_cat:"Behold.so live-flöde · Automatisk uppdatering · Coachprofiler",
     b_view:"Visa →",
     about_title:'Ett gym.<br><span class="gold-shimmer">Ett system.</span>',
-    about_p1:"De flesta thaiboxningsklubbar använder spridda verktyg — en enkel hemsida, en separat bokningsplattform, medlemskap via mail och en shop som lever på en annan sida. Inget känns ihopkopplat.",
+    about_p1:"De flesta thaiboxningsklubbar använder spridda verktyg en enkel hemsida, en separat bokningsplattform, medlemskap via mail och en shop som lever på en annan sida. Inget känns ihopkopplat.",
     about_p2:"Det här konceptet samlar det. En sajt med en herolvideo som sätter tonen, ett schema som medlemmar faktiskt kan använda, tydliga medlemskapsplaner, en varumärkt shop och en nyhetssektion som håller klubben levande.",
-    about_p3:"Instagram-flödet uppdateras automatiskt via Behold.so — så länge gymmet postar på Instagram håller sajten sig fräsch utan att någon rör backend.",
-    about_note:"Konceptprojekt — alla delar byggda och live på smt-demo.",
+    about_p3:"Instagram-flödet uppdateras automatiskt via Behold.so så länge gymmet postar på Instagram håller sajten sig fräsch utan att någon rör backend.",
+    about_note:"Konceptprojekt alla delar byggda och live på smt-demo.",
     tag1:"Herolvideo", tag2:"Medlemskap", tag3:"Schema", tag4:"Varumärkt shop", tag5:"Auto Instagram", tag6:"Nyhetskarusell",
     sys_label:"Så fungerar det", sys_title:'Sex delar. <em>En upplevelse.</em>',
-    s1_type:"Varumärkeslager", s1_name:"Sajt", s1_desc:"En herolvideo som sätter tonen innan ett ord lästs. Ren navigation, om-sektion, coacher och kontakt — allt i en scroll.",
-    s2_type:"Passåtkomst", s2_name:"Schema", s2_desc:"Idag- och imorgon-flikar. Varje passkort visar tid, namn och nivå — med direkt bokningsknapp. Ingen extern länk, ingen friktion.",
-    s3_type:"Medlemsflöde", s3_name:"Medlemskap", s3_desc:"Sex planer som täcker alla typer av medlemmar — drop-in, obegränsat, nybörjare, student, ungdom och 10-pack. Tydlig prissättning, tydlig väg att starta.",
-    s4_type:"Commerce-lager", s4_name:"Shop", s4_desc:"Klubbkläder — hoodies, tees, kepsar, lindor och shorts — med inbyggd färgväxling. Premium-känsla som en del av samma varumärkesupplevelse.",
-    s5_type:"Innehållssystem", s5_name:"Nyheter", s5_desc:"En 3D-dragkarusell för fighter, schemauppdateringar och besked. Samma karusellformat som Stormie Performance-portfolion — byggt från grunden.",
-    s6_type:"Socialt lager", s6_name:"Auto-innehåll", s6_desc:"Behold.so hämtar gymmets Instagram-flöde live. Posta på Instagram — sajten uppdateras automatiskt. Ingen backend, inget manuellt arbete.",
+    s1_type:"Varumärkeslager", s1_name:"Sajt", s1_desc:"En herolvideo som sätter tonen innan ett ord lästs. Ren navigation, om-sektion, coacher och kontakt allt i en scroll.",
+    s2_type:"Passåtkomst", s2_name:"Schema", s2_desc:"Idag- och imorgon-flikar. Varje passkort visar tid, namn och nivå med direkt bokningsknapp. Ingen extern länk, ingen friktion.",
+    s3_type:"Medlemsflöde", s3_name:"Medlemskap", s3_desc:"Sex planer som täcker alla typer av medlemmar drop-in, obegränsat, nybörjare, student, ungdom och 10-pack. Tydlig prissättning, tydlig väg att starta.",
+    s4_type:"Commerce-lager", s4_name:"Shop", s4_desc:"Klubbkläder hoodies, tees, kepsar, lindor och shorts med inbyggd färgväxling. Premium-känsla som en del av samma varumärkesupplevelse.",
+    s5_type:"Innehållssystem", s5_name:"Nyheter", s5_desc:"En 3D-dragkarusell för fighter, schemauppdateringar och besked. Samma karusellformat som Stormie Performance-portfolion byggt från grunden.",
+    s6_type:"Socialt lager", s6_name:"Auto-innehåll", s6_desc:"Behold.so hämtar gymmets Instagram-flöde live. Posta på Instagram sajten uppdateras automatiskt. Ingen backend, inget manuellt arbete.",
     cta_label:"Vill du ha något liknande?",
     cta_title:'Vi bygger <span class="gold-shimmer">din.</span>',
-    cta_desc:"Sajt, schema, medlemskap, shop eller ett helt sammankopplat system — byggt för din klubb, ditt varumärke och dina medlemmar.",
+    cta_desc:"Sajt, schema, medlemskap, shop eller ett helt sammankopplat system byggt för din klubb, ditt varumärke och dina medlemmar.",
     cta_btn:"Skicka en förfrågan", ft_back:"Tillbaka till start"
   }
 };
