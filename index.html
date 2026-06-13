@@ -180,12 +180,23 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   border-bottom: 1px solid var(--line);
   opacity: 0;
   animation: fadeIn 0.8s ease 0.1s forwards;
+  position: relative;
 }
 .topbar-left {
   font-size: 10px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--muted2);
+}
+.topbar-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted2);
+  white-space: nowrap;
 }
 .topbar-right { display: flex; gap: 28px; align-items: center; }
 .topbar-right a {
@@ -244,9 +255,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .intro-top {
   opacity: 0;
   animation: fadeUp 1s ease 0.3s forwards;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
 }
-.intro-eyebrow { margin-bottom: 24px; }
 .intro-headline-main {
   font-family: var(--serif);
   font-size: clamp(38px, 6vw, 80px);
@@ -372,20 +382,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .sc-arrow--prev { left: 0; }
 .sc-arrow--next { right: 0; }
 .sc-detail {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-rows: auto auto auto auto;
-  column-gap: 48px;
-  align-items: start;
-  margin: 32px 0 0;
-  padding: 28px 0 48px;
-  border-top: 1px solid var(--line);
+  text-align: center;
+  margin: 28px auto 0;
+  max-width: 560px;
+  padding: 0 0 56px;
   transition: opacity .25s ease, transform .25s ease;
 }
 .sc-detail.is-switching { opacity: 0; transform: translateY(8px); }
 .sc-cat {
-  grid-column: 1;
-  grid-row: 1;
   font-size: 10px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -393,39 +397,28 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   margin-bottom: 10px;
 }
 .sc-detail h3 {
-  grid-column: 1;
-  grid-row: 2;
   font-family: var(--serif);
   font-size: clamp(28px, 3.5vw, 42px);
   font-weight: 300;
   line-height: 1.05;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 .sc-desc {
-  grid-column: 1;
-  grid-row: 3;
   font-size: 13px;
   font-weight: 300;
   color: var(--muted);
   line-height: 1.8;
+  margin-bottom: 28px;
 }
-.sc-detail .btn-ghost {
-  grid-column: 2;
-  grid-row: 1;
-  align-self: start;
-  white-space: nowrap;
-}
-.sc-cta {
-  grid-column: 2;
-  grid-row: 2;
-  display: inline-block;
-  margin-top: 14px;
-  white-space: nowrap;
+.sc-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 .sc-hint {
-  grid-column: 1 / -1;
-  grid-row: 4;
-  margin-top: 20px;
+  margin-top: 24px;
   font-size: 10px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -772,6 +765,7 @@ footer {
   <!-- ============ TOPBAR ============ -->
   <header class="topbar">
     <span class="topbar-left">Stormie Performance</span>
+    <span class="topbar-center hide-mobile" data-i18n="hero_eyebrow">Stockholm · Digital studio for sport & fitness brands</span>
     <nav class="topbar-right">
       <a href="#work" class="hide-mobile" data-i18n="nav_work">Work</a>
       <a href="#process" class="hide-mobile" data-i18n="nav_how">How it works</a>
@@ -780,14 +774,12 @@ footer {
         <span>/</span>
         <button type="button" id="lang-sv" onclick="setLang('sv')">SV</button>
       </div>
-      <a href="#contact" class="cta-link" data-i18n="nav_cta">Request a consultation</a>
     </nav>
   </header>
 
   <!-- ============ INTRO: headline + carousel ============ -->
   <section class="intro inview" id="showcase">
     <div class="intro-top">
-      <p class="eyebrow intro-eyebrow" data-i18n="hero_eyebrow">Stockholm · Digital studio for sport & fitness brands</p>
       <h1 class="intro-headline-main" data-i18n="hero_title">Custom websites for gyms, martial arts clubs and coaches.</h1>
       <p class="intro-headline-sub" data-i18n="hero_sub">Built to convert, and effortless for you to run.</p>
     </div>
@@ -803,8 +795,10 @@ footer {
         <p class="sc-cat" id="scCat"></p>
         <h3 id="scName"></h3>
         <p class="sc-desc" id="scDesc"></p>
-        <a class="btn-ghost" id="scLink" href="#"></a>
-        <a class="btn-gold sc-cta" href="#contact" data-i18n="sc_cta">Request a consultation</a>
+        <div class="sc-buttons">
+          <a class="btn-ghost" id="scLink" href="#"></a>
+          <a class="btn-gold" href="#contact" data-i18n="sc_cta">Request a consultation</a>
+        </div>
         <p class="sc-hint" data-i18n="sc_hint">Drag to spin &mdash; or use the arrows</p>
       </div>
     </div>
