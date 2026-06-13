@@ -390,6 +390,49 @@ footer { padding: 24px 0; display: flex; justify-content: space-between; align-i
   footer { flex-direction: column; gap: 8px; text-align: center; }
   .hide-mobile { display: none; }
 }
+
+/* ══ NEED PICKER ══ */
+.need-picker { max-width: 600px; margin: 0 auto; }
+.need-grid {
+  display: flex; flex-direction: column; gap: 2px;
+  margin-top: 32px;
+}
+.need-btn {
+  width: 100%; background: var(--bg2); border: 1px solid var(--line);
+  color: var(--text); font-family: var(--sans); font-size: 15px; font-weight: 300;
+  padding: 20px 28px; text-align: left; cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, padding-left 0.3s;
+  position: relative;
+}
+.need-btn::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 0; height: 1px;
+  background: var(--gold); transition: width 0.4s ease;
+}
+.need-btn::after {
+  content: '→'; position: absolute; right: 28px; top: 50%; transform: translateY(-50%);
+  color: var(--muted2); transition: color 0.2s, transform 0.25s ease;
+}
+.need-btn:hover { background: var(--bg); border-color: var(--gold-line); padding-left: 36px; }
+.need-btn:hover::before { width: 100%; }
+.need-btn:hover::after { color: var(--gold); transform: translateY(-50%) translateX(4px); }
+.need-response { max-width: 600px; margin: 0 auto; }
+.need-back {
+  background: none; border: none; font-family: var(--sans); font-size: 10px;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted2);
+  cursor: pointer; padding: 0; margin-bottom: 32px; transition: color 0.2s;
+}
+.need-back:hover { color: var(--text); }
+.need-answer {
+  border-left: 2px solid var(--gold); padding-left: 24px; margin-bottom: 40px;
+}
+.need-answer h3 {
+  font-family: var(--serif); font-size: 24px; font-weight: 300;
+  color: var(--text); margin-bottom: 10px; line-height: 1.1;
+}
+.need-answer p {
+  font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.85;
+}
+
 </style>
 </head>
 <body>
@@ -467,9 +510,7 @@ footer { padding: 24px 0; display: flex; justify-content: space-between; align-i
     <div class="trust-item">
       <span class="trust-num">iv.</span>
       <span class="trust-title" data-i18n="trust4_title">Built for Fitness Only</span>
-      <p class="trust-body" data-i18n="trust4_body">I don’t build websites for restaurants or law firms. Every project is created for gyms, martial arts clubs, and coaches.
-
-Having worked in the fitness industry since 2017 as a personal trainer, fitness instructor, gym manager, and coach, I understand the businesses I build for.</p>
+      <p class="trust-body" data-i18n="trust4_body">I don't build websites for restaurants or law firms. Every project is created for gyms, martial arts clubs and coaches. Training Muay Thai since 2019 keeps me connected to the industry I serve.</p>
     </div>
   </div>
 </section>
@@ -519,26 +560,35 @@ Having worked in the fitness industry since 2017 as a personal trainer, fitness 
 
 <!-- CONTACT -->
 <section class="contact" id="contact">
-  <p class="eyebrow" data-i18n="ct_label">Request a consultation</p>
-  <h2 class="contact-title" data-i18n="ct_title">Ready for a site that works <span class="gold-shimmer">as hard as you do?</span></h2>
-  <p class="contact-sub" data-i18n="ct_sub">Tell me briefly about your club or business and I'll get back to you within 24 hours.</p>
-  <form class="contact-form" id="contactForm" novalidate>
-    <p class="hp-field" aria-hidden="true"><label>Skip: <input name="_gotcha" tabindex="-1" autocomplete="off" /></label></p>
-    <div class="field"><label for="f-name" data-i18n="f_name">Name</label><input id="f-name" type="text" name="name" required autocomplete="name" /></div>
-    <div class="field"><label for="f-email" data-i18n="f_email">Email</label><input id="f-email" type="email" name="email" required autocomplete="email" /></div>
-    <div class="field">
-      <label for="f-type" data-i18n="f_type">What do you run?</label>
-      <select id="f-type" name="type">
-        <option value="gym" data-i18n="f_type1">Gym / club</option>
-        <option value="pt" data-i18n="f_type2">PT / coach</option>
-        <option value="other" data-i18n="f_type3">Other</option>
-      </select>
+  <p class="eyebrow" data-i18n="ct_label">Get in touch</p>
+  <h2 class="contact-title" data-i18n="ct_title">What do you need <span class="gold-shimmer">help with?</span></h2>
+
+  <!-- NEED PICKER -->
+  <div class="need-picker" id="needPicker">
+    <div class="need-grid">
+      <button class="need-btn" data-need="members" data-i18n-need="need_members">More members</button>
+      <button class="need-btn" data-need="impression" data-i18n-need="need_impression">Better first impression</button>
+      <button class="need-btn" data-need="admin" data-i18n-need="need_admin">Easier administration</button>
+      <button class="need-btn" data-need="outdated" data-i18n-need="need_outdated">Replace an outdated website</button>
+      <button class="need-btn" data-need="new" data-i18n-need="need_new">New gym opening</button>
     </div>
-    <div class="field"><label for="f-msg" data-i18n="f_msg">Tell me briefly</label><textarea id="f-msg" name="message" rows="4"></textarea></div>
-    <button class="btn-gold form-submit" type="submit" id="formSubmitBtn" data-i18n="f_send">Send →</button>
-    <p class="form-error-msg" id="formError" data-i18n="f_error">Something went wrong. Please try again or email me directly.</p>
-  </form>
-  <p class="form-success" id="formSuccess" data-i18n="f_success">Message received. I'll be in touch within 24 hours.</p>
+  </div>
+
+  <!-- NEED RESPONSE — shown after picking -->
+  <div class="need-response" id="needResponse" style="display:none">
+    <button class="need-back" id="needBack" data-i18n="need_back">← Back</button>
+    <div class="need-answer" id="needAnswer"></div>
+    <form class="contact-form" id="contactForm" novalidate>
+      <p class="hp-field" aria-hidden="true"><label>Skip: <input name="_gotcha" tabindex="-1" autocomplete="off" /></label></p>
+      <input type="hidden" name="need" id="f-need" value=""/>
+      <div class="field"><label for="f-name" data-i18n="f_name">Name</label><input id="f-name" type="text" name="name" required autocomplete="name" /></div>
+      <div class="field"><label for="f-email" data-i18n="f_email">Email</label><input id="f-email" type="email" name="email" required autocomplete="email" /></div>
+      <div class="field"><label for="f-msg" data-i18n="f_msg">Tell me briefly</label><textarea id="f-msg" name="message" rows="3"></textarea></div>
+      <button class="btn-gold form-submit" type="submit" id="formSubmitBtn" data-i18n="f_send">Send →</button>
+      <p class="form-error-msg" id="formError" data-i18n="f_error">Something went wrong. Please try again or email me directly.</p>
+    </form>
+    <p class="form-success" id="formSuccess" data-i18n="f_success">Message received. I'll be in touch within 24 hours.</p>
+  </div>
 </section>
 
 <!-- EASTER EGG -->
@@ -594,9 +644,9 @@ const I18N = {
     care_title:"Easy for you.<br><span class=\"gold-shimmer\">Handled by me.</span>",
     care_p1:"Your domain is yours. Your content is yours. Updating it is something you do yourself, in a regular spreadsheet. Change the schedule, post news, adjust prices in the time it takes to make a coffee. No CMS logins. No thick manuals.",
     care_p2:"Everything you don't want to think about, like hosting, security, backups and updates, I take care of for a flat monthly fee. Lower than what a template platform charges.",
-    ct_label:"Request a consultation",
-    ct_title:"Ready for a site that works <span class=\"gold-shimmer\">as hard as you do?</span>",
-    ct_sub:"Tell me briefly about your club or business and I'll get back to you within 24 hours.",
+    ct_label:"Get in touch",
+    ct_title:"What do you need <span class=\"gold-shimmer\">help with?</span>",
+    ct_sub:"",
     f_name:"Name", f_email:"Email", f_type:"What do you run?",
     f_type1:"Gym / club", f_type2:"PT / coach", f_type3:"Other",
     f_msg:"Tell me briefly", f_send:"Send →",
@@ -638,9 +688,9 @@ const I18N = {
     care_title:"Enkelt för dig.<br><span class=\"gold-shimmer\">Skött av mig.</span>",
     care_p1:"Din domän är din. Ditt innehåll är ditt. Att uppdatera det gör du själv, i ett vanligt kalkylark. Ändra schemat, lägg upp nyheter, justera priser på den tid det tar att brygga en kaffe. Inga inloggningar i något CMS. Inga tjocka manualer.",
     care_p2:"Allt du inte vill tänka på, som hosting, säkerhet, backup och uppdateringar, tar jag hand om för en fast månadskostnad. Lägre än vad en mallplattform kostar.",
-    ct_label:"Skicka en förfrågan",
-    ct_title:"Redo att få en sajt som jobbar <span class=\"gold-shimmer\">lika hårt som du?</span>",
-    ct_sub:"Berätta kort om din klubb eller verksamhet, så återkommer jag inom 24 timmar.",
+    ct_label:"Kom igång",
+    ct_title:"Vad behöver du <span class=\"gold-shimmer\">hjälp med?</span>",
+    ct_sub:"",
     f_name:"Namn", f_email:"Mail", f_type:"Vad driver du?",
     f_type1:"Gym / klubb", f_type2:"PT / coach", f_type3:"Annat",
     f_msg:"Berätta kort", f_send:"Skicka →",
@@ -700,7 +750,7 @@ function buildHeadline(text) {
     fetch('https://formspree.io/f/mvznvwpk', {
       method: 'POST',
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email, type: form.querySelector('#f-type').value, message: form.querySelector('#f-msg').value.trim(), _subject: 'New request via stormieperformance.com' })
+      body: JSON.stringify({ name, email, need: form.querySelector('#f-need')?.value || '', message: form.querySelector('#f-msg').value.trim(), _subject: 'New request via stormieperformance.com' })
     })
     .then(r => { if (r.ok) { form.style.display='none'; ok.style.display='block'; ok.textContent=I18N[lang].f_success; } else throw 0; })
     .catch(() => { btn.disabled=false; btn.style.opacity='1'; err.style.display='block'; err.textContent=I18N[lang].f_error; });
@@ -886,6 +936,119 @@ function buildHeadline(text) {
   window.addEventListener('resize',render);
   render();updateDetail(0,true);
 })();
+
+// ══ NEED PICKER ══
+const NEEDS = {
+  en: {
+    members: {
+      title: "More members.",
+      text: "The site needs to do one thing well: turn visitors into people who actually show up. Clear paths to trial sessions, a schedule that updates itself, and a first impression that reflects what your gym actually is."
+    },
+    impression: {
+      title: "A first impression that matches your gym.",
+      text: "Most gym sites look like templates. Yours should look like you built it on purpose — because the experience of the site is part of the experience of the gym."
+    },
+    admin: {
+      title: "Less time managing a website.",
+      text: "Update your schedule in a spreadsheet. Post news without a CMS login. Change prices in seconds. The whole point is that you stop fighting your website and focus on running your gym."
+    },
+    outdated: {
+      title: "A site that actually represents you now.",
+      text: "If your website was built three years ago and nothing has changed, it's working against you. A new site that's easy to update means it stays current without effort."
+    },
+    new: {
+      title: "A strong start for your new gym.",
+      text: "Launch with a site that looks like you've been around for years. Memberships, schedule, booking and brand — all in place from day one."
+    }
+  },
+  sv: {
+    members: {
+      title: "Fler medlemmar.",
+      text: "Sajten ska göra en sak bra: omvandla besökare till personer som faktiskt dyker upp. Tydliga vägar till provpass, ett schema som uppdaterar sig självt och ett första intryck som speglar vad ditt gym faktiskt är."
+    },
+    impression: {
+      title: "Ett första intryck som matchar ditt gym.",
+      text: "De flesta gymhemsidor ser ut som mallar. Din borde se ut som att den byggts med avsikt — för upplevelsen av sajten är en del av upplevelsen av gymmet."
+    },
+    admin: {
+      title: "Mindre tid med att hantera en hemsida.",
+      text: "Uppdatera schemat i ett kalkylark. Lägg upp nyheter utan CMS-inloggning. Ändra priser på sekunder. Hela poängen är att du slutar slåss med din hemsida och fokuserar på att driva ditt gym."
+    },
+    outdated: {
+      title: "En sajt som faktiskt representerar dig nu.",
+      text: "Om din hemsida byggdes för tre år sedan och ingenting har förändrats jobbar den emot dig. En ny sajt som är enkel att uppdatera gör att den håller sig aktuell utan ansträngning."
+    },
+    new: {
+      title: "En stark start för ditt nya gym.",
+      text: "Lansera med en sajt som ser ut som om du har funnits i åratal. Medlemskap, schema, bokning och varumärke — allt på plats från dag ett."
+    }
+  }
+};
+
+const NEED_LABELS = {
+  en: { members:'More members', impression:'Better first impression', admin:'Easier administration', outdated:'Replace an outdated website', new:'New gym opening', back:'← Back' },
+  sv: { members:'Fler medlemmar', impression:'Bättre första intryck', admin:'Enklare administration', outdated:'Ersätt en föråldrad hemsida', new:'Nytt gym öppnar', back:'← Tillbaka' }
+};
+
+(function() {
+  const picker = document.getElementById('needPicker');
+  const response = document.getElementById('needResponse');
+  const answer = document.getElementById('needAnswer');
+  const backBtn = document.getElementById('needBack');
+  const fNeed = document.getElementById('f-need');
+  if (!picker) return;
+
+  function getLang() { return document.documentElement.lang === 'sv' ? 'sv' : 'en'; }
+
+  function showNeed(need) {
+    const lang = getLang();
+    const data = NEEDS[lang][need];
+    if (!data) return;
+    fNeed.value = need;
+    answer.innerHTML = '<h3>' + data.title + '</h3><p>' + data.text + '</p>';
+    picker.style.display = 'none';
+    response.style.display = 'block';
+    // reset form
+    const form = document.getElementById('contactForm');
+    if (form) { form.style.display = ''; document.getElementById('formSuccess').style.display = 'none'; }
+    const btn = document.getElementById('formSubmitBtn');
+    if (btn) { btn.disabled = false; btn.style.opacity = '1'; }
+    document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function showPicker() {
+    picker.style.display = '';
+    response.style.display = 'none';
+  }
+
+  document.querySelectorAll('.need-btn').forEach(btn => {
+    btn.addEventListener('click', () => showNeed(btn.getAttribute('data-need')));
+  });
+
+  backBtn.addEventListener('click', showPicker);
+
+  // update labels on lang change
+  function updateNeedLabels() {
+    const lang = getLang();
+    const labels = NEED_LABELS[lang];
+    document.querySelectorAll('.need-btn').forEach(btn => {
+      const need = btn.getAttribute('data-need');
+      if (labels[need]) btn.textContent = labels[need];
+    });
+    if (backBtn) backBtn.textContent = labels.back;
+    // if response is visible, re-render answer
+    if (response.style.display !== 'none' && fNeed.value) {
+      const data = NEEDS[lang][fNeed.value];
+      if (data) answer.innerHTML = '<h3>' + data.title + '</h3><p>' + data.text + '</p>';
+    }
+  }
+
+  // hook into existing setLang
+  const _origSetLang = window.setLang;
+  window.setLang = function(lang) {
+    _origSetLang(lang);
+    updateNeedLabels();
+  };
+})();
+
 </script>
-</body>
-</html>
