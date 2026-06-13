@@ -104,7 +104,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   50% { background-position: -15% 0; }
 }
 
-/* gold button: outlined, with a slow sheen sweep on hover */
+/* gold button */
 .btn-gold {
   position: relative;
   display: inline-block;
@@ -236,30 +236,19 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .lang-toggle button:hover { color: var(--text); }
 .lang-toggle button.active { color: var(--gold); }
 
-/* ---------- hero ---------- */
+/* ---------- hero (compact — no big title) ---------- */
 .hero {
-  padding: 120px 0 90px;
+  padding: 72px 0 64px;
   border-bottom: 1px solid var(--line);
 }
-.hero .eyebrow { margin-bottom: 36px; opacity: 0; animation: fadeUp 1s ease 0.3s forwards; }
-.hero-title {
-  font-family: var(--serif);
-  font-size: clamp(58px, 9vw, 128px);
-  font-weight: 300;
-  line-height: 0.96;
-  letter-spacing: -0.02em;
-  opacity: 0;
-  animation: fadeUp 1.2s ease 0.45s forwards;
-  max-width: 18ch;
-}
+.hero .eyebrow { margin-bottom: 28px; opacity: 0; animation: fadeUp 1s ease 0.3s forwards; }
 .hero-bottom {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   gap: 40px;
-  margin-top: 56px;
   opacity: 0;
-  animation: fadeUp 1s ease 0.75s forwards;
+  animation: fadeUp 1s ease 0.5s forwards;
 }
 .hero-desc {
   font-size: 14px;
@@ -269,16 +258,151 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   max-width: 400px;
 }
 .hero-ctas { display: flex; gap: 28px; align-items: center; white-space: nowrap; }
-.trust-strip {
-  margin-top: 64px;
-  padding-top: 20px;
-  border-top: 1px solid var(--line);
+
+/* ---------- showcase carousel ---------- */
+.showcase { padding: 88px 0; border-bottom: 1px solid var(--line); }
+.showcase-title {
+  font-family: var(--serif);
+  font-size: clamp(34px, 4vw, 52px);
+  font-weight: 300;
+  line-height: 1.1;
+  margin: 18px 0 10px;
+}
+.showcase-title em { font-style: italic; color: var(--muted); }
+.sc-stage {
+  position: relative;
+  height: 540px;
+  margin-top: 26px;
+  perspective: 1400px;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.sc-track { position: absolute; inset: 0; transform-style: preserve-3d; }
+.sc-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 252px;
+  height: 496px;
+  margin: -248px 0 0 -126px;
+  border: 1px solid var(--line);
+  background: var(--bg2);
+  overflow: hidden;
+  cursor: pointer;
+  will-change: transform, opacity;
+  transition: border-color .3s ease, box-shadow .3s ease;
+}
+.sc-card.is-active {
+  border-color: var(--gold-line);
+  box-shadow: 0 0 0 1px var(--gold-line), 0 30px 70px rgba(0,0,0,0.55);
+  cursor: grab;
+}
+.sc-stage.is-dragging .sc-card { cursor: grabbing; }
+.sc-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 1.2;
+  color: var(--muted);
+  background: radial-gradient(130% 80% at 50% 0%, rgba(201,169,110,0.10), transparent 60%), var(--bg2);
+}
+.sc-frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--bg2);
+}
+.sc-frame iframe {
+  width: 390px;
+  height: 880px;
+  border: 0;
+  transform: scale(0.6462);
+  transform-origin: top left;
+  pointer-events: none;
+}
+.sc-card::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 38%;
+  background: linear-gradient(180deg, transparent, rgba(7,7,6,0.92));
+  pointer-events: none;
+}
+.sc-caption {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 18px 18px 16px;
+  z-index: 2;
+  pointer-events: none;
+}
+.sc-caption .sc-card-name {
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1.1;
+}
+.sc-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 30;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  background: rgba(12,12,11,0.7);
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: color .2s, border-color .2s;
+}
+.sc-arrow:hover { color: var(--gold); border-color: var(--gold-line); }
+.sc-arrow--prev { left: 0; }
+.sc-arrow--next { right: 0; }
+.sc-detail {
+  max-width: 560px;
+  margin: 30px auto 0;
+  text-align: center;
+  transition: opacity .25s ease, transform .25s ease;
+}
+.sc-detail.is-switching { opacity: 0; transform: translateY(8px); }
+.sc-cat {
   font-size: 10px;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.sc-detail h3 {
+  font-family: var(--serif);
+  font-size: clamp(30px, 4vw, 46px);
+  font-weight: 300;
+  line-height: 1.05;
+  margin: 12px 0;
+}
+.sc-desc {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+.sc-hint {
+  margin-top: 28px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--muted2);
-  opacity: 0;
-  animation: fadeIn 1s ease 1s forwards;
 }
 
 /* ---------- segments ---------- */
@@ -351,7 +475,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 
 /* ---------- work / launching soon ---------- */
 .case { padding: 72px 0; border-bottom: 1px solid var(--line); }
-.case-teaser { padding: 0; }
 .case-teaser-title {
   font-family: var(--serif);
   font-size: clamp(44px, 6.5vw, 88px);
@@ -365,9 +488,16 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   font-weight: 300;
   color: var(--muted);
   line-height: 1.85;
-  max-width: 480px;
+  max-width: 560px;
   margin-top: 26px;
 }
+.case-client-link {
+  color: var(--gold);
+  text-decoration: none;
+  border-bottom: 1px solid var(--gold-line);
+  transition: border-color 0.3s;
+}
+.case-client-link:hover { border-color: var(--gold); }
 .pulse-dot {
   display: inline-block;
   width: 7px;
@@ -382,65 +512,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   0%, 100% { box-shadow: 0 0 0 0 rgba(201,169,110,0.45); }
   50% { box-shadow: 0 0 0 9px rgba(201,169,110,0); }
 }
-
-/* ---------- concept work ---------- */
-.concepts { padding-top: 56px; border-top: 1px solid var(--line); }
-.concept-sub {
-  font-size: 11px;
-  font-weight: 300;
-  color: var(--muted2);
-  margin-top: 14px;
-  letter-spacing: 0.04em;
-}
-.work-list { display: flex; flex-direction: column; margin-top: 10px; }
-.work-row {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 24px;
-  align-items: center;
-  padding: 24px 0;
-  border-bottom: 1px solid var(--line);
-  text-decoration: none;
-  color: inherit;
-  position: relative;
-  transition: padding-left 0.3s ease;
-}
-.work-row::after {
-  content: '';
-  position: absolute;
-  left: 0; bottom: -1px;
-  width: 0; height: 1px;
-  background: var(--gold);
-  transition: width 0.4s ease;
-}
-.work-row:hover::after { width: 100%; }
-.work-row:hover { padding-left: 10px; }
-.work-info { display: flex; flex-direction: column; gap: 5px; }
-.work-name {
-  font-family: var(--serif);
-  font-size: clamp(22px, 2.8vw, 32px);
-  font-weight: 300;
-  line-height: 1.05;
-  color: var(--text);
-  transition: color 0.2s;
-}
-.work-row:hover .work-name { color: #fff; }
-.work-category {
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted2);
-  transition: color 0.2s;
-}
-.work-row:hover .work-category { color: var(--gold); }
-.work-arrow {
-  font-size: 10px;
-  color: var(--muted2);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  transition: transform 0.25s ease, color 0.2s;
-}
-.work-row:hover .work-arrow { transform: translateX(6px); color: var(--gold); }
 
 /* ---------- process ---------- */
 .process { padding: 88px 0; border-bottom: 1px solid var(--line); }
@@ -573,6 +644,25 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .form-submit { margin-top: 14px; align-self: center; }
 .hp-field { position: absolute; left: -9999px; opacity: 0; height: 0; overflow: hidden; }
 
+/* form feedback */
+.form-success {
+  display: none;
+  text-align: center;
+  padding: 32px 0 8px;
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 300;
+  color: var(--gold);
+}
+.form-error-msg {
+  display: none;
+  font-size: 12px;
+  color: #e07070;
+  text-align: center;
+  margin-top: 12px;
+  letter-spacing: 0.04em;
+}
+
 /* ---------- easter egg + footer ---------- */
 .wylder { text-align: center; padding: 44px 0; border-bottom: 1px solid var(--line); }
 .wylder-trigger {
@@ -614,162 +704,17 @@ footer {
 @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-/* ---------- showcase carousel ---------- */
-.showcase { padding: 88px 0; border-bottom: 1px solid var(--line); }
-.showcase-title {
-  font-family: var(--serif);
-  font-size: clamp(34px, 4vw, 52px);
-  font-weight: 300;
-  line-height: 1.1;
-  margin: 18px 0 10px;
-}
-.showcase-title em { font-style: italic; color: var(--muted); }
-.sc-stage {
-  position: relative;
-  height: 540px;
-  margin-top: 26px;
-  perspective: 1400px;
-  touch-action: pan-y;
-  user-select: none;
-  -webkit-user-select: none;
-}
-.sc-track { position: absolute; inset: 0; transform-style: preserve-3d; }
-.sc-card {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 252px;
-  height: 496px;
-  margin: -248px 0 0 -126px;
-  border: 1px solid var(--line);
-  background: var(--bg2);
-  overflow: hidden;
-  cursor: pointer;
-  will-change: transform, opacity;
-  transition: border-color .3s ease, box-shadow .3s ease;
-}
-.sc-card.is-active {
-  border-color: var(--gold-line);
-  box-shadow: 0 0 0 1px var(--gold-line), 0 30px 70px rgba(0,0,0,0.55);
-  cursor: grab;
-}
-.sc-stage.is-dragging .sc-card { cursor: grabbing; }
-.sc-fallback {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 24px;
-  font-family: var(--serif);
-  font-size: 24px;
-  font-weight: 300;
-  line-height: 1.2;
-  color: var(--muted);
-  background: radial-gradient(130% 80% at 50% 0%, rgba(201,169,110,0.10), transparent 60%), var(--bg2);
-}
-.sc-frame {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  background: var(--bg2);
-}
-.sc-frame iframe {
-  width: 390px;
-  height: 880px;
-  border: 0;
-  transform: scale(0.6462);   /* 252 / 390 */
-  transform-origin: top left;
-  pointer-events: none;
-}
-.sc-card::after {
-  content: '';
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 38%;
-  background: linear-gradient(180deg, transparent, rgba(7,7,6,0.92));
-  pointer-events: none;
-}
-.sc-caption {
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  padding: 18px 18px 16px;
-  z-index: 2;
-  pointer-events: none;
-}
-.sc-caption .sc-card-name {
-  font-family: var(--serif);
-  font-size: 21px;
-  font-weight: 300;
-  color: var(--text);
-  line-height: 1.1;
-}
-.sc-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 30;
-  width: 44px;
-  height: 44px;
-  border: 1px solid var(--line);
-  background: rgba(12,12,11,0.7);
-  color: var(--muted);
-  font-size: 18px;
-  line-height: 1;
-  cursor: pointer;
-  backdrop-filter: blur(4px);
-  transition: color .2s, border-color .2s;
-}
-.sc-arrow:hover { color: var(--gold); border-color: var(--gold-line); }
-.sc-arrow--prev { left: 0; }
-.sc-arrow--next { right: 0; }
-.sc-detail {
-  max-width: 560px;
-  margin: 30px auto 0;
-  text-align: center;
-  transition: opacity .25s ease, transform .25s ease;
-}
-.sc-detail.is-switching { opacity: 0; transform: translateY(8px); }
-.sc-cat {
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-.sc-detail h3 {
-  font-family: var(--serif);
-  font-size: clamp(30px, 4vw, 46px);
-  font-weight: 300;
-  line-height: 1.05;
-  margin: 12px 0;
-}
-.sc-desc {
-  font-size: 13px;
-  font-weight: 300;
-  color: var(--muted);
-  line-height: 1.8;
-  margin-bottom: 24px;
-}
-.sc-hint {
-  margin-top: 28px;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--muted2);
-}
 @media (max-width: 768px) {
   .sc-stage { height: 460px; }
   .sc-card { width: 212px; height: 416px; margin: -208px 0 0 -106px; }
-  .sc-frame iframe { transform: scale(0.5436); }  /* 212 / 390 */
+  .sc-frame iframe { transform: scale(0.5436); }
   .sc-arrow--prev { left: -8px; }
   .sc-arrow--next { right: -8px; }
 }
 
 @media (max-width: 768px) {
   .page { padding: 0 24px; }
-  .hero { padding: 80px 0 64px; }
+  .hero { padding: 56px 0 48px; }
   .hero-bottom { flex-direction: column; align-items: flex-start; gap: 28px; }
   .hero-ctas { white-space: normal; flex-wrap: wrap; gap: 20px; }
   .segment-grid { grid-template-columns: 1fr; }
@@ -800,15 +745,13 @@ footer {
     </nav>
   </header>
 
-  <!-- ============ HERO ============ -->
+  <!-- ============ HERO (compact — no big title) ============ -->
   <section class="hero inview">
     <p class="eyebrow" data-i18n="hero_eyebrow">Stockholm · Digital studio for sport & fitness brands</p>
-    <h1 class="hero-title" data-i18n="hero_title">Your website should <span class="gold-shimmer">sell</span> memberships.</h1>
     <div class="hero-bottom">
       <p class="hero-desc" data-i18n="hero_desc">Custom websites for gyms, martial arts clubs and coaches. Built to convert, and effortless for you to run.</p>
       <div class="hero-ctas">
         <a class="btn-gold" href="#contact" data-i18n="hero_cta1">Request a Consultation</a>
-        <a class="btn-ghost" href="#work" data-i18n="hero_cta2">See my work ↓</a>
       </div>
     </div>
   </section>
@@ -836,9 +779,9 @@ footer {
   <!-- ============ FIRST CLIENT CASE ============ -->
   <section class="case" id="work">
     <div class="case-teaser">
-      <span class="eyebrow" data-i18n="case_label">First client case</span>
+      <span class="eyebrow" data-i18n="case_label">First client cases</span>
       <h2 class="case-teaser-title"><span class="pulse-dot" aria-hidden="true"></span><span class="gold-shimmer" data-i18n="case_title">Launching soon.</span></h2>
-      <p class="case-teaser-text" data-i18n="case_text">A Stockholm martial arts club is getting a brand new site. The full case study lands here the day it goes live.</p>
+      <p class="case-teaser-text" data-i18n="case_text">A Stockholm martial arts club and a Stockholm-based personal trainer are both getting brand new sites. The full case studies land here the day they go live.</p>
     </div>
   </section>
 
@@ -918,18 +861,12 @@ footer {
     <p class="contact-sub" data-i18n="ct_sub">Tell me briefly about your club or business and I'll get back to you within 24 hours.</p>
 
     <!--
-      FORM SETUP (5 min, works on GitHub Pages today):
-      1. Create a free account at formspree.io
-      2. New form. Set the notification email to the inbox where you want requests
-         (your gmail works fine for now; visitors never see it)
-      3. Copy your endpoint, e.g. https://formspree.io/f/abcdwxyz
-      4. Replace YOUR_FORM_ID in the action below
-
-      LATER, IF THE SITE MOVES TO NETLIFY: you can switch to Netlify Forms by
-      removing the action and adding data-netlify="true" + a hidden form-name input.
+      FORM: uses fetch() to POST JSON to Formspree.
+      Replace YOUR_FORM_ID with your actual Formspree form ID.
+      The JS below handles submission without a page redirect,
+      shows a success message on the page, and catches errors.
     -->
-    <form class="contact-form" name="contact" method="POST" action="https://formspree.io/f/YOUR_FORM_ID">
-      <input type="hidden" name="_subject" value="New request via stormieperformance.com" />
+    <form class="contact-form" id="contactForm" novalidate>
       <p class="hp-field" aria-hidden="true"><label>Skip this field: <input name="_gotcha" tabindex="-1" autocomplete="off" /></label></p>
       <div class="field">
         <label for="f-name" data-i18n="f_name">Name</label>
@@ -951,8 +888,10 @@ footer {
         <label for="f-msg" data-i18n="f_msg">Tell me briefly</label>
         <textarea id="f-msg" name="message" rows="4"></textarea>
       </div>
-      <button class="btn-gold form-submit" type="submit" data-i18n="f_send">Send →</button>
+      <button class="btn-gold form-submit" type="submit" id="formSubmitBtn" data-i18n="f_send">Send →</button>
+      <p class="form-error-msg" id="formError" data-i18n="f_error">Something went wrong. Please try again or email me directly.</p>
     </form>
+    <p class="form-success" id="formSuccess" data-i18n="f_success">Message received — I'll be in touch within 24 hours.</p>
   </section>
 
   <!-- ============ EASTER EGG ============ -->
@@ -976,17 +915,21 @@ footer {
 </div>
 
 <script>
+// ============ i18n ============
 const I18N = {
   en: {
     nav_work: "Work",
     nav_how: "How it works",
     nav_cta: "Request a consultation",
     hero_eyebrow: "Stockholm · Digital studio for sport & fitness brands",
-    hero_title: 'Your website should <span class="gold-shimmer">sell</span> memberships.',
     hero_desc: "Custom websites for gyms, martial arts clubs and coaches. Built to convert, and effortless for you to run.",
     hero_cta1: "Request a consultation",
-    hero_cta2: "See my work ↓",
-    trust: "Stockholm &nbsp;·&nbsp; Built for real clubs &nbsp;·&nbsp; You own your domain and your content",
+    sc_label: "Showcase",
+    sc_title: 'The work, <em>live.</em>',
+    sc_hint: "Drag to spin — or use the arrows",
+    case_label: "First client cases",
+    case_title: "Launching soon.",
+    case_text: "A Stockholm martial arts club and a Stockholm-based personal trainer are both getting brand new sites. The full case studies land here the day they go live.",
     seg_label: "Who I work with",
     seg_title: "Built for the fitness industry. <em>Nothing else.</em>",
     seg1_name: "Gyms &amp; martial arts clubs",
@@ -996,17 +939,6 @@ const I18N = {
     seg3_name: "Shop &amp; brand",
     seg3_text: "Sell merch and gear straight to your community. An online store built into your site, not next to it.",
     seg_link: "See how →", seg_link2: "See how →", seg_link3: "See how →",
-    case_label: "First client case",
-    case_title: "Launching soon.",
-    case_text: "A Stockholm martial arts club is getting a brand new site. The full case study lands here the day it goes live.",
-    con_label: "Concept work",
-    con_sub: "Concepts that show what your site could look like.",
-    con1_cat: "Concept · PT &amp; coach · Website, booking &amp; shop",
-    con2_cat: "Concept · Martial arts club · Website, memberships &amp; CMS",
-    con_view: "View →", con_view2: "View →",
-    sc_label: "Showcase",
-    sc_title: 'The work, <em>live.</em>',
-    sc_hint: "Drag to spin — or use the arrows",
     pro_label: "How it works",
     pro_title: "Three steps. No surprises.",
     pro1_h: "We talk",
@@ -1027,6 +959,8 @@ const I18N = {
     f_name: "Name", f_email: "Email", f_type: "What do you run?",
     f_type1: "Gym / club", f_type2: "PT / coach", f_type3: "Other",
     f_msg: "Tell me briefly", f_send: "Send →",
+    f_success: "Message received — I'll be in touch within 24 hours.",
+    f_error: "Something went wrong. Please try again or email me directly.",
     ft_left: "Stormie Performance · Stockholm",
     ft_right: "Digital studio for the fitness industry"
   },
@@ -1035,11 +969,14 @@ const I18N = {
     nav_how: "Så funkar det",
     nav_cta: "Boka ett kostnadsfritt samtal",
     hero_eyebrow: "Stockholm · Digital studio för sport- & träningsvarumärken",
-    hero_title: 'Din hemsida ska <span class="gold-shimmer">sälja</span> medlemskap.',
     hero_desc: "Skräddarsydda webbplatser för gym, kampsportsklubbar och coacher. Byggda för att konvertera, och enkla för dig att sköta.",
     hero_cta1: "Boka ett kostnadsfritt samtal",
-    hero_cta2: "Se mitt arbete ↓",
-    trust: "Stockholm &nbsp;·&nbsp; Byggt åt riktiga klubbar &nbsp;·&nbsp; Du äger din domän och ditt innehåll",
+    sc_label: "Showcase",
+    sc_title: 'Arbetet, <em>live.</em>',
+    sc_hint: "Dra för att snurra — eller använd pilarna",
+    case_label: "Första kundcasen",
+    case_title: "Lanseras snart.",
+    case_text: "En kampsportsklubb i Stockholm och en Stockholmsbaserad personlig tränare får varsitt helt nytt site. Hela casen publiceras här samma dag som de går live.",
     seg_label: "Vem jag hjälper",
     seg_title: "Byggt för träningsbranschen. <em>Inget annat.</em>",
     seg1_name: "Gym &amp; kampsportsklubbar",
@@ -1049,17 +986,6 @@ const I18N = {
     seg3_name: "Shop &amp; varumärke",
     seg3_text: "Sälj merch och utrustning direkt till din community. En webbshop byggd in i din sajt, inte bredvid den.",
     seg_link: "Se hur →", seg_link2: "Se hur →", seg_link3: "Se hur →",
-    case_label: "Första kundcaset",
-    case_title: "Lanseras snart.",
-    case_text: "En kampsportsklubb i Stockholm får en helt ny sajt. Hela caset publiceras här samma dag som den går live.",
-    con_label: "Konceptarbete",
-    con_sub: "Koncept som visar hur din sajt kan se ut.",
-    con1_cat: "Koncept · PT &amp; coach · Webbplats, bokning &amp; shop",
-    con2_cat: "Koncept · Kampsportsklubb · Webbplats, medlemskap &amp; CMS",
-    con_view: "Visa →", con_view2: "Visa →",
-    sc_label: "Showcase",
-    sc_title: 'Arbetet, <em>live.</em>',
-    sc_hint: "Dra för att snurra — eller använd pilarna",
     pro_label: "Så funkar det",
     pro_title: "Tre steg. Inga överraskningar.",
     pro1_h: "Vi pratar",
@@ -1069,7 +995,7 @@ const I18N = {
     pro3_h: "Live på din domän",
     pro3_p: "Sajten lanseras på din adress med formulär, bokning och allt kopplat. Från dag ett uppdaterar du schema, nyheter och priser själv, och jag sköter driften bakom kulisserna.",
     care_title: 'Enkelt för dig.<br><span class="gold-shimmer">Skött av mig.</span>',
-    care_p1: "Din domän är din. Ditt innehåll är ditt. Att uppdatera det gör du själv, i ett vanligt kalkylark. Ändra schemat, lägg upp nyheter, justera priser på tiden det tar att brygga en kaffe. Inga inloggningar i något CMS. Inga tjocka manualer.",
+    care_p1: "Din domän är din. Ditt innehåll är ditt. Att uppdatera det gör du själv, i ett vanligt kalkylark. Ändra schemat, lägg upp nyheter, justera priser på den tid det tar att brygga en kaffe. Inga inloggningar i något CMS. Inga tjocka manualer.",
     care_p2: "Allt du inte vill tänka på, som hosting, säkerhet, backup och uppdateringar, tar jag hand om för en fast månadskostnad. Lägre än vad en mallplattform kostar.",
     about_title: 'Byggt från <span class="gold-shimmer">gymgolvet.</span>',
     about_p1: "Jag heter Storm Kolmodin: licensierad personlig tränare, agil projektledare och utvecklare, i den ordningen. Jag bygger för träningsvärlden och kampsporten eftersom jag lever i den. Jag vet vad som får någon att våga boka sitt första pass, och jag vet att klubbägare har bättre saker för sig än att slåss med sin hemsida.",
@@ -1080,6 +1006,8 @@ const I18N = {
     f_name: "Namn", f_email: "Mail", f_type: "Vad driver du?",
     f_type1: "Gym / klubb", f_type2: "PT / coach", f_type3: "Annat",
     f_msg: "Berätta kort", f_send: "Skicka →",
+    f_success: "Meddelande mottaget — jag återkommer inom 24 timmar.",
+    f_error: "Något gick fel. Försök igen eller maila mig direkt.",
     ft_left: "Stormie Performance · Stockholm",
     ft_right: "Digital studio för träningsbranschen"
   }
@@ -1095,7 +1023,7 @@ function setLang(lang) {
   document.documentElement.lang = lang;
   document.getElementById('lang-en').classList.toggle('active', lang === 'en');
   document.getElementById('lang-sv').classList.toggle('active', lang === 'sv');
-  try { localStorage.setItem('sp-lang', lang); } catch (e) { /* preview environments */ }
+  try { localStorage.setItem('sp-lang', lang); } catch (e) {}
 }
 
 (function init() {
@@ -1103,7 +1031,6 @@ function setLang(lang) {
   try { lang = localStorage.getItem('sp-lang') || 'en'; } catch (e) {}
   if (lang !== 'en') setLang(lang);
 
-  // gold detail reveals on scroll
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => {
@@ -1114,6 +1041,65 @@ function setLang(lang) {
   } else {
     document.querySelectorAll('section').forEach(s => s.classList.add('inview'));
   }
+})();
+
+// ============ CONTACT FORM (fetch → Formspree, no redirect) ============
+(function () {
+  var form = document.getElementById('contactForm');
+  var btn  = document.getElementById('formSubmitBtn');
+  var successEl = document.getElementById('formSuccess');
+  var errorEl   = document.getElementById('formError');
+
+  // ↓ Replace with your actual Formspree endpoint, e.g. https://formspree.io/f/abcdwxyz
+  var ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+
+  if (!form) return;
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    // honeypot check
+    var hp = form.querySelector('input[name="_gotcha"]');
+    if (hp && hp.value) return;
+
+    var name  = form.querySelector('#f-name').value.trim();
+    var email = form.querySelector('#f-email').value.trim();
+    if (!name || !email) return;
+
+    btn.disabled = true;
+    btn.style.opacity = '0.5';
+    errorEl.style.display = 'none';
+
+    var lang = document.documentElement.lang === 'sv' ? 'sv' : 'en';
+    var dict = I18N[lang];
+
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name:    name,
+        email:   email,
+        type:    form.querySelector('#f-type').value,
+        message: form.querySelector('#f-msg').value.trim(),
+        _subject: 'New request via stormieperformance.com'
+      })
+    })
+    .then(function (res) {
+      if (res.ok) {
+        form.style.display = 'none';
+        successEl.style.display = 'block';
+        successEl.textContent = dict.f_success;
+      } else {
+        throw new Error('server error');
+      }
+    })
+    .catch(function () {
+      btn.disabled = false;
+      btn.style.opacity = '1';
+      errorEl.style.display = 'block';
+      errorEl.textContent = dict.f_error;
+    });
+  });
 })();
 
 // ============ SHOWCASE CAROUSEL ============
@@ -1297,7 +1283,6 @@ function setLang(lang) {
   stage.addEventListener('pointercancel', endDrag);
   window.addEventListener('resize', render);
 
-  // re-render detail text when the EN/SV toggle changes the page language
   new MutationObserver(function () { updateDetail(shownIndex, true); })
     .observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
 
