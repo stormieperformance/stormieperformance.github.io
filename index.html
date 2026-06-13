@@ -805,40 +805,32 @@ function buildHeadline(text) {
     }
   }
 
-  // Smooth lerp snap — no bounce
+  // Smooth lerp to target
   function tick() {
-    const snap = Math.round(pos);
-    const diff = snap - pos;
+    const diff = target - pos;
     if (Math.abs(diff) < 0.001) {
-      pos = snap; render(); rafId = null; return;
+      pos = target; render(); rafId = null; return;
     }
-    pos += diff * (reduceMotion ? 1 : 0.11);
+    pos += diff * (reduceMotion ? 1 : 0.13);
     render();
     rafId = requestAnimationFrame(tick);
   }
-  function startPhysics() { if (rafId === null) rafId = requestAnimationFrame(tick); }
+  function startTween() { if (rafId === null) rafId = requestAnimationFrame(tick); }
 
   function goTo(i) {
-    const diff = (() => { let d = mod(i - Math.round(pos), N); if (d > N/2) d -= N; return d; })();
-    pos = pos - (pos - Math.round(pos)); // snap current to nearest first
-    pos += diff;
-    startPhysics();
+    const diff = (() => { let d = mod(i - target, N); if (d > N/2) d -= N; return d; })();
+    target += diff;
+    startTween();
   }
-  function step(dir) {
-    pos = Math.round(pos) + dir;
-    startPhysics();
-  }
+  function step(dir) { target += dir; startTween(); }
 
-  // ── drag / swipe ───────────────────────────────────────────────────────
-  let dragging = false, dragStartX = 0, dragLastX = 0, dragStartPos = 0, dragMoved = false;
-  let lastVel = 0, lastTime = 0;
+  let dragging = false, dragStartX = 0, dragStartPos = 0, dragMoved = false;
 
   stage.addEventListener('pointerdown', e => {
     if (e.target.closest('.sc-arrow')) return;
     dragging = true; dragMoved = false;
-    dragStartX = dragLastX = e.clientX;
+    dragStartX = e.clientX;
     dragStartPos = pos;
-    lastVel = 0; lastTime = Date.now();
     stage.classList.add('is-dragging');
     if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
     stage.setPointerCapture(e.pointerId);
@@ -846,10 +838,7 @@ function buildHeadline(text) {
   stage.addEventListener('pointermove', e => {
     if (!dragging) return;
     const dx = e.clientX - dragStartX;
-    if (Math.abs(dx) > 5) dragMoved = true;
-    const now = Date.now();
-    lastVel = (e.clientX - dragLastX) / Math.max(1, now - lastTime) * 16;
-    lastTime = now; dragLastX = e.clientX;
+    if (Math.abs(dx) > 6) dragMoved = true;
     pos = dragStartPos - dx / spacing();
     render();
   });
@@ -857,12 +846,8 @@ function buildHeadline(text) {
     if (!dragging) return;
     dragging = false;
     stage.classList.remove('is-dragging');
-    // small fling: if swipe was fast enough, advance one step in that direction
-    const fling = -lastVel / spacing();
-    if (Math.abs(fling) > 0.28) {
-      pos = Math.round(pos) + Math.sign(fling);
-    }
-    startPhysics();
+    target = Math.round(pos);
+    startTween();
     setTimeout(() => { dragMoved = false; }, 0);
   }
   stage.addEventListener('pointerup', endDrag);
