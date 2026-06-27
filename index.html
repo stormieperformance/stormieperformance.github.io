@@ -558,8 +558,8 @@ footer { padding: 24px 0; display: flex; justify-content: space-between; align-i
 <section class="care">
   <h2 class="care-title" data-i18n="care_title">Easy for you.<br><span class="gold-shimmer">Handled by me.</span></h2>
   <div class="care-right">
-    <p data-i18n="care_p1">Your domain is yours. Your content is yours. Updating it is something you do yourself, in a regular spreadsheet. Change the schedule, post news, adjust prices in the time it takes to make a coffee. No CMS logins. No thick manuals.</p>
-    <p data-i18n="care_p2">Everything you don't want to think about, like hosting, security, backups and updates, I take care of for a flat monthly fee. Lower than what a template platform charges.</p>
+    <p data-i18n="care_p1">Your content is always yours. Depending on the project, you update it yourself in a spreadsheet or through a clean CMS dashboard built for non-developers. No manuals, no agency middleman.</p>
+    <p data-i18n="care_p2">Everything you don't want to think about, like hosting, security, backups and updates, I handle for a flat monthly fee. Less than what a template platform charges, with none of the limitations.</p>
   </div>
 </section>
 
@@ -576,6 +576,7 @@ footer { padding: 24px 0; display: flex; justify-content: space-between; align-i
       <button class="need-btn" data-need="admin" data-i18n-need="need_admin">Easier administration</button>
       <button class="need-btn" data-need="outdated" data-i18n-need="need_outdated">Replace an outdated website</button>
       <button class="need-btn" data-need="new" data-i18n-need="need_new">New gym opening</button>
+      <button class="need-btn" data-need="other" data-i18n-need="need_other">Something else</button>
     </div>
   </div>
 
@@ -647,8 +648,8 @@ const I18N = {
     pro2_h:"You see possibilities", pro2_p:"Within a week you get a first draft of your actual site. Not a sketch, a working page with your content. We adjust together until it sits right.",
     pro3_h:"Live on your domain", pro3_p:"The site launches on your address with forms, booking and everything connected. From day one you update schedules, news and prices yourself, and I handle the operations behind the scenes.",
     care_title:"Easy for you.<br><span class=\"gold-shimmer\">Handled by me.</span>",
-    care_p1:"Your domain is yours. Your content is yours. Updating it is something you do yourself, in a regular spreadsheet. Change the schedule, post news, adjust prices in the time it takes to make a coffee. No CMS logins. No thick manuals.",
-    care_p2:"Everything you don't want to think about, like hosting, security, backups and updates, I take care of for a flat monthly fee. Lower than what a template platform charges.",
+    care_p1:"Your content is always yours. Depending on the project, you update it yourself in a spreadsheet or through a clean CMS dashboard built for non-developers. No manuals, no agency middleman.",
+    care_p2:"Everything you don't want to think about, like hosting, security, backups and updates, I handle for a flat monthly fee. Less than what a template platform charges, with none of the limitations.",
     ct_label:"Get in touch",
     ct_title:"What do you need <span class=\"gold-shimmer\">help with?</span>",
     ct_sub:"",
@@ -691,8 +692,8 @@ const I18N = {
     pro2_h:"Du ser ett utkast", pro2_p:"Inom en vecka får du ett första utkast av din riktiga sajt. Inte en skiss, en fungerande sida med ditt innehåll. Vi justerar tillsammans tills det sitter.",
     pro3_h:"Live på din domän", pro3_p:"Sajten lanseras på din adress med formulär, bokning och allt kopplat. Från dag ett uppdaterar du schema, nyheter och priser själv, och jag sköter driften bakom kulisserna.",
     care_title:"Enkelt för dig.<br><span class=\"gold-shimmer\">Skött av mig.</span>",
-    care_p1:"Din domän är din. Ditt innehåll är ditt. Att uppdatera det gör du själv, i ett vanligt kalkylark. Ändra schemat, lägg upp nyheter, justera priser på den tid det tar att brygga en kaffe. Inga inloggningar i något CMS. Inga tjocka manualer.",
-    care_p2:"Allt du inte vill tänka på, som hosting, säkerhet, backup och uppdateringar, tar jag hand om för en fast månadskostnad. Lägre än vad en mallplattform kostar.",
+    care_p1:"Ditt innehåll är alltid ditt. Beroende på projektet uppdaterar du det själv i ett kalkylark eller via ett enkelt CMS-gränssnitt byggt för icke-utvecklare. Inga manualer, ingen mellanhands-byrå.",
+    care_p2:"Allt du inte vill tänka på, som hosting, säkerhet, backup och uppdateringar, sköter jag för en fast månadskostnad. Lägre än vad en mallplattform kostar, utan deras begränsningar.",
     ct_label:"Kom igång",
     ct_title:"Vad behöver du <span class=\"gold-shimmer\">hjälp med?</span>",
     ct_sub:"",
@@ -779,7 +780,7 @@ function buildHeadline(text) {
     {
       name:'Real Performance by Dante', href:'https://www.pt-real-performance-by-dante.com', frame:'https://www.pt-real-performance-by-dante.com', comingSoon:true,
       img:'https://www.pt-real-performance-by-dante.com/og-image.jpg',
-      en:{cat:'Client project · Launching soon', desc:'A Stockholm-based personal trainer getting a new site built on Next.js, TypeScript, and Sanity CMS — with integrated booking and client-managed content. Case study publishes on launch day.', link:''},
+      en:{cat:'Client project · Launching soon', desc:'A Stockholm-based personal trainer getting a new site built on Next.js, TypeScript, and Sanity CMS with integrated booking and client-managed content. Case study publishes on launch day.', link:''},
       sv:{cat:'Kundprojekt · Lanseras snart', desc:'En Stockholmsbaserad personlig tränare som får en ny sajt med integrerad bokning. Caset publiceras på lanseringsdagen.', link:''}
     },
 
@@ -963,11 +964,11 @@ const NEEDS = {
     },
     impression: {
       title: "A first impression that matches your gym.",
-      text: "Most gym sites look like templates. Yours should look like you built it on purpose — because the experience of the site is part of the experience of the gym."
+      text: "Most gym sites look like templates. Yours should look like you built it on purpose, because the experience of the site is part of the experience of the gym."
     },
     admin: {
       title: "Less time managing a website.",
-      text: "Update your schedule in a spreadsheet. Post news without a CMS login. Change prices in seconds. The whole point is that you stop fighting your website and focus on running your gym."
+      text: "Update your schedule in a spreadsheet, or manage everything through a clean CMS dashboard depending on what fits your workflow. Either way, you stay in control without needing a developer for every small change."
     },
     outdated: {
       title: "A site that actually represents you now.",
@@ -975,7 +976,11 @@ const NEEDS = {
     },
     new: {
       title: "A strong start for your new gym.",
-      text: "Launch with a site that looks like you've been around for years. Memberships, schedule, booking and brand — all in place from day one."
+      text: "Launch with a site that looks like you've been around for years. Memberships, schedule, booking and brand, all in place from day one."
+    },
+    other: {
+      title: "Let's figure it out together.",
+      text: "Not every brief fits a checkbox. Tell me what's on your mind and we'll work out what makes sense, whether it's a full site, a single feature, or something you haven't seen done before."
     }
   },
   sv: {
@@ -985,11 +990,11 @@ const NEEDS = {
     },
     impression: {
       title: "Ett första intryck som matchar ditt gym.",
-      text: "De flesta gymhemsidor ser ut som mallar. Din borde se ut som att den byggts med avsikt — för upplevelsen av sajten är en del av upplevelsen av gymmet."
+      text: "De flesta gymhemsidor ser ut som mallar. Din borde se ut som att den byggts med avsikt, för upplevelsen av sajten är en del av upplevelsen av gymmet."
     },
     admin: {
       title: "Mindre tid med att hantera en hemsida.",
-      text: "Uppdatera schemat i ett kalkylark. Lägg upp nyheter utan CMS-inloggning. Ändra priser på sekunder. Hela poängen är att du slutar slåss med din hemsida och fokuserar på att driva ditt gym."
+      text: "Uppdatera schemat i ett kalkylark, eller hantera allt via ett enkelt CMS-gränssnitt beroende på vad som passar dig. Oavsett förblir du i kontroll utan att behöva en utvecklare för varje liten ändring."
     },
     outdated: {
       title: "En sajt som faktiskt representerar dig nu.",
@@ -997,14 +1002,18 @@ const NEEDS = {
     },
     new: {
       title: "En stark start för ditt nya gym.",
-      text: "Lansera med en sajt som ser ut som om du har funnits i åratal. Medlemskap, schema, bokning och varumärke — allt på plats från dag ett."
+      text: "Lansera med en sajt som ser ut som om du har funnits i åratal. Medlemskap, schema, bokning och varumärke, allt på plats från dag ett."
+    },
+    other: {
+      title: "Vi listar ut det tillsammans.",
+      text: "Inte allt passar i en kryssruta. Berätta vad du har i tankarna så tar vi reda på vad som är rätt, oavsett om det är en hel sajt, en enskild funktion eller något du inte sett gjort tidigare."
     }
   }
 };
 
 const NEED_LABELS = {
-  en: { members:'More members', impression:'Better first impression', admin:'Easier administration', outdated:'Replace an outdated website', new:'New gym opening', back:'← Back' },
-  sv: { members:'Fler medlemmar', impression:'Bättre första intryck', admin:'Enklare administration', outdated:'Ersätt en föråldrad hemsida', new:'Nytt gym öppnar', back:'← Tillbaka' }
+  en: { members:'More members', impression:'Better first impression', admin:'Easier administration', outdated:'Replace an outdated website', new:'New gym opening', other:'Something else', back:'← Back' },
+  sv: { members:'Fler medlemmar', impression:'Bättre första intryck', admin:'Enklare administration', outdated:'Ersätt en föråldrad hemsida', new:'Nytt gym öppnar', other:'Något annat', back:'← Tillbaka' }
 };
 
 (function() {
