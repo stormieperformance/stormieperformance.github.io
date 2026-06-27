@@ -41,6 +41,30 @@ html { scroll-behavior: smooth; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+/* ══ MOBILE REVEAL ANIMATIONS ══ */
+@media (max-width: 768px) {
+  .mob-reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    filter: blur(7px);
+    transition:
+      opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .mob-reveal.mob-visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+  .mob-reveal:nth-child(1) { transition-delay: 0.04s; }
+  .mob-reveal:nth-child(2) { transition-delay: 0.14s; }
+  .mob-reveal:nth-child(3) { transition-delay: 0.24s; }
+  .mob-reveal:nth-child(4) { transition-delay: 0.34s; }
+  .mob-reveal:nth-child(5) { transition-delay: 0.44s; }
+  .mob-reveal:nth-child(6) { transition-delay: 0.54s; }
+}
 body {
   background: var(--bg);
   color: var(--text);
@@ -484,8 +508,8 @@ footer { padding: 24px 0; display: flex; justify-content: space-between; align-i
 
 <!-- ABOUT — directly under carousel -->
 <section class="about-inline inview" id="about">
-  <h2 class="about-inline-title" data-i18n="about_title">Built from <span class="gold-shimmer">the gym floor.</span></h2>
-  <div class="about-inline-right">
+  <h2 class="about-inline-title mob-reveal" data-i18n="about_title">Built from <span class="gold-shimmer">the gym floor.</span></h2>
+  <div class="about-inline-right mob-reveal">
     <p data-i18n="about_p1">I'm Storm Kolmodin. Licensed personal trainer, agile project manager, and developer. I build websites for gyms, clubs, and coaches. Not because I found a niche, but because it's the world I come from.</p>
     <p data-i18n="about_p2">Stormie Performance is a small studio with a simple promise: you'll work directly with the person building your site. No middlemen. No handovers. No surprises.</p>
     <p class="about-sign">— Storm</p>
@@ -494,24 +518,24 @@ footer { padding: 24px 0; display: flex; justify-content: space-between; align-i
 
 <!-- TRUST / CREDENTIALS -->
 <section class="trust inview" id="trust">
-  <span class="section-label" data-i18n="trust_label">Why it works</span>
+  <span class="section-label mob-reveal" data-i18n="trust_label">Why it works</span>
   <div class="trust-grid">
-    <div class="trust-item">
+    <div class="trust-item mob-reveal">
       <span class="trust-num">i.</span>
       <span class="trust-title" data-i18n="trust1_title">Licensed Personal Trainer</span>
       <p class="trust-body" data-i18n="trust1_body">Certified since 2018 and further educated at the Swedish School of Sport and Health Sciences (GIH). I understand what motivates people to take the first step and what keeps them coming back.</p>
     </div>
-    <div class="trust-item">
+    <div class="trust-item mob-reveal">
       <span class="trust-num">ii.</span>
       <span class="trust-title" data-i18n="trust2_title">Agile Project Manager & Developer</span>
       <p class="trust-body" data-i18n="trust2_body">Trained at Futuregames and Stockholm University. Projects delivered with clear communication, structured workflows and attention to detail.</p>
     </div>
-    <div class="trust-item">
+    <div class="trust-item mob-reveal">
       <span class="trust-num">iii.</span>
       <span class="trust-title" data-i18n="trust3_title">Former Gym Manager & Fitness Instructor</span>
       <p class="trust-body" data-i18n="trust3_body">Working in fitness since 2017. From memberships and schedules to coaching and daily operations, I understand how gyms actually run.</p>
     </div>
-    <div class="trust-item">
+    <div class="trust-item mob-reveal">
       <span class="trust-num">iv.</span>
       <span class="trust-title" data-i18n="trust4_title">Built for Fitness Only</span>
       <p class="trust-body" data-i18n="trust4_body">I don't build websites for restaurants or law firms. Every project is created for gyms, martial arts clubs and coaches. Having worked in the fitness industry since 2017 as a personal trainer, fitness instructor, gym manager, and coach, I understand the businesses I build for.</p>
@@ -521,20 +545,20 @@ footer { padding: 24px 0; display: flex; justify-content: space-between; align-i
 
 <!-- SEGMENTS -->
 <section class="segments" id="segments">
-  <span class="section-label" data-i18n="seg_label">Who I work with</span>
-  <h2 class="segments-title" data-i18n="seg_title">Built for the fitness industry. <em>Nothing else.</em></h2>
+  <span class="section-label mob-reveal" data-i18n="seg_label">Who I work with</span>
+  <h2 class="segments-title mob-reveal" data-i18n="seg_title">Built for the fitness industry. <em>Nothing else.</em></h2>
   <div class="segment-grid">
-    <a class="segment-card" href="stormiemuaythai.html">
+    <a class="segment-card mob-reveal" href="stormiemuaythai.html">
       <h3 class="segment-name" data-i18n="seg1_name">Gyms &amp; martial arts clubs</h3>
       <p class="segment-text" data-i18n="seg1_text">More trial sessions, more members. A site that reflects your culture as well as your Instagram does, with clear paths to trial passes, memberships and corporate training. And when the schedule changes? You update it yourself in 30 seconds.</p>
       <span class="segment-link" data-i18n="seg_link">See how →</span>
     </a>
-    <a class="segment-card" href="erikstrand.html">
+    <a class="segment-card mob-reveal" href="erikstrand.html">
       <h3 class="segment-name" data-i18n="seg2_name">PTs &amp; coaches</h3>
       <p class="segment-text" data-i18n="seg2_text">Fill your programs. A personal site with booking, packages and payments, so a follower becomes a client without you chasing DMs. New prices, new offers, new testimonials: you change them yourself, between two sessions.</p>
       <span class="segment-link" data-i18n="seg_link2">See how →</span>
     </a>
-    <a class="segment-card wide" href="ecommerce.html">
+    <a class="segment-card wide mob-reveal" href="ecommerce.html">
       <h3 class="segment-name" data-i18n="seg3_name">Shop &amp; brand</h3>
       <p class="segment-text" data-i18n="seg3_text">Sell merch and gear straight to your community. An online store built into your site, not next to it.</p>
       <span class="segment-link" data-i18n="seg_link3">See how →</span>
@@ -544,13 +568,13 @@ footer { padding: 24px 0; display: flex; justify-content: space-between; align-i
 
 <!-- PROCESS -->
 <section class="process" id="process">
-  <span class="section-label" data-i18n="pro_label">How it works</span>
-  <h2 class="process-title" data-i18n="pro_title">Three steps. No surprises.</h2>
+  <span class="section-label mob-reveal" data-i18n="pro_label">How it works</span>
+  <h2 class="process-title mob-reveal" data-i18n="pro_title">Three steps. No surprises.</h2>
   <div class="process-grid">
-    <div class="step"><p class="step-num">1</p><h3 data-i18n="pro1_h">We talk</h3><p data-i18n="pro1_p"> Every club, coach and business is different. We start by understanding your goals, your clients and the role the website should play in the business.</p></div>
-    <div class="step"><p class="step-num">2</p><h3 data-i18n="pro2_h">Built together</h3><p data-i18n="pro2_p"> Whenever possible, I review your existing website, social media and public material before we meet. That gives us something concrete to discuss from the start. From there, we test ideas, make adjustments and keep improving the site together.
+    <div class="step mob-reveal"><p class="step-num">1</p><h3 data-i18n="pro1_h">We talk</h3><p data-i18n="pro1_p"> Every club, coach and business is different. We start by understanding your goals, your clients and the role the website should play in the business.</p></div>
+    <div class="step mob-reveal"><p class="step-num">2</p><h3 data-i18n="pro2_h">Built together</h3><p data-i18n="pro2_p"> Whenever possible, I review your existing website, social media and public material before we meet. That gives us something concrete to discuss from the start. From there, we test ideas, make adjustments and keep improving the site together.
 </p></div>
-    <div class="step"><p class="step-num">3</p><h3 data-i18n="pro3_h">Live on your domain</h3><p data-i18n="pro3_p">The site launches on your address with forms, booking and everything connected. From day one you update schedules, news and prices yourself, and I handle the operations behind the scenes.</p></div>
+    <div class="step mob-reveal"><p class="step-num">3</p><h3 data-i18n="pro3_h">Live on your domain</h3><p data-i18n="pro3_p">The site launches on your address with forms, booking and everything connected. From day one you update schedules, news and prices yourself, and I handle the operations behind the scenes.</p></div>
   </div>
 </section>
 
@@ -739,6 +763,21 @@ function buildHeadline(text) {
     }, { threshold: 0.1 });
     document.querySelectorAll('section').forEach(s => io.observe(s));
   } else { document.querySelectorAll('section').forEach(s => s.classList.add('inview')); }
+
+  // Mobile-only reveal animations
+  if (window.innerWidth <= 768 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const mobIO = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('mob-visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    document.querySelectorAll('.mob-reveal').forEach(el => mobIO.observe(el));
+  } else {
+    document.querySelectorAll('.mob-reveal').forEach(el => el.classList.add('mob-visible'));
+  }
 })();
 
 (function() {
