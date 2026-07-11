@@ -367,9 +367,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .wylder-game a { display: inline-block; opacity: 0.6; transition: opacity 0.2s; text-decoration: none; }
 .wylder-game a:hover { opacity: 1; }
 .wylder-game svg { display: block; margin: 0 auto; }
-footer { padding: 24px 0; display: flex; justify-content: space-between; align-items: center; }
+footer { padding: 24px 0; display: flex; flex-direction: column; gap: 14px; }
+.footer-row { display: flex; justify-content: space-between; align-items: center; }
 .footer-left { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted2); }
 .footer-right { font-family: var(--serif); font-size: 13px; font-style: italic; color: var(--muted2); }
+.footer-network { display: flex; justify-content: center; align-items: center; gap: 10px; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; }
+.footer-network a { color: var(--muted2); text-decoration: none; transition: color 0.2s; }
+.footer-network a:hover { color: var(--gold); }
+.footer-network .dot { color: var(--line); }
 
 /* ══ MOBILE ══ */
 @media (max-width: 768px) {
@@ -391,7 +396,7 @@ footer { padding: 24px 0; display: flex; justify-content: space-between; align-i
   .process-grid { grid-template-columns: 1fr; gap: 36px; }
   .care { grid-template-columns: 1fr; gap: 32px; }
   .contact { padding: 76px 0 64px; }
-  footer { flex-direction: column; gap: 8px; text-align: center; }
+  .footer-row { flex-direction: column; gap: 8px; text-align: center; }
   .hide-mobile { display: none; }
 }
 
@@ -608,8 +613,17 @@ footer { padding: 24px 0; display: flex; justify-content: space-between; align-i
 </div>
 
 <footer>
-  <span class="footer-left" data-i18n="ft_left">Stormie Performance · Stockholm</span>
-  <span class="footer-right" data-i18n="ft_right">Digital studio for the fitness industry</span>
+  <div class="footer-network">
+    <a href="https://stormieperformance.com">Stormie Performance</a>
+    <span class="dot">·</span>
+    <a href="https://stormie.app">Stormie Studios</a>
+    <span class="dot">·</span>
+    <a href="https://stormiemoves.com">Stormie Moves</a>
+  </div>
+  <div class="footer-row">
+    <span class="footer-left" data-i18n="ft_left">Stormie Performance · Stockholm</span>
+    <span class="footer-right" data-i18n="ft_right">Digital studio for the fitness industry</span>
+  </div>
 </footer>
 
 </div>
