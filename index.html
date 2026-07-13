@@ -367,9 +367,22 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .wylder-game a { display: inline-block; opacity: 0.6; transition: opacity 0.2s; text-decoration: none; }
 .wylder-game a:hover { opacity: 1; }
 .wylder-game svg { display: block; margin: 0 auto; }
-footer { padding: 24px 0; display: flex; justify-content: space-between; align-items: center; }
-.footer-left { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted2); }
-.footer-right { font-family: var(--serif); font-size: 13px; font-style: italic; color: var(--muted2); }
+/* ══ FOOTER SHELL (matches Stormie Games / Moves / Studios) ══ */
+.hud-frame { position: relative; margin-left: -48px; margin-right: -48px; }
+.footer-shell { border: 0; border-top: 1px solid rgba(201,169,110,0.12); background: linear-gradient(180deg, rgba(12,12,11,0.28), rgba(8,9,10,0.96)); }
+footer { max-width: 1080px; margin: 0 auto; padding: 42px 48px 34px; display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
+.footer-mark { width: 24px; height: 24px; color: rgba(201,169,110,0.68); margin-bottom: 4px; }
+.footer-network { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 9px; letter-spacing: 0.13em; text-transform: uppercase; }
+.footer-network a { color: rgba(232,228,220,0.30); text-decoration: none; transition: color 0.2s ease; }
+.footer-network a:hover { color: var(--gold); }
+.footer-network .dot { color: rgba(201,169,110,0.32); }
+.footer-row { display: flex; flex-direction: column; align-items: center; gap: 5px; width: 100%; }
+.footer-left { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(232,228,220,0.25); }
+.footer-right { font-family: var(--serif); font-size: 14px; font-style: italic; color: rgba(232,228,220,0.28); }
+.footer-social { display: flex; align-items: center; gap: 18px; margin-top: 4px; }
+.footer-social a { color: rgba(201,169,110,0.52); display: inline-flex; transition: color 0.2s ease, transform 0.2s ease; }
+.footer-social a:hover { color: var(--gold); transform: translateY(-1px); }
+.footer-social svg { width: 17px; height: 17px; }
 
 /* ══ MOBILE ══ */
 @media (max-width: 768px) {
@@ -391,7 +404,10 @@ footer { padding: 24px 0; display: flex; justify-content: space-between; align-i
   .process-grid { grid-template-columns: 1fr; gap: 36px; }
   .care { grid-template-columns: 1fr; gap: 32px; }
   .contact { padding: 76px 0 64px; }
-  footer { flex-direction: column; gap: 8px; text-align: center; }
+  .footer-row { gap: 5px; text-align: center; }
+  footer { padding: 36px 24px 30px; gap: 14px; }
+  .footer-network { max-width: 320px; line-height: 1.8; }
+  .hud-frame { margin-left: -24px; margin-right: -24px; }
   .hide-mobile { display: none; }
 }
 
@@ -607,10 +623,32 @@ footer { padding: 24px 0; display: flex; justify-content: space-between; align-i
   </div>
 </div>
 
+<div class="hud-frame footer-shell">
 <footer>
-  <span class="footer-left" data-i18n="ft_left">Stormie Performance · Stockholm</span>
-  <span class="footer-right" data-i18n="ft_right">Digital studio for the fitness industry</span>
+  <svg class="footer-mark" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" aria-hidden="true">
+    <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/>
+  </svg>
+
+  <div class="footer-network">
+    <a href="https://stormieperformance.com">Stormie Performance</a>
+    <span class="dot">·</span>
+    <a href="https://stormiestudios.com">Stormie Studios</a>
+    <span class="dot">·</span>
+    <a href="https://stormiemoves.com">Stormie Moves</a>
+  </div>
+
+  <div class="footer-row">
+    <div class="footer-left">Stormie Performance By Storm Kolmodin</div>
+    <div class="footer-right">stormieperformance.com</div>
+  </div>
+
+  <div class="footer-social">
+    <a href="mailto:storm.kolmodin@gmail.com" aria-label="Email">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+    </a>
+  </div>
 </footer>
+</div>
 
 </div>
 
@@ -657,8 +695,7 @@ const I18N = {
     f_type1:"Gym / club", f_type2:"PT / coach", f_type3:"Other",
     f_msg:"Tell me briefly", f_send:"Send →",
     f_success:"Message received. I'll be in touch within 24 hours.",
-    f_error:"Something went wrong. Please try again or email me directly.",
-    ft_left:"Stormie Performance · Stockholm", ft_right:"Digital studio for the fitness industry"
+    f_error:"Something went wrong. Please try again or email me directly."
   },
   sv: {
     nav_work:"Case", nav_how:"Så funkar det", nav_cta:"Skicka en förfrågan",
@@ -701,8 +738,7 @@ const I18N = {
     f_type1:"Gym / klubb", f_type2:"PT / coach", f_type3:"Annat",
     f_msg:"Berätta kort", f_send:"Skicka →",
     f_success:"Meddelande mottaget. Jag återkommer inom 24 timmar.",
-    f_error:"Något gick fel. Försök igen eller maila mig direkt.",
-    ft_left:"Stormie Performance · Stockholm", ft_right:"Digital studio för träningsbranschen"
+    f_error:"Något gick fel. Försök igen eller maila mig direkt."
   }
 };
 
