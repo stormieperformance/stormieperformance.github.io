@@ -358,6 +358,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .hp-field { position: absolute; left: -9999px; opacity: 0; height: 0; overflow: hidden; }
 .form-success { display: none; text-align: center; padding: 32px 0 8px; font-family: var(--serif); font-size: 22px; font-weight: 300; color: var(--gold); }
 .form-error-msg { display: none; font-size: 12px; color: #e07070; text-align: center; margin-top: 12px; letter-spacing: 0.04em; }
+.form-privacy-note { text-align: center; margin-top: 18px; font-size: 11px; }
+.form-privacy-note a { color: var(--muted2); text-decoration: none; border-bottom: 1px solid var(--line); transition: color 0.2s ease; }
+.form-privacy-note a:hover { color: var(--gold); border-color: var(--gold-line); }
 
 /* ══ FOOTER ══ */
 .wylder { text-align: center; padding: 44px 0; border-bottom: 1px solid var(--line); }
@@ -610,6 +613,7 @@ footer { max-width: 1080px; margin: 0 auto; padding: 42px 48px 34px; display: fl
       <p class="form-error-msg" id="formError" data-i18n="f_error">Something went wrong. Please try again or email me directly.</p>
     </form>
     <p class="form-success" id="formSuccess" data-i18n="f_success">Message received. I'll be in touch within 24 hours.</p>
+    <p class="form-privacy-note"><a href="/privacy.html" data-i18n="f_privacy">Privacy policy</a></p>
   </div>
 </section>
 
@@ -695,7 +699,8 @@ const I18N = {
     f_type1:"Gym / club", f_type2:"PT / coach", f_type3:"Other",
     f_msg:"Tell me briefly", f_send:"Send →",
     f_success:"Message received. I'll be in touch within 24 hours.",
-    f_error:"Something went wrong. Please try again or email me directly."
+    f_error:"Something went wrong. Please try again or email me directly.",
+    f_privacy:"Privacy policy"
   },
   sv: {
     nav_work:"Case", nav_how:"Så funkar det", nav_cta:"Skicka en förfrågan",
@@ -738,7 +743,8 @@ const I18N = {
     f_type1:"Gym / klubb", f_type2:"PT / coach", f_type3:"Annat",
     f_msg:"Berätta kort", f_send:"Skicka →",
     f_success:"Meddelande mottaget. Jag återkommer inom 24 timmar.",
-    f_error:"Något gick fel. Försök igen eller maila mig direkt."
+    f_error:"Något gick fel. Försök igen eller maila mig direkt.",
+    f_privacy:"Integritetspolicy"
   }
 };
 
