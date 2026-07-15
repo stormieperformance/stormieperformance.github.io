@@ -420,8 +420,14 @@ footer { max-width: 1080px; margin: 0 auto; padding: 42px 48px 34px; display: fl
   .footer-network { max-width: 320px; line-height: 1.8; }
   .hud-frame { margin-left: -24px; margin-right: -24px; }
   .topbar { margin: 0 -24px; padding: 14px 24px; }
-  .topbar-right { gap: 14px; }
-  .topbar-right a.cta-link { padding: 7px 12px; font-size: 9px; }
+  .topbar-right { gap: 12px; }
+  .topbar-left { font-size: 9px; letter-spacing: 0.14em; }
+  .topbar-right a.cta-link {
+    padding: 8px 14px;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
   .hide-mobile { display: none; }
 }
 
@@ -488,7 +494,7 @@ footer { max-width: 1080px; margin: 0 auto; padding: 42px 48px 34px; display: fl
       <span>/</span>
       <button type="button" id="lang-sv" onclick="setLang('sv')">SV</button>
     </div>
-    <a href="#contact" class="cta-link" data-i18n="nav_cta">Request a consultation</a>
+    <a href="#contact" class="cta-link" data-i18n="nav_cta_short">Consultation</a>
   </nav>
 </header>
 
@@ -675,7 +681,7 @@ footer { max-width: 1080px; margin: 0 auto; padding: 42px 48px 34px; display: fl
 <script>
 const I18N = {
   en: {
-    nav_work:"Work", nav_how:"How it works", nav_cta:"Request a consultation",
+    nav_work:"Work", nav_how:"How it works", nav_cta:"Request a consultation", nav_cta_short:"Consultation",
     hero_eyebrow:"Stockholm · Digital studio for sport & fitness brands",
     hero_headline:"Custom Websites for Gyms, Coaches & Martial Arts Clubs.",
     hero_sub:"Built to convert visitors into members, and effortless for you to run.",
@@ -719,7 +725,7 @@ const I18N = {
     f_privacy:"Privacy policy"
   },
   sv: {
-    nav_work:"Case", nav_how:"Så funkar det", nav_cta:"Skicka en förfrågan",
+    nav_work:"Case", nav_how:"Så funkar det", nav_cta:"Skicka en förfrågan", nav_cta_short:"Konsultation",
     hero_eyebrow:"Stockholm · Digital studio för sport och träning",
     hero_headline:"Skräddarsydda webbplatser för gym, coacher och kampsportsklubbar.",
     hero_sub:"Byggda för att omvandla besökare till medlemmar, och enkla för dig att sköta.",
