@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Masters Gym Built by Stormie Studios</title>
+<meta name="description" content="How Masters Gym Stockholm's site was rebuilt: bilingual, conversion-focused, self-service CMS. Built by Stormie Studios." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0c0c0b;
+  --bg2: #111110;
+  --text: #e8e4dc;
+  --muted: rgba(232,228,220,0.42);
+  --muted2: rgba(232,228,220,0.22);
+  --line: rgba(232,228,220,0.08);
+  --gold: #c9a96e;
+  --gold-bright: #ecd9ae;
+  --gold-dim: rgba(201,169,110,0.14);
+  --gold-line: rgba(201,169,110,0.4);
+  --sans: 'DM Sans', sans-serif;
+  --serif: 'Cormorant Garamond', serif;
+}
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.055;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+a { text-decoration: none; color: inherit; }
+a:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline: 1px solid var(--gold); outline-offset: 3px; }
+.page { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 48px; }
+
+.cream {
+  --bg: #f6f0e2; --bg2: #efe4cd; --text: #241d13;
+  --muted: rgba(36,29,19,0.58); --muted2: rgba(36,29,19,0.32); --line: rgba(36,29,19,0.12);
+  --gold: #a8763e; --gold-bright: #7d5a2c; --gold-dim: rgba(168,118,62,0.14); --gold-line: rgba(168,118,62,0.4);
+  background: var(--bg); color: var(--text);
+}
+
+.eyebrow { font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); }
+.section-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted2); }
+.gold-shimmer {
+  font-style: italic;
+  background: linear-gradient(110deg, var(--gold) 30%, var(--gold-bright) 50%, var(--gold) 70%);
+  background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 7s ease-in-out infinite;
+}
+@keyframes shimmer { 0%,100%{background-position:115% 0} 50%{background-position:-15% 0} }
+
+.btn-gold {
+  position: relative; display: inline-block; overflow: hidden;
+  font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--gold); background: transparent; border: 1px solid var(--gold-line);
+  padding: 14px 30px; cursor: pointer;
+  transition: color 0.3s, border-color 0.3s, background 0.3s, letter-spacing 0.35s;
+}
+.btn-gold::before {
+  content: ''; position: absolute; top: 0; left: -130%; width: 55%; height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(236,217,174,0.22), transparent);
+  transform: skewX(-18deg); transition: left 0.7s ease;
+}
+.btn-gold:hover { color: var(--gold-bright); border-color: var(--gold); background: var(--gold-dim); letter-spacing: 0.2em; }
+.btn-gold:hover::before { left: 170%; }
+.btn-ghost {
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); position: relative; padding-bottom: 4px;
+}
+.btn-ghost::after { content: ''; position: absolute; left:0;bottom:0;width:100%;height:1px;background:var(--line); }
+.btn-ghost::before { content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--gold);transition:width .45s ease;z-index:1; }
+.btn-ghost:hover { color: var(--text); }
+.btn-ghost:hover::before { width: 100%; }
+
+/* TOPBAR */
+.topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 28px 0; border-bottom: 1px solid var(--line);
+  opacity: 0; animation: fadeIn 0.8s ease 0.1s forwards;
+}
+.topbar-left { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted2); transition: color 0.2s; }
+.topbar-left:hover { color: var(--text); }
+.topbar-right { display: flex; gap: 28px; align-items: center; }
+.topbar-right a { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted2); transition: color 0.2s; }
+.topbar-right a:hover { color: var(--text); }
+.topbar-right a.cta-link { color: var(--gold); position: relative; padding-bottom: 2px; }
+.topbar-right a.cta-link::after { content:'';position:absolute;left:0;bottom:0;width:100%;height:1px;background:var(--gold-line);transform:scaleX(0.4);transform-origin:left;transition:transform .4s ease; }
+.topbar-right a.cta-link:hover::after { transform: scaleX(1); }
+.lang-toggle { display:flex;align-items:center;gap:6px;font-family:var(--serif);font-size:13px;font-style:italic;color:var(--muted2); }
+.lang-toggle button { background:none;border:none;cursor:pointer;font:inherit;color:var(--muted2);padding:2px 1px;transition:color .2s; }
+.lang-toggle button:hover { color: var(--text); }
+.lang-toggle button.active { color: var(--gold); }
+
+/* HERO */
+.hero { padding: 88px 0 72px; border-bottom: 1px solid var(--line); }
+.hero .eyebrow { margin-bottom: 28px; opacity: 0; animation: fadeUp 1s ease 0.3s forwards; }
+.hero-title {
+  font-family: var(--serif); font-size: clamp(54px, 8.5vw, 116px);
+  font-weight: 300; line-height: 0.98; letter-spacing: -0.02em;
+  opacity: 0; animation: fadeUp 1.2s ease 0.45s forwards;
+}
+.hero-bottom {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  gap: 40px; margin-top: 36px;
+  opacity: 0; animation: fadeUp 1s ease 0.75s forwards;
+}
+.hero-desc { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.85; max-width: 520px; }
+.hero-meta { text-align: right; flex-shrink: 0; }
+.hero-meta-label { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted2); margin-bottom: 6px; }
+.hero-meta-value { font-family: var(--serif); font-size: 16px; font-style: italic; color: var(--muted); }
+
+/* BEFORE / AFTER SHOWCASE */
+.showcase { padding: 88px 0; border-bottom: 1px solid var(--line); }
+.showcase-title { font-family: var(--serif); font-size: clamp(34px, 4vw, 52px); font-weight: 300; line-height: 1.1; margin: 18px 0 40px; }
+.showcase-title em { font-style: italic; color: var(--muted); }
+
+.compare { padding: 88px 0; border-bottom: 1px solid var(--line); }
+.compare-title { font-family: var(--serif); font-size: clamp(34px, 4vw, 52px); font-weight: 300; line-height: 1.1; margin: 18px 0 12px; }
+.compare-title em { font-style: italic; color: var(--muted); }
+.compare-sub { font-size: 13px; color: var(--muted2); line-height: 1.7; max-width: 480px; margin-bottom: 40px; }
+.compare-viewport { overflow: hidden; }
+.compare-track { display: flex; transition: transform 0.5s cubic-bezier(0.16,1,0.3,1); }
+.compare-slide { flex: 0 0 100%; }
+.compare-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.compare-col { position: relative; background: var(--bg2); aspect-ratio: 16/9; overflow: hidden; }
+.compare-col img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.compare-tag { position: absolute; top: 14px; left: 14px; z-index: 2; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-bright); background: rgba(12,12,11,0.7); padding: 6px 12px; border: 1px solid var(--gold-line); }
+.compare-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; border: 1px dashed var(--line); margin: 10px; }
+.compare-placeholder-icon { width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--muted2); font-size: 14px; }
+.compare-placeholder-text { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted2); }
+.compare-name { font-family: var(--serif); font-size: 24px; font-style: italic; color: var(--gold-bright); margin: 28px 0 12px; }
+.compare-caption { font-size: 14px; color: var(--muted); line-height: 1.85; max-width: 680px; }
+.compare-nav { display: flex; align-items: center; gap: 20px; margin-top: 36px; }
+.compare-arrow { width: 40px; height: 40px; border: 1px solid var(--line); background: transparent; color: var(--text); font-size: 15px; cursor: pointer; transition: border-color 0.2s, color 0.2s; display: flex; align-items: center; justify-content: center; }
+.compare-arrow:hover { border-color: var(--gold-line); color: var(--gold-bright); }
+.compare-arrow:disabled { opacity: 0.3; cursor: default; }
+.compare-arrow:disabled:hover { border-color: var(--line); color: var(--text); }
+.compare-dots { display: flex; gap: 8px; }
+.compare-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--line); border: none; padding: 0; cursor: pointer; transition: background 0.2s; }
+.compare-dot.active { background: var(--gold); }
+.compare-count { font-size: 11px; letter-spacing: 0.08em; color: var(--muted2); margin-left: auto; }
+.preview { padding: 0 0 88px; }
+.preview-frame { border: 1px solid var(--line); background: var(--bg2); overflow: hidden; }
+.preview-frame-bar { display: flex; gap: 6px; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+.preview-frame-bar span { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
+.preview-frame img { display: block; width: 100%; height: auto; }
+.showcase-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.showcase-stat { background: var(--bg); padding: 28px 26px; display: flex; flex-direction: column; gap: 6px; }
+.showcase-stat-num { font-family: var(--serif); font-style: italic; font-size: 44px; color: var(--gold-bright); line-height: 1; }
+.showcase-stat-label { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text); font-weight: 500; margin-top: 4px; }
+.showcase-stat-sub { font-size: 12px; color: var(--muted2); line-height: 1.6; }
+
+/* PILLARS OVERVIEW */
+.highlights { padding: 64px 0 88px; border-bottom: 1px solid var(--line); }
+.highlights-title { font-family: var(--serif); font-size: clamp(30px, 3.6vw, 44px); font-weight: 300; line-height: 1.1; margin: 18px 0 12px; }
+.highlights-title em { font-style: italic; color: var(--muted); }
+.highlights-sub { font-size: 14px; color: var(--muted); line-height: 1.7; max-width: 560px; margin-bottom: 40px; }
+.highlights-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.highlight-item { background: var(--bg); padding: 24px 26px; display: flex; gap: 14px; align-items: flex-start; }
+.highlight-check { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--gold-dim); color: var(--gold-bright); font-size: 12px; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+.highlight-item h3 { font-family: var(--sans); font-size: 15px; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+.highlight-item p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+@media(max-width: 720px) { .highlights-grid { grid-template-columns: 1fr; } }
+
+.pillars { padding: 88px 0; border-bottom: 1px solid var(--line); }
+.pillars-title { font-family: var(--serif); font-size: clamp(34px, 4vw, 52px); font-weight: 300; line-height: 1.1; margin: 18px 0 44px; }
+.pillars-title em { font-style: italic; color: var(--muted); }
+.pillars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.pillar-card { background: var(--bg); padding: 32px 28px; }
+.pillar-num { font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--gold); display: block; margin-bottom: 14px; }
+.pillar-card h3 { font-family: var(--serif); font-size: 26px; font-weight: 300; margin-bottom: 12px; }
+.pillar-card p { font-size: 13px; color: var(--muted); line-height: 1.75; }
+
+/* PILLAR DETAIL SECTIONS */
+.pillar-detail { padding: 88px 0; border-bottom: 1px solid var(--line); }
+.pillar-detail-title { font-family: var(--serif); font-size: clamp(34px, 4vw, 52px); font-weight: 300; line-height: 1.1; margin: 18px 0 20px; }
+.pillar-detail-title em { font-style: italic; color: var(--muted); }
+.pillar-detail-intro { font-size: 14px; color: var(--muted); line-height: 1.8; max-width: 560px; margin-bottom: 44px; }
+.pd-list { display: flex; flex-direction: column; }
+.pd-row { padding: 24px 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: 280px 1fr; gap: 32px; }
+.pd-row:last-child { border-bottom: 1px solid var(--line); }
+.pd-row h4 { font-family: var(--serif); font-size: 20px; font-weight: 300; font-style: italic; color: var(--gold-bright); }
+.pd-row p { font-size: 13px; color: var(--muted); line-height: 1.8; }
+.pd-row-planned { opacity: 0.85; }
+.pd-planned-badge { display: inline-block; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold-line); padding: 3px 10px; margin-bottom: 8px; }
+
+/* CRAFT / BUILT PROPERLY */
+.craft { padding: 88px 0; border-bottom: 1px solid var(--line); }
+.craft-tabs { display: flex; gap: 2px; margin: 32px 0 32px; border-bottom: 1px solid var(--line); }
+.craft-tab { background: none; border: none; padding: 12px 4px; margin-right: 32px; font-family: var(--sans); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted2); cursor: pointer; position: relative; transition: color 0.25s; }
+.craft-tab::after { content: ''; position: absolute; left: 0; bottom: -1px; width: 100%; height: 1.5px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease; }
+.craft-tab:hover { color: var(--text); }
+.craft-tab.active { color: var(--gold-bright); }
+.craft-tab.active::after { transform: scaleX(1); }
+.craft-panel { display: none; }
+.craft-panel.active { display: block; }
+.craft-panel p { font-size: 14px; color: var(--muted); line-height: 1.85; max-width: 620px; margin-bottom: 14px; }
+.craft-list { list-style: none; display: flex; flex-direction: column; gap: 14px; max-width: 700px; }
+.craft-list li { font-size: 13px; color: var(--muted); line-height: 1.8; padding-left: 20px; position: relative; }
+.craft-list li::before { content: '—'; position: absolute; left: 0; color: var(--gold); }
+
+/* WHAT WAS BUILT */
+.built { padding: 88px 0 72px; border-bottom: 1px solid var(--line); }
+.built-header { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px; }
+.section-count { font-family:var(--serif);font-size:14px;font-style:italic;color:var(--muted2); }
+.built-list { display: flex; flex-direction: column; }
+.built-row {
+  display: grid; grid-template-columns: 52px 1fr auto;
+  gap: 24px; align-items: center; padding: 26px 0;
+  border-bottom: 1px solid var(--line); color: inherit; position: relative;
+}
+.built-num { font-family:var(--serif);font-size:15px;font-style:italic;color:var(--gold); }
+.built-info { display:flex;flex-direction:column;gap:5px; }
+.built-name { font-family:var(--serif);font-size:clamp(22px,2.8vw,32px);font-weight:300;line-height:1.05;color:var(--text); }
+.built-category { font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted2); }
+.built-status {
+  font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold); display: flex; align-items: center; gap: 6px;
+}
+.built-status::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold); box-shadow: 0 0 6px rgba(201,169,110,0.6);
+  flex-shrink: 0;
+}
+
+/* ABOUT */
+.about {
+  padding: 88px 0; border-bottom: 1px solid var(--line);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+}
+.about-title { font-family:var(--serif);font-size:clamp(38px,4.5vw,58px);font-weight:300;line-height:1.08;letter-spacing:-0.01em; }
+.about-right { display:flex;flex-direction:column;gap:22px;padding-top:8px; }
+.about-right p { font-size:14px;font-weight:300;color:var(--muted);line-height:1.85; }
+.about-note { font-family:var(--serif);font-size:14px!important;font-style:italic;color:var(--muted2)!important;border-top:1px solid var(--line);padding-top:18px; }
+.about-tags { display:flex;flex-wrap:wrap;gap:8px;margin-top:4px; }
+.tag { font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted2);border:1px solid var(--line);padding:6px 13px;transition:color .25s,border-color .25s; }
+.tag:hover { color:var(--gold);border-color:var(--gold-line); }
+
+/* SYSTEM GRID */
+.system { padding: 88px 0; border-bottom: 1px solid var(--line); }
+.system-title { font-family:var(--serif);font-size:clamp(34px,4vw,52px);font-weight:300;line-height:1.1;margin:18px 0 52px; }
+.system-title em { font-style:italic;color:var(--muted); }
+.system-grid { display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line); }
+.system-grid .system-card:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.system-card { background:var(--bg);padding:36px 32px;position:relative;transition:background .25s; }
+.system-card::before { content:'';position:absolute;top:0;left:0;width:0;height:1px;background:var(--gold);transition:width .5s ease; }
+.system-card:hover { background:var(--bg2); }
+.system-card:hover::before { width:100%; }
+.system-num { font-family:var(--serif);font-size:15px;font-style:italic;color:var(--gold);margin-bottom:16px; }
+.system-type { font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted2);margin-bottom:8px; }
+.system-name { font-family:var(--serif);font-size:clamp(24px,3vw,30px);font-weight:300;line-height:1.1;color:var(--text);margin-bottom:12px; }
+.system-desc { font-size:13px;font-weight:300;color:var(--muted);line-height:1.8; }
+
+/* CTA */
+.cta-section { padding:100px 0 90px;text-align:center;border-bottom:1px solid var(--line); }
+.cta-title { font-family:var(--serif);font-size:clamp(40px,6vw,84px);font-weight:300;line-height:1.02;letter-spacing:-0.02em;margin:24px auto 18px;max-width:18ch; }
+.cta-desc { font-size:13px;font-weight:300;color:var(--muted);line-height:1.8;max-width:440px;margin:0 auto 44px; }
+.cta-actions { display:flex;gap:28px;align-items:center;justify-content:center;flex-wrap:wrap; }
+
+footer { padding:24px 0;display:flex;justify-content:space-between;align-items:center; }
+.footer-left { font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted2); }
+.footer-right { font-family:var(--serif);font-size:13px;font-style:italic; }
+.footer-right a { color:var(--muted2);transition:color .2s; }
+.footer-right a:hover { color:var(--text); }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+@media(max-width:768px){
+  .page{padding:0 24px}
+  .hero{padding:76px 0 0}
+  .hero-bottom{flex-direction:column;align-items:flex-start;gap:26px}
+  .hero-meta{text-align:left}
+  .built-row{grid-template-columns:36px 1fr auto;gap:16px}
+  .about{grid-template-columns:1fr;gap:32px}
+  .system-grid{grid-template-columns:1fr}
+  .showcase-stats{grid-template-columns:1fr}
+  .compare-cols{grid-template-columns:1fr}
+  .compare-col{aspect-ratio:16/10}
+  .compare-nav{flex-wrap:wrap}
+  .compare-count{margin-left:0;width:100%;order:3}
+  .pillars-grid{grid-template-columns:1fr}
+  .pd-row{grid-template-columns:1fr;gap:8px}
+  .tour-legend-item{padding:8px 10px}
+  .tour-explain{padding:20px 20px}
+  .craft-tab{margin-right:20px}
+  footer{flex-direction:column;gap:8px;text-align:center}
+  .hide-mobile{display:none}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="topbar">
+  <a class="topbar-left" href="index.html">Stormie Studios</a>
+  <nav class="topbar-right">
+    <div class="lang-toggle" role="group" aria-label="Language">
+      <button type="button" id="lang-en" class="active" onclick="setLang('en')">EN</button>
+      <span>/</span>
+      <button type="button" id="lang-sv" onclick="setLang('sv')">SV</button>
+    </div>
+    <a href="index.html#contact" class="cta-link" data-i18n="nav_cta">Work with us</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="eyebrow" data-i18n="hero_eyebrow">Client project · Kickboxing &amp; Muay Thai club</p>
+  <h1 class="hero-title" data-i18n="hero_title">Masters <span class="gold-shimmer">Gym.</span></h1>
+  <div class="hero-bottom">
+    <p class="hero-desc" data-i18n="hero_desc">A full rebuild for Masters Gym Stockholm bilingual, conversion-focused, with a self-service content system and a schedule that fits how the club actually works.</p>
+    <div class="hero-meta">
+      <p class="hero-meta-label" data-i18n="hero_meta_label">Client type</p>
+      <p class="hero-meta-value" data-i18n="hero_meta_value">Kickboxing &amp; Muay Thai club · Kungsholmen, Stockholm</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE SOLVED -->
+<section class="about">
+  <h2 class="about-title" data-i18n="about_title">One club.<br><span class="gold-shimmer">One system.</span></h2>
+  <div class="about-right">
+    <p data-i18n="about_p1">The old site ran on Squarespace, so the club could technically edit it themselves. The real problem wasn't developer-dependency, it was no bilingual support, no clear path from visitor to member, and content that went stale anyway.</p>
+    <p data-i18n="about_p2">The rebuild is fully custom and hand-coded, structured around conversion, with a content system matched to how the club actually works day to day, not a generic template with a logo swapped in.</p>
+    <p data-i18n="about_p3">Everything the club needs to keep current, headlines, pricing, coach profiles, class photos and promotions, is managed from a single Studio, confirmed live end to end. The schedule stays on a spreadsheet, the fastest way to edit fast-moving weekly class times, layered with temporary schedules, one-off cancellations, calendar subscriptions and automatic member email alerts, with checks in place so a typo can't break the page or send an accidental email.</p>
+    <p class="about-note" data-i18n="about_note">Live build, real CMS, real code, real client meetings.</p>
+    <div class="about-tags">
+      <span class="tag" data-i18n="tag1">Bilingual</span>
+      <span class="tag" data-i18n="tag2">Self-service news</span>
+      <span class="tag" data-i18n="tag3">Schedule pipeline</span>
+      <span class="tag" data-i18n="tag4">Membership flow</span>
+      <span class="tag" data-i18n="tag5">Social links</span>
+      <span class="tag" data-i18n="tag6">Accessible</span>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE HIGHLIGHTS -->
+<section class="highlights" id="highlights">
+  <span class="section-label" data-i18n="hl_label">What's live today</span>
+  <h2 class="highlights-title" data-i18n="hl_title">Not a landing page. <em>A running system.</em></h2>
+  <div class="system-grid">
+
+    <div class="system-card">
+      <p class="system-num">✓</p>
+      <p class="system-type" data-i18n="s1_type">Conversion layer</p>
+      <h3 class="system-name" data-i18n="s1_name">Built for conversion</h3>
+      <p class="system-desc" data-i18n="s1_desc">Separate paths for members, families and corporate training, each with its own call to action, all built around one goal: turning a visitor into a booked trial.</p>
+    </div>
+
+    <div class="system-card">
+      <p class="system-num">✓</p>
+      <p class="system-type" data-i18n="s2_type">Content system</p>
+      <h3 class="system-name" data-i18n="s2_name">Full content control</h3>
+      <p class="system-desc" data-i18n="s2_desc">News, prices, coach profiles and photos, class listings and site-wide promotions, all managed from one CMS (Sanity), no developer, no waiting.</p>
+    </div>
+
+    <div class="system-card">
+      <p class="system-num">✓</p>
+      <p class="system-type" data-i18n="s9_type">Fail-safe design</p>
+      <h3 class="system-name" data-i18n="s9_name">Routine edits can't break the layout</h3>
+      <p class="system-desc" data-i18n="s9_desc">Delete a price, leave a field blank, remove a photo, the design falls back to what already works. Everyday content changes are designed to never damage the site's layout or build.</p>
+    </div>
+
+    <div class="system-card">
+      <p class="system-num">✓</p>
+      <p class="system-type" data-i18n="s3_type">Class access</p>
+      <h3 class="system-name" data-i18n="s3_name">A schedule that runs itself</h3>
+      <p class="system-desc" data-i18n="s3_desc">The full weekly schedule, holiday schedules and one-off cancellations managed from a Google Sheet. Members subscribe once and it lives in their own calendar from then on.</p>
+    </div>
+
+    <div class="system-card">
+      <p class="system-num">✓</p>
+      <p class="system-type" data-i18n="s4_type">Member alerts</p>
+      <h3 class="system-name" data-i18n="s4_name">Notified automatically</h3>
+      <p class="system-desc" data-i18n="s4_desc">When a class is cancelled or changed, subscribed members get an email within minutes, no group chat, no missed messages.</p>
+    </div>
+
+    <div class="system-card">
+      <p class="system-num">✓</p>
+      <p class="system-type" data-i18n="s5_type">Social layer</p>
+      <h3 class="system-name" data-i18n="s5_name">Social-first design</h3>
+      <p class="system-desc" data-i18n="s5_desc">Instagram, Facebook and TikTok surfaced directly, with a live feed pulling straight from the club's real Instagram, always current.</p>
+    </div>
+
+    <div class="system-card">
+      <p class="system-num">✓</p>
+      <p class="system-type" data-i18n="s6_type">Trust layer</p>
+      <h3 class="system-name" data-i18n="s6_name">Real reviews, pulled in live</h3>
+      <p class="system-desc" data-i18n="s6_desc">Actual Google reviews shown directly on the site, building trust without a single copy-pasted screenshot.</p>
+    </div>
+
+    <div class="system-card">
+      <p class="system-num">✓</p>
+      <p class="system-type" data-i18n="s7_type">Support layer</p>
+      <h3 class="system-name" data-i18n="s7_name">Always-on help</h3>
+      <p class="system-desc" data-i18n="s7_desc">A quick-help widget answers common questions, booking, pricing, schedule, without a visitor ever leaving the page.</p>
+    </div>
+
+    <div class="system-card">
+      <p class="system-num">✓</p>
+      <p class="system-type" data-i18n="s8_type">Language &amp; access</p>
+      <h3 class="system-name" data-i18n="s8_name">Built for everyone</h3>
+      <p class="system-desc" data-i18n="s8_desc">Every page works in Swedish and English from one system. Fully usable with a keyboard, readable by screen readers, and set up to actually get found on Google.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="showcase" id="showcase">
+  <span class="section-label" data-i18n="showcase_label">Real results</span>
+  <h2 class="showcase-title" data-i18n="showcase_title">The numbers <em>behind the build.</em></h2>
+
+  <div class="showcase-stats">
+    <div class="showcase-stat">
+      <span class="showcase-stat-num">91</span>
+      <span class="showcase-stat-label" data-i18n="stat_perf_label">Performance score (mobile)</span>
+      <span class="showcase-stat-sub" data-i18n="stat_perf_sub">Fast on mobile, built for real-world networks</span>
+    </div>
+    <div class="showcase-stat">
+      <span class="showcase-stat-num">100</span>
+      <span class="showcase-stat-label" data-i18n="stat_seo_label">SEO score</span>
+      <span class="showcase-stat-sub" data-i18n="stat_seo_sub">Fully structured and indexed, built to be found</span>
+    </div>
+    <div class="showcase-stat">
+      <span class="showcase-stat-num">97</span>
+      <span class="showcase-stat-label" data-i18n="stat_a11y_label">Accessibility score</span>
+      <span class="showcase-stat-sub" data-i18n="stat_a11y_sub">Tested by hand, keyboard and screen reader both</span>
+    </div>
+  </div>
+</section>
+
+<!-- BUILT PROPERLY -->
+<section class="craft" id="craft">
+  <span class="section-label" data-i18n="craft_label">Built properly</span>
+  <h2 class="pillar-detail-title" data-i18n="craft_title">The craft <em>underneath.</em></h2>
+  <div class="craft-tabs">
+    <button type="button" class="craft-tab active" data-tab="plain" data-i18n="craft_tab1">The short version</button>
+    <button type="button" class="craft-tab" data-tab="tech" data-i18n="craft_tab2">Tech specs</button>
+  </div>
+  <div class="craft-panel active" id="craft-plain">
+    <p data-i18n="craft_plain1">Built to load fast, to work for people using a keyboard or a screen reader, and to actually get found on Google.</p>
+    <p data-i18n="craft_plain2">Every form field, every menu, every modal was checked for the kind of thing that's invisible until it breaks for someone.</p>
+  </div>
+  <div class="craft-panel" id="craft-tech">
+    <ul class="craft-list">
+      <li data-i18n="craft_t1">Stack: hand-written HTML, CSS and vanilla JS, no framework, single static file, hosted on GitHub Pages.</li>
+      <li data-i18n="craft_t2">Content layer: Sanity CMS via GROQ queries for news, published Google Sheets CSV endpoint for the schedule.</li>
+      <li data-i18n="craft_t3">Performance: eliminated a render-blocking third-party stylesheet, preloaded the hero image, added font preconnects. Mobile Lighthouse performance went from unmeasurable to 91, desktop to 99.</li>
+      <li data-i18n="craft_t4">Accessibility: modal focus trap with Escape-to-close and focus return, full ARIA labeling, keyboard-operable carousel, corrected heading hierarchy, restored pinch-to-zoom.</li>
+      <li data-i18n="craft_t5">Security: innerHTML output escaped throughout, honeypot field on the trial form.</li>
+      <li data-i18n="craft_t6">SEO: canonical URL, LocalBusiness structured data, sitemap.xml, robots.txt, branded 404 page.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SECTION BY SECTION -->
+<section class="compare" id="compare">
+  <span class="section-label" data-i18n="compare_label">Section by section</span>
+  <h2 class="compare-title" data-i18n="compare_title">Old <em>versus new.</em></h2>
+  <p class="compare-sub" data-i18n="compare_sub">Every part of the site rebuilt, not just restyled. New-site screenshots are being added as they're finalized.</p>
+
+  <div class="compare-viewport">
+    <div class="compare-track" id="compareTrack">
+
+      <div class="compare-slide">
+        <div class="compare-cols">
+          <div class="compare-col"><span class="compare-tag" data-i18n="compare_old">Old</span><img src="masters-gym-before.jpg" alt="Old hero"></div>
+          <div class="compare-col"><span class="compare-tag" data-i18n="compare_new">New</span><div class="compare-placeholder"><span class="compare-placeholder-icon">↗</span><span class="compare-placeholder-text" data-i18n="compare_soon">Screenshot coming</span></div></div>
+        </div>
+        <h3 class="compare-name" data-i18n="c1_name">Hero</h3>
+        <p class="compare-caption" data-i18n="c1_text">The old hero was a single stock-feeling photo with the nav overlaid on top. The new hero replaces it with a structured layout, headline, description, and two direct calls to action, book a trial or check the schedule, so a first-time visitor knows exactly what to do without scrolling.</p>
+      </div>
+
+      <div class="compare-slide">
+        <div class="compare-cols">
+          <div class="compare-col"><span class="compare-tag" data-i18n="compare_old">Old</span><img src="old-about.jpg" alt="Old about section"></div>
+          <div class="compare-col"><span class="compare-tag" data-i18n="compare_new">New</span><div class="compare-placeholder"><span class="compare-placeholder-icon">↗</span><span class="compare-placeholder-text" data-i18n="compare_soon">Screenshot coming</span></div></div>
+        </div>
+        <h3 class="compare-name" data-i18n="c2_name">About</h3>
+        <p class="compare-caption" data-i18n="c2_text">The old About was two paragraphs floating in a box on top of a photo, cramped and hard to read on smaller screens. The new About is a proper section with founding story, credentials and a values grid, giving the club's history room to actually build trust instead of competing with an image for space.</p>
+      </div>
+
+      <div class="compare-slide">
+        <div class="compare-cols">
+          <div class="compare-col"><span class="compare-tag" data-i18n="compare_old">Old</span><img src="old-classes.jpg" alt="Old classes section"></div>
+          <div class="compare-col"><span class="compare-tag" data-i18n="compare_new">New</span><div class="compare-placeholder"><span class="compare-placeholder-icon">↗</span><span class="compare-placeholder-text" data-i18n="compare_soon">Screenshot coming</span></div></div>
+        </div>
+        <h3 class="compare-name" data-i18n="c3_name">Classes</h3>
+        <p class="compare-caption" data-i18n="c3_text">The old page had one general paragraph and a single link. The new site breaks training into seven distinct class types, each with its own format, tagline and equipment notes, so a visitor can find the right class for their level before ever contacting the gym.</p>
+      </div>
+
+      <div class="compare-slide">
+        <div class="compare-cols">
+          <div class="compare-col"><span class="compare-tag" data-i18n="compare_old">Old</span><img src="old-schedule.jpg" alt="Old schedule section"></div>
+          <div class="compare-col"><span class="compare-tag" data-i18n="compare_new">New</span><div class="compare-placeholder"><span class="compare-placeholder-icon">↗</span><span class="compare-placeholder-text" data-i18n="compare_soon">Screenshot coming</span></div></div>
+        </div>
+        <h3 class="compare-name" data-i18n="c4_name">Schedule</h3>
+        <p class="compare-caption" data-i18n="c4_text">The old schedule was a photo of a printed poster, not real text, not searchable, and stuck showing whichever season it was uploaded for. The new schedule pulls live from a spreadsheet the club edits themselves, with day-by-day and week views, so it's never out of date.</p>
+      </div>
+
+      <div class="compare-slide">
+        <div class="compare-cols">
+          <div class="compare-col"><span class="compare-tag" data-i18n="compare_old">Old</span><img src="old-news.jpg" alt="Old news page"></div>
+          <div class="compare-col"><span class="compare-tag" data-i18n="compare_new">New</span><div class="compare-placeholder"><span class="compare-placeholder-icon">↗</span><span class="compare-placeholder-text" data-i18n="compare_soon">Screenshot coming</span></div></div>
+        </div>
+        <h3 class="compare-name" data-i18n="c5_name">News</h3>
+        <p class="compare-caption" data-i18n="c5_text">The old news page was a plain list of dated posts, easy to miss and disconnected from the rest of the site. The new News section runs on a real CMS and now sits high on the homepage, right next to the schedule, where members actually look.</p>
+      </div>
+
+      <div class="compare-slide">
+        <div class="compare-cols">
+          <div class="compare-col"><span class="compare-tag" data-i18n="compare_old">Old</span><img src="old-trial.jpg" alt="Old trial promo"></div>
+          <div class="compare-col"><span class="compare-tag" data-i18n="compare_new">New</span><div class="compare-placeholder"><span class="compare-placeholder-icon">↗</span><span class="compare-placeholder-text" data-i18n="compare_soon">Screenshot coming</span></div></div>
+        </div>
+        <h3 class="compare-name" data-i18n="c6_name">Memberships</h3>
+        <p class="compare-caption" data-i18n="c6_text">The old site promoted trial weeks as a limited seasonal banner, implying trials were only available at certain times. The new site shows every membership tier and price year-round, with a standing invitation to try a class any time, no waiting for a promo window.</p>
+      </div>
+
+      <div class="compare-slide">
+        <div class="compare-cols">
+          <div class="compare-col"><span class="compare-tag" data-i18n="compare_old">Old</span><img src="old-corporate.jpg" alt="Old corporate section"></div>
+          <div class="compare-col"><span class="compare-tag" data-i18n="compare_new">New</span><div class="compare-placeholder"><span class="compare-placeholder-icon">↗</span><span class="compare-placeholder-text" data-i18n="compare_soon">Screenshot coming</span></div></div>
+        </div>
+        <h3 class="compare-name" data-i18n="c7_name">Corporate</h3>
+        <p class="compare-caption" data-i18n="c7_text">The old corporate offer was one paragraph and a "Read more" link with no clear next step. The new corporate section spells out exactly what's included, morning sessions, team building, group classes, with a direct booking CTA and a quote turnaround time.</p>
+      </div>
+
+      <div class="compare-slide">
+        <div class="compare-cols">
+          <div class="compare-col"><span class="compare-tag" data-i18n="compare_old">Old</span><img src="old-footer.jpg" alt="Old footer"></div>
+          <div class="compare-col"><span class="compare-tag" data-i18n="compare_new">New</span><div class="compare-placeholder"><span class="compare-placeholder-icon">↗</span><span class="compare-placeholder-text" data-i18n="compare_soon">Screenshot coming</span></div></div>
+        </div>
+        <h3 class="compare-name" data-i18n="c8_name">Contact</h3>
+        <p class="compare-caption" data-i18n="c8_text">The old footer was five links and a "Made with Squarespace" credit. The new contact section gives visitors the address, metro directions, opening hours and an embedded map in one place, answering the most common first-visit questions without an extra click.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="compare-nav">
+    <button class="compare-arrow" id="comparePrev" aria-label="Previous section">←</button>
+    <button class="compare-arrow" id="compareNext" aria-label="Next section">→</button>
+    <div class="compare-dots" id="compareDots"></div>
+    <span class="compare-count" id="compareCount">1 / 8</span>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <p class="eyebrow" data-i18n="cta_label">Want something similar?</p>
+  <h2 class="cta-title" data-i18n="cta_title">Let's build <span class="gold-shimmer">yours.</span></h2>
+  <p class="cta-desc" data-i18n="cta_desc">Website, schedule, memberships, a content system or a full connected build for your club, your brand and your members.</p>
+  <div class="cta-actions">
+    <a class="btn-gold" href="index.html#contact" data-i18n="cta_btn">Request a consultation</a>
+    <a class="btn-ghost" href="#" onclick="window.location='mai'+'lto:hel'+'lo@stormiestudios.com'; return false;">hello&#64;stormiestudios&#46;com</a>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-left">© Stormie Studios</span>
+  <span class="footer-right"><a href="index.html" data-i18n="ft_back">Back to index</a></span>
+</footer>
+
+</div>
+
+<script>
+const I18N = {
+  en: {
+    nav_cta:"Work with us",
+    hero_eyebrow:"Client project · Kickboxing & Muay Thai club",
+    hero_title:'Masters <span class="gold-shimmer">Gym.</span>',
+    hero_desc:"A full rebuild for Masters Gym Stockholm bilingual, conversion-focused, with a self-service content system and a schedule that fits how the club actually works.",
+    hero_meta_label:"Client type", hero_meta_value:"Kickboxing & Muay Thai club · Kungsholmen, Stockholm",
+    hl_label:"What's live today", hl_title:'Not a landing page. <em>A running system.</em>',
+    s1_type:"Conversion layer", s1_name:"Built for conversion", s1_desc:"Separate paths for members, families and corporate training, each with its own call to action, all built around one goal: turning a visitor into a booked trial.",
+    s2_type:"Content system", s2_name:"Full content control", s2_desc:"News, prices, coach profiles and photos, class listings and site-wide promotions, all managed from one CMS (Sanity), no developer, no waiting.",
+    s9_type:"Fail-safe design", s9_name:"Routine edits can't break the layout", s9_desc:"Delete a price, leave a field blank, remove a photo, the design falls back to what already works. Everyday content changes are designed to never damage the site's layout or build.",
+    s3_type:"Class access", s3_name:"A schedule that runs itself", s3_desc:"The full weekly schedule, holiday schedules and one-off cancellations managed from a Google Sheet. Members subscribe once and it lives in their own calendar from then on.",
+    s4_type:"Member alerts", s4_name:"Notified automatically", s4_desc:"When a class is cancelled or changed, subscribed members get an email within minutes, no group chat, no missed messages.",
+    s5_type:"Social layer", s5_name:"Social-first design", s5_desc:"Instagram, Facebook and TikTok surfaced directly, with a live feed pulling straight from the club's real Instagram, always current.",
+    s6_type:"Trust layer", s6_name:"Real reviews, pulled in live", s6_desc:"Actual Google reviews shown directly on the site, building trust without a single copy-pasted screenshot.",
+    s7_type:"Support layer", s7_name:"Always-on help", s7_desc:"A quick-help widget answers common questions, booking, pricing, schedule, without a visitor ever leaving the page.",
+    s8_type:"Language & access", s8_name:"Built for everyone", s8_desc:"Every page works in Swedish and English from one system. Fully usable with a keyboard, readable by screen readers, and set up to actually get found on Google.",
+    compare_label:"Section by section", compare_title:'Old <em>versus new.</em>',
+    compare_sub:"Every part of the site rebuilt, not just restyled. New-site screenshots are being added as they're finalized.",
+    compare_old:"Old", compare_new:"New", compare_soon:"Screenshot coming",
+    c1_name:"Hero", c1_text:"The old hero was a single stock-feeling photo with the nav overlaid on top. The new hero replaces it with a structured layout, headline, description, and two direct calls to action, book a trial or check the schedule, so a first-time visitor knows exactly what to do without scrolling.",
+    c2_name:"About", c2_text:"The old About was two paragraphs floating in a box on top of a photo, cramped and hard to read on smaller screens. The new About is a proper section with founding story, credentials and a values grid, giving the club's history room to actually build trust instead of competing with an image for space.",
+    c3_name:"Classes", c3_text:"The old page had one general paragraph and a single link. The new site breaks training into seven distinct class types, each with its own format, tagline and equipment notes, so a visitor can find the right class for their level before ever contacting the gym.",
+    c4_name:"Schedule", c4_text:"The old schedule was a photo of a printed poster, not real text, not searchable, and stuck showing whichever season it was uploaded for. The new schedule pulls live from a spreadsheet the club edits themselves, day-by-day and week views, holiday and temporary schedules that switch in and out automatically, one-off cancellations, calendar subscription, and an opt-in email alert the moment staff flag a real change, so it's never out of date and nobody has to keep checking.",
+    c5_name:"News", c5_text:"The old news page was a plain list of dated posts, easy to miss and disconnected from the rest of the site. The new News section runs on a real CMS and now sits high on the homepage, right next to the schedule, where members actually look.",
+    c6_name:"Memberships", c6_text:"The old site promoted trial weeks as a limited seasonal banner, implying trials were only available at certain times. The new site shows every membership tier and price year-round, with a standing invitation to try a class any time, no waiting for a promo window.",
+    c7_name:"Corporate", c7_text:'The old corporate offer was one paragraph and a "Read more" link with no clear next step. The new corporate section spells out exactly what\'s included, morning sessions, team building, group classes, with a direct booking CTA and a quote turnaround time.',
+    c8_name:"Contact", c8_text:'The old footer was five links and a "Made with Squarespace" credit. The new contact section gives visitors the address, metro directions, opening hours and an embedded map in one place, answering the most common first-visit questions without an extra click.',
+    craft_label:"Built properly", craft_title:'The craft <em>underneath.</em>',
+    craft_tab1:"The short version", craft_tab2:"Tech specs",
+    craft_plain1:"Built to load fast, to work for people using a keyboard or a screen reader, and to actually get found on Google.",
+    craft_plain2:"Every form field, every menu, every modal was checked for the kind of thing that's invisible until it breaks for someone.",
+    craft_t1:"Stack: hand-written HTML, CSS and vanilla JS, no framework, single static file, hosted on GitHub Pages.",
+    craft_t2:"Content layer: Sanity CMS via GROQ queries for news, published Google Sheets CSV endpoints for the schedule (base, temporary schedules, one-off exceptions), Google Apps Script backend for sign-ups and automatic email alerts.",
+    craft_t3:"Performance: eliminated a render-blocking third-party stylesheet, preloaded the hero image, added font preconnects. Mobile Lighthouse performance went from unmeasurable to 91, desktop to 99.",
+    craft_t4:"Accessibility: modal focus trap with Escape-to-close and focus return, full ARIA labeling, keyboard-operable carousel, corrected heading hierarchy, restored pinch-to-zoom.",
+    craft_t5:"Security: innerHTML output escaped throughout, honeypot field on the trial form.",
+    craft_t6:"SEO: canonical URL, LocalBusiness structured data, sitemap.xml, robots.txt, branded 404 page.",
+    showcase_label:"Real results", showcase_title:'The numbers <em>behind the build.</em>',
+    stat_perf_label:"Performance score (mobile)", stat_perf_sub:"Fast on mobile, built for real-world networks",
+    stat_seo_label:"SEO score", stat_seo_sub:"Fully structured and indexed, built to be found",
+    stat_a11y_label:"Accessibility score", stat_a11y_sub:"Tested by hand, keyboard and screen reader both",
+    about_title:'One club.<br><span class="gold-shimmer">One system.</span>',
+    about_p1:"The old site ran on Squarespace, so the club could technically edit it themselves. The real problem wasn't developer-dependency, it was no bilingual support, no clear path from visitor to member, and content that went stale anyway.",
+    about_p2:"The rebuild is fully custom and hand-coded, structured around conversion, with a content system matched to how the club actually works day to day, not a generic template with a logo swapped in.",
+    about_p3:"Everything the club needs to keep current, headlines, pricing, coach profiles, class photos and promotions, is managed from a single Studio, confirmed live end to end. The schedule stays on a spreadsheet, the fastest way to edit fast-moving weekly class times, layered with temporary schedules, one-off cancellations, calendar subscriptions and automatic member email alerts, with checks in place so a typo can't break the page or send an accidental email.",
+    about_note:"Live build, real CMS, real code, real client meetings.",
+    tag1:"Bilingual", tag2:"Self-service news", tag3:"Schedule pipeline", tag4:"Membership flow", tag5:"Social links", tag6:"Accessible",
+    cta_label:"Want something similar?",
+    cta_title:'Let\'s build <span class="gold-shimmer">yours.</span>',
+    cta_desc:"Website, schedule, memberships, a content system or a full connected build for your club, your brand and your members.",
+    cta_btn:"Request a consultation", ft_back:"Back to index"
+  },
+  sv: {
+    nav_cta:"Jobba med oss",
+    hero_eyebrow:"Kunduppdrag · Kickboxning & Thaiboxningsklubb",
+    hero_title:'Masters <span class="gold-shimmer">Gym.</span>',
+    hero_desc:"En fullständig ombyggnad för Masters Gym Stockholm tvåspråkig, konverteringsfokuserad, med ett självbetjänat innehållssystem och ett schema som passar hur klubben faktiskt arbetar.",
+    hero_meta_label:"Kundtyp", hero_meta_value:"Kickboxning & thaiboxningsklubb · Kungsholmen, Stockholm",
+    hl_label:"Live redan idag", hl_title:'Inte en landningssida. <em>Ett system som körs.</em>',
+    s1_type:"Konverteringslager", s1_name:"Byggt för konvertering", s1_desc:"Separata vägar för medlemmar, familjer och företag, var och en med sin egen call to action, allt byggt kring ett mål: göra en besökare till ett bokat provpass.",
+    s2_type:"Innehållssystem", s2_name:"Fullständig innehållskontroll", s2_desc:"Nyheter, priser, tränarprofiler och bilder, passbeskrivningar och webbplatsövergripande kampanjer, allt hanterat från ett CMS (Sanity), ingen utvecklare, ingen väntan.",
+    s9_type:"Felsäker design", s9_name:"Vardagliga ändringar kan inte förstöra layouten", s9_desc:"Ta bort ett pris, lämna ett fält tomt, radera en bild, designen faller tillbaka på det som redan fungerar. Vardagliga innehållsändringar är byggda för att aldrig skada sajtens layout eller bygge.",
+    s3_type:"Passåtkomst", s3_name:"Ett schema som sköter sig själv", s3_desc:"Hela veckoschemat, lovscheman och enstaka inställda pass hanteras från ett Google Sheet. Medlemmar prenumererar en gång och det lever sedan i deras egen kalender.",
+    s4_type:"Medlemsaviseringar", s4_name:"Automatiska aviseringar", s4_desc:"När ett pass ställs in eller ändras får prenumererade medlemmar ett mejl inom minuter, ingen gruppchatt, inga missade meddelanden.",
+    s5_type:"Socialt lager", s5_name:"Socialt först i designen", s5_desc:"Instagram, Facebook och TikTok synliggjorda direkt, med ett direktsänt flöde hämtat från klubbens riktiga Instagram, alltid aktuellt.",
+    s6_type:"Förtroendelager", s6_name:"Riktiga recensioner, live", s6_desc:"Faktiska Google-recensioner visas direkt på sajten, bygger förtroende utan en enda inklistrad skärmbild.",
+    s7_type:"Supportlager", s7_name:"Hjälp, alltid tillgänglig", s7_desc:"En snabbhjälp svarar på vanliga frågor, bokning, priser, schema, utan att besökaren behöver lämna sidan.",
+    s8_type:"Språk & tillgänglighet", s8_name:"Byggt för alla", s8_desc:"Varje sida fungerar på svenska och engelska från ett och samma system. Fullt användbar med tangentbord, läsbar av skärmläsare, och inställd för att faktiskt hittas på Google.",
+    compare_label:"Sektion för sektion", compare_title:'Gammalt <em>mot nytt.</em>',
+    compare_sub:"Varje del av sajten är ombyggd, inte bara omstylad. Skärmbilder från nya sajten läggs till efterhand som de blir klara.",
+    compare_old:"Gammal", compare_new:"Ny", compare_soon:"Skärmbild kommer",
+    c1_name:"Startsida", c1_text:"Den gamla toppsektionen var ett enda foto som kändes lite som bildbank, med menyn ovanpå. Den nya toppsektionen ersätter det med en strukturerad layout, rubrik, beskrivning och två tydliga call-to-actions, boka provpass eller se schemat, så en förstagångsbesökare vet exakt vad hen ska göra utan att scrolla.",
+    c2_name:"Om oss", c2_text:"Den gamla Om oss-sektionen var två stycken text som flöt i en ruta ovanpå ett foto, trångt och svårläst på mindre skärmar. Den nya Om oss-sektionen är en riktig sektion med grundarhistoria, meriter och ett värderingsraster, vilket ger klubbens historia utrymme att faktiskt bygga förtroende istället för att konkurrera med en bild om platsen.",
+    c3_name:"Pass", c3_text:"Den gamla sidan hade ett allmänt stycke och en enda länk. Den nya sajten delar upp träningen i sju olika passtyper, var och en med sitt eget format, tagline och utrustningsinfo, så en besökare kan hitta rätt pass för sin nivå innan hen ens kontaktar gymmet.",
+    c4_name:"Schema", c4_text:"Det gamla schemat var ett foto av en utskriven affisch, inte riktig text, inte sökbart, och fastnade med vilken säsong som helst det laddades upp för. Det nya schemat hämtas live från ett kalkylark klubben redigerar själva, dag-för-dag- och veckovyer, lov- och tillfälliga scheman som slås av och på automatiskt, enstaka inställda pass, kalenderprenumeration, och en valfri mejlavisering så fort personalen flaggar en riktig ändring, så det blir aldrig inaktuellt och ingen behöver kolla manuellt.",
+    c5_name:"Nyheter", c5_text:"Den gamla nyhetssidan var en enkel lista med daterade inlägg, lätt att missa och frikopplad från resten av sajten. Den nya Nyheter-sektionen körs på ett riktigt CMS och ligger nu högt upp på startsidan, precis bredvid schemat, där medlemmar faktiskt tittar.",
+    c6_name:"Medlemskap", c6_text:"Den gamla sajten marknadsförde provveckor som en tidsbegränsad banner för säsongen, vilket antydde att provpass bara fanns vissa perioder. Den nya sajten visar alla medlemskapsnivåer och priser året runt, med en stående inbjudan att prova ett pass när som helst, ingen väntan på ett kampanjfönster.",
+    c7_name:"Företag", c7_text:'Det gamla företagserbjudandet var ett stycke och en "Läs mer"-länk utan tydligt nästa steg. Den nya företagssektionen visar exakt vad som ingår, morgonpass, teambuilding, gruppass, med en direkt bokningsknapp och svarstid för offert.',
+    c8_name:"Kontakt", c8_text:'Den gamla sidfoten var fem länkar och en "Made with Squarespace"-kreditering. Den nya kontaktsektionen ger besökare adress, T-baneväg, öppettider och en inbäddad karta på ett ställe, vilket besvarar de vanligaste frågorna inför ett första besök utan ett extra klick.',
+    craft_label:"Byggt på riktigt", craft_title:'Hantverket <em>under ytan.</em>',
+    craft_tab1:"Kortversionen", craft_tab2:"Tekniska specifikationer",
+    craft_plain1:"Byggt för att ladda snabbt, fungera för den som använder tangentbord eller skärmläsare, och faktiskt gå att hitta på Google.",
+    craft_plain2:"Varje formulärfält, varje meny, varje modal kontrollerades för sådant som är osynligt tills det går sönder för någon.",
+    craft_t1:"Stack: handskriven HTML, CSS och vanilla JS, inget ramverk, en enda statisk fil, hostad på GitHub Pages.",
+    craft_t2:"Innehållslager: Sanity CMS via GROQ-frågor för nyheter, publicerade Google Sheets CSV-endpoints för schemat (grundschema, tillfälliga scheman, enstaka undantag), Google Apps Script-backend för anmälningar och automatiska mejlaviseringar.",
+    craft_t3:"Prestanda: tog bort en renderingsblockerande tredjepartsstilmall, förladdade huvudbilden i toppen, lade till font-preconnects. Lighthouse-prestanda gick från omätbart till 91 på mobil och 99 på desktop.",
+    craft_t4:"Tillgänglighet: fokusfälla i modalen med Escape-stängning och fokusåterställning, fullständig ARIA-märkning, tangentbordsstyrd karusell, korrigerad rubrikhierarki, återställd pinch-to-zoom.",
+    craft_t5:"Säkerhet: innerHTML-utdata escapad genomgående, honeypot-fält i provpassformuläret.",
+    craft_t6:"SEO: kanonisk URL, LocalBusiness strukturerad data, sitemap.xml, robots.txt, egen 404-sida.",
+    showcase_label:"Verkliga resultat", showcase_title:'Siffrorna <em>bakom bygget.</em>',
+    stat_perf_label:"Prestandapoäng (mobil)", stat_perf_sub:"Snabb på mobil, byggd för verkliga nätverk",
+    stat_seo_label:"SEO-poäng", stat_seo_sub:"Fullt strukturerad och indexerad, byggd för att hittas",
+    stat_a11y_label:"Tillgänglighetspoäng", stat_a11y_sub:"Testat för hand, både tangentbord och skärmläsare",
+    about_title:'En klubb.<br><span class="gold-shimmer">Ett system.</span>',
+    about_p1:"Den gamla sajten låg på Squarespace, så klubben kunde tekniskt sett redigera själva. Det verkliga problemet var inte utvecklarberoende, det var ingen tvåspråkighet, ingen tydlig väg från besökare till medlem, och innehåll som blev inaktuellt ändå.",
+    about_p2:"Ombyggnaden är helt skräddarsydd och handkodad, strukturerad kring konvertering, med ett innehållssystem anpassat efter hur klubben faktiskt arbetar dag för dag, inte en generisk mall med utbytt logga.",
+    about_p3:"Allt klubben behöver hålla aktuellt, rubriker, priser, tränarprofiler, passbilder och kampanjer, hanteras från en enda Studio, bekräftat live från start till slut. Schemat ligger kvar i ett kalkylblad, det snabbaste sättet att redigera snabbrörliga veckoscheman, med tillfälliga scheman, enstaka inställda pass, kalenderprenumerationer och automatiska mejlaviseringar till medlemmar, med kontroller så att ett stavfel varken kan förstöra sidan eller skicka ett mejl av misstag.",
+    about_note:"Live build, riktigt CMS, riktig kod, riktiga kundmöten.",
+    tag1:"Tvåspråkig", tag2:"Självbetjänade nyheter", tag3:"Schemaflöde", tag4:"Medlemskapsflöde", tag5:"Sociala länkar", tag6:"Tillgänglig",
+    cta_label:"Vill du ha något liknande?",
+    cta_title:'Vi bygger <span class="gold-shimmer">din.</span>',
+    cta_desc:"Sajt, schema, medlemskap, ett innehållssystem eller en helt sammankopplad build för din klubb, ditt varumärke och dina medlemmar.",
+    cta_btn:"Skicka en förfrågan", ft_back:"Tillbaka till start"
+  }
+};
+
+function setLang(lang) {
+  const dict = I18N[lang]; if (!dict) return;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key] !== undefined) el.innerHTML = dict[key];
+  });
+  document.documentElement.lang = lang;
+  document.getElementById('lang-en').classList.toggle('active', lang==='en');
+  document.getElementById('lang-sv').classList.toggle('active', lang==='sv');
+  try { localStorage.setItem('sp-lang', lang); } catch(e) {}
+}
+
+function initCompare() {
+  const track = document.getElementById('compareTrack');
+  if (!track) return;
+  const slides = Array.from(track.children);
+  const prevBtn = document.getElementById('comparePrev');
+  const nextBtn = document.getElementById('compareNext');
+  const dotsWrap = document.getElementById('compareDots');
+  const countEl = document.getElementById('compareCount');
+  let index = 0;
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'compare-dot';
+    dot.setAttribute('aria-label', 'Go to section ' + (i + 1));
+    dot.addEventListener('click', () => { index = i; update(); });
+    dotsWrap.appendChild(dot);
+  });
+  const dots = Array.from(dotsWrap.children);
+
+  function update() {
+    track.style.transform = 'translateX(-' + (index * 100) + '%)';
+    prevBtn.disabled = index === 0;
+    nextBtn.disabled = index === slides.length - 1;
+    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+    countEl.textContent = (index + 1) + ' / ' + slides.length;
+  }
+  prevBtn.addEventListener('click', () => { index = Math.max(0, index - 1); update(); });
+  nextBtn.addEventListener('click', () => { index = Math.min(slides.length - 1, index + 1); update(); });
+  document.addEventListener('keydown', e => {
+    const rect = track.getBoundingClientRect();
+    if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+    if (e.key === 'ArrowLeft') prevBtn.click();
+    if (e.key === 'ArrowRight') nextBtn.click();
+  });
+  update();
+}
+
+function initCraftTabs() {
+  const tabs = document.querySelectorAll('.craft-tab');
+  if (!tabs.length) return;
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.craft-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('craft-' + tab.dataset.tab).classList.add('active');
+    });
+  });
+}
+
+(function init() {
+  let lang = 'en';
+  try { lang = localStorage.getItem('sp-lang') || 'en'; } catch(e) {}
+  if (lang !== 'en') setLang(lang);
+
+  initCompare();
+  initCraftTabs();
+
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('inview'); io.unobserve(e.target); }});
+    }, { threshold: 0.18 });
+    document.querySelectorAll('section').forEach(s => io.observe(s));
+  } else {
+    document.querySelectorAll('section').forEach(s => s.classList.add('inview'));
+  }
+})();
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
